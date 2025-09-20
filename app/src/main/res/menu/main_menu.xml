@@ -9,6 +9,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_settings"
+        android:title="Settings"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_sign_out"
         android:title="Sign Out"
         android:icon="@drawable/ic_settings"

@@ -1,6 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AlzheimersCaregiver</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="submit">Submit</string>
+    
+    <!-- Email Verification Strings -->
+    <string name="verification_pending_message">We\'ve sent a verification email to %1$s.\n\nPlease check your inbox and click the verification link.</string>
+    <string name="verification_success_message">Your email has been successfully verified!\n\nYou can now sign in with your new email address.</string>
+    <string name="verification_check_button">Check Verification Status</string>
+    <string name="verification_resend_button">Resend Verification Email</string>
+    <string name="verification_signin_button">Back to Sign In</string>
 </resources>

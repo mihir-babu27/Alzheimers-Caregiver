@@ -58,7 +58,15 @@
             android:theme="@style/Theme.AlzheimersCaregiver" />
             
         <activity android:name=".MainActivity" />
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".OnboardingActivity" />
+        
+        <!-- Email Verification Activity -->
+        <activity
+            android:name=".EmailVerificationActivity"
+            android:exported="false"
+            android:label="Email Verification"
+            android:theme="@style/Theme.AlzheimersCaregiver" />
         <!-- ADD THIS: Tasks Activity -->
         <activity
             android:name=".TasksActivity"

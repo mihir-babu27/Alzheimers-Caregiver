@@ -53,6 +53,8 @@
 
             
 
+			
+
             <!-- Main Feature Buttons Grid -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,7 +144,7 @@
 
                 </LinearLayout>
 
-                <!-- Row 2: Memory Games & Emergency (moved here) -->
+			<!-- Row 2: Memory Games & MMSE -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -186,155 +188,210 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/emergencyCard"
-                        android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="4dp"
-                        android:backgroundTint="@color/emergency_color">
+					<androidx.cardview.widget.CardView
+						android:id="@+id/mmseCard"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_marginStart="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="4dp"
+						android:backgroundTint="@color/memory_color">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:padding="16dp">
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:orientation="vertical"
+							android:gravity="center"
+							android:padding="16dp">
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/ic_emergency"
-                                android:layout_marginBottom="8dp"
-                                app:tint="@color/white" />
+							<ImageView
+								android:layout_width="40dp"
+								android:layout_height="40dp"
+								android:src="@drawable/ic_brain"
+								android:layout_marginBottom="8dp"
+								app:tint="@color/white" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Emergency"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:gravity="center" />
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="MMSE Quiz"
+								android:textColor="@color/white"
+								android:textSize="16sp"
+								android:textStyle="bold"
+								android:gravity="center" />
 
-                        </LinearLayout>
+						</LinearLayout>
 
-                    </androidx.cardview.widget.CardView>
+					</androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
-                <!-- Row 3: Face Recognition (full width) -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/photosCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    android:backgroundTint="@color/photos_color">
+			<!-- Row 3: Face Recognition & Object Detection -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginBottom="16dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
+				<androidx.cardview.widget.CardView
+					android:id="@+id/photosCard"
+					android:layout_width="0dp"
+					android:layout_height="120dp"
+					android:layout_weight="1"
+					android:layout_marginEnd="8dp"
+					app:cardCornerRadius="16dp"
+					app:cardElevation="4dp"
+					android:backgroundTint="@color/photos_color">
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_photo"
-                            android:layout_marginBottom="8dp"
-                            app:tint="@color/white" />
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Face Recognition"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:gravity="center" />
+						<ImageView
+							android:layout_width="40dp"
+							android:layout_height="40dp"
+							android:src="@drawable/ic_photo"
+							android:layout_marginBottom="8dp"
+							app:tint="@color/white" />
 
-                    </LinearLayout>
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Face Recognition"
+							android:textColor="@color/white"
+							android:textSize="16sp"
+							android:textStyle="bold"
+							android:gravity="center" />
 
-                </androidx.cardview.widget.CardView>
+					</LinearLayout>
 
-                <!-- Row 4: Object Detection (full width) -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/objectDetectionCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    android:backgroundTint="@color/photos_color">
+				</androidx.cardview.widget.CardView>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
+				<androidx.cardview.widget.CardView
+					android:id="@+id/objectDetectionCard"
+					android:layout_width="0dp"
+					android:layout_height="120dp"
+					android:layout_weight="1"
+					android:layout_marginStart="8dp"
+					app:cardCornerRadius="16dp"
+					app:cardElevation="4dp"
+					android:backgroundTint="@color/photos_color">
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_camera"
-                            android:layout_marginBottom="8dp"
-                            app:tint="@color/white" />
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Object Detection"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:gravity="center" />
+						<ImageView
+							android:layout_width="40dp"
+							android:layout_height="40dp"
+							android:src="@drawable/ic_camera"
+							android:layout_marginBottom="8dp"
+							app:tint="@color/white" />
 
-                    </LinearLayout>
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Object Detection"
+							android:textColor="@color/white"
+							android:textSize="16sp"
+							android:textStyle="bold"
+							android:gravity="center" />
 
-                </androidx.cardview.widget.CardView>
+					</LinearLayout>
 
-                <!-- Row 5: MMSE Quiz (full width) -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/mmseCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    android:backgroundTint="@color/memory_color">
+				</androidx.cardview.widget.CardView>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
+			</LinearLayout>
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_brain"
-                            android:layout_marginBottom="8dp"
-                            app:tint="@color/white" />
+			<!-- Row 4: Emergency & Settings -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginBottom="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MMSE Quiz"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:gravity="center" />
+				<androidx.cardview.widget.CardView
+					android:id="@+id/emergencyCard"
+					android:layout_width="0dp"
+					android:layout_height="120dp"
+					android:layout_weight="1"
+					android:layout_marginEnd="8dp"
+					app:cardCornerRadius="16dp"
+					app:cardElevation="4dp"
+					android:backgroundTint="@color/emergency_color">
 
-                    </LinearLayout>
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:padding="16dp">
 
-                </androidx.cardview.widget.CardView>
+						<ImageView
+							android:layout_width="40dp"
+							android:layout_height="40dp"
+							android:src="@drawable/ic_emergency"
+							android:layout_marginBottom="8dp"
+							app:tint="@color/white" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Emergency"
+							android:textColor="@color/white"
+							android:textSize="16sp"
+							android:textStyle="bold"
+							android:gravity="center" />
+
+					</LinearLayout>
+
+				</androidx.cardview.widget.CardView>
+
+				<androidx.cardview.widget.CardView
+					android:id="@+id/settingsCard"
+					android:layout_width="0dp"
+					android:layout_height="120dp"
+					android:layout_weight="1"
+					android:layout_marginStart="8dp"
+					app:cardCornerRadius="16dp"
+					app:cardElevation="4dp"
+					android:backgroundTint="@color/primary_color">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:padding="16dp">
+
+						<ImageView
+							android:layout_width="40dp"
+							android:layout_height="40dp"
+							android:src="@drawable/ic_settings"
+							android:layout_marginBottom="8dp"
+							app:tint="@color/white" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Settings"
+							android:textColor="@color/white"
+							android:textSize="16sp"
+							android:textStyle="bold"
+							android:gravity="center" />
+
+					</LinearLayout>
+
+				</androidx.cardview.widget.CardView>
+
+			</LinearLayout>
 
             </LinearLayout>
 

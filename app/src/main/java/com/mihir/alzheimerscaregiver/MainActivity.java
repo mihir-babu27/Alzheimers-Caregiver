@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,6 +70,40 @@ public class MainActivity extends AppCompatActivity {
         if (!authManager.isPatientSignedIn()) {
             navigateToAuth();
             return;
+        }
+        
+        // Try to update Firestore with the latest verified email
+        try {
+            com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                // Force reload to get fresh data
+                user.reload().addOnSuccessListener(aVoid -> {
+                    // Get fresh user instance
+                    com.google.firebase.auth.FirebaseUser refreshedUser = 
+                        com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+                    
+                    if (refreshedUser != null) {
+                        String patientId = authManager.getCurrentPatientId();
+                        String currentEmail = refreshedUser.getEmail();
+                        
+                        if (patientId != null && currentEmail != null) {
+                            android.util.Log.d("MainActivity", "Updating Firestore email to: " + currentEmail);
+                            com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                                .collection("patients")
+                                .document(patientId)
+                                .update("email", currentEmail)
+                                .addOnSuccessListener(unused -> {
+                                    android.util.Log.d("MainActivity", "Email updated in Firestore");
+                                })
+                                .addOnFailureListener(e -> {
+                                    android.util.Log.e("MainActivity", "Failed to update email in Firestore", e);
+                                });
+                        }
+                    }
+                });
+            }
+        } catch (Exception e) {
+            android.util.Log.e("MainActivity", "Error updating email", e);
         }
 
         // Initialize UI elements
@@ -261,6 +296,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Settings Card
+        View settingsCard = findViewById(R.id.settingsCard);
+        if (settingsCard != null) {
+            settingsCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
+                    Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     /**
@@ -279,13 +327,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        // Update welcome and name when returning to the app
+protected void onResume() {
+    super.onResume();
+    
+    // Check if auth is initialized to avoid crash
+    if (authManager != null) {
+        // First reload the user to get the latest auth state including email verification
+        authManager.reloadCurrentUser(success -> {
+            if (success) {
+                // If reload is successful, sync the email and update UI
+                authManager.syncEmailWithFirestore(syncSuccess -> {
+                    if (syncSuccess) {
+                        Log.d("MainActivity", "Email synced with Firestore on resume");
+                    } else {
+                        Log.w("MainActivity", "Failed to sync email with Firestore on resume");
+                    }
+                });
+            }
+            
+            // Update welcome and name when returning to the app
+            setupWelcomeMessage();
+        });
+    } else {
+        // Update welcome and name even if auth is not initialized
         setupWelcomeMessage();
-
-        // You could also refresh task counts, medication reminders, etc.
     }
+
+    // You could also refresh task counts, medication reminders, etc.
+}
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -307,6 +376,10 @@ public class MainActivity extends AppCompatActivity {
             authManager.signOut();
             Toast.makeText(this, "Signed out successfully", Toast.LENGTH_SHORT).show();
             navigateToAuth();
+            return true;
+        } else if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
         

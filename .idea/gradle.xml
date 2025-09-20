@@ -12,7 +12,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/face_recognition" />
-            <option value="$PROJECT_DIR$/objectdetection" />
+            <option value="$PROJECT_DIR$/object_detection" />
+            <option value="$PROJECT_DIR$/object_detection/app" />
           </set>
         </option>
       </GradleProjectSettings>
