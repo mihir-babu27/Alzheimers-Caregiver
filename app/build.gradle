@@ -1,3 +1,8 @@
+plugins {
+    alias(libs.plugins.android.application)
+    id 'com.google.gms.google-services'
+}
+
 // Load API keys from properties file
 def apiKeysPropertiesFile = rootProject.file("secure-keys/api-keys.properties")
 def apiKeysProperties = new Properties()
@@ -6,11 +11,6 @@ if (apiKeysPropertiesFile.exists()) {
 } else {
     logger.warn("WARNING: secure-keys/api-keys.properties not found. Using placeholder values.")
     apiKeysProperties.setProperty("FIREBASE_API_KEY", "placeholder")
-}
-
-plugins {
-    alias(libs.plugins.android.application)
-    id 'com.google.gms.google-services'
 }
 
 android {
