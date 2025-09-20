@@ -1,3 +1,13 @@
+// Load API keys from properties file
+def apiKeysPropertiesFile = rootProject.file("secure-keys/api-keys.properties")
+def apiKeysProperties = new Properties()
+if (apiKeysPropertiesFile.exists()) {
+    apiKeysProperties.load(new FileInputStream(apiKeysPropertiesFile))
+} else {
+    logger.warn("WARNING: secure-keys/api-keys.properties not found. Using placeholder values.")
+    apiKeysProperties.setProperty("FIREBASE_API_KEY", "placeholder")
+}
+
 plugins {
     alias(libs.plugins.android.application)
     id 'com.google.gms.google-services'
@@ -15,6 +25,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Add API keys as build config fields
+        buildConfigField "String", "FIREBASE_API_KEY", "\"${apiKeysProperties['FIREBASE_API_KEY']}\""
     }
 
     buildTypes {
@@ -22,6 +35,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    
+    buildFeatures {
+        buildConfig true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

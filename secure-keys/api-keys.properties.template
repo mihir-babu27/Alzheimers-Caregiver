@@ -1,0 +1,4 @@
+# Copy this file to api-keys.properties and replace with your actual API keys
+# DO NOT commit the actual keys to GitHub
+
+FIREBASE_API_KEY=your_firebase_api_key_here

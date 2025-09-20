@@ -34,12 +34,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize Firebase early to prevent initialization issues
+        // Initialize Firebase securely with API keys from BuildConfig
         try {
-            com.mihir.alzheimerscaregiver.data.FirebaseInitializer.initialize(this);
+            // Use our secure initializer instead of FirebaseInitializer
+            com.mihir.alzheimerscaregiver.data.SecureFirebaseInitializer.initialize(this);
         } catch (Exception e) {
-            android.util.Log.e("MainActivity", "Error initializing Firebase", e);
-            // Continue with app initialization even if Firebase fails
+            android.util.Log.e("MainActivity", "Error initializing Firebase securely", e);
+            
+            // Fallback to traditional initialization if secure method fails
+            try {
+                com.mihir.alzheimerscaregiver.data.FirebaseInitializer.initialize(this);
+                android.util.Log.d("MainActivity", "Firebase initialized with traditional method");
+            } catch (Exception fallbackEx) {
+                android.util.Log.e("MainActivity", "Error initializing Firebase with fallback method", fallbackEx);
+                // Continue with app initialization even if Firebase fails
+            }
         }
 
         // Initialize notification channels early

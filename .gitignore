@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Ignore google-services.json with API keys
+/app/google-services.json
+
+# Ignore the actual API keys properties file but keep the template
+/secure-keys/api-keys.properties
