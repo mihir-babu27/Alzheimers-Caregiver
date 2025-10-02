@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Detailed Patient Profile"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Refresh Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/refreshButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Refresh Profile Data"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp"
+            app:icon="@drawable/ic_settings"
+            app:cornerRadius="8dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <!-- Profile Details Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Profile Icon -->
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_person"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/circle_background_primary"
+                    android:padding="20dp"
+                    android:contentDescription="Profile Icon" />
+
+                <!-- Patient Name -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Patient Name"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/patientNameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not available"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/rounded_background_light"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Birth Year -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Birth Year"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/birthYearTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not available"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/rounded_background_light"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Birthplace -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Birthplace"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/birthplaceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not available"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/rounded_background_light"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Profession -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profession"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/professionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not available"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/rounded_background_light"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Other Details -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other Details"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/otherDetailsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not available"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/rounded_background_light"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:minHeight="60dp"
+                    android:gravity="top" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Debug Information (Caretaker Email) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Caretaker Email (Debug Info)"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/caretakerEmailTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not available"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:background="@drawable/rounded_background_light"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Last Updated -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last Updated"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/lastUpdatedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not available"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:background="@drawable/rounded_background_light"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Loading Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:visibility="gone" />
+
+        <!-- Help Text -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This information is provided by your caretaker to help personalize your care experience. Use the refresh button to get the latest updates."
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="center"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>

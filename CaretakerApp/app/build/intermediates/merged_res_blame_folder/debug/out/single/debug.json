@@ -72,6 +72,10 @@
         "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_caretaker_mmse_results.xml"
     },
     {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-37:/layout_activity_patient_profile_entry.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_patient_profile_entry.xml"
+    },
+    {
         "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-37:/layout_activity_add_medication.xml.flat",
         "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_add_medication.xml"
     }

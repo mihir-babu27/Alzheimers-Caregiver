@@ -80,6 +80,9 @@
         <activity
             android:name="com.mihir.alzheimerscaregiver.caretaker.MmseResultDetailActivity"
             android:exported="false" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.PatientProfileEntryActivity"
+            android:exported="false" />
 
         <!-- Broadcast Receivers for Notifications -->
         <receiver

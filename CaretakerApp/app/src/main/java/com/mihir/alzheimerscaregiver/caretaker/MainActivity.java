@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private Button addMedicationButton, addTaskButton, addEmergencyContactButton, logoutButton, viewMmseResultsButton;
-    private Button scheduleMmseTestButton, addCustomQuestionsButton;
+    private Button scheduleMmseTestButton, addCustomQuestionsButton, addPatientProfileButton;
     private TextView welcomeText;
     private FirebaseAuth mAuth;
     private SharedPreferences prefs;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     scheduleMmseTestButton = findViewById(R.id.scheduleMmseTestButton);
     addCustomQuestionsButton = findViewById(R.id.addCustomQuestionsButton);
+    addPatientProfileButton = findViewById(R.id.addPatientProfileButton);
 
         // Set welcome text
         welcomeText.setText("Welcome! You are linked to Patient ID: " + linkedPatientId);
@@ -93,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
         addCustomQuestionsButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CustomMmseQuestionsActivity.class);
             intent.putExtra("patientId", linkedPatientId);
+            startActivity(intent);
+        });
+
+        addPatientProfileButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, PatientProfileEntryActivity.class);
             startActivity(intent);
         });
     }

@@ -70,6 +70,14 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".OnboardingActivity" />
         
+        <!-- Detailed Patient Profile Activity -->
+        <activity
+            android:name=".DetailedPatientProfileActivity"
+            android:exported="false"
+            android:label="Detailed Patient Profile"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AlzheimersCaregiver" />
+        
         <!-- Email Verification Activity -->
         <activity
             android:name=".EmailVerificationActivity"

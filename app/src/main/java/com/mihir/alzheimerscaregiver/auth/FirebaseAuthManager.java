@@ -174,15 +174,43 @@ public class FirebaseAuthManager implements IAuthManager {
      * Add caretaker to patient's caretakerIds list
      */
     public void addCaretaker(String patientId, String caretakerId, PatientDataCallback callback) {
+        // First get the current patient document to check existing caretakerIds
         db.collection("patients").document(patientId)
-                .update("caretakerIds", java.util.Arrays.asList(caretakerId))
+                .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Refresh patient data
-                        getPatientData(patientId, callback);
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        java.util.List<String> caretakerIds = new java.util.ArrayList<>();
+                        
+                        // Get existing caretaker IDs if they exist
+                        PatientEntity patient = task.getResult().toObject(PatientEntity.class);
+                        if (patient != null && patient.caretakerIds != null) {
+                            caretakerIds.addAll(patient.caretakerIds);
+                        }
+                        
+                        // Add new caretaker if not already in the list
+                        if (!caretakerIds.contains(caretakerId)) {
+                            caretakerIds.add(caretakerId);
+                            
+                            // Update the document with the new caretaker list
+                            db.collection("patients").document(patientId)
+                                    .update("caretakerIds", caretakerIds)
+                                    .addOnCompleteListener(updateTask -> {
+                                        if (updateTask.isSuccessful()) {
+                                            // Refresh patient data
+                                            getPatientData(patientId, callback);
+                                        } else {
+                                            String errorMessage = updateTask.getException() != null ? 
+                                                    updateTask.getException().getMessage() : "Failed to add caretaker";
+                                            callback.onError(errorMessage);
+                                        }
+                                    });
+                        } else {
+                            // Caretaker already exists, just refresh data
+                            getPatientData(patientId, callback);
+                        }
                     } else {
                         String errorMessage = task.getException() != null ? 
-                                task.getException().getMessage() : "Failed to add caretaker";
+                                task.getException().getMessage() : "Failed to get patient data";
                         callback.onError(errorMessage);
                     }
                 });

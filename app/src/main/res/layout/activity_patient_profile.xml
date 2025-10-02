@@ -208,6 +208,18 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- View Detailed Profile Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewDetailedProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="View Detailed Profile"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_person"
+            style="@style/Widget.MaterialComponents.Button" />
+
         <!-- Sign Out Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signOutButton"

@@ -15,7 +15,7 @@ import com.mihir.alzheimerscaregiver.data.entity.PatientEntity;
 public class PatientProfileActivity extends AppCompatActivity {
     
     private TextView patientIdTextView, nameTextView, emailTextView, caretakerCountTextView;
-    private Button signOutButton, sharePatientIdButton;
+    private Button signOutButton, sharePatientIdButton, viewDetailedProfileButton;
     private FirebaseAuthManager authManager;
     private PatientEntity currentPatient;
     
@@ -45,11 +45,13 @@ public class PatientProfileActivity extends AppCompatActivity {
         caretakerCountTextView = findViewById(R.id.caretakerCountTextView);
         signOutButton = findViewById(R.id.signOutButton);
         sharePatientIdButton = findViewById(R.id.sharePatientIdButton);
+        viewDetailedProfileButton = findViewById(R.id.viewDetailedProfileButton);
     }
     
     private void setupClickListeners() {
         signOutButton.setOnClickListener(v -> handleSignOut());
         sharePatientIdButton.setOnClickListener(v -> sharePatientId());
+        viewDetailedProfileButton.setOnClickListener(v -> viewDetailedProfile());
     }
     
     private void loadPatientData() {
@@ -109,6 +111,11 @@ public class PatientProfileActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+    
+    private void viewDetailedProfile() {
+        Intent intent = new Intent(this, DetailedPatientProfileActivity.class);
+        startActivity(intent);
     }
     
     @Override

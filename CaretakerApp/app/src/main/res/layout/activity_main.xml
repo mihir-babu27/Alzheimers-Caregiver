@@ -41,6 +41,16 @@
         android:textColor="@color/white"
         android:backgroundTint="@color/purple_700"
         app:cornerRadius="8dp"
+        android:layout_marginBottom="12dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addPatientProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Add Patient Profile"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/purple_700"
+        app:cornerRadius="8dp"
         android:layout_marginBottom="24dp" />
 
 

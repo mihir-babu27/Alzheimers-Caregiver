@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
             android.util.Log.e("MainActivity", "Error updating email", e);
         }
 
+        // Set up toolbar
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         // Initialize UI elements
         initializeViews();
 

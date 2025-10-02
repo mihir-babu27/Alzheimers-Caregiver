@@ -3194,6 +3194,7 @@ id addButton
 id addCustomQuestionsButton
 id addEmergencyContactButton
 id addMedicationButton
+id addPatientProfileButton
 id addTaskButton
 id adjust_height
 id adjust_width
@@ -3219,6 +3220,8 @@ id baseline
 id beginOnFirstDraw
 id beginning
 id bestChoice
+id birthYearEditText
+id birthplaceEditText
 id blocking
 id bottom
 id bounce
@@ -3495,6 +3498,7 @@ id option3Input
 id option4Input
 id optionsContainer
 id optionsText
+id otherDetailsEditText
 id outline
 id outward
 id overshoot
@@ -3509,6 +3513,7 @@ id password_toggle
 id path
 id pathRelative
 id patientIdEditText
+id patientNameEditText
 id peekHeight
 id percent
 id phoneNumberEditText
@@ -3519,6 +3524,7 @@ id pooling_container_listener_holder_tag
 id position
 id postLayout
 id pressed
+id professionEditText
 id progressBar
 id progress_circular
 id progress_horizontal
@@ -3540,6 +3546,7 @@ id right_side
 id rounded
 id row_index_key
 id saveButton
+id savePatientProfileButton
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
@@ -3812,6 +3819,7 @@ layout activity_custom_mmse_questions
 layout activity_login
 layout activity_main
 layout activity_patient_link
+layout activity_patient_profile_entry
 layout activity_register
 layout activity_schedule_mmse_test
 layout browser_actions_context_menu_page

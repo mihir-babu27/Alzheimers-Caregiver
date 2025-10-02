@@ -77,6 +77,10 @@
             android:name=".MmseResultDetailActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".PatientProfileEntryActivity"
+            android:exported="false" />
+
         <!-- Broadcast Receivers for Notifications -->
         <receiver
             android:name=".notifications.ReminderReceiver"

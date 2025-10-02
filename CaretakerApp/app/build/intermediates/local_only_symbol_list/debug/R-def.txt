@@ -14,8 +14,11 @@ id addButton
 id addCustomQuestionsButton
 id addEmergencyContactButton
 id addMedicationButton
+id addPatientProfileButton
 id addTaskButton
 id answerText
+id birthYearEditText
+id birthplaceEditText
 id cancelButton
 id confirmPasswordEditText
 id contactNameEditText
@@ -42,11 +45,14 @@ id option3Input
 id option4Input
 id optionsContainer
 id optionsText
+id otherDetailsEditText
 id passwordEditText
 id patientIdEditText
+id patientNameEditText
 id phoneNumberEditText
 id pickDateButton
 id pickTimeButton
+id professionEditText
 id progressBar
 id questionInput
 id questionText
@@ -55,6 +61,7 @@ id registerButton
 id registerLink
 id relationEditText
 id saveButton
+id savePatientProfileButton
 id scheduleButton
 id scheduleMmseTestButton
 id scheduledDateEditText
@@ -81,6 +88,7 @@ layout activity_custom_mmse_questions
 layout activity_login
 layout activity_main
 layout activity_patient_link
+layout activity_patient_profile_entry
 layout activity_register
 layout activity_schedule_mmse_test
 layout item_custom_mmse_question
