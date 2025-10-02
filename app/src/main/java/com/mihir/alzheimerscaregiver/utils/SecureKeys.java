@@ -16,6 +16,14 @@ public class SecureKeys {
      * @return The Firebase API key
      */
     public static String getFirebaseApiKey() {
-        return BuildConfig.FIREBASE_API_KEY;
+        return BuildConfig.GOOGLE_API_KEY;
+    }
+    
+    /**
+     * Get the Firebase Project ID
+     * @return The Firebase Project ID
+     */
+    public static String getFirebaseProjectId() {
+        return BuildConfig.FIREBASE_PROJECT_ID;
     }
 }

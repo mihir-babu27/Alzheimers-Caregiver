@@ -16,7 +16,7 @@ local.properties
 
 # Secure API Keys - NEVER commit these files
 /secure-keys/api-keys.properties
-/app/google-services.json.generated
+/app/google-services.json
 
-# Google Services template will have placeholders (safe to commit)
-# The actual google-services.json will be generated at build time
+# Generated files
+/app/google-services.json.generated

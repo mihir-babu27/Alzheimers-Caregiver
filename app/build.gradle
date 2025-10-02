@@ -17,32 +17,8 @@ if (apiKeysPropertiesFile.exists()) {
     apiKeysProperties.setProperty("FIREBASE_APP_ID", "placeholder")
 }
 
-// Generate google-services.json from template at build time
-task generateGoogleServicesJson {
-    doLast {
-        def templateFile = file('google-services.json')
-        def outputFile = file('google-services.json.generated')
-        
-        if (templateFile.exists()) {
-            def templateContent = templateFile.text
-            def processedContent = templateContent
-                .replace('${GOOGLE_API_KEY}', apiKeysProperties['GOOGLE_API_KEY'])
-                .replace('${FIREBASE_PROJECT_ID}', apiKeysProperties['FIREBASE_PROJECT_ID'])  
-                .replace('${FIREBASE_PROJECT_NUMBER}', apiKeysProperties['FIREBASE_PROJECT_NUMBER'])
-                .replace('${FIREBASE_STORAGE_BUCKET}', apiKeysProperties['FIREBASE_STORAGE_BUCKET'])
-                .replace('${FIREBASE_APP_ID}', apiKeysProperties['FIREBASE_APP_ID'])
-            
-            outputFile.text = processedContent
-            
-            // Copy to the location expected by Google Services plugin
-            def finalFile = file('google-services.json')
-            finalFile.text = processedContent
-        }
-    }
-}
-
-// Ensure google-services.json is generated before processing
-preBuild.dependsOn generateGoogleServicesJson
+// Note: google-services.json contains actual API keys and is excluded from git
+// The secure API keys are also available via BuildConfig for runtime use
 
 android {
     namespace 'com.mihir.alzheimerscaregiver'

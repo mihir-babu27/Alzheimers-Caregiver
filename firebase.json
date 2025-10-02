@@ -15,5 +15,8 @@
       ],
       "source": "functions"
     }
-  ]
+  ],
+  "firestore": {
+    "rules": "CaretakerApp/firestore.rules"
+  }
 }

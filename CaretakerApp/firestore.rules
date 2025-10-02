@@ -2,17 +2,6 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Patients can only read/write inside their own patient document
-    match /patients/{patientId} {
-      // Allow read/write access to the patient document itself
-      allow read, write: if request.auth != null && request.auth.uid == patientId;
-      
-      // Allow access to subcollections (reminders, tasks, contacts, medications)
-      match /{subcollection}/{document=**} {
-        allow read, write: if request.auth != null && request.auth.uid == patientId;
-      }
-    }
-    
     // Caretaker-patient linking collection
     match /caretakerPatients/{caretakerUid} {
       // Caretakers can only access their own linking documents
@@ -23,16 +12,25 @@ service cloud.firestore {
       }
     }
     
-    // Caretakers can read/write patient data if they are linked
+    // Patient document rules - consolidated to avoid conflicts
     match /patients/{patientId} {
-      // Allow caretakers to read/write if they are linked
-      allow read, write: if request.auth != null && 
-        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId));
+      // Allow patients to read/write their own document
+      // OR allow caretakers to read/write if they are linked to this patient
+      allow read, write: if request.auth != null && (
+        // Patient can access their own document
+        request.auth.uid == patientId ||
+        // OR caretaker can access if they are linked to this patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId))
+      );
       
-      // Allow access to subcollections if caretaker is linked
+      // Allow access to subcollections with same rules
       match /{subcollection}/{document=**} {
-        allow read, write: if request.auth != null && 
-          exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId));
+        allow read, write: if request.auth != null && (
+          // Patient can access their own subcollections
+          request.auth.uid == patientId ||
+          // OR caretaker can access if they are linked to this patient
+          exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId))
+        );
       }
     }
     
