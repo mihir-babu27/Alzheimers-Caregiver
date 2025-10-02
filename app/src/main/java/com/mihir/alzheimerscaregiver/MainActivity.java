@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     // UI Elements
     private TextView welcomeText;
     private TextView nameText;
-    private CardView medicationCard, tasksCard, memoryCard, photosCard, emergencyCard, mmseCard, objectDetectionCard;
+    private CardView medicationCard, tasksCard, memoryCard, photosCard, emergencyCard, mmseCard, objectDetectionCard, storiesCard;
     
     // Firebase Auth Manager
     private FirebaseAuthManager authManager;
@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
         mmseCard = findViewById(R.id.mmseCard);
         emergencyCard = findViewById(R.id.emergencyCard);
         objectDetectionCard = findViewById(R.id.objectDetectionCard);
+        storiesCard = findViewById(R.id.storiesCard);
     }
 
     /**
@@ -360,6 +361,19 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
                     Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        // Stories Card
+        if (storiesCard != null) {
+            storiesCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
+                    showToast("Opening My Stories...");
+                    Intent intent = new Intent(MainActivity.this, com.mihir.alzheimerscaregiver.reminiscence.ReminiscenceStoryActivity.class);
                     startActivity(intent);
                 }
             });

@@ -84,6 +84,18 @@
             android:exported="false"
             android:label="Email Verification"
             android:theme="@style/Theme.AlzheimersCaregiver" />
+        
+        <!-- Reminiscence Story Activity -->
+        <activity
+            android:name=".reminiscence.ReminiscenceStoryActivity"
+            android:exported="false"
+            android:label="My Stories"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AlzheimersCaregiver">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <!-- ADD THIS: Tasks Activity -->
         <activity
             android:name=".TasksActivity"
