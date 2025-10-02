@@ -2,6 +2,8 @@ package com.mihir.alzheimerscaregiver;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,7 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihir.alzheimerscaregiver.data.entity.ReminderEntity;
 import com.mihir.alzheimerscaregiver.ui.reminders.ReminderEntityAdapter;
 import com.mihir.alzheimerscaregiver.ui.viewmodel.ReminderViewModel;
-import com.mihir.alzheimerscaregiver.notifications.ReminderScheduler;
+import com.mihir.alzheimerscaregiver.alarm.AlarmScheduler;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,6 +42,7 @@ import java.util.Locale;
 public class RemindersActivity extends AppCompatActivity implements ReminderEntityAdapter.OnReminderInteractionListener {
 
     private ImageButton backButton;
+    private ImageButton debugButton;
     private RecyclerView remindersRecyclerView;
     private FloatingActionButton addReminderFab;
 
@@ -49,22 +53,49 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
     private boolean medicationMode = false;
 
     // Call this before scheduling an exact alarm
-    private void checkAndRequestExactAlarmPermission() {
+    private boolean checkAndRequestExactAlarmPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Android 12+
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
                 Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                 startActivity(intent);
+                toast("Please grant permission to schedule alarms");
+                return false;
             }
+        }
+        return true;
     }
-}
+    
+    // Request notification permission for Android 13+
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 1001;
+    private boolean checkAndRequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= 33) { // Android 13+
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != 
+                PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 
+                    REQUEST_NOTIFICATION_PERMISSION);
+                toast("Please grant notification permission");
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
 
+        // Check for alarm permissions as early as possible
+        checkAndRequestExactAlarmPermission();
+        
+        // Also check for notification permissions on Android 13+
+        checkAndRequestNotificationPermission();
+        
         backButton = findViewById(R.id.backButton);
+        debugButton = findViewById(R.id.debugButton);
         remindersRecyclerView = findViewById(R.id.remindersRecyclerView);
         addReminderFab = findViewById(R.id.addReminderFab);
 
@@ -111,6 +142,7 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
         });
 
         backButton.setOnClickListener(v -> finish());
+        debugButton.setOnClickListener(v -> testAlarm());
         addReminderFab.setOnClickListener(v -> showAddOrEditDialog(null));
     }
 
@@ -169,7 +201,22 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                         ReminderEntity entity = new ReminderEntity(title, desc, scheduledAt[0], completed);
                         toast("Inserting reminder: " + title);
                         viewModel.insert(entity);
-                        if (!completed && scheduledAt[0] != null) { ReminderScheduler.schedule(this, scheduledAt[0], title, desc); }
+                        
+                        // Schedule alarm for non-completed reminders with a scheduled time
+                        if (!completed && scheduledAt[0] != null) {
+                            if (checkAndRequestExactAlarmPermission()) {
+                                // Use the new AlarmScheduler with proper debugging
+                                AlarmScheduler alarmScheduler = new AlarmScheduler(this);
+                                boolean scheduled = alarmScheduler.scheduleAlarm(entity.id, title, desc, scheduledAt[0]);
+                                
+                                if (scheduled) {
+                                    toast("Alarm scheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
+                                          Locale.getDefault()).format(new Date(scheduledAt[0])));
+                                } else {
+                                    toast("Failed to schedule alarm");
+                                }
+                            }
+                        }
                     } else {
                         existing.title = title;
                         existing.description = desc;
@@ -177,7 +224,29 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                         existing.isCompleted = completed;
                         toast("Updating reminder: " + title);
                         viewModel.update(existing);
-                        if (!completed && scheduledAt[0] != null) { ReminderScheduler.schedule(this, scheduledAt[0], title, desc); }
+                        
+                        // For existing reminders, reschedule or cancel alarm as needed
+                        if (!completed && scheduledAt[0] != null) {
+                            if (checkAndRequestExactAlarmPermission()) {
+                                // First cancel any existing alarm
+                                AlarmScheduler alarmScheduler = new AlarmScheduler(this);
+                                alarmScheduler.cancelAlarm(existing.id);
+                                
+                                // Then schedule the new alarm time
+                                boolean scheduled = alarmScheduler.scheduleAlarm(existing.id, title, desc, scheduledAt[0]);
+                                
+                                if (scheduled) {
+                                    toast("Alarm rescheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
+                                          Locale.getDefault()).format(new Date(scheduledAt[0])));
+                                } else {
+                                    toast("Failed to schedule alarm");
+                                }
+                            }
+                        } else if (completed || scheduledAt[0] == null) {
+                            // If marked as completed or time removed, cancel any existing alarm
+                            AlarmScheduler alarmScheduler = new AlarmScheduler(this);
+                            alarmScheduler.cancelAlarm(existing.id);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -205,6 +274,22 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
     }
 
     private String emptyToNull(String s) { return TextUtils.isEmpty(s) ? null : s; }
+    private void testAlarm() {
+        // Check both required permissions
+        if (checkAndRequestExactAlarmPermission() && checkAndRequestNotificationPermission()) {
+            AlarmScheduler alarmScheduler = new AlarmScheduler(this);
+            boolean scheduled = alarmScheduler.scheduleTestAlarm();
+            
+            if (scheduled) {
+                toast("Test alarm scheduled! Should trigger in 10 seconds");
+            } else {
+                toast("Failed to schedule test alarm");
+            }
+        } else {
+            toast("Cannot schedule test alarm - permissions not granted");
+        }
+    }
+    
     private void toast(String s) { Toast.makeText(this, s, Toast.LENGTH_SHORT).show(); }
 }
 

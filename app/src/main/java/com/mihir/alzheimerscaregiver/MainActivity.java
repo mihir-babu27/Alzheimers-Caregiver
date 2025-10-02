@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 import com.mihir.alzheimerscaregiver.auth.FirebaseAuthManager;
 import com.mihir.alzheimerscaregiver.face_recognition.FaceRecognitionActivity;
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
             }
         }
+        
+        // Check and request alarm permissions for reliable reminders
+        checkAlarmPermissions();
 
         // Initialize Firebase Auth Manager
         authManager = new FirebaseAuthManager();
@@ -124,6 +128,16 @@ public class MainActivity extends AppCompatActivity {
         // Set up click listeners for all cards
         setupClickListeners();
 
+        // Hidden debug/test hook: long-press on the user's name to schedule a test alarm in 10 seconds
+        try {
+            if (nameText != null) {
+                nameText.setOnLongClickListener(v -> {
+                    scheduleTestAlarm();
+                    return true;
+                });
+            }
+        } catch (Exception ignore) {}
+
         // Schedule MMSE test notifications for patient
         try {
             String patientId = authManager.getCurrentPatientId();
@@ -136,6 +150,34 @@ public class MainActivity extends AppCompatActivity {
         try {
             syncMmseReminder();
         } catch (Exception ignore) {}
+
+        // Ensure background periodic sync is scheduled (safety net if FCM missed)
+        try {
+            com.mihir.alzheimerscaregiver.sync.ReminderSyncScheduler.schedulePeriodic(this.getApplicationContext());
+        } catch (Exception e) {
+            android.util.Log.w("MainActivity", "Failed to schedule periodic sync", e);
+        }
+
+        // Client-only mode: no FCM; WorkManager periodic sync is sufficient for background updates.
+    }
+
+    // Schedules a quick test alarm in ~10 seconds to validate end-to-end alarm UX
+    private void scheduleTestAlarm() {
+        try {
+            com.mihir.alzheimerscaregiver.alarm.AlarmScheduler scheduler =
+                    new com.mihir.alzheimerscaregiver.alarm.AlarmScheduler(this);
+            long triggerAt = System.currentTimeMillis() + 10_000L;
+            String id = UUID.randomUUID().toString();
+            boolean ok = scheduler.scheduleAlarm(id, "Test Alarm", "This is a test alarm", triggerAt);
+            if (ok) {
+                Toast.makeText(this, "Test alarm set for 10 seconds", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to set test alarm", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            android.util.Log.e("MainActivity", "Error scheduling test alarm", e);
+            Toast.makeText(this, "Error scheduling test alarm", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void syncMmseReminder() {
@@ -400,5 +442,87 @@ protected void onResume() {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+    
+    /**
+     * Check and request alarm permissions for reliable reminders
+     */
+    private void checkAlarmPermissions() {
+        boolean needsPermission = false;
+        StringBuilder message = new StringBuilder();
+        message.append("For alarms to work reliably, please enable these settings:\n\n");
+        
+        // Check exact alarm permission on Android 12+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(ALARM_SERVICE);
+            if (!alarmManager.canScheduleExactAlarms()) {
+                needsPermission = true;
+                message.append("1. Allow 'Alarms & reminders' permission\n");
+            }
+        }
+        
+        // Check battery optimization
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            android.os.PowerManager powerManager = (android.os.PowerManager) getSystemService(POWER_SERVICE);
+            if (!powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
+                needsPermission = true;
+                message.append("2. Disable battery optimization for this app\n");
+            }
+        }
+        
+        if (needsPermission) {
+            message.append("\nThis ensures alarms work even when the app is in the background.");
+            
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("Permission Settings Required")
+                    .setMessage(message.toString())
+                    .setPositiveButton("Open Settings", (dialog, which) -> openAlarmSettings())
+                    .setNegativeButton("Later", null)
+                    .show();
+        }
+    }
+    
+    /**
+     * Open appropriate settings for alarm permissions
+     */
+    private void openAlarmSettings() {
+        // First try exact alarm settings (Android 12+)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(ALARM_SERVICE);
+            if (!alarmManager.canScheduleExactAlarms()) {
+                try {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                    intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                    startActivity(intent);
+                    return;
+                } catch (Exception e) {
+                    android.util.Log.e("MainActivity", "Could not open exact alarm settings", e);
+                }
+            }
+        }
+        
+        // Fall back to battery optimization settings
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            android.os.PowerManager powerManager = (android.os.PowerManager) getSystemService(POWER_SERVICE);
+            if (!powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
+                try {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                    intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                    startActivity(intent);
+                    return;
+                } catch (Exception e) {
+                    android.util.Log.e("MainActivity", "Could not open battery optimization settings", e);
+                }
+            }
+        }
+        
+        // Final fallback to general app settings
+        try {
+            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+            startActivity(intent);
+        } catch (Exception e) {
+            android.util.Log.e("MainActivity", "Could not open app settings", e);
+        }
     }
 }

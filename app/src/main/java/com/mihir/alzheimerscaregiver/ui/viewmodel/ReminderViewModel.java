@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.mihir.alzheimerscaregiver.data.entity.ReminderEntity;
 import com.mihir.alzheimerscaregiver.repository.ReminderRepository;
+import com.mihir.alzheimerscaregiver.alarm.AlarmScheduler;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class ReminderViewModel extends AndroidViewModel {
     private final ReminderRepository repository;
     private final MutableLiveData<List<ReminderEntity>> allReminders;
     private final MutableLiveData<String> errorMessage;
+    private final AlarmScheduler alarmScheduler;
 
     public ReminderViewModel(@NonNull Application application) {
         super(application);
@@ -26,6 +28,7 @@ public class ReminderViewModel extends AndroidViewModel {
             repository = new ReminderRepository();
             allReminders = new MutableLiveData<>();
             errorMessage = new MutableLiveData<>();
+            alarmScheduler = new AlarmScheduler(application.getApplicationContext());
             loadReminders();
         } catch (Exception e) {
             Log.e(TAG, "Error initializing ReminderViewModel", e);
@@ -127,6 +130,11 @@ public class ReminderViewModel extends AndroidViewModel {
 
     public void delete(ReminderEntity entity) {
         try {
+            // Cancel any scheduled alarms for this reminder
+            if (entity.scheduledTimeEpochMillis != null && !entity.isCompleted) {
+                alarmScheduler.cancelAlarm(entity.id);
+            }
+            
             repository.delete(entity, new ReminderRepository.FirebaseCallback<Void>() {
                 @Override
                 public void onSuccess(Void result) {
@@ -147,10 +155,39 @@ public class ReminderViewModel extends AndroidViewModel {
 
     public void markCompleted(String id, boolean completed) {
         try {
+            // If marking as completed, cancel any scheduled alarms
+            if (completed) {
+                alarmScheduler.cancelAlarm(id);
+            }
+            
             repository.markCompleted(id, completed, new ReminderRepository.FirebaseCallback<Void>() {
                 @Override
                 public void onSuccess(Void result) {
                     loadReminders(); // Refresh the list
+                    
+                    // If we're marking as not completed, and it had a scheduled time, we need to re-schedule it
+                    if (!completed) {
+                        // Find the reminder and reschedule it if needed
+                        repository.getById(id, new ReminderRepository.FirebaseCallback<ReminderEntity>() {
+                            @Override
+                            public void onSuccess(ReminderEntity reminder) {
+                                if (reminder != null && reminder.scheduledTimeEpochMillis != null 
+                                        && reminder.scheduledTimeEpochMillis > System.currentTimeMillis()) {
+                                    alarmScheduler.scheduleAlarm(
+                                            reminder.id,
+                                            reminder.title,
+                                            reminder.description,
+                                            reminder.scheduledTimeEpochMillis
+                                    );
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                Log.e(TAG, "Error getting reminder to reschedule: " + error);
+                            }
+                        });
+                    }
                 }
 
                 @Override

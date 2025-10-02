@@ -207,6 +207,83 @@ public class ReminderRepository {
             callback.onError("Failed to mark reminder completed: " + e.getMessage());
         }
     }
+    
+    /**
+     * Get a reminder by its ID
+     * 
+     * @param id The ID of the reminder to retrieve
+     * @param callback Callback to handle success or error
+     */
+    public void getById(String id, FirebaseCallback<ReminderEntity> callback) {
+        try {
+            if (id == null || id.isEmpty()) {
+                callback.onError("Reminder ID cannot be null or empty");
+                return;
+            }
+            
+            CollectionReference remindersRef = getRemindersRef();
+            remindersRef.document(id).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            ReminderEntity entity = documentSnapshot.toObject(ReminderEntity.class);
+                            if (entity != null) {
+                                entity.id = documentSnapshot.getId();
+                                callback.onSuccess(entity);
+                            } else {
+                                callback.onError("Failed to parse reminder data");
+                            }
+                        } else {
+                            callback.onError("Reminder not found with ID: " + id);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error getting reminder by ID: " + id, e);
+                        callback.onError("Error retrieving reminder: " + e.getMessage());
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in getById", e);
+            callback.onError("Failed to get reminder: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Get all active (non-completed) reminders sorted by date
+     * 
+     * @param callback Callback to handle success or error
+     */
+    public void getAllActiveReminders(FirebaseCallback<List<ReminderEntity>> callback) {
+        try {
+            CollectionReference remindersRef = getRemindersRef();
+            remindersRef.whereEqualTo("isCompleted", false)
+                    .orderBy("scheduledTimeEpochMillis")
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        try {
+                            List<ReminderEntity> list = new ArrayList<>();
+                            if (queryDocumentSnapshots != null) {
+                                for (var doc : queryDocumentSnapshots) {
+                                    ReminderEntity entity = doc.toObject(ReminderEntity.class);
+                                    if (entity != null) {
+                                        entity.id = doc.getId();
+                                        list.add(entity);
+                                    }
+                                }
+                            }
+                            callback.onSuccess(list);
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error processing active reminders data", e);
+                            callback.onError("Error processing active reminders: " + e.getMessage());
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error fetching active reminders", e);
+                        callback.onError(e.getMessage());
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in getAllActiveReminders", e);
+            callback.onError("Failed to fetch active reminders: " + e.getMessage());
+        }
+    }
 }
 
 
