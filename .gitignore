@@ -14,8 +14,9 @@
 .cxx
 local.properties
 
-# Ignore google-services.json with API keys
-/app/google-services.json
-
-# Ignore the actual API keys properties file but keep the template
+# Secure API Keys - NEVER commit these files
 /secure-keys/api-keys.properties
+/app/google-services.json.generated
+
+# Google Services template will have placeholders (safe to commit)
+# The actual google-services.json will be generated at build time

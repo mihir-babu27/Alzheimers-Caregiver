@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1092854188528",
-    "project_id": "recallar-12588",
-    "storage_bucket": "recallar-12588.firebasestorage.app"
+    "project_number": "${FIREBASE_PROJECT_NUMBER}",
+    "project_id": "${FIREBASE_PROJECT_ID}",
+    "storage_bucket": "${FIREBASE_STORAGE_BUCKET}"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092854188528:android:6581dd1fd9af8deee27535",
+        "mobilesdk_app_id": "${FIREBASE_APP_ID}",
         "android_client_info": {
           "package_name": "com.mihir.alzheimerscaregiver"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBbCZZ7NPDeZBA6eYtPSMCaw-L7O4RhDvI"
+          "current_key": "${GOOGLE_API_KEY}"
         }
       ],
       "services": {
