@@ -130,6 +130,31 @@
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preferred Story Language"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select the language you prefer for personalized reminiscence stories"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/languageSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:popupBackground="@color/white" />
+
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress"
             android:layout_width="wrap_content"

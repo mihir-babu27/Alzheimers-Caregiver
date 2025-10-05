@@ -176,8 +176,8 @@ public class ReminiscenceStoryActivity extends AppCompatActivity implements Text
         // Show loading state
         showLoadingState(true);
         
-        // Generate story using Gemini API
-        storyGenerator.generateReminiscenceStory(currentPatientDetails, new GeminiStoryGenerator.StoryGenerationCallback() {
+        // Generate story using Gemini API with language preference context
+        storyGenerator.generateReminiscenceStory(currentPatientDetails, this, new GeminiStoryGenerator.StoryGenerationCallback() {
             @Override
             public void onSuccess(String story) {
                 currentStory = story;

@@ -1,5 +1,6 @@
 package com.mihir.alzheimerscaregiver.reminiscence;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -116,12 +117,15 @@ public class GeminiStoryGenerator {
      * Generates a reminiscence story based on patient details
      */
     public void generateReminiscenceStory(PatientDetails patientDetails, StoryGenerationCallback callback) {
+        generateReminiscenceStory(patientDetails, null, callback);
+    }
+    
+    /**
+     * Generates a reminiscence story based on patient details with context
+     */
+    public void generateReminiscenceStory(PatientDetails patientDetails, android.content.Context context, StoryGenerationCallback callback) {
         
-        // Real Gemini API is now enabled with your API key!
-        // Comment out the mock generator lines below if you want to test with mock stories
-        
-        // generateMockStory(patientDetails, callback);
-        // return;
+
         
         // REAL GEMINI API CODE:
         // Validate input
@@ -135,8 +139,8 @@ public class GeminiStoryGenerator {
             return;
         }
         
-        // Build the prompt
-        String prompt = buildStoryPrompt(patientDetails);
+        // Build the prompt with language preference
+        String prompt = buildStoryPrompt(patientDetails, context);
         Log.d(TAG, "Generated prompt: " + prompt);
         
         // Execute API call in background thread
@@ -158,8 +162,8 @@ public class GeminiStoryGenerator {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         Log.e(TAG, "Failed to generate story with " + MODEL_NAMES[0] + ", trying next model", e);
-                        // Try next model or fallback to mock story
-                        tryNextModelOrFallback(patientDetails, callback, 1, buildStoryPrompt(patientDetails));
+                        // Try next model
+                        tryNextModelOrFallback(patientDetails, callback, 1, buildStoryPrompt(patientDetails, context), context);
                     }
                     
                     @Override
@@ -170,8 +174,8 @@ public class GeminiStoryGenerator {
                                 Log.e(TAG, "API call unsuccessful for " + MODEL_NAMES[0] + ": " + r.code() + " - " + r.message());
                                 Log.e(TAG, "Response body: " + responseBody);
                                 
-                                // Try next model or fallback to mock story
-                                mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, 1, buildStoryPrompt(patientDetails)));
+                                // Try next model
+                                mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, 1, buildStoryPrompt(patientDetails, context), context));
                                 return;
                             }
                             
@@ -183,31 +187,31 @@ public class GeminiStoryGenerator {
                                 mainHandler.post(() -> callback.onSuccess(story.trim()));
                             } else {
                                 Log.w(TAG, "Generated story is empty");
-                                mainHandler.post(() -> callback.onError("Generated story is empty. Please try again."));
+                                mainHandler.post(() -> callback.onError("Story generation returned empty content. Please try again in a moment."));
                             }
                         } catch (Exception e) {
                             Log.e(TAG, "Error processing response", e);
-                            mainHandler.post(() -> callback.onError("Error processing generated story"));
+                            mainHandler.post(() -> callback.onError("There was an issue processing the story. Please try again."));
                         }
                     }
                 });
                 
             } catch (Exception e) {
                 Log.e(TAG, "Error creating request", e);
-                mainHandler.post(() -> callback.onError("Error creating request"));
+                mainHandler.post(() -> callback.onError("Unable to prepare story request. Please check patient information and try again."));
             }
         });
         // END OF REAL API CODE */
     }
 
     /**
-     * Tries the next available model or falls back to mock story generation
+     * Tries the next available model or shows appropriate error if all models fail
      */
     private void tryNextModelOrFallback(PatientDetails patientDetails, StoryGenerationCallback callback, 
-                                      int modelIndex, String prompt) {
+                                      int modelIndex, String prompt, android.content.Context context) {
         if (modelIndex >= MODEL_NAMES.length) {
-            Log.w(TAG, "All API models failed, falling back to mock story generation");
-            generateMockStory(patientDetails, callback);
+            Log.e(TAG, "All API models failed");
+            mainHandler.post(() -> callback.onError("Story generation is temporarily unavailable. Please check your internet connection and try again in a few minutes."));
             return;
         }
 
@@ -228,7 +232,7 @@ public class GeminiStoryGenerator {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.e(TAG, "Failed to generate story with " + currentModel, e);
-                    mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt));
+                    mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt, context));
                 }
 
                 @Override
@@ -239,7 +243,7 @@ public class GeminiStoryGenerator {
                             Log.e(TAG, "API call unsuccessful for " + currentModel + ": " + r.code() + " - " + r.message());
                             
                             // Try next model
-                            mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt));
+                            mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt, context));
                             return;
                         }
 
@@ -248,7 +252,7 @@ public class GeminiStoryGenerator {
                         
                         if (story == null || story.trim().isEmpty()) {
                             Log.w(TAG, "Generated story is empty for " + currentModel);
-                            mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt));
+                            mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt, context));
                             return;
                         }
                         
@@ -257,93 +261,17 @@ public class GeminiStoryGenerator {
                         
                     } catch (Exception e) {
                         Log.e(TAG, "Error processing response for " + currentModel, e);
-                        mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt));
+                        mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt, context));
                     }
                 }
             });
             
         } catch (Exception e) {
             Log.e(TAG, "Error creating request for " + currentModel, e);
-            mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt));
+            mainHandler.post(() -> tryNextModelOrFallback(patientDetails, callback, modelIndex + 1, prompt, context));
         }
     }
-    
-    /**
-     * Temporary diverse story generator for testing UI functionality
-     * Remove this method once the Gemini API is properly configured
-     */
-    private void generateMockStory(PatientDetails patientDetails, StoryGenerationCallback callback) {
-        // Simulate API delay
-        mainHandler.postDelayed(() -> {
-            String mockStory = generateDiverseStory(patientDetails);
-            
-            Log.d(TAG, "Generated diverse mock story successfully");
-            callback.onSuccess(mockStory);
-        }, 2000); // 2 second delay to simulate API call
-    }
-    
-    /**
-     * Generates diverse, warm stories focusing on different aspects of the patient's life and birthplace
-     */
-    private String generateDiverseStory(PatientDetails patientDetails) {
-        // Array of different story themes and templates
-        String[] storyTemplates = {
-            // Theme 1: Community and Workplace
-            "The people of %s still remember %s with great fondness. As a dedicated %s, %s brought joy and reliability to everyone they worked with. " +
-            "In %s, neighbors would often say that %s had a special way of making even the busiest days feel peaceful. " +
-            "The community gatherings were always brighter when %s was there, sharing stories and laughter that echoed through the streets of %s.",
-            
-            // Theme 2: Seasonal memories and local traditions
-            "When spring arrived in %s, %s would always be among the first to notice the changes in the town. " +
-            "Working as a %s since %s, %s became part of the rhythm of the seasons that made %s so special. " +
-            "Local festivals and celebrations were never quite the same without %s's warm presence and the traditions they helped keep alive.",
-            
-            // Theme 3: Daily life and simple pleasures
-            "Every morning in %s held a special magic, and %s knew exactly where to find it. " +
-            "The local cafés and markets became familiar places where %s, known for their work as a %s, would exchange warm greetings with friends. " +
-            "These simple moments of connection made %s not just a place on the map, but a true home filled with cherished memories.",
-            
-            // Theme 4: Legacy and impact on place
-            "The streets of %s tell many stories, but few as heartwarming as %s's journey there. " +
-            "From %s onward, %s's work as a %s became woven into the very fabric of the community. " +
-            "Visitors to %s today still hear tales of kindness and dedication that %s left behind, a beautiful legacy that continues to inspire.",
-            
-            // Theme 5: Natural beauty and connection to place
-            "In %s, the natural beauty seemed to dance with %s's gentle spirit. " +
-            "Whether working as a %s or simply enjoying quiet moments, %s found peace in the landscapes that surrounded their beloved hometown. " +
-            "The sunsets over %s still carry whispers of the joy and contentment that %s brought to everyone they met.",
-            
-            // Theme 6: Friendship and community bonds
-            "The friendships that bloomed in %s were like flowers in %s's garden - carefully tended and full of life. " +
-            "As a respected %s, %s became the person others turned to for both wisdom and laughter. " +
-            "The coffee shops and gathering places of %s still echo with the warmth of conversations that %s shared with so many dear friends.",
-            
-            // Theme 7: Generational connections
-            "Stories passed down through families in %s often mention %s with a smile. " +
-            "Working diligently as a %s from %s, %s became a bridge between generations, sharing wisdom and creating bonds that lasted lifetimes. " +
-            "Children who grew up in %s remember %s's encouraging words and the way they made everyone feel valued and heard.",
-            
-            // Theme 8: Cultural and local heritage
-            "The cultural tapestry of %s was made richer by %s's presence and contributions. " +
-            "As a dedicated %s, %s helped preserve the unique character that made %s such a special place to call home. " +
-            "Local traditions and celebrations gained extra meaning through %s's participation and the joy they brought to community gatherings."
-        };
-        
-        // Randomly select a story template
-        java.util.Random random = new java.util.Random();
-        int templateIndex = random.nextInt(storyTemplates.length);
-        String selectedTemplate = storyTemplates[templateIndex];
-        
-        // Fill in the template with patient details
-        return String.format(selectedTemplate,
-            patientDetails.birthplace, patientDetails.name, patientDetails.profession,
-            patientDetails.name, patientDetails.birthplace, patientDetails.name,
-            patientDetails.name, patientDetails.birthplace, patientDetails.birthYear,
-            patientDetails.name, patientDetails.birthplace, patientDetails.name,
-            patientDetails.name, patientDetails.birthplace, patientDetails.name,
-            patientDetails.profession, patientDetails.birthplace, patientDetails.name
-        );
-    }
+
     
     /**
      * Creates the JSON request body for the Gemini API
@@ -389,68 +317,150 @@ public class GeminiStoryGenerator {
     }
     
     /**
-     * Builds diverse prompts for story generation focusing on different themes
-     * This method can be extended in the future to include historical events or other context
+     * Builds enhanced, detailed prompts for safe therapeutic reminiscence story generation
+     * Provides specific instructions for creating therapeutic, personalized stories inspired by life details
+     * @param details Patient details for story context
+     * @param context Android context to access language preferences (can be null for backward compatibility)
      */
-    private String buildStoryPrompt(PatientDetails details) {
-        // Array of different story themes to create variety
+    private String buildStoryPrompt(PatientDetails details, android.content.Context context) {
+        // Get user's preferred language for story generation
+        String preferredLanguage = com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.DEFAULT_LANGUAGE;
+        if (context != null) {
+            preferredLanguage = com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.getPreferredLanguage(context);
+        }
+        // Therapeutically safe story themes focused on sensory memories and emotional comfort
         String[] storyThemes = {
             // Theme 1: Community and relationships
-            "Generate a warm, positive story (3-4 sentences) about the community connections of %s, who lived in %s and worked as a %s. " +
-            "Focus on friendships, neighbors, and the bonds they formed in %s. Show how %s brought people together and created lasting relationships.",
+            "Write a gentle reminiscence story inspired by life in %s as a %s. " +
+            "The story should feel comforting, familiar, and emotionally supportive, but should not claim to be a factual record or biography. " +
+            "Focus on evoking warm memories of community connections - the sounds of friendly conversations with neighbors, " +
+            "the welcoming smells of local shops, the comfortable feelings of belonging at community gatherings. " +
+            "Emphasize sensory details like warm greetings, familiar faces, and the gentle rhythm of community life in %s.",
             
-            // Theme 2: Daily life and local culture
-            "Create a nostalgic story (3-4 sentences) about daily life in %s through the eyes of %s, a local %s. " +
-            "Describe the sights, sounds, and traditions that made %s special. Focus on simple pleasures and the unique character of the town.",
+            // Theme 2: Daily life and cherished routines
+            "Write a gentle reminiscence story inspired by the daily rhythms that someone might have experienced in %s while working as a %s. " +
+            "The story should feel comforting and familiar but not claim to be factual. Focus on evoking warm, sensory-rich memories: " +
+            "the aroma of morning coffee, the gentle sounds of a neighborhood awakening, the satisfaction of familiar routines. " +
+            "Paint pictures of cozy morning rituals, peaceful walks through %s, and the simple pleasures that bring comfort and stability.",
             
-            // Theme 3: Seasonal and natural beauty
-            "Write a peaceful story (3-4 sentences) about how %s experienced the natural beauty and changing seasons in %s while working as a %s. " +
-            "Paint a picture of the landscapes, weather, and outdoor life that made %s a wonderful place to live.",
+            // Theme 3: Seasonal memories and natural beauty  
+            "Craft a peaceful reminiscence story inspired by the natural beauty someone in %s might have experienced while working as a %s. " +
+            "The story should evoke warm, sensory memories but not claim to be biographical. Focus on gentle seasonal moments: " +
+            "the soft colors of spring flowers in local parks, the warm breeze of summer evenings, the golden hues of autumn streets, " +
+            "the cozy comfort of winter gatherings. Emphasize how nature's beauty in %s could provide comfort, peace, and moments of quiet joy.",
             
-            // Theme 4: Professional life and community service
-            "Tell an inspiring story (3-4 sentences) about %s's meaningful work as a %s in %s, and how it impacted the local community. " +
-            "Show the pride, dedication, and positive difference %s made in people's lives through their profession.",
+            // Theme 4: Professional pride and meaningful work
+            "Write a gentle reminiscence story inspired by the satisfaction someone might have found working as a %s in %s. " +
+            "The story should feel emotionally supportive but not claim to be factual. Focus on evoking the warm feelings of meaningful work: " +
+            "the satisfaction of helping others, the comfort of workplace friendships, the pride in developing skills over time. " +
+            "Emphasize sensory memories like the sounds of a busy workplace, the feeling of accomplishment, and the respect earned through dedication.",
             
-            // Theme 5: Local traditions and celebrations
-            "Describe a joyful story (3-4 sentences) about local celebrations, festivals, or traditions in %s that %s participated in as a respected %s. " +
-            "Focus on community gatherings, shared meals, music, or cultural events that brought %s together.",
+            // Theme 5: Cultural celebrations and traditions
+            "Create a gentle reminiscence story inspired by the cultural richness someone in %s might have experienced while working as a %s. " +
+            "The story should evoke warm, nostalgic feelings but not claim to be biographical. Focus on sensory memories of celebrations: " +
+            "the aromas of traditional foods, the sounds of music and laughter, the colorful sights of local festivals. " +
+            "Paint pictures of community gatherings, seasonal traditions, and the comfort found in shared cultural experiences in %s.",
             
-            // Theme 6: Generational wisdom and mentorship
-            "Create a heartwarming story (3-4 sentences) about how %s, working as a %s in %s, shared wisdom and guidance with younger generations. " +
-            "Show the lasting impact of their kindness and the way they helped others grow and learn in %s."
+            // Theme 6: Generational connections and wisdom sharing
+            "Write a gentle reminiscence story inspired by the wisdom and connections someone might have shared in %s as a %s. " +
+            "The story should feel emotionally supportive but not claim to be factual. Focus on evoking warm memories of mentorship: " +
+            "the satisfaction of teaching others, the comfort of sharing life lessons, the joy of watching others grow. " +
+            "Emphasize the gentle moments of guidance, the warm feelings of being valued for wisdom, and the connections across generations.",
+            
+            // Theme 7: Family connections and home life
+            "Create a gentle reminiscence story inspired by the warmth of home that someone might have experienced in %s while working as a %s. " +
+            "The story should feel comforting and familiar but not claim to be biographical. Focus on sensory memories of home: " +
+            "the aromas of favorite meals, the sounds of family conversations, the comfort of familiar spaces. " +
+            "Paint pictures of cozy gatherings, the warmth of shared traditions, and the security found in a loving home environment.",
+            
+            // Theme 8: Personal growth and life journey
+            "Write a gentle reminiscence story inspired by the personal growth someone might have experienced while living in %s and working as a %s. " +
+            "The story should feel emotionally supportive but not claim to be factual. Focus on evoking warm feelings of personal development: " +
+            "the satisfaction of learning new skills, the comfort of overcoming gentle challenges, the pride in personal achievements. " +
+            "Emphasize the positive emotions of resilience, the warmth of self-discovery, and the peaceful wisdom gained through life's experiences."
         };
         
-        // Randomly select a story theme
+        // Randomly select a story theme for variety
         java.util.Random random = new java.util.Random();
         int themeIndex = random.nextInt(storyThemes.length);
         String selectedTheme = storyThemes[themeIndex];
         
-        // Build the complete prompt
+        // Build the comprehensive prompt
         StringBuilder prompt = new StringBuilder();
+        
+        // Add therapeutic safety context and instructions
+        prompt.append("CRITICAL: This is for dementia/Alzheimer's reminiscence therapy. You must create a story that is INSPIRED BY life details, not a factual biography. ");
+        prompt.append("The story should feel comforting, familiar, and emotionally supportive while being therapeutically safe. ");
+        
+        // Add the selected theme with patient details (excluding name for privacy)
         prompt.append(String.format(selectedTheme, 
-            details.name, details.birthplace, details.profession,
-            details.birthplace, details.name, details.name,
-            details.birthplace, details.name));
+            details.birthplace, details.profession,
+            details.birthplace));
         
-        prompt.append(" Write it in plain, simple English that elderly patients can easily understand. ");
-        prompt.append("Keep the tone warm, positive, and encouraging. ");
+        // Add detailed therapeutic writing guidelines
+        prompt.append("\n\nTHERAPEUTIC WRITING GUIDELINES:\n");
+        prompt.append("• This story is INSPIRED BY life details, NOT a factual record or biography\n");
+        prompt.append("• Length: 4-5 sentences (approximately 80-120 words)\n");
         
-        // Add birth year context if available
+        // Add language-specific instructions
+        if (preferredLanguage.equals(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
+            prompt.append("• Language: Simple, clear English suitable for elderly patients\n");
+        } else {
+            prompt.append("• Language: Write the ENTIRE story in ").append(preferredLanguage).append(" using simple, clear language suitable for elderly patients\n");
+            prompt.append("• Script: Use the native script of ").append(preferredLanguage).append(" (e.g., Devanagari for Hindi, Kannada script for Kannada, Tamil script for Tamil, etc.)\n");
+            prompt.append("• Cultural Context: ").append(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.getCulturalContext(preferredLanguage)).append("\n");
+            prompt.append("• Natural Expressions: ").append(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.getLanguageSpecificPhrases(preferredLanguage)).append("\n");
+            prompt.append("• IMPORTANT: The story must be written completely in ").append(preferredLanguage).append(", not in English with ").append(preferredLanguage).append(" words mixed in\n");
+        }
+        
+        prompt.append("• Tone: Warm, gentle, positive, and reassuring - avoid any dramatic or stressful content\n");
+        prompt.append("• Focus: Emphasize sensory details (sounds, smells, colors, feelings), nostalgia, and emotional comfort\n");
+        prompt.append("• Avoid: Factual claims, specific events, sad topics, loss, conflict, or anything distressing\n");
+        prompt.append("• Include: Gentle sensory memories, warm emotions, peaceful scenarios, and comforting imagery\n");
+        prompt.append("• Emotion: Create feelings of warmth, belonging, pride, and comfort through gentle reminiscence\n");
+        prompt.append("• Pacing: Use gentle, non-judgmental phrasing with supportive and calming language\n");
+        
+        // Add historical context if birth year is available
         if (details.birthYear != null && !details.birthYear.trim().isEmpty()) {
-            prompt.append("Consider that ").append(details.name)
-                  .append(" was born in ").append(details.birthYear).append(". ");
+            int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+            int birthYear = Integer.parseInt(details.birthYear);
+            int currentAge = currentYear - birthYear;
+            
+            prompt.append("\nHISTORICAL CONTEXT: ");
+            prompt.append("This person was born in ").append(details.birthYear);
+            if (birthYear < 1950) {
+                prompt.append(", so include references to mid-20th century life, traditional values, and simpler times.");
+            } else if (birthYear < 1970) {
+                prompt.append(", so include references to post-war prosperity, community growth, and social connections.");
+            }
         }
         
-        // Add other details if available
+        // Add additional context if provided
         if (details.otherDetails != null && !details.otherDetails.trim().isEmpty()) {
-            prompt.append("Additional context: ")
+            prompt.append("\nADDITIONAL CONTEXT: ")
                   .append(details.otherDetails)
-                  .append(". ");
+                  .append(" - Incorporate these details naturally into the story.");
         }
         
-        prompt.append("Make the story unique and avoid repetitive phrases from previous stories.");
+        // Final therapeutic safety instructions with language emphasis
+        prompt.append("\n\nFINAL INSTRUCTIONS: ");
+        if (!preferredLanguage.equals(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
+            prompt.append("Write the COMPLETE story in ").append(preferredLanguage).append(" language using native script. ");
+        }
+        prompt.append("Write a gentle reminiscence story INSPIRED BY life details from ");
+        prompt.append(details.birthplace).append(", but do NOT claim it as factual biography. ");
+        prompt.append("The story should evoke warm, familiar feelings and sensory memories that feel emotionally supportive. ");
+        prompt.append("Focus on creating therapeutic comfort through gentle nostalgia, peaceful imagery, and positive emotions. ");
+        prompt.append("This is therapeutic reminiscence, not historical documentation - prioritize emotional safety and comfort above all else.");
         
         return prompt.toString();
+    }
+    
+    /**
+     * Backward compatibility method for existing code
+     */
+    private String buildStoryPrompt(PatientDetails details) {
+        return buildStoryPrompt(details, null);
     }
     
     /**

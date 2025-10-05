@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -19,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.mihir.alzheimerscaregiver.auth.FirebaseAuthManager;
 import com.mihir.alzheimerscaregiver.auth.IAuthManager;
 import com.mihir.alzheimerscaregiver.settings.SettingsViewModel;
+import com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
     private TextInputEditText inputCurrentPassword;
     private TextInputEditText inputNewPassword;
     private View progress;
+    private Spinner languageSpinner;
 
     private FirebaseAuth auth;
     private FirebaseAuthManager authManager;
@@ -48,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         inputCurrentPassword = findViewById(R.id.inputCurrentPassword);
         inputNewPassword = findViewById(R.id.inputNewPassword);
         progress = findViewById(R.id.progress);
+        languageSpinner = findViewById(R.id.languageSpinner);
 
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         toolbar.setNavigationOnClickListener(v -> finish());
@@ -59,6 +65,9 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         patientIdValue.setText(user.getUid());
+        
+        // Initialize language preference spinner
+        setupLanguageSpinner();
 
         viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         viewModel.getState().observe(this, ui -> {
@@ -123,6 +132,45 @@ public class SettingsActivity extends AppCompatActivity {
                 .setPositiveButton("OK", null)
                 .show();
         }
+    }
+    
+    /**
+     * Setup the language preference spinner with supported languages
+     */
+    private void setupLanguageSpinner() {
+        // Create adapter with supported languages
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+            this,
+            android.R.layout.simple_spinner_item,
+            LanguagePreferenceManager.SUPPORTED_LANGUAGES
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        languageSpinner.setAdapter(adapter);
+        
+        // Set current selection based on saved preference
+        String currentLanguage = LanguagePreferenceManager.getPreferredLanguage(this);
+        int currentIndex = LanguagePreferenceManager.getLanguageIndex(currentLanguage);
+        languageSpinner.setSelection(currentIndex);
+        
+        // Set up selection listener to save preference immediately
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedLanguage = LanguagePreferenceManager.SUPPORTED_LANGUAGES[position];
+                String currentLanguage = LanguagePreferenceManager.getPreferredLanguage(SettingsActivity.this);
+                
+                // Only save if the selection has actually changed (avoid saving on initial setup)
+                if (!selectedLanguage.equals(currentLanguage)) {
+                    LanguagePreferenceManager.setPreferredLanguage(SettingsActivity.this, selectedLanguage);
+                    showSnack(languageSpinner, "Story language preference updated to " + selectedLanguage);
+                }
+            }
+            
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
     }
 }
 
