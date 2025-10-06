@@ -15,6 +15,7 @@ if (apiKeysPropertiesFile.exists()) {
     apiKeysProperties.setProperty("FIREBASE_PROJECT_NUMBER", "placeholder")
     apiKeysProperties.setProperty("FIREBASE_STORAGE_BUCKET", "placeholder")
     apiKeysProperties.setProperty("FIREBASE_APP_ID", "placeholder")
+    apiKeysProperties.setProperty("HUGGING_FACE_API_KEY", "placeholder")
 }
 
 // Note: google-services.json contains actual API keys and is excluded from git
@@ -36,6 +37,7 @@ android {
         // Add API keys as build config fields
         buildConfigField "String", "GOOGLE_API_KEY", "\"${apiKeysProperties['GOOGLE_API_KEY']}\""
         buildConfigField "String", "FIREBASE_PROJECT_ID", "\"${apiKeysProperties['FIREBASE_PROJECT_ID']}\""
+        buildConfigField "String", "HUGGING_FACE_API_KEY", "\"${apiKeysProperties['HUGGING_FACE_API_KEY']}\""
     }
 
     buildTypes {

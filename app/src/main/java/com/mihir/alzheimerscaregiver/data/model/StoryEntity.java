@@ -13,6 +13,11 @@ public class StoryEntity {
     private String language; // Language preference used for generation
     private String theme; // Story theme used (community, work, family, etc.)
     
+    // Image illustration fields
+    private String illustrationUrl; // URL or base64 data of the generated illustration
+    private String illustrationDescription; // Description of the illustration scene
+    private boolean hasIllustration; // Whether an illustration was successfully generated
+    
     // Required empty constructor for Firebase
     public StoryEntity() {}
     
@@ -44,4 +49,13 @@ public class StoryEntity {
     
     public String getTheme() { return theme; }
     public void setTheme(String theme) { this.theme = theme; }
+    
+    public String getIllustrationUrl() { return illustrationUrl; }
+    public void setIllustrationUrl(String illustrationUrl) { this.illustrationUrl = illustrationUrl; }
+    
+    public String getIllustrationDescription() { return illustrationDescription; }
+    public void setIllustrationDescription(String illustrationDescription) { this.illustrationDescription = illustrationDescription; }
+    
+    public boolean isHasIllustration() { return hasIllustration; }
+    public void setHasIllustration(boolean hasIllustration) { this.hasIllustration = hasIllustration; }
 }

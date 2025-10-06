@@ -56,6 +56,78 @@
                     android:layout_marginBottom="16dp"
                     android:gravity="center" />
 
+                <!-- Illustration Scene -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/illustrationCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Illustration Image -->
+                        <ImageView
+                            android:id="@+id/illustrationImageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop"
+                            android:background="@color/background_light"
+                            android:contentDescription="Therapeutic illustration scene" />
+
+                        <!-- Illustration Loading -->
+                        <ProgressBar
+                            android:id="@+id/illustrationLoadingProgressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="20dp"
+                            android:visibility="gone"
+                            android:indeterminate="true" />
+
+                        <!-- Illustration Description and Actions -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@color/background_light">
+
+                            <TextView
+                                android:id="@+id/illustrationDescriptionTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:textSize="12sp"
+                                android:textStyle="italic"
+                                android:textColor="@android:color/darker_gray"
+                                android:text="Illustration inspired by memories"
+                                android:gravity="center" />
+
+                            <!-- Save Button -->
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/saveImageButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="12dp"
+                                android:text="💾 Save Image"
+                                android:textSize="14sp"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                app:backgroundTint="@color/stories_color"
+                                android:textColor="@color/white"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
                 <!-- Story Content -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -241,6 +313,19 @@
                 android:padding="16dp"
                 android:layout_marginBottom="12dp"
                 android:textSize="16sp" />
+
+            <!-- Generate Photos Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/generatePhotosButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🎨 Generate Photos"
+                android:backgroundTint="@color/stories_color"
+                android:textColor="@color/white"
+                app:cornerRadius="12dp"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:textSize="15sp" />
 
             <!-- View All Stories Button -->
             <com.google.android.material.button.MaterialButton
