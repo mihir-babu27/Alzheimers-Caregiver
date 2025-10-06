@@ -36,6 +36,8 @@
     <color name="info">#3B82F6</color>
 
     <!-- Additional UI Colors -->
+    <color name="background_light">#F1F5F9</color>      <!-- Light background for cards and sections -->
+    <color name="secondary_color">#FF9800</color>       <!-- Secondary color for buttons -->
     <color name="border_color">#E2E8F0</color>
     <color name="shadow_color">#1E293B</color>
 

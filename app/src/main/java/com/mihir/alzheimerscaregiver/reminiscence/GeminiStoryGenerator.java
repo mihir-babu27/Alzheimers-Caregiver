@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.mihir.alzheimerscaregiver.BuildConfig;
+import com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -389,27 +390,36 @@ public class GeminiStoryGenerator {
         StringBuilder prompt = new StringBuilder();
         
         // Add therapeutic safety context and instructions
-        prompt.append("CRITICAL: This is for dementia/Alzheimer's reminiscence therapy. You must create a story that is INSPIRED BY life details, not a factual biography. ");
-        prompt.append("The story should feel comforting, familiar, and emotionally supportive while being therapeutically safe. ");
+        prompt.append("CRITICAL: This is for dementia/Alzheimer's reminiscence therapy. You must create a story about a FICTIONAL CHARACTER in THIRD PERSON that is INSPIRED BY life details, not a factual biography about the patient. ");
+        prompt.append("The story should feel comforting, familiar, and emotionally supportive while being therapeutically safe. Create a relatable fictional character whose experiences mirror the provided life details. ");
         
         // Add the selected theme with patient details (excluding name for privacy)
         prompt.append(String.format(selectedTheme, 
             details.birthplace, details.profession,
             details.birthplace));
         
+        // Add additional context if provided - emphasize personal details
+        if (details.otherDetails != null && !details.otherDetails.trim().isEmpty()) {
+            prompt.append("\n\nPERSONAL CONTEXT (Very Important - weave these details throughout the story): ")
+                  .append(details.otherDetails)
+                  .append(" - These personal details should be central to creating authentic, meaningful memories in the story.");
+        }
+        
         // Add detailed therapeutic writing guidelines
         prompt.append("\n\nTHERAPEUTIC WRITING GUIDELINES:\n");
-        prompt.append("• This story is INSPIRED BY life details, NOT a factual record or biography\n");
+        prompt.append("• NARRATIVE STYLE: Write in THIRD PERSON about a FICTIONAL CHARACTER (use 'he', 'she', or character name)\n");
+        prompt.append("• CHARACTER: Create a relatable fictional person whose life experiences are INSPIRED BY the provided details\n");
+        prompt.append("• SAFETY: This is NOT a factual record or biography about the patient - it's fiction inspired by life details\n");
         prompt.append("• Length: 4-5 sentences (approximately 80-120 words)\n");
         
         // Add language-specific instructions
-        if (preferredLanguage.equals(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
+        if (preferredLanguage.equals(LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
             prompt.append("• Language: Simple, clear English suitable for elderly patients\n");
         } else {
             prompt.append("• Language: Write the ENTIRE story in ").append(preferredLanguage).append(" using simple, clear language suitable for elderly patients\n");
             prompt.append("• Script: Use the native script of ").append(preferredLanguage).append(" (e.g., Devanagari for Hindi, Kannada script for Kannada, Tamil script for Tamil, etc.)\n");
-            prompt.append("• Cultural Context: ").append(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.getCulturalContext(preferredLanguage)).append("\n");
-            prompt.append("• Natural Expressions: ").append(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.getLanguageSpecificPhrases(preferredLanguage)).append("\n");
+            prompt.append("• Cultural Context: ").append(LanguagePreferenceManager.getCulturalContext(preferredLanguage)).append("\n");
+            prompt.append("• Natural Expressions: ").append(LanguagePreferenceManager.getLanguageSpecificPhrases(preferredLanguage)).append("\n");
             prompt.append("• IMPORTANT: The story must be written completely in ").append(preferredLanguage).append(", not in English with ").append(preferredLanguage).append(" words mixed in\n");
         }
         
@@ -424,7 +434,7 @@ public class GeminiStoryGenerator {
         if (details.birthYear != null && !details.birthYear.trim().isEmpty()) {
             int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
             int birthYear = Integer.parseInt(details.birthYear);
-            int currentAge = currentYear - birthYear;
+            // int currentAge = currentYear - birthYear; // Future use for age-appropriate context
             
             prompt.append("\nHISTORICAL CONTEXT: ");
             prompt.append("This person was born in ").append(details.birthYear);
@@ -435,16 +445,9 @@ public class GeminiStoryGenerator {
             }
         }
         
-        // Add additional context if provided
-        if (details.otherDetails != null && !details.otherDetails.trim().isEmpty()) {
-            prompt.append("\nADDITIONAL CONTEXT: ")
-                  .append(details.otherDetails)
-                  .append(" - Incorporate these details naturally into the story.");
-        }
-        
         // Final therapeutic safety instructions with language emphasis
         prompt.append("\n\nFINAL INSTRUCTIONS: ");
-        if (!preferredLanguage.equals(com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
+        if (!preferredLanguage.equals(LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
             prompt.append("Write the COMPLETE story in ").append(preferredLanguage).append(" language using native script. ");
         }
         prompt.append("Write a gentle reminiscence story INSPIRED BY life details from ");

@@ -85,16 +85,28 @@
             android:label="Email Verification"
             android:theme="@style/Theme.AlzheimersCaregiver" />
         
-        <!-- Reminiscence Story Activity -->
+        <!-- Firebase-Integrated Story Generation Activity -->
         <activity
-            android:name=".reminiscence.ReminiscenceStoryActivity"
+            android:name=".reminiscence.StoryGenerationActivity"
             android:exported="false"
-            android:label="My Stories"
+            android:label="AI Stories"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AlzheimersCaregiver">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+        
+        <!-- All Stories Activity -->
+        <activity
+            android:name=".reminiscence.AllStoriesActivity"
+            android:exported="false"
+            android:label="All Stories"
+            android:parentActivityName=".reminiscence.StoryGenerationActivity"
+            android:theme="@style/Theme.AlzheimersCaregiver">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".reminiscence.StoryGenerationActivity" />
         </activity>
         <!-- ADD THIS: Tasks Activity -->
         <activity

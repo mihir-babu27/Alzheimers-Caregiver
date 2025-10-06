@@ -64,6 +64,9 @@ dependencies {
     implementation libs.lifecycleLivedata
     implementation libs.lifecycleRuntime
     implementation libs.biometric
+    
+    // RecyclerView for stories list
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
 
     // Room dependencies removed - using Firebase Firestore instead
     testImplementation libs.junit

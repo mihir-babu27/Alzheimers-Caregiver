@@ -366,14 +366,14 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        // Stories Card
+        // Stories Card - Updated to use Firebase-integrated Story Generation
         if (storiesCard != null) {
             storiesCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
-                    showToast("Opening My Stories...");
-                    Intent intent = new Intent(MainActivity.this, com.mihir.alzheimerscaregiver.reminiscence.ReminiscenceStoryActivity.class);
+                    showToast("Opening AI Stories...");
+                    Intent intent = new Intent(MainActivity.this, com.mihir.alzheimerscaregiver.reminiscence.StoryGenerationActivity.class);
                     startActivity(intent);
                 }
             });
