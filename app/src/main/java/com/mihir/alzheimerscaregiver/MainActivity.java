@@ -162,6 +162,13 @@ public class MainActivity extends AppCompatActivity {
             android.util.Log.w("MainActivity", "Failed to schedule periodic sync", e);
         }
 
+        // Schedule midnight alarm reset job for daily alarm maintenance
+        try {
+            com.mihir.alzheimerscaregiver.alarm.MidnightAlarmResetScheduler.scheduleMidnightReset(this.getApplicationContext());
+        } catch (Exception e) {
+            android.util.Log.w("MainActivity", "Failed to schedule midnight alarm reset", e);
+        }
+
         // Client-only mode: no FCM; WorkManager periodic sync is sufficient for background updates.
     }
 

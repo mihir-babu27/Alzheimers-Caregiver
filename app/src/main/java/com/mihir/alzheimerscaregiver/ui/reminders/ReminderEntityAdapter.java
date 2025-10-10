@@ -69,12 +69,24 @@ public class ReminderEntityAdapter extends RecyclerView.Adapter<ReminderEntityAd
                     new SimpleDateFormat("EEE, MMM d h:mm a", Locale.getDefault()).format(new Date(r.scheduledTimeEpochMillis));
             String title = r.title + (subtitle.isEmpty() ? "" : (" • " + subtitle));
             taskCheckBox.setText(title);
-            taskCheckBox.setChecked(r.isCompleted);
+            
+            // For repeating reminders, check if completed today; for others, check isCompleted
+            boolean isChecked = r.isRepeating ? r.isCompletedToday() : r.isCompleted;
+            taskCheckBox.setChecked(isChecked);
             updateStatus(r);
 
             taskCheckBox.setOnCheckedChangeListener(null);
             taskCheckBox.setOnCheckedChangeListener((b, checked) -> {
-                r.isCompleted = checked;
+                if (r.isRepeating) {
+                    // For repeating reminders, update the lastCompletedDate locally for immediate UI feedback
+                    if (checked) {
+                        r.markCompletedToday();
+                    } else {
+                        r.lastCompletedDate = null;
+                    }
+                } else {
+                    r.isCompleted = checked;
+                }
                 updateStatus(r);
                 if (listener != null) listener.onCompletionToggled(r);
             });
@@ -82,7 +94,10 @@ public class ReminderEntityAdapter extends RecyclerView.Adapter<ReminderEntityAd
         }
 
         private void updateStatus(ReminderEntity r) {
-            if (r.isCompleted) {
+            // Check completion status based on reminder type
+            boolean isCompleted = r.isRepeating ? r.isCompletedToday() : r.isCompleted;
+            
+            if (isCompleted) {
                 taskStatusText.setText("✓ Completed");
                 taskStatusText.setTextColor(itemView.getContext().getResources().getColor(R.color.success));
             } else {

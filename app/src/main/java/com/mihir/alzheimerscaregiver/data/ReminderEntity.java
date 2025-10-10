@@ -21,6 +21,8 @@ public class ReminderEntity {
     private String type; // e.g., "medication", "task"
     private String patientId; // ID of the patient this reminder is for
     private boolean isCompleted;
+    private boolean isRepeating; // Whether this reminder repeats daily
+    private String lastCompletedDate; // Date when last completed (YYYY-MM-DD format)
     
     @ServerTimestamp
     private Date createdAt;
@@ -39,6 +41,20 @@ public class ReminderEntity {
         this.type = type;
         this.patientId = patientId;
         this.isCompleted = false;
+        this.isRepeating = false;
+        this.lastCompletedDate = null;
+        this.needsAlarmUpdate = true;
+    }
+    
+    public ReminderEntity(String title, String message, long timeMillis, String type, String patientId, boolean isRepeating) {
+        this.title = title;
+        this.message = message;
+        this.timeMillis = timeMillis;
+        this.type = type;
+        this.patientId = patientId;
+        this.isCompleted = false;
+        this.isRepeating = isRepeating;
+        this.lastCompletedDate = null;
         this.needsAlarmUpdate = true;
     }
     
@@ -51,6 +67,8 @@ public class ReminderEntity {
         result.put("type", type);
         result.put("patientId", patientId);
         result.put("isCompleted", isCompleted);
+        result.put("isRepeating", isRepeating);
+        result.put("lastCompletedDate", lastCompletedDate);
         // createdAt is handled automatically by Firestore with @ServerTimestamp
         return result;
     }
@@ -122,6 +140,22 @@ public class ReminderEntity {
         this.createdAt = createdAt;
     }
 
+    public boolean isRepeating() {
+        return isRepeating;
+    }
+
+    public void setRepeating(boolean repeating) {
+        isRepeating = repeating;
+    }
+
+    public String getLastCompletedDate() {
+        return lastCompletedDate;
+    }
+
+    public void setLastCompletedDate(String lastCompletedDate) {
+        this.lastCompletedDate = lastCompletedDate;
+    }
+
     @Exclude
     public boolean needsAlarmUpdate() {
         return needsAlarmUpdate;
@@ -130,5 +164,35 @@ public class ReminderEntity {
     @Exclude
     public void setNeedsAlarmUpdate(boolean needsAlarmUpdate) {
         this.needsAlarmUpdate = needsAlarmUpdate;
+    }
+
+    /**
+     * Check if this reminder was completed today
+     */
+    @Exclude
+    public boolean isCompletedToday() {
+        if (lastCompletedDate == null) {
+            return false;
+        }
+        
+        // Get today's date in YYYY-MM-DD format
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+        String today = dateFormat.format(new Date());
+        
+        return today.equals(lastCompletedDate);
+    }
+
+    /**
+     * Mark this reminder as completed for today
+     */
+    @Exclude
+    public void markCompletedToday() {
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+        this.lastCompletedDate = dateFormat.format(new Date());
+        
+        // For non-repeating reminders, also mark as permanently completed
+        if (!isRepeating) {
+            this.isCompleted = true;
+        }
     }
 }

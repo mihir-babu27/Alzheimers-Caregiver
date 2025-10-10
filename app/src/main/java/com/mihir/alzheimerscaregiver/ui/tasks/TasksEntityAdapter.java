@@ -74,21 +74,43 @@ public class TasksEntityAdapter extends RecyclerView.Adapter<TasksEntityAdapter.
 
         public void bind(TaskEntity task) {
             String title = task.name;
+            
+            // Add time information if scheduled
             if (task.scheduledTimeEpochMillis != null) {
                 String time = new SimpleDateFormat("h:mm a", Locale.getDefault())
                         .format(new Date(task.scheduledTimeEpochMillis));
                 title = title + " • " + time;
             }
+            
+            // Add repeat information for repeating tasks
+            if (task.isRepeating) {
+                String repeatInfo = task.getRepeatDaysDescription();
+                title = title + " • " + repeatInfo;
+            }
 
             taskCheckBox.setText(title);
-            taskCheckBox.setChecked(task.isCompleted);
-            updateStatusText(task.isCompleted);
+            
+            // For repeating tasks, check if completed today; for others, check isCompleted (same as ReminderEntityAdapter)
+            boolean isChecked = task.isRepeating ? task.isCompletedToday() : task.isCompleted;
+            taskCheckBox.setChecked(isChecked);
+            updateStatusText(isChecked);
 
             taskCheckBox.setOnCheckedChangeListener(null);
-            taskCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            taskCheckBox.setOnCheckedChangeListener((buttonView, checked) -> {
                 buttonView.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
-                task.isCompleted = isChecked;
-                updateStatusText(isChecked);
+                
+                if (task.isRepeating) {
+                    // For repeating tasks, update the lastCompletedDate locally for immediate UI feedback (same as ReminderEntityAdapter)
+                    if (checked) {
+                        task.markCompletedToday();
+                    } else {
+                        task.lastCompletedDate = null;
+                    }
+                } else {
+                    task.isCompleted = checked;
+                }
+                
+                updateStatusText(checked);
                 if (listener != null) listener.onCompletionToggled(task);
             });
 
@@ -97,7 +119,9 @@ public class TasksEntityAdapter extends RecyclerView.Adapter<TasksEntityAdapter.
                 if (listener != null) listener.onItemClicked(task);
             });
 
-            applyCompletionStyling(task.isCompleted);
+            // Apply styling based on correct completion status
+            boolean isCompleted = task.isRepeating ? task.isCompletedToday() : task.isCompleted;
+            applyCompletionStyling(isCompleted);
         }
 
         private void updateStatusText(boolean isCompleted) {

@@ -14,11 +14,14 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihir.alzheimerscaregiver.data.entity.TaskEntity;
@@ -151,7 +154,8 @@ public class TasksActivity extends AppCompatActivity implements TasksAdapter.OnT
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.getTodayTasks().observe(this, tasks -> {
+        // Use getAllSortedBySchedule() instead of getTodayTasks() to show all tasks like RemindersActivity does
+        taskViewModel.getAllSortedBySchedule().observe(this, tasks -> {
             entityAdapter.submitList(tasks);
             updateTasksRemainingCounter();
         });
@@ -237,8 +241,10 @@ public class TasksActivity extends AppCompatActivity implements TasksAdapter.OnT
     // New Room-backed adapter callbacks
     @Override
     public void onCompletionToggled(TaskEntity task) {
-        taskViewModel.markCompleted(task.id, task.isCompleted);
-        if (task.isCompleted) {
+        // Use effective completion status for repeating tasks (same logic as adapter)
+        boolean isCompleted = task.isRepeating ? task.isCompletedToday() : task.isCompleted;
+        taskViewModel.markCompleted(task.id, isCompleted);
+        if (isCompleted) {
             simulateCaregiverNotification(new Task(task.name, true));
         }
         updateTasksRemainingCounter();
@@ -327,22 +333,57 @@ public class TasksActivity extends AppCompatActivity implements TasksAdapter.OnT
 
     private void showAddOrEditTaskDialog(TaskEntity existing) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_edit_task, null, false);
+        
+        // Basic task info fields
         EditText inputName = view.findViewById(R.id.inputTaskName);
         EditText inputDescription = view.findViewById(R.id.inputTaskDescription);
         EditText inputCategory = view.findViewById(R.id.inputTaskCategory);
         EditText inputTime = view.findViewById(R.id.inputTaskTime);
-        CheckBox checkRecurring = view.findViewById(R.id.checkRecurring);
-        EditText inputRecurrence = view.findViewById(R.id.inputRecurrenceRule);
+        
+        // Repeat options
+        CheckBox checkRepeating = view.findViewById(R.id.checkRepeating);
+        TextView labelDaysOfWeek = view.findViewById(R.id.labelDaysOfWeek);
+        LinearLayout layoutDaysOfWeek = view.findViewById(R.id.layoutDaysOfWeek);
+        LinearLayout layoutQuickRepeat = view.findViewById(R.id.layoutQuickRepeat);
+        
+        // Day selection toggle buttons
+        ToggleButton[] dayButtons = {
+                view.findViewById(R.id.buttonSunday),
+                view.findViewById(R.id.buttonMonday),
+                view.findViewById(R.id.buttonTuesday),
+                view.findViewById(R.id.buttonWednesday),
+                view.findViewById(R.id.buttonThursday),
+                view.findViewById(R.id.buttonFriday),
+                view.findViewById(R.id.buttonSaturday)
+        };
+        
+        // Quick repeat buttons
+        Button buttonDaily = view.findViewById(R.id.buttonDaily);
+        Button buttonWeekdays = view.findViewById(R.id.buttonWeekdays);
+        Button buttonWeekends = view.findViewById(R.id.buttonWeekends);
+        
+        // Alarm/notification options
+        CheckBox checkEnableAlarm = view.findViewById(R.id.checkEnableAlarm);
+        CheckBox checkCaretakerNotification = view.findViewById(R.id.checkCaretakerNotification);
 
         final Long[] scheduledAt = {null};
 
+        // Initialize fields if editing existing task
         if (existing != null) {
             inputName.setText(existing.name);
             inputDescription.setText(existing.description);
             inputCategory.setText(existing.category);
-            checkRecurring.setChecked(existing.isRecurring);
-            inputRecurrence.setEnabled(existing.isRecurring);
-            inputRecurrence.setText(existing.recurrenceRule);
+            checkRepeating.setChecked(existing.isRepeating);
+            checkEnableAlarm.setChecked(existing.enableAlarm);
+            checkCaretakerNotification.setChecked(existing.enableCaretakerNotification);
+            
+            // Set day selection buttons
+            boolean[] existingDays = {existing.repeatOnSunday, existing.repeatOnMonday, existing.repeatOnTuesday,
+                                   existing.repeatOnWednesday, existing.repeatOnThursday, existing.repeatOnFriday, existing.repeatOnSaturday};
+            for (int i = 0; i < dayButtons.length; i++) {
+                dayButtons[i].setChecked(existingDays[i]);
+            }
+            
             if (existing.scheduledTimeEpochMillis != null) {
                 scheduledAt[0] = existing.scheduledTimeEpochMillis;
                 inputTime.setText(new SimpleDateFormat("EEE, MMM d h:mm a", Locale.getDefault())
@@ -350,12 +391,56 @@ public class TasksActivity extends AppCompatActivity implements TasksAdapter.OnT
             }
         }
 
-        checkRecurring.setOnCheckedChangeListener((buttonView, isChecked) -> inputRecurrence.setEnabled(isChecked));
+        // Show/hide repeat options based on checkbox
+        checkRepeating.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int visibility = isChecked ? View.VISIBLE : View.GONE;
+            labelDaysOfWeek.setVisibility(visibility);
+            layoutDaysOfWeek.setVisibility(visibility);
+            layoutQuickRepeat.setVisibility(visibility);
+        });
+        
+        // Trigger initial visibility
+        checkRepeating.setOnCheckedChangeListener(null);
+        int initialVisibility = checkRepeating.isChecked() ? View.VISIBLE : View.GONE;
+        labelDaysOfWeek.setVisibility(initialVisibility);
+        layoutDaysOfWeek.setVisibility(initialVisibility);
+        layoutQuickRepeat.setVisibility(initialVisibility);
+        checkRepeating.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int visibility = isChecked ? View.VISIBLE : View.GONE;
+            labelDaysOfWeek.setVisibility(visibility);
+            layoutDaysOfWeek.setVisibility(visibility);
+            layoutQuickRepeat.setVisibility(visibility);
+        });
+
+        // Quick repeat button handlers
+        buttonDaily.setOnClickListener(v -> {
+            for (ToggleButton btn : dayButtons) btn.setChecked(true);
+        });
+        
+        buttonWeekdays.setOnClickListener(v -> {
+            dayButtons[0].setChecked(false); // Sunday
+            dayButtons[1].setChecked(true);  // Monday
+            dayButtons[2].setChecked(true);  // Tuesday
+            dayButtons[3].setChecked(true);  // Wednesday
+            dayButtons[4].setChecked(true);  // Thursday
+            dayButtons[5].setChecked(true);  // Friday
+            dayButtons[6].setChecked(false); // Saturday
+        });
+        
+        buttonWeekends.setOnClickListener(v -> {
+            dayButtons[0].setChecked(true);  // Sunday
+            dayButtons[1].setChecked(false); // Monday
+            dayButtons[2].setChecked(false); // Tuesday
+            dayButtons[3].setChecked(false); // Wednesday
+            dayButtons[4].setChecked(false); // Thursday
+            dayButtons[5].setChecked(false); // Friday
+            dayButtons[6].setChecked(true);  // Saturday
+        });
 
         inputTime.setOnClickListener(v -> pickDateTime(scheduledAt, inputTime));
 
         new AlertDialog.Builder(this)
-                .setTitle(existing == null ? "Add task" : "Edit task")
+                .setTitle(existing == null ? "Add Task" : "Edit Task")
                 .setView(view)
                 .setPositiveButton(existing == null ? "Add" : "Save", (dialog, which) -> {
                     String name = inputName.getText().toString().trim();
@@ -363,26 +448,59 @@ public class TasksActivity extends AppCompatActivity implements TasksAdapter.OnT
                         showToast("Task name required");
                         return;
                     }
+                    
                     String desc = inputDescription.getText().toString().trim();
                     String cat = inputCategory.getText().toString().trim();
-                    boolean recurring = checkRecurring.isChecked();
-                    String rule = inputRecurrence.getText().toString().trim();
+                    boolean repeating = checkRepeating.isChecked();
+                    boolean enableAlarm = checkEnableAlarm.isChecked();
+                    boolean enableCaretakerNotif = checkCaretakerNotification.isChecked();
 
                     if (existing == null) {
-                        TaskEntity entity = new TaskEntity(name, emptyToNull(desc), false, emptyToNull(cat), scheduledAt[0], recurring, emptyToNull(rule));
+                        // Create new task with enhanced scheduling
+                        TaskEntity entity = new TaskEntity(name, emptyToNull(desc), false, emptyToNull(cat), scheduledAt[0], false, null, repeating);
+                        
+                        // Set day selection
+                        entity.repeatOnSunday = dayButtons[0].isChecked();
+                        entity.repeatOnMonday = dayButtons[1].isChecked();
+                        entity.repeatOnTuesday = dayButtons[2].isChecked();
+                        entity.repeatOnWednesday = dayButtons[3].isChecked();
+                        entity.repeatOnThursday = dayButtons[4].isChecked();
+                        entity.repeatOnFriday = dayButtons[5].isChecked();
+                        entity.repeatOnSaturday = dayButtons[6].isChecked();
+                        
+                        // Set alarm options
+                        entity.enableAlarm = enableAlarm;
+                        entity.enableCaretakerNotification = enableCaretakerNotif;
+                        
                         taskViewModel.insert(entity);
-                        if (scheduledAt[0] != null) {
+                        
+                        if (scheduledAt[0] != null && enableAlarm) {
                             TaskReminderScheduler.schedule(this, scheduledAt[0], name, desc);
                         }
                     } else {
+                        // Update existing task
                         existing.name = name;
                         existing.description = emptyToNull(desc);
                         existing.category = emptyToNull(cat);
                         existing.scheduledTimeEpochMillis = scheduledAt[0];
-                        existing.isRecurring = recurring;
-                        existing.recurrenceRule = emptyToNull(rule);
+                        existing.isRepeating = repeating;
+                        
+                        // Update day selection
+                        existing.repeatOnSunday = dayButtons[0].isChecked();
+                        existing.repeatOnMonday = dayButtons[1].isChecked();
+                        existing.repeatOnTuesday = dayButtons[2].isChecked();
+                        existing.repeatOnWednesday = dayButtons[3].isChecked();
+                        existing.repeatOnThursday = dayButtons[4].isChecked();
+                        existing.repeatOnFriday = dayButtons[5].isChecked();
+                        existing.repeatOnSaturday = dayButtons[6].isChecked();
+                        
+                        // Update alarm options
+                        existing.enableAlarm = enableAlarm;
+                        existing.enableCaretakerNotification = enableCaretakerNotif;
+                        
                         taskViewModel.update(existing);
-                        if (scheduledAt[0] != null) {
+                        
+                        if (scheduledAt[0] != null && enableAlarm) {
                             TaskReminderScheduler.schedule(this, scheduledAt[0], name, desc);
                         }
                     }

@@ -37,6 +37,13 @@
         android:text="Mark as completed"
         android:layout_marginTop="8dp" />
 
+    <CheckBox
+        android:id="@+id/checkRepeating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repeat daily"
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>
 
 

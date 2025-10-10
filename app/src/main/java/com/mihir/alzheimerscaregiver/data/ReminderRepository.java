@@ -15,8 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.mihir.alzheimerscaregiver.alarm.AlarmScheduler;
+import com.mihir.alzheimerscaregiver.caretaker.CaretakerNotificationScheduler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,12 +33,27 @@ public class ReminderRepository {
     private final FirebaseFirestore db;
     private final FirebaseAuth auth;
     private final AlarmScheduler alarmScheduler;
+    private final CaretakerNotificationScheduler caretakerScheduler;
     private final MutableLiveData<List<ReminderEntity>> remindersLiveData;
     
     public ReminderRepository(AlarmScheduler alarmScheduler) {
         this.db = FirebaseFirestore.getInstance();
         this.auth = FirebaseAuth.getInstance();
         this.alarmScheduler = alarmScheduler;
+        // For now, caretaker scheduler is null if we don't have context access
+        // This will be set separately for activities that need caretaker notifications
+        this.caretakerScheduler = null;
+        this.remindersLiveData = new MutableLiveData<>(new ArrayList<>());
+    }
+    
+    /**
+     * Constructor with context for caretaker notifications
+     */
+    public ReminderRepository(AlarmScheduler alarmScheduler, android.content.Context context) {
+        this.db = FirebaseFirestore.getInstance();
+        this.auth = FirebaseAuth.getInstance();
+        this.alarmScheduler = alarmScheduler;
+        this.caretakerScheduler = new CaretakerNotificationScheduler(context);
         this.remindersLiveData = new MutableLiveData<>(new ArrayList<>());
     }
     
@@ -77,7 +94,8 @@ public class ReminderRepository {
                             
                             // Check if we need to schedule an alarm for this reminder
                             if (reminder.needsAlarmUpdate() || !alarmScheduler.isAlarmScheduled(reminder.getId())) {
-                                alarmScheduler.scheduleAlarm(reminder);
+                                // Schedule alarm with repeating flag
+                                alarmScheduler.scheduleAlarm(reminder, reminder.isRepeating());
                                 reminder.setNeedsAlarmUpdate(false);
                             }
                             
@@ -106,7 +124,10 @@ public class ReminderRepository {
                 .add(reminder.toMap())
                 .addOnSuccessListener(documentReference -> {
                     reminder.setId(documentReference.getId());
-                    alarmScheduler.scheduleAlarm(reminder);
+                    alarmScheduler.scheduleAlarm(reminder, reminder.isRepeating());
+                    
+                    // Caretaker notifications are handled by repository/ReminderRepository instead
+                    
                     Log.d(TAG, "Reminder added with ID: " + documentReference.getId());
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error adding reminder", e));
@@ -130,7 +151,7 @@ public class ReminderRepository {
                 .update(reminder.toMap())
                 .addOnSuccessListener(aVoid -> {
                     // Schedule new alarm with updated time
-                    alarmScheduler.scheduleAlarm(reminder);
+                    alarmScheduler.scheduleAlarm(reminder, reminder.isRepeating());
                     Log.d(TAG, "Reminder updated: " + reminder.getId());
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error updating reminder", e));
@@ -157,11 +178,42 @@ public class ReminderRepository {
     public Task<Void> completeReminder(String reminderId) {
         return db.collection(COLLECTION_REMINDERS)
                 .document(reminderId)
-                .update("isCompleted", true)
-                .addOnSuccessListener(aVoid -> {
-                    // Optionally cancel alarm if reminder is marked as completed
-                    alarmScheduler.cancelAlarm(reminderId);
-                    Log.d(TAG, "Reminder marked complete: " + reminderId);
+                .get()
+                .continueWithTask(task -> {
+                    if (!task.isSuccessful() || !task.getResult().exists()) {
+                        throw new RuntimeException("Reminder not found");
+                    }
+                    
+                    ReminderEntity reminder = task.getResult().toObject(ReminderEntity.class);
+                    if (reminder == null) {
+                        throw new RuntimeException("Failed to parse reminder");
+                    }
+                    
+                    // Mark as completed for today
+                    reminder.markCompletedToday();
+                    
+                    // Update the reminder in Firestore
+                    Map<String, Object> updates = new HashMap<>();
+                    updates.put("lastCompletedDate", reminder.getLastCompletedDate());
+                    
+                    // Only mark as permanently completed if it's not a repeating reminder
+                    if (!reminder.isRepeating()) {
+                        updates.put("isCompleted", true);
+                        // Cancel alarm for non-repeating reminders
+                        alarmScheduler.cancelAlarm(reminderId);
+                        Log.d(TAG, "Non-repeating reminder marked complete: " + reminderId);
+                    } else {
+                        Log.d(TAG, "Repeating reminder marked complete for today: " + reminderId);
+                    }
+                    
+                    // Cancel/resolve caretaker notifications when reminder is completed
+                    if (caretakerScheduler != null) {
+                        caretakerScheduler.resolveIncompleteReminderAlert(reminderId);
+                    }
+                    
+                    return db.collection(COLLECTION_REMINDERS)
+                            .document(reminderId)
+                            .update(updates);
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error marking reminder complete", e));
     }
@@ -183,13 +235,52 @@ public class ReminderRepository {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         ReminderEntity reminder = doc.toObject(ReminderEntity.class);
-                        if (reminder.getTimeMillis() > System.currentTimeMillis()) {
-                            // Only reschedule future reminders
-                            alarmScheduler.scheduleAlarm(reminder);
+                        if (reminder.getTimeMillis() > System.currentTimeMillis() || reminder.isRepeating()) {
+                            // Reschedule future reminders or repeating reminders (even if past due)
+                            alarmScheduler.scheduleAlarm(reminder, reminder.isRepeating());
                             Log.d(TAG, "Rescheduled alarm for reminder: " + reminder.getId());
                         }
                     }
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error fetching reminders for rescheduling", e));
+    }
+    
+    /**
+     * Reset daily completion status for all repeating reminders
+     * This is called at midnight to make repeating reminders appear unchecked for the new day
+     */
+    public void resetDailyCompletionStatus() {
+        String patientId = getCurrentPatientId();
+        if (patientId == null) {
+            Log.w(TAG, "resetDailyCompletionStatus: No authenticated user");
+            return;
+        }
+        
+        Log.d(TAG, "Starting daily completion status reset");
+        
+        db.collection(COLLECTION_REMINDERS)
+                .whereEqualTo("patientId", patientId)
+                .whereEqualTo("isRepeating", true)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        ReminderEntity reminder = doc.toObject(ReminderEntity.class);
+                        if (reminder != null && reminder.isCompletedToday()) {
+                            // Reset the lastCompletedDate to make it appear unchecked
+                            Map<String, Object> updates = new HashMap<>();
+                            updates.put("lastCompletedDate", null);
+                            
+                            db.collection(COLLECTION_REMINDERS)
+                                    .document(doc.getId())
+                                    .update(updates)
+                                    .addOnSuccessListener(aVoid -> 
+                                        Log.d(TAG, "Reset completion status for reminder: " + doc.getId()))
+                                    .addOnFailureListener(e -> 
+                                        Log.e(TAG, "Error resetting completion status for " + doc.getId(), e));
+                        }
+                    }
+                    Log.d(TAG, "Daily completion status reset completed");
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Error fetching repeating reminders for reset", e));
     }
 }

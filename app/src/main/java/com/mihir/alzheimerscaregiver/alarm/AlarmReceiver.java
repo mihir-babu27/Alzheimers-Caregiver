@@ -19,6 +19,7 @@ import android.media.AudioAttributes;
 
 /**
  * BroadcastReceiver that shows a notification when an alarm triggers
+ * Handles daily repeating alarms by automatically rescheduling
  */
 public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "AlarmReceiver";
@@ -28,6 +29,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static final String EXTRA_TITLE = "title";
     private static final String EXTRA_MESSAGE = "message";
     private static final String EXTRA_TYPE = "type";
+    private static final String EXTRA_IS_REPEATING = "is_repeating";
+    private static final String EXTRA_ORIGINAL_TIME = "original_time";
     
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -39,15 +42,22 @@ public class AlarmReceiver extends BroadcastReceiver {
             String title = intent.getStringExtra(EXTRA_TITLE);
             String message = intent.getStringExtra(EXTRA_MESSAGE);
             String type = intent.getStringExtra(EXTRA_TYPE);
+            boolean isRepeating = intent.getBooleanExtra(EXTRA_IS_REPEATING, false);
+            long originalTime = intent.getLongExtra(EXTRA_ORIGINAL_TIME, 0);
             
             // Default values if null
             if (title == null) title = "Reminder";
             if (message == null) message = "You have a reminder";
             
-            Log.d(TAG, "Alarm for: " + title);
+            Log.d(TAG, "Alarm triggered for: " + title + " (repeating: " + isRepeating + ")");
             
             // Start a foreground service that posts a non-dismissible full-screen alarm notification
             startAlarmService(context, reminderId, title, message, type);
+            
+            // If this is a repeating alarm, automatically reschedule for tomorrow
+            if (isRepeating && reminderId != null) {
+                rescheduleForNextDay(context, reminderId, title, message, type, originalTime);
+            }
             
         } catch (Exception e) {
             Log.e(TAG, "Error processing alarm: " + e.getMessage(), e);
@@ -76,6 +86,24 @@ public class AlarmReceiver extends BroadcastReceiver {
             
         } catch (Exception e) {
             Log.e(TAG, "Error showing full-screen alarm", e);
+        }
+    }
+    
+    /**
+     * Reschedule a repeating alarm for the next day
+     */
+    private void rescheduleForNextDay(Context context, String reminderId, String title, String message, String type, long originalTime) {
+        try {
+            AlarmScheduler scheduler = new AlarmScheduler(context);
+            boolean success = scheduler.rescheduleRepeatingAlarm(reminderId, title, message, type);
+            
+            if (success) {
+                Log.d(TAG, "Successfully rescheduled repeating alarm " + reminderId + " for next day");
+            } else {
+                Log.w(TAG, "Failed to reschedule repeating alarm " + reminderId + " for next day");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error rescheduling repeating alarm", e);
         }
     }
     

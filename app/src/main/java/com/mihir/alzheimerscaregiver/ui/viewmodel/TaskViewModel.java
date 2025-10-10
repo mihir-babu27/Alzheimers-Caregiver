@@ -18,14 +18,20 @@ public class TaskViewModel extends AndroidViewModel {
     private final MutableLiveData<List<TaskEntity>> todayTasks;
     private final MutableLiveData<List<TaskEntity>> allTasks;
     private final MutableLiveData<List<TaskEntity>> pendingTasks;
+    private final MutableLiveData<String> errorMessage;
 
     public TaskViewModel(@NonNull Application application) {
         super(application);
-        repository = new TaskRepository();
+        // Use context-aware constructor to enable caretaker notifications
+        repository = new TaskRepository(application.getApplicationContext());
         todayTasks = new MutableLiveData<>();
         allTasks = new MutableLiveData<>();
         pendingTasks = new MutableLiveData<>();
+        errorMessage = new MutableLiveData<>();
         loadTasks();
+        
+        // Reset daily completion status for repeating tasks
+        repository.resetDailyCompletionStatus();
     }
 
     private void loadTasks() {
@@ -88,6 +94,10 @@ public class TaskViewModel extends AndroidViewModel {
         return pendingTasks;
     }
 
+    public LiveData<String> getErrorMessage() {
+        return errorMessage;
+    }
+
     public void search(String query) {
         repository.search(query, new TaskRepository.FirebaseCallback<List<TaskEntity>>() {
             @Override
@@ -117,7 +127,8 @@ public class TaskViewModel extends AndroidViewModel {
     }
 
     public void insert(TaskEntity entity) {
-        repository.insert(entity, new TaskRepository.FirebaseCallback<Void>() {
+        // Use addTask instead of insert to enable caretaker notifications
+        repository.addTask(entity, new TaskRepository.FirebaseCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 loadTasks(); // Refresh all lists
@@ -125,7 +136,7 @@ public class TaskViewModel extends AndroidViewModel {
 
             @Override
             public void onError(String error) {
-                // Handle error
+                errorMessage.setValue("Failed to add task: " + error);
             }
         });
     }
@@ -159,17 +170,33 @@ public class TaskViewModel extends AndroidViewModel {
     }
 
     public void markCompleted(String id, boolean completed) {
-        repository.markCompleted(id, completed, new TaskRepository.FirebaseCallback<Void>() {
-            @Override
-            public void onSuccess(Void result) {
-                loadTasks(); // Refresh all lists
-            }
+        if (completed) {
+            // Use completeTask to handle daily repeating tasks and caretaker notifications
+            repository.completeTask(id, new TaskRepository.FirebaseCallback<Void>() {
+                @Override
+                public void onSuccess(Void result) {
+                    loadTasks(); // Refresh all lists
+                }
 
-            @Override
-            public void onError(String error) {
-                // Handle error
-            }
-        });
+                @Override
+                public void onError(String error) {
+                    errorMessage.setValue("Failed to complete task: " + error);
+                }
+            });
+        } else {
+            // For unchecking tasks, use the original markCompleted method
+            repository.markCompleted(id, completed, new TaskRepository.FirebaseCallback<Void>() {
+                @Override
+                public void onSuccess(Void result) {
+                    loadTasks(); // Refresh all lists
+                }
+
+                @Override
+                public void onError(String error) {
+                    errorMessage.setValue("Failed to update task: " + error);
+                }
+            });
+        }
     }
 
     public void refresh() {

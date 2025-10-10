@@ -25,7 +25,8 @@ public class ReminderViewModel extends AndroidViewModel {
     public ReminderViewModel(@NonNull Application application) {
         super(application);
         try {
-            repository = new ReminderRepository();
+            // Use context-aware constructor to enable caretaker notifications
+            repository = new ReminderRepository(application.getApplicationContext());
             allReminders = new MutableLiveData<>();
             errorMessage = new MutableLiveData<>();
             alarmScheduler = new AlarmScheduler(application.getApplicationContext());
@@ -90,7 +91,8 @@ public class ReminderViewModel extends AndroidViewModel {
 
     public void insert(ReminderEntity entity) {
         try {
-            repository.insert(entity, new ReminderRepository.FirebaseCallback<Void>() {
+            // Use addReminder instead of insert to enable caretaker notifications
+            repository.addReminder(entity, new ReminderRepository.FirebaseCallback<Void>() {
                 @Override
                 public void onSuccess(Void result) {
                     loadReminders(); // Refresh the list
@@ -98,13 +100,13 @@ public class ReminderViewModel extends AndroidViewModel {
 
                 @Override
                 public void onError(String error) {
-                    Log.e(TAG, "Error inserting reminder: " + error);
+                    Log.e(TAG, "Error adding reminder: " + error);
                     errorMessage.setValue(error);
                 }
             });
         } catch (Exception e) {
             Log.e(TAG, "Exception in insert", e);
-            errorMessage.setValue("Failed to insert reminder: " + e.getMessage());
+            errorMessage.setValue("Failed to add reminder: " + e.getMessage());
         }
     }
 
@@ -158,15 +160,26 @@ public class ReminderViewModel extends AndroidViewModel {
             // If marking as completed, cancel any scheduled alarms
             if (completed) {
                 alarmScheduler.cancelAlarm(id);
-            }
-            
-            repository.markCompleted(id, completed, new ReminderRepository.FirebaseCallback<Void>() {
-                @Override
-                public void onSuccess(Void result) {
-                    loadReminders(); // Refresh the list
-                    
-                    // If we're marking as not completed, and it had a scheduled time, we need to re-schedule it
-                    if (!completed) {
+                // Use completeReminder for completion to handle caretaker notifications
+                repository.completeReminder(id, new ReminderRepository.FirebaseCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        loadReminders(); // Refresh the list
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e(TAG, "Error completing reminder: " + error);
+                        errorMessage.setValue(error);
+                    }
+                });
+            } else {
+                // For unchecking, use regular markCompleted
+                repository.markCompleted(id, completed, new ReminderRepository.FirebaseCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        loadReminders(); // Refresh the list
+                        
                         // Find the reminder and reschedule it if needed
                         repository.getById(id, new ReminderRepository.FirebaseCallback<ReminderEntity>() {
                             @Override
@@ -188,14 +201,14 @@ public class ReminderViewModel extends AndroidViewModel {
                             }
                         });
                     }
-                }
 
-                @Override
-                public void onError(String error) {
-                    Log.e(TAG, "Error marking reminder completed: " + error);
-                    errorMessage.setValue(error);
-                }
-            });
+                    @Override
+                    public void onError(String error) {
+                        Log.e(TAG, "Error marking reminder uncompleted: " + error);
+                        errorMessage.setValue(error);
+                    }
+                });
+            }
         } catch (Exception e) {
             Log.e(TAG, "Exception in markCompleted", e);
             errorMessage.setValue("Failed to mark reminder completed: " + e.getMessage());

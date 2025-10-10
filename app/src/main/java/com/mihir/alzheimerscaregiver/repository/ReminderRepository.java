@@ -1,6 +1,7 @@
 
 package com.mihir.alzheimerscaregiver.repository;
 
+import android.content.Context;
 import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -9,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mihir.alzheimerscaregiver.data.entity.ReminderEntity;
 import com.mihir.alzheimerscaregiver.data.FirebaseConfig;
+import com.mihir.alzheimerscaregiver.caretaker.CaretakerNotificationScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,13 @@ public class ReminderRepository {
     private static final String TAG = "ReminderRepository";
     private final FirebaseFirestore db;
     private final FirebaseAuth auth;
+    private final CaretakerNotificationScheduler caretakerScheduler;
 
     public ReminderRepository() {
+        this(null);
+    }
+
+    public ReminderRepository(Context context) {
         try {
             db = FirebaseConfig.getInstance();
             auth = FirebaseAuth.getInstance();
@@ -29,6 +36,13 @@ public class ReminderRepository {
             }
             if (auth == null) {
                 throw new RuntimeException("Firebase Auth instance is null");
+            }
+            
+            // Initialize caretaker scheduler if context is provided
+            if (context != null) {
+                caretakerScheduler = new CaretakerNotificationScheduler(context);
+            } else {
+                caretakerScheduler = null;
             }
         } catch (Exception e) {
             Log.e(TAG, "Error initializing ReminderRepository", e);
@@ -149,6 +163,33 @@ public class ReminderRepository {
         }
     }
 
+    public void addReminder(ReminderEntity reminder, FirebaseCallback<Void> callback) {
+        try {
+            // First insert the reminder
+            insert(reminder, new FirebaseCallback<Void>() {
+                @Override
+                public void onSuccess(Void result) {
+                    // If caretaker notifications are enabled and reminder has a scheduled time
+                    if (caretakerScheduler != null && reminder.scheduledTimeEpochMillis != null && 
+                        reminder.scheduledTimeEpochMillis > System.currentTimeMillis()) {
+                        
+                        Log.d(TAG, "Scheduling caretaker notifications for reminder: " + reminder.id);
+                        caretakerScheduler.scheduleCaretakerNotifications(reminder);
+                    }
+                    callback.onSuccess(result);
+                }
+
+                @Override
+                public void onError(String error) {
+                    callback.onError(error);
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in addReminder", e);
+            callback.onError("Failed to add reminder: " + e.getMessage());
+        }
+    }
+
     public void update(ReminderEntity reminder, FirebaseCallback<Void> callback) {
         try {
             CollectionReference remindersRef = getRemindersRef();
@@ -205,6 +246,31 @@ public class ReminderRepository {
         } catch (Exception e) {
             Log.e(TAG, "Exception in markCompleted", e);
             callback.onError("Failed to mark reminder completed: " + e.getMessage());
+        }
+    }
+
+    public void completeReminder(String id, FirebaseCallback<Void> callback) {
+        try {
+            // First mark as completed
+            markCompleted(id, true, new FirebaseCallback<Void>() {
+                @Override
+                public void onSuccess(Void result) {
+                    // If caretaker notifications are enabled, resolve any pending alerts
+                    if (caretakerScheduler != null) {
+                        Log.d(TAG, "Resolving caretaker notifications for completed reminder: " + id);
+                        caretakerScheduler.resolveIncompleteReminderAlert(id);
+                    }
+                    callback.onSuccess(result);
+                }
+
+                @Override
+                public void onError(String error) {
+                    callback.onError(error);
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in completeReminder", e);
+            callback.onError("Failed to complete reminder: " + e.getMessage());
         }
     }
     

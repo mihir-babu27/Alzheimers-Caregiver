@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -24,7 +28,7 @@
         android:id="@+id/inputTaskCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Category (e.g., Exercise)"
+        android:hint="Category (e.g., Exercise, Medication)"
         android:layout_marginTop="8dp"
         android:inputType="textCapWords" />
 
@@ -37,21 +41,168 @@
         android:clickable="true"
         android:layout_marginTop="8dp" />
 
-    <CheckBox
-        android:id="@+id/checkRecurring"
+    <!-- Repeat Options Section -->
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recurring"
-        android:layout_marginTop="8dp" />
+        android:text="Repeat Options"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
-    <EditText
-        android:id="@+id/inputRecurrenceRule"
+    <CheckBox
+        android:id="@+id/checkRepeating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable repeat"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Days of Week Selection -->
+    <TextView
+        android:id="@+id/labelDaysOfWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repeat on:"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layoutDaysOfWeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Recurrence (e.g., DAILY, WEEKLY:MON,WED)"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone">
+
+        <ToggleButton
+            android:id="@+id/buttonSunday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOff="S"
+            android:textOn="S"
+            android:textSize="12sp"
+            android:layout_margin="2dp" />
+
+        <ToggleButton
+            android:id="@+id/buttonMonday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOff="M"
+            android:textOn="M"
+            android:textSize="12sp"
+            android:layout_margin="2dp" />
+
+        <ToggleButton
+            android:id="@+id/buttonTuesday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOff="T"
+            android:textOn="T"
+            android:textSize="12sp"
+            android:layout_margin="2dp" />
+
+        <ToggleButton
+            android:id="@+id/buttonWednesday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOff="W"
+            android:textOn="W"
+            android:textSize="12sp"
+            android:layout_margin="2dp" />
+
+        <ToggleButton
+            android:id="@+id/buttonThursday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOff="T"
+            android:textOn="T"
+            android:textSize="12sp"
+            android:layout_margin="2dp" />
+
+        <ToggleButton
+            android:id="@+id/buttonFriday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOff="F"
+            android:textOn="F"
+            android:textSize="12sp"
+            android:layout_margin="2dp" />
+
+        <ToggleButton
+            android:id="@+id/buttonSaturday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textOff="S"
+            android:textOn="S"
+            android:textSize="12sp"
+            android:layout_margin="2dp" />
+
+    </LinearLayout>
+
+    <!-- Quick Repeat Options -->
+    <LinearLayout
+        android:id="@+id/layoutQuickRepeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/buttonDaily"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Daily"
+            android:layout_margin="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <Button
+            android:id="@+id/buttonWeekdays"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Weekdays"
+            android:layout_margin="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <Button
+            android:id="@+id/buttonWeekends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Weekends"
+            android:layout_margin="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+    </LinearLayout>
+
+    <!-- Alarm/Notification Options -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notification Options"
+        android:textStyle="bold"
         android:layout_marginTop="8dp"
-        android:enabled="false" />
+        android:layout_marginBottom="8dp" />
+
+    <CheckBox
+        android:id="@+id/checkEnableAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable alarm/notification"
+        android:checked="true" />
+
+    <CheckBox
+        android:id="@+id/checkCaretakerNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notify caretaker if missed"
+        android:checked="true" />
 
 </LinearLayout>
+
+</ScrollView>
 
 

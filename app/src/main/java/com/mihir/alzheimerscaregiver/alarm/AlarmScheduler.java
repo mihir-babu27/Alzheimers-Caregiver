@@ -4,20 +4,24 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
 import com.mihir.alzheimerscaregiver.data.ReminderEntity;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Utility class for scheduling and managing alarms using AlarmManager
+ * Supports daily repeating alarms with automatic rescheduling
  */
 public class AlarmScheduler {
     private static final String TAG = "AlarmScheduler";
@@ -25,23 +29,32 @@ public class AlarmScheduler {
     private static final String EXTRA_TITLE = "title";
     private static final String EXTRA_MESSAGE = "message";
     private static final String EXTRA_TYPE = "type";
+    private static final String EXTRA_IS_REPEATING = "is_repeating";
+    private static final String EXTRA_ORIGINAL_TIME = "original_time";
+    
+    // SharedPreferences keys for storing repeating alarm info
+    private static final String PREFS_NAME = "AlarmSchedulerPrefs";
+    private static final String KEY_REPEATING_ALARMS = "repeating_alarms";
     
     private final Context context;
     private final AlarmManager alarmManager;
+    private final SharedPreferences prefs;
     private final Map<String, Boolean> scheduledAlarms; // Track which alarms are currently scheduled
     
     public AlarmScheduler(Context context) {
         this.context = context.getApplicationContext();
         this.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         this.scheduledAlarms = new HashMap<>();
     }
     
     /**
-     * Schedule an alarm for a reminder
+     * Schedule an alarm for a reminder with daily repetition support
      * @param reminder The reminder to schedule an alarm for
+     * @param isRepeating Whether this alarm should repeat daily
      * @return true if the alarm was scheduled successfully, false otherwise
      */
-    public boolean scheduleAlarm(ReminderEntity reminder) {
+    public boolean scheduleAlarm(ReminderEntity reminder, boolean isRepeating) {
         if (reminder == null || reminder.getId() == null) {
             Log.e(TAG, "Cannot schedule alarm for null reminder or reminder without ID");
             return false;
@@ -50,63 +63,32 @@ public class AlarmScheduler {
         long timeMillis = reminder.getTimeMillis();
         long currentTimeMillis = System.currentTimeMillis();
         
-        if (timeMillis <= currentTimeMillis) {
+        // If time is in the past and this is a repeating alarm, schedule for next occurrence
+        if (timeMillis <= currentTimeMillis && isRepeating) {
+            timeMillis = getNextDailyOccurrence(timeMillis);
+            Log.d(TAG, "Scheduling repeating alarm for next occurrence: " + new Date(timeMillis));
+        } else if (timeMillis <= currentTimeMillis) {
             Log.w(TAG, "Not scheduling alarm for past time: " + timeMillis);
             return false;
         }
         
-        // Create intent for AlarmReceiver
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra(EXTRA_REMINDER_ID, reminder.getId());
-        intent.putExtra(EXTRA_TITLE, reminder.getTitle());
-        intent.putExtra(EXTRA_MESSAGE, reminder.getMessage());
-        intent.putExtra(EXTRA_TYPE, reminder.getType());
-        
-        // Create unique request code based on reminder ID hash
-        int requestCode = reminder.getId().hashCode();
-        
-        // Create pending intent that will fire the BroadcastReceiver
-        PendingIntent operation = PendingIntent.getBroadcast(
-                context,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-        
-        try {
-            // Prefer setAlarmClock for true alarm semantics (bypasses DND, shows alarm UI affordances)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                // Create a showIntent to open the full-screen AlarmActivity
-                Intent alarmActivityIntent = new Intent(context, AlarmActivity.class);
-                alarmActivityIntent.putExtra(EXTRA_REMINDER_ID, reminder.getId());
-                alarmActivityIntent.putExtra(EXTRA_TITLE, reminder.getTitle());
-                alarmActivityIntent.putExtra(EXTRA_MESSAGE, reminder.getMessage());
-                alarmActivityIntent.putExtra(EXTRA_TYPE, reminder.getType());
-                alarmActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                PendingIntent showIntent = PendingIntent.getActivity(
-                        context,
-                        requestCode,
-                        alarmActivityIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-                );
-
-                AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(timeMillis, showIntent);
-                alarmManager.setAlarmClock(info, operation);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMillis, operation);
-            } else {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeMillis, operation);
-            }
-            
-            scheduledAlarms.put(reminder.getId(), true);
-            Log.d(TAG, "Alarm scheduled for " + reminder.getTitle() + " at " + timeMillis);
-            return true;
-            
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to schedule alarm", e);
-            return false;
+        // Store repeating alarm info if needed
+        if (isRepeating) {
+            storeRepeatingAlarmInfo(reminder.getId(), reminder.getTimeMillis());
         }
+        
+        return scheduleAlarmInternal(reminder.getId(), reminder.getTitle(), reminder.getMessage(), 
+                                   reminder.getType(), timeMillis, isRepeating, reminder.getTimeMillis());
+    }
+
+    /**
+     * Schedule an alarm for a reminder (backward compatibility)
+     * @param reminder The reminder to schedule an alarm for
+     * @return true if the alarm was scheduled successfully, false otherwise
+     */
+    public boolean scheduleAlarm(ReminderEntity reminder) {
+        // Default to non-repeating for backward compatibility
+        return scheduleAlarm(reminder, false);
     }
     
     /**
@@ -164,22 +146,20 @@ public class AlarmScheduler {
      * @return true if the alarm was scheduled successfully, false otherwise
      */
     public boolean scheduleAlarm(String reminderId, String title, String message, long timeMillis) {
-        if (reminderId == null || reminderId.isEmpty()) {
-            Log.e(TAG, "Cannot schedule alarm with null or empty reminder ID");
-            return false;
-        }
-        
-        if (timeMillis <= System.currentTimeMillis()) {
-            Log.w(TAG, "Not scheduling alarm for past time: " + timeMillis);
-            return false;
-        }
-        
-        // Create intent for AlarmReceiver
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra(EXTRA_REMINDER_ID, reminderId);
-        intent.putExtra(EXTRA_TITLE, title);
-        intent.putExtra(EXTRA_MESSAGE, message);
-        
+        return scheduleAlarm(reminderId, title, message, timeMillis, false);
+    }
+    
+    /**
+     * Schedule an alarm using basic parameters with daily repetition support
+     * 
+     * @param reminderId The unique ID of the reminder
+     * @param title The title of the reminder to show in the notification
+     * @param message The message to show in the notification
+     * @param timeMillis The time at which to trigger the alarm
+     * @param isRepeating Whether this alarm should repeat daily
+     * @return true if the alarm was scheduled successfully, false otherwise
+     */
+    public boolean scheduleAlarm(String reminderId, String title, String message, long timeMillis, boolean isRepeating) {
         // Determine type based on title (simple heuristic)
         String type = "task";
         if (title != null && (title.toLowerCase().contains("medicine") || 
@@ -188,89 +168,21 @@ public class AlarmScheduler {
                               title.toLowerCase().contains("drug"))) {
             type = "medication";
         }
-        intent.putExtra(EXTRA_TYPE, type);
         
-        // Create unique request code based on reminder ID hash
-        int requestCode = reminderId.hashCode();
+        long scheduledTime = timeMillis;
         
-    // Create pending intent that will fire the BroadcastReceiver
-    PendingIntent operation = PendingIntent.getBroadcast(
-                context,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-        
-        try {
-            // Enhanced permission and capability checks
-            Log.d(TAG, "Android SDK version: " + Build.VERSION.SDK_INT);
-            
-            // Check permission on Android 12+ (API 31+)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                boolean canScheduleExact = alarmManager.canScheduleExactAlarms();
-                Log.d(TAG, "Can schedule exact alarms: " + canScheduleExact);
-                if (!canScheduleExact) {
-                    Log.e(TAG, "Cannot schedule exact alarms - permission not granted. User needs to enable in Settings.");
-                    // Still try to schedule with setAndAllowWhileIdle as fallback
-                }
-            }
-            
-            // Use the most robust scheduling method available
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                // Also create a showIntent that opens the AlarmActivity
-                Intent alarmActivityIntent = new Intent(context, AlarmActivity.class);
-                alarmActivityIntent.putExtra(EXTRA_REMINDER_ID, reminderId);
-                alarmActivityIntent.putExtra(EXTRA_TITLE, title);
-                alarmActivityIntent.putExtra(EXTRA_MESSAGE, message);
-                alarmActivityIntent.putExtra(EXTRA_TYPE, type);
-                alarmActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                PendingIntent showIntent = PendingIntent.getActivity(
-                        context,
-                        requestCode,
-                        alarmActivityIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-                );
-
-                Log.d(TAG, "Using setAlarmClock for true alarm behavior");
-                AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(timeMillis, showIntent);
-                alarmManager.setAlarmClock(info, operation);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Log.d(TAG, "Using setExactAndAllowWhileIdle for maximum reliability");
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMillis, operation);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                Log.d(TAG, "Using setExact for API " + Build.VERSION.SDK_INT);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeMillis, operation);
-            } else {
-                Log.d(TAG, "Using legacy set() method for older Android");
-                alarmManager.set(AlarmManager.RTC_WAKEUP, timeMillis, operation);
-            }
-            
-            scheduledAlarms.put(reminderId, true);
-            
-            // Additional diagnostic info
-            long currentTime = System.currentTimeMillis();
-            long delaySeconds = (timeMillis - currentTime) / 1000;
-            Log.d(TAG, "Alarm scheduled to trigger in " + delaySeconds + " seconds");
-            
-            // Enhanced logging for debugging
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            String formattedTime = dateFormat.format(new Date(timeMillis));
-            Log.d(TAG, "Alarm scheduled successfully! Details: " +
-                  "\nID: " + reminderId +
-                  "\nTitle: " + title + 
-                  "\nMessage: " + message +
-                  "\nType: " + type + 
-                  "\nTime: " + formattedTime +
-                  "\nMillis: " + timeMillis +
-                  "\nRequest Code: " + requestCode);
-            
-            return true;
-            
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to schedule alarm: " + e.getMessage(), e);
-            return false;
+        // If time is in the past and this is a repeating alarm, schedule for next occurrence
+        if (timeMillis <= System.currentTimeMillis() && isRepeating) {
+            scheduledTime = getNextDailyOccurrence(timeMillis);
+            Log.d(TAG, "Scheduling repeating alarm for next occurrence: " + new Date(scheduledTime));
         }
+        
+        // Store repeating alarm info if needed
+        if (isRepeating) {
+            storeRepeatingAlarmInfo(reminderId, timeMillis);
+        }
+        
+        return scheduleAlarmInternal(reminderId, title, message, type, scheduledTime, isRepeating, timeMillis);
     }
 
     /**
@@ -304,5 +216,196 @@ public class AlarmScheduler {
      */
     public void clearAlarmTracker() {
         scheduledAlarms.clear();
+    }
+    
+    /**
+     * Internal method to schedule an alarm with all parameters
+     */
+    private boolean scheduleAlarmInternal(String reminderId, String title, String message, 
+                                        String type, long timeMillis, boolean isRepeating, long originalTime) {
+        if (reminderId == null || reminderId.isEmpty()) {
+            Log.e(TAG, "Cannot schedule alarm with null or empty reminder ID");
+            return false;
+        }
+        
+        if (timeMillis <= System.currentTimeMillis()) {
+            Log.w(TAG, "Not scheduling alarm for past time: " + timeMillis);
+            return false;
+        }
+        
+        // Create intent for AlarmReceiver
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra(EXTRA_REMINDER_ID, reminderId);
+        intent.putExtra(EXTRA_TITLE, title);
+        intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(EXTRA_TYPE, type);
+        intent.putExtra(EXTRA_IS_REPEATING, isRepeating);
+        intent.putExtra(EXTRA_ORIGINAL_TIME, originalTime);
+        
+        // Create unique request code based on reminder ID hash
+        int requestCode = reminderId.hashCode();
+        
+        // Create pending intent that will fire the BroadcastReceiver
+        PendingIntent operation = PendingIntent.getBroadcast(
+                context,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        
+        try {
+            // Enhanced permission and capability checks
+            Log.d(TAG, "Scheduling alarm - Android SDK version: " + Build.VERSION.SDK_INT);
+            
+            // Check permission on Android 12+ (API 31+)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                boolean canScheduleExact = alarmManager.canScheduleExactAlarms();
+                Log.d(TAG, "Can schedule exact alarms: " + canScheduleExact);
+                if (!canScheduleExact) {
+                    Log.e(TAG, "Cannot schedule exact alarms - permission not granted. User needs to enable in Settings.");
+                }
+            }
+            
+            // Use the most robust scheduling method available
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Create a showIntent to open the full-screen AlarmActivity
+                Intent alarmActivityIntent = new Intent(context, AlarmActivity.class);
+                alarmActivityIntent.putExtra(EXTRA_REMINDER_ID, reminderId);
+                alarmActivityIntent.putExtra(EXTRA_TITLE, title);
+                alarmActivityIntent.putExtra(EXTRA_MESSAGE, message);
+                alarmActivityIntent.putExtra(EXTRA_TYPE, type);
+                alarmActivityIntent.putExtra(EXTRA_IS_REPEATING, isRepeating);
+                alarmActivityIntent.putExtra(EXTRA_ORIGINAL_TIME, originalTime);
+                alarmActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PendingIntent showIntent = PendingIntent.getActivity(
+                        context,
+                        requestCode,
+                        alarmActivityIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                );
+
+                Log.d(TAG, "Using setAlarmClock for true alarm behavior");
+                AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(timeMillis, showIntent);
+                alarmManager.setAlarmClock(info, operation);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Log.d(TAG, "Using setExactAndAllowWhileIdle for maximum reliability");
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMillis, operation);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Log.d(TAG, "Using setExact for API " + Build.VERSION.SDK_INT);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeMillis, operation);
+            } else {
+                Log.d(TAG, "Using legacy set() method for older Android");
+                alarmManager.set(AlarmManager.RTC_WAKEUP, timeMillis, operation);
+            }
+            
+            scheduledAlarms.put(reminderId, true);
+            
+            // Enhanced logging for debugging
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            String formattedTime = dateFormat.format(new Date(timeMillis));
+            Log.d(TAG, "Alarm scheduled successfully! Details: " +
+                  "\nID: " + reminderId +
+                  "\nTitle: " + title + 
+                  "\nMessage: " + message +
+                  "\nType: " + type + 
+                  "\nRepeating: " + isRepeating +
+                  "\nTime: " + formattedTime +
+                  "\nMillis: " + timeMillis +
+                  "\nRequest Code: " + requestCode);
+            
+            return true;
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to schedule alarm: " + e.getMessage(), e);
+            return false;
+        }
+    }
+    
+    /**
+     * Get the next daily occurrence of a given time
+     */
+    private long getNextDailyOccurrence(long originalTimeMillis) {
+        Calendar original = Calendar.getInstance();
+        original.setTimeInMillis(originalTimeMillis);
+        
+        Calendar now = Calendar.getInstance();
+        Calendar next = Calendar.getInstance();
+        next.set(Calendar.HOUR_OF_DAY, original.get(Calendar.HOUR_OF_DAY));
+        next.set(Calendar.MINUTE, original.get(Calendar.MINUTE));
+        next.set(Calendar.SECOND, original.get(Calendar.SECOND));
+        next.set(Calendar.MILLISECOND, original.get(Calendar.MILLISECOND));
+        
+        // If the time has already passed today, schedule for tomorrow
+        if (next.getTimeInMillis() <= now.getTimeInMillis()) {
+            next.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        
+        return next.getTimeInMillis();
+    }
+    
+    /**
+     * Store repeating alarm information in SharedPreferences
+     */
+    private void storeRepeatingAlarmInfo(String reminderId, long originalTime) {
+        try {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putLong(reminderId + "_original_time", originalTime);
+            editor.putBoolean(reminderId + "_is_repeating", true);
+            editor.apply();
+            Log.d(TAG, "Stored repeating alarm info for: " + reminderId);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to store repeating alarm info", e);
+        }
+    }
+    
+    /**
+     * Check if an alarm is set to repeat daily
+     */
+    public boolean isRepeatingAlarm(String reminderId) {
+        return prefs.getBoolean(reminderId + "_is_repeating", false);
+    }
+    
+    /**
+     * Get the original time for a repeating alarm
+     */
+    public long getOriginalTime(String reminderId) {
+        return prefs.getLong(reminderId + "_original_time", 0);
+    }
+    
+    /**
+     * Reschedule a repeating alarm for its next daily occurrence
+     */
+    public boolean rescheduleRepeatingAlarm(String reminderId, String title, String message, String type) {
+        if (!isRepeatingAlarm(reminderId)) {
+            Log.d(TAG, "Alarm " + reminderId + " is not a repeating alarm");
+            return false;
+        }
+        
+        long originalTime = getOriginalTime(reminderId);
+        if (originalTime == 0) {
+            Log.e(TAG, "No original time found for repeating alarm: " + reminderId);
+            return false;
+        }
+        
+        long nextOccurrence = getNextDailyOccurrence(originalTime);
+        Log.d(TAG, "Rescheduling repeating alarm " + reminderId + " for next occurrence: " + new Date(nextOccurrence));
+        
+        return scheduleAlarmInternal(reminderId, title, message, type, nextOccurrence, true, originalTime);
+    }
+    
+    /**
+     * Remove repeating alarm info from storage
+     */
+    public void removeRepeatingAlarmInfo(String reminderId) {
+        try {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.remove(reminderId + "_original_time");
+            editor.remove(reminderId + "_is_repeating");
+            editor.apply();
+            Log.d(TAG, "Removed repeating alarm info for: " + reminderId);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to remove repeating alarm info", e);
+        }
     }
 }

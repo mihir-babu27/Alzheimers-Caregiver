@@ -27,6 +27,9 @@ import android.content.Intent;
 import android.app.AlarmManager;
 import android.content.Context;
 
+import com.mihir.alzheimerscaregiver.alarm.AlarmScheduler;
+import com.mihir.alzheimerscaregiver.data.entity.ReminderEntity;
+
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihir.alzheimerscaregiver.data.entity.ReminderEntity;
@@ -134,7 +137,14 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
             }
             java.util.List<com.mihir.alzheimerscaregiver.data.entity.ReminderEntity> activeReminders = new java.util.ArrayList<>();
             for (com.mihir.alzheimerscaregiver.data.entity.ReminderEntity r : reminders) {
-                if (!r.isCompleted) {
+                // Show reminders that aren't completed today
+                // For non-repeating reminders, check isCompleted
+                // For repeating reminders, check isCompletedToday()
+                if (r.isRepeating) {
+                    // Always show repeating reminders (completion status checked individually)
+                    activeReminders.add(r);
+                } else if (!r.isCompleted) {
+                    // Show non-repeating reminders that aren't permanently completed
                     activeReminders.add(r);
                 }
             }
@@ -148,7 +158,9 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
 
     @Override
     public void onCompletionToggled(ReminderEntity reminder) {
-        viewModel.markCompleted(reminder.id, reminder.isCompleted);
+        // For repeating reminders, use isCompletedToday(); for others, use isCompleted
+        boolean completionStatus = reminder.isRepeating ? reminder.isCompletedToday() : reminder.isCompleted;
+        viewModel.markCompleted(reminder.id, completionStatus);
     }
 
     @Override
@@ -173,6 +185,7 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
         EditText inputDescription = view.findViewById(R.id.inputDescription);
         EditText inputDateTime = view.findViewById(R.id.inputDateTime);
         CheckBox checkCompleted = view.findViewById(R.id.checkCompleted);
+        CheckBox checkRepeating = view.findViewById(R.id.checkRepeating);
         final Long[] scheduledAt = {null};
         inputTitle.setHint("Medicine (e.g., Aspirin)");
         inputDescription.setHint("Dosage (e.g., 1 tablet)");
@@ -180,6 +193,7 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
             inputTitle.setText(existing.title);
             inputDescription.setText(existing.description);
             checkCompleted.setChecked(existing.isCompleted);
+            checkRepeating.setChecked(existing.isRepeating);
             if (existing.scheduledTimeEpochMillis != null) {
                 scheduledAt[0] = existing.scheduledTimeEpochMillis;
                 inputDateTime.setText(new SimpleDateFormat("EEE, MMM d h:mm a", Locale.getDefault())
@@ -197,8 +211,9 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                     if (TextUtils.isEmpty(title)) { toast("Title required"); return; }
                     String desc = emptyToNull(inputDescription.getText().toString().trim());
                     boolean completed = checkCompleted.isChecked();
+                    boolean repeating = checkRepeating.isChecked();
                     if (existing == null) {
-                        ReminderEntity entity = new ReminderEntity(title, desc, scheduledAt[0], completed);
+                        ReminderEntity entity = new ReminderEntity(title, desc, scheduledAt[0], completed, repeating);
                         toast("Inserting reminder: " + title);
                         viewModel.insert(entity);
                         
@@ -207,10 +222,11 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                             if (checkAndRequestExactAlarmPermission()) {
                                 // Use the new AlarmScheduler with proper debugging
                                 AlarmScheduler alarmScheduler = new AlarmScheduler(this);
-                                boolean scheduled = alarmScheduler.scheduleAlarm(entity.id, title, desc, scheduledAt[0]);
+                                boolean scheduled = alarmScheduler.scheduleAlarm(entity.id, title, desc, scheduledAt[0], repeating);
                                 
                                 if (scheduled) {
-                                    toast("Alarm scheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
+                                    String alarmType = repeating ? "Daily repeating alarm" : "Alarm";
+                                    toast(alarmType + " scheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
                                           Locale.getDefault()).format(new Date(scheduledAt[0])));
                                 } else {
                                     toast("Failed to schedule alarm");
@@ -222,6 +238,7 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                         existing.description = desc;
                         existing.scheduledTimeEpochMillis = scheduledAt[0];
                         existing.isCompleted = completed;
+                        existing.isRepeating = repeating;
                         toast("Updating reminder: " + title);
                         viewModel.update(existing);
                         
@@ -232,18 +249,19 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                                 AlarmScheduler alarmScheduler = new AlarmScheduler(this);
                                 alarmScheduler.cancelAlarm(existing.id);
                                 
-                                // Then schedule the new alarm time
-                                boolean scheduled = alarmScheduler.scheduleAlarm(existing.id, title, desc, scheduledAt[0]);
+                                // Then schedule the new alarm time with repeating flag
+                                boolean scheduled = alarmScheduler.scheduleAlarm(existing.id, title, desc, scheduledAt[0], repeating);
                                 
                                 if (scheduled) {
-                                    toast("Alarm rescheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
+                                    String alarmType = repeating ? "Daily repeating alarm" : "Alarm";
+                                    toast(alarmType + " rescheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
                                           Locale.getDefault()).format(new Date(scheduledAt[0])));
                                 } else {
                                     toast("Failed to schedule alarm");
                                 }
                             }
-                        } else if (completed || scheduledAt[0] == null) {
-                            // If marked as completed or time removed, cancel any existing alarm
+                        } else if ((completed && !repeating) || scheduledAt[0] == null) {
+                            // If marked as completed (and not repeating) or time removed, cancel any existing alarm
                             AlarmScheduler alarmScheduler = new AlarmScheduler(this);
                             alarmScheduler.cancelAlarm(existing.id);
                         }
