@@ -1,6 +1,8 @@
 package com.mihir.alzheimerscaregiver.data.entity;
 
 import androidx.annotation.NonNull;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ReminderEntity {
 
@@ -18,6 +20,10 @@ public class ReminderEntity {
     public boolean isRepeating;
     
     public String lastCompletedDate;
+    
+    // New fields for multiple medicines and images
+    public List<String> medicineNames; // List of medicine names
+    public List<String> imageUrls; // List of image URLs (Firebase Storage or local paths)
 
         public ReminderEntity(@NonNull String title,
                                                   String description,
@@ -29,6 +35,8 @@ public class ReminderEntity {
                 this.isCompleted = isCompleted;
                 this.isRepeating = false;
                 this.lastCompletedDate = null;
+                this.medicineNames = new ArrayList<>();
+                this.imageUrls = new ArrayList<>();
         }
         
         public ReminderEntity(@NonNull String title,
@@ -42,10 +50,15 @@ public class ReminderEntity {
                 this.isCompleted = isCompleted;
                 this.isRepeating = isRepeating;
                 this.lastCompletedDate = null;
+                this.medicineNames = new ArrayList<>();
+                this.imageUrls = new ArrayList<>();
         }
 
         // Default constructor for Firebase
-        public ReminderEntity() {}
+        public ReminderEntity() {
+            this.medicineNames = new ArrayList<>();
+            this.imageUrls = new ArrayList<>();
+        }
         
         /**
          * Check if this reminder was completed today
@@ -73,6 +86,57 @@ public class ReminderEntity {
             if (!isRepeating) {
                 this.isCompleted = true;
             }
+        }
+        
+        /**
+         * Get formatted medicine names as a single string
+         */
+        public String getMedicineNamesString() {
+            if (medicineNames == null || medicineNames.isEmpty()) {
+                return title; // Fallback to title for backward compatibility
+            }
+            return String.join(", ", medicineNames);
+        }
+        
+        /**
+         * Add a medicine name to the list
+         */
+        public void addMedicineName(String medicineName) {
+            if (medicineNames == null) {
+                medicineNames = new ArrayList<>();
+            }
+            if (medicineName != null && !medicineName.trim().isEmpty()) {
+                medicineNames.add(medicineName.trim());
+            }
+        }
+        
+        /**
+         * Add an image URL to the list
+         */
+        public void addImageUrl(String imageUrl) {
+            if (imageUrls == null) {
+                imageUrls = new ArrayList<>();
+            }
+            if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+                imageUrls.add(imageUrl.trim());
+            }
+        }
+        
+        /**
+         * Check if this reminder has any images
+         */
+        public boolean hasImages() {
+            return imageUrls != null && !imageUrls.isEmpty();
+        }
+        
+        /**
+         * Get the first image URL (for display purposes)
+         */
+        public String getFirstImageUrl() {
+            if (hasImages()) {   
+                return imageUrls.get(0);
+            }
+            return null;
         }
 }
 

@@ -41,6 +41,14 @@ public class AlarmForegroundService extends Service {
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         String type = intent.getStringExtra(EXTRA_TYPE);
         int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, (int) System.currentTimeMillis());
+        
+        // Extract enhanced data
+        String[] medicineNames = intent.getStringArrayExtra("medicine_names");
+        String[] imageUrls = intent.getStringArrayExtra("image_urls");
+        
+        // Debug logging
+        android.util.Log.d("AlarmForegroundService", "Medicine names: " + (medicineNames != null ? java.util.Arrays.toString(medicineNames) : "null"));
+        android.util.Log.d("AlarmForegroundService", "Image URLs: " + (imageUrls != null ? java.util.Arrays.toString(imageUrls) : "null"));
 
         if (title == null) title = "Reminder";
         if (message == null) message = "You have a reminder";
@@ -76,6 +84,15 @@ public class AlarmForegroundService extends Service {
         activityIntent.putExtra(EXTRA_MESSAGE, message);
         activityIntent.putExtra(EXTRA_TYPE, type);
         activityIntent.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
+        
+        // Add enhanced data to the AlarmActivity intent
+        if (medicineNames != null) {
+            activityIntent.putExtra("medicine_names", medicineNames);
+        }
+        if (imageUrls != null) {
+            activityIntent.putExtra("image_urls", imageUrls);
+        }
+        
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(

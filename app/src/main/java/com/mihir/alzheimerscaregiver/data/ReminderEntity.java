@@ -7,6 +7,8 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Entity representing a medication or task reminder
@@ -24,6 +26,10 @@ public class ReminderEntity {
     private boolean isRepeating; // Whether this reminder repeats daily
     private String lastCompletedDate; // Date when last completed (YYYY-MM-DD format)
     
+    // New fields for multiple medicines and images
+    public List<String> medicineNames; // List of medicine names
+    public List<String> imageUrls; // List of image URLs (Firebase Storage or local paths)
+    
     @ServerTimestamp
     private Date createdAt;
     
@@ -32,6 +38,8 @@ public class ReminderEntity {
 
     // Required empty constructor for Firestore
     public ReminderEntity() {
+        this.medicineNames = new ArrayList<>();
+        this.imageUrls = new ArrayList<>();
     }
     
     public ReminderEntity(String title, String message, long timeMillis, String type, String patientId) {
@@ -44,6 +52,8 @@ public class ReminderEntity {
         this.isRepeating = false;
         this.lastCompletedDate = null;
         this.needsAlarmUpdate = true;
+        this.medicineNames = new ArrayList<>();
+        this.imageUrls = new ArrayList<>();
     }
     
     public ReminderEntity(String title, String message, long timeMillis, String type, String patientId, boolean isRepeating) {
@@ -56,6 +66,8 @@ public class ReminderEntity {
         this.isRepeating = isRepeating;
         this.lastCompletedDate = null;
         this.needsAlarmUpdate = true;
+        this.medicineNames = new ArrayList<>();
+        this.imageUrls = new ArrayList<>();
     }
     
     // Convert to HashMap for Firestore
@@ -194,5 +206,47 @@ public class ReminderEntity {
         if (!isRepeating) {
             this.isCompleted = true;
         }
+    }
+    
+    // Helper methods for medicine names and images
+    @Exclude
+    public String getMedicineNamesString() {
+        if (medicineNames == null || medicineNames.isEmpty()) {
+            return "";
+        }
+        return String.join(", ", medicineNames);
+    }
+    
+    @Exclude
+    public void addMedicineName(String medicineName) {
+        if (medicineNames == null) {
+            medicineNames = new ArrayList<>();
+        }
+        if (!medicineNames.contains(medicineName)) {
+            medicineNames.add(medicineName);
+        }
+    }
+    
+    @Exclude
+    public void addImageUrl(String imageUrl) {
+        if (imageUrls == null) {
+            imageUrls = new ArrayList<>();
+        }
+        if (!imageUrls.contains(imageUrl)) {
+            imageUrls.add(imageUrl);
+        }
+    }
+    
+    @Exclude
+    public boolean hasImages() {
+        return imageUrls != null && !imageUrls.isEmpty();
+    }
+    
+    @Exclude
+    public String getFirstImageUrl() {
+        if (hasImages()) {
+            return imageUrls.get(0);
+        }
+        return null;
     }
 }

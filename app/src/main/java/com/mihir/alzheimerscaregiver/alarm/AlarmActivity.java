@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mihir.alzheimerscaregiver.R;
+import com.mihir.alzheimerscaregiver.ui.reminders.MedicineImageAdapter;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -21,12 +22,18 @@ import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.os.Build;
 import android.app.NotificationManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AlarmActivity extends AppCompatActivity {
 
     private static final String EXTRA_TITLE = "title";
     private static final String EXTRA_MESSAGE = "message";
     private static final String EXTRA_REMINDER_ID = "reminder_id";
+    private static final String EXTRA_MEDICINE_NAMES = "medicine_names";
+    private static final String EXTRA_IMAGE_URLS = "image_urls";
     private static final long SNOOZE_DURATION_MS = 10 * 60 * 1000; // 10 minutes
     private Ringtone ringtone;
     private Vibrator vibrator;
@@ -45,18 +52,60 @@ public class AlarmActivity extends AppCompatActivity {
 
         TextView titleTextView = findViewById(R.id.alarmTitle);
         TextView messageTextView = findViewById(R.id.alarmMessage);
+        TextView medicineNamesText = findViewById(R.id.medicineNamesText);
+        TextView imagesLabel = findViewById(R.id.imagesLabel);
+        RecyclerView medicineImagesRecyclerView = findViewById(R.id.medicineImagesRecyclerView);
         Button dismissButton = findViewById(R.id.dismissButton);
         Button snoozeButton = findViewById(R.id.snoozeButton);
 
-    String title = getIntent().getStringExtra(EXTRA_TITLE);
-    String message = getIntent().getStringExtra(EXTRA_MESSAGE);
-    String reminderId = getIntent().getStringExtra(EXTRA_REMINDER_ID);
-    // Prefer a direct notification_id from the intent for exact cancellation; fallback to reminderId hash
-    int passedNotificationId = getIntent().getIntExtra("notification_id", 0);
-    notificationId = (passedNotificationId != 0) ? passedNotificationId : ((reminderId != null) ? reminderId.hashCode() : 0);
+        String title = getIntent().getStringExtra(EXTRA_TITLE);
+        String message = getIntent().getStringExtra(EXTRA_MESSAGE);
+        String reminderId = getIntent().getStringExtra(EXTRA_REMINDER_ID);
+        String[] medicineNames = getIntent().getStringArrayExtra(EXTRA_MEDICINE_NAMES);
+        String[] imageUrls = getIntent().getStringArrayExtra(EXTRA_IMAGE_URLS);
+        
+        // Debug logging to see what data we receive
+        android.util.Log.d("AlarmActivity", "Title: " + title);
+        android.util.Log.d("AlarmActivity", "Medicine names: " + (medicineNames != null ? java.util.Arrays.toString(medicineNames) : "null"));
+        android.util.Log.d("AlarmActivity", "Image URLs: " + (imageUrls != null ? java.util.Arrays.toString(imageUrls) : "null"));
+        
+        // Prefer a direct notification_id from the intent for exact cancellation; fallback to reminderId hash
+        int passedNotificationId = getIntent().getIntExtra("notification_id", 0);
+        notificationId = (passedNotificationId != 0) ? passedNotificationId : ((reminderId != null) ? reminderId.hashCode() : 0);
 
         titleTextView.setText(title != null ? title : "Reminder");
         messageTextView.setText(message != null ? message : "You have a new reminder.");
+        
+        // Display medicine names if available
+        if (medicineNames != null && medicineNames.length > 0) {
+            android.util.Log.d("AlarmActivity", "Setting medicine names visible: " + java.util.Arrays.toString(medicineNames));
+            medicineNamesText.setVisibility(TextView.VISIBLE);
+            if (medicineNames.length == 1) {
+                medicineNamesText.setText("Medicine: " + medicineNames[0]);
+            } else {
+                medicineNamesText.setText("Medicines: " + String.join(", ", medicineNames));
+            }
+        } else {
+            android.util.Log.d("AlarmActivity", "No medicine names found, hiding section");
+            medicineNamesText.setVisibility(TextView.GONE);
+        }
+        
+        // Display medicine images if available
+        if (imageUrls != null && imageUrls.length > 0) {
+            android.util.Log.d("AlarmActivity", "Setting images visible: " + java.util.Arrays.toString(imageUrls));
+            imagesLabel.setVisibility(TextView.VISIBLE);
+            medicineImagesRecyclerView.setVisibility(RecyclerView.VISIBLE);
+            medicineImagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            
+            ArrayList<String> imageUrlsList = new ArrayList<>(Arrays.asList(imageUrls));
+            // Use display-only mode (no remove buttons) for alarm
+            MedicineImageAdapter imageAdapter = new MedicineImageAdapter(this, imageUrlsList, false);
+            medicineImagesRecyclerView.setAdapter(imageAdapter);
+        } else {
+            android.util.Log.d("AlarmActivity", "No image URLs found, hiding images section");
+            imagesLabel.setVisibility(TextView.GONE);
+            medicineImagesRecyclerView.setVisibility(RecyclerView.GONE);
+        }
 
         startAlarmFeedback();
 

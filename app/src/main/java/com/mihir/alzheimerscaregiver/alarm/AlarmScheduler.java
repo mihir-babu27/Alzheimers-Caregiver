@@ -77,7 +77,7 @@ public class AlarmScheduler {
             storeRepeatingAlarmInfo(reminder.getId(), reminder.getTimeMillis());
         }
         
-        return scheduleAlarmInternal(reminder.getId(), reminder.getTitle(), reminder.getMessage(), 
+        return scheduleAlarmInternalWithExtras(reminder, reminder.getId(), reminder.getTitle(), reminder.getMessage(), 
                                    reminder.getType(), timeMillis, isRepeating, reminder.getTimeMillis());
     }
 
@@ -183,6 +183,44 @@ public class AlarmScheduler {
         }
         
         return scheduleAlarmInternal(reminderId, title, message, type, scheduledTime, isRepeating, timeMillis);
+    }
+
+    /**
+     * Enhanced schedule alarm method that accepts medicine names and image URLs
+     * @param reminderId The ID of the reminder
+     * @param title The alarm title
+     * @param message The alarm message  
+     * @param timeMillis The scheduled time in milliseconds
+     * @param isRepeating Whether this alarm should repeat daily
+     * @param medicineNames List of medicine names
+     * @param imageUrls List of image URLs
+     * @return true if the alarm was scheduled successfully, false otherwise
+     */
+    public boolean scheduleAlarmWithExtras(String reminderId, String title, String message, long timeMillis, 
+                                          boolean isRepeating, java.util.List<String> medicineNames, java.util.List<String> imageUrls) {
+        if (reminderId == null) {
+            Log.e(TAG, "Cannot schedule alarm with null reminder ID");
+            return false;
+        }
+        
+        long currentTimeMillis = System.currentTimeMillis();
+        
+        // If time is in the past and this is a repeating alarm, schedule for next occurrence
+        if (timeMillis <= currentTimeMillis && isRepeating) {
+            timeMillis = getNextDailyOccurrence(timeMillis);
+            Log.d(TAG, "Scheduling repeating alarm for next occurrence: " + new Date(timeMillis));
+        } else if (timeMillis <= currentTimeMillis) {
+            Log.w(TAG, "Not scheduling alarm for past time: " + timeMillis);
+            return false;
+        }
+        
+        // Store repeating alarm info if needed
+        if (isRepeating) {
+            storeRepeatingAlarmInfo(reminderId, timeMillis);
+        }
+        
+        return scheduleAlarmInternalWithExtras(reminderId, title, message, "medication", timeMillis, 
+                                              isRepeating, timeMillis, medicineNames, imageUrls);
     }
 
     /**
@@ -318,6 +356,214 @@ public class AlarmScheduler {
             
         } catch (Exception e) {
             Log.e(TAG, "Failed to schedule alarm: " + e.getMessage(), e);
+            return false;
+        }
+    }
+    
+    /**
+     * Enhanced internal method to schedule an alarm with additional ReminderEntity data
+     */
+    private boolean scheduleAlarmInternalWithExtras(ReminderEntity reminder, String reminderId, String title, String message, 
+                                        String type, long timeMillis, boolean isRepeating, long originalTime) {
+        if (reminderId == null || reminderId.isEmpty()) {
+            Log.e(TAG, "Cannot schedule alarm with null or empty reminder ID");
+            return false;
+        }
+        
+        if (timeMillis <= System.currentTimeMillis() && !isRepeating) {
+            Log.w(TAG, "Not scheduling alarm for past time: " + timeMillis);
+            return false;
+        }
+        
+        // Create intent for AlarmReceiver
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra(EXTRA_REMINDER_ID, reminderId);
+        intent.putExtra(EXTRA_TITLE, title);
+        intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(EXTRA_TYPE, type);
+        intent.putExtra(EXTRA_IS_REPEATING, isRepeating);
+        intent.putExtra(EXTRA_ORIGINAL_TIME, originalTime);
+        
+        // Add enhanced data with debug logging
+        if (reminder.medicineNames != null && !reminder.medicineNames.isEmpty()) {
+            String[] names = reminder.medicineNames.toArray(new String[0]);
+            intent.putExtra("medicine_names", names);
+            Log.d(TAG, "AlarmScheduler: Adding medicine names to intent: " + java.util.Arrays.toString(names));
+        } else {
+            Log.d(TAG, "AlarmScheduler: No medicine names to add - list is " + (reminder.medicineNames == null ? "null" : "empty"));
+        }
+        if (reminder.imageUrls != null && !reminder.imageUrls.isEmpty()) {
+            String[] urls = reminder.imageUrls.toArray(new String[0]);
+            intent.putExtra("image_urls", urls);
+            Log.d(TAG, "AlarmScheduler: Adding image URLs to intent: " + java.util.Arrays.toString(urls));
+        } else {
+            Log.d(TAG, "AlarmScheduler: No image URLs to add - list is " + (reminder.imageUrls == null ? "null" : "empty"));
+        }
+        
+        // Create unique request code based on reminder ID hash
+        int requestCode = reminderId.hashCode();
+        
+        // Create pending intent that will fire the BroadcastReceiver
+        PendingIntent operation = PendingIntent.getBroadcast(
+                context,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        
+        try {
+            // Enhanced permission and capability checks
+            Log.d(TAG, "Scheduling enhanced alarm - Android SDK version: " + Build.VERSION.SDK_INT);
+            
+            // Check permission on Android 12+ (API 31+)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                boolean canScheduleExact = alarmManager.canScheduleExactAlarms();
+                Log.d(TAG, "Can schedule exact alarms: " + canScheduleExact);
+                if (!canScheduleExact) {
+                    Log.e(TAG, "Cannot schedule exact alarms - permission not granted. User needs to enable in Settings.");
+                }
+            }
+            
+            // Use the most robust scheduling method available
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Create a showIntent to open the full-screen AlarmActivity
+                Intent alarmActivityIntent = new Intent(context, AlarmActivity.class);
+                alarmActivityIntent.putExtra(EXTRA_REMINDER_ID, reminderId);
+                alarmActivityIntent.putExtra(EXTRA_TITLE, title);
+                alarmActivityIntent.putExtra(EXTRA_MESSAGE, message);
+                alarmActivityIntent.putExtra(EXTRA_TYPE, type);
+                alarmActivityIntent.putExtra(EXTRA_IS_REPEATING, isRepeating);
+                alarmActivityIntent.putExtra(EXTRA_ORIGINAL_TIME, originalTime);
+                
+                // Add enhanced data to alarm activity intent
+                if (reminder.medicineNames != null && !reminder.medicineNames.isEmpty()) {
+                    alarmActivityIntent.putExtra("medicine_names", reminder.medicineNames.toArray(new String[0]));
+                }
+                if (reminder.imageUrls != null && !reminder.imageUrls.isEmpty()) {
+                    alarmActivityIntent.putExtra("image_urls", reminder.imageUrls.toArray(new String[0]));
+                }
+                
+                alarmActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PendingIntent showIntent = PendingIntent.getActivity(
+                        context,
+                        requestCode,
+                        alarmActivityIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                );
+                
+                AlarmManager.AlarmClockInfo clockInfo = new AlarmManager.AlarmClockInfo(timeMillis, showIntent);
+                Log.d(TAG, "Using setAlarmClock for enhanced alarm behavior");
+                alarmManager.setAlarmClock(clockInfo, operation);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Log.d(TAG, "Using setExactAndAllowWhileIdle for maximum reliability");
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMillis, operation);
+            } else {
+                Log.d(TAG, "Using setExact for API " + Build.VERSION.SDK_INT);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeMillis, operation);
+            }
+            
+            // Enhanced alarm scheduled - information logged below
+            
+            Log.d(TAG, "Enhanced alarm scheduled successfully" +
+                  "\nReminder ID: " + reminderId +
+                  "\nTitle: " + title +
+                  "\nMessage: " + message +
+                  "\nType: " + type +
+                  "\nScheduled Time: " + new Date(timeMillis) +
+                  "\nIs Repeating: " + isRepeating +
+                  "\nOriginal Time: " + originalTime +
+                  "\nMedicine Count: " + (reminder.medicineNames != null ? reminder.medicineNames.size() : 0) +
+                  "\nImage Count: " + (reminder.imageUrls != null ? reminder.imageUrls.size() : 0) +
+                  "\nRequest Code: " + requestCode);
+            
+            return true;
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to schedule enhanced alarm: " + e.getMessage(), e);
+            return false;
+        }
+    }
+    
+    /**
+     * Enhanced alarm scheduling with direct medicine and image lists (for compatibility with different entity types)
+     */
+    private boolean scheduleAlarmInternalWithExtras(String reminderId, String title, String message, 
+                                        String type, long timeMillis, boolean isRepeating, long originalTime,
+                                        java.util.List<String> medicineNames, java.util.List<String> imageUrls) {
+        if (reminderId == null || reminderId.isEmpty()) {
+            Log.e(TAG, "Cannot schedule alarm with null or empty reminder ID");
+            return false;
+        }
+        
+        if (timeMillis <= System.currentTimeMillis() && !isRepeating) {
+            Log.w(TAG, "Not scheduling alarm for past time: " + timeMillis);
+            return false;
+        }
+        
+        // Create intent for AlarmReceiver
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra(EXTRA_REMINDER_ID, reminderId);
+        intent.putExtra(EXTRA_TITLE, title);
+        intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(EXTRA_TYPE, type);
+        intent.putExtra(EXTRA_IS_REPEATING, isRepeating);
+        intent.putExtra(EXTRA_ORIGINAL_TIME, originalTime);
+        
+        // Add enhanced data with debug logging
+        if (medicineNames != null && !medicineNames.isEmpty()) {
+            String[] names = medicineNames.toArray(new String[0]);
+            intent.putExtra("medicine_names", names);
+            Log.d(TAG, "AlarmScheduler: Adding medicine names to intent: " + java.util.Arrays.toString(names));
+        } else {
+            Log.d(TAG, "AlarmScheduler: No medicine names to add - list is " + (medicineNames == null ? "null" : "empty"));
+        }
+        if (imageUrls != null && !imageUrls.isEmpty()) {
+            String[] urls = imageUrls.toArray(new String[0]);
+            intent.putExtra("image_urls", urls);
+            Log.d(TAG, "AlarmScheduler: Adding image URLs to intent: " + java.util.Arrays.toString(urls));
+        } else {
+            Log.d(TAG, "AlarmScheduler: No image URLs to add - list is " + (imageUrls == null ? "null" : "empty"));
+        }
+        
+        // Create unique request code based on reminder ID hash
+        int requestCode = reminderId.hashCode();
+        
+        // Create pending intent that will fire the BroadcastReceiver
+        PendingIntent operation = PendingIntent.getBroadcast(
+                context,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        
+        try {
+            // Schedule the alarm
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (!alarmManager.canScheduleExactAlarms()) {
+                    Log.e(TAG, "Cannot schedule exact alarms - permission not granted. User needs to enable in Settings.");
+                    return false;
+                }
+            }
+            
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMillis, operation);
+            
+            Log.d(TAG, "Enhanced alarm scheduled successfully" +
+                  "\nReminder ID: " + reminderId +
+                  "\nTitle: " + title +
+                  "\nMessage: " + message +
+                  "\nType: " + type +
+                  "\nScheduled Time: " + new Date(timeMillis) +
+                  "\nIs Repeating: " + isRepeating +
+                  "\nOriginal Time: " + originalTime +
+                  "\nMedicine Count: " + (medicineNames != null ? medicineNames.size() : 0) +
+                  "\nImage Count: " + (imageUrls != null ? imageUrls.size() : 0) +
+                  "\nRequest Code: " + requestCode);
+            
+            return true;
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to schedule enhanced alarm: " + e.getMessage(), e);
             return false;
         }
     }

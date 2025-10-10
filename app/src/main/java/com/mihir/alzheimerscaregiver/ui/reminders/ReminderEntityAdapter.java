@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mihir.alzheimerscaregiver.R;
@@ -42,7 +43,7 @@ public class ReminderEntityAdapter extends RecyclerView.Adapter<ReminderEntityAd
     @NonNull
     @Override
     public ReminderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_enhanced_reminder, parent, false);
         return new ReminderViewHolder(v);
     }
 
@@ -57,11 +58,18 @@ public class ReminderEntityAdapter extends RecyclerView.Adapter<ReminderEntityAd
     class ReminderViewHolder extends RecyclerView.ViewHolder {
         private final CheckBox taskCheckBox;
         private final TextView taskStatusText;
+        private final TextView medicineNamesText;
+        private final RecyclerView medicineImagesRecyclerView;
 
         ReminderViewHolder(@NonNull View itemView) {
             super(itemView);
             taskCheckBox = itemView.findViewById(R.id.taskCheckBox);
             taskStatusText = itemView.findViewById(R.id.taskStatusText);
+            medicineNamesText = itemView.findViewById(R.id.medicineNamesText);
+            medicineImagesRecyclerView = itemView.findViewById(R.id.medicineImagesRecyclerView);
+            
+            // Setup images RecyclerView
+            medicineImagesRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         }
 
         void bind(ReminderEntity r) {
@@ -69,6 +77,23 @@ public class ReminderEntityAdapter extends RecyclerView.Adapter<ReminderEntityAd
                     new SimpleDateFormat("EEE, MMM d h:mm a", Locale.getDefault()).format(new Date(r.scheduledTimeEpochMillis));
             String title = r.title + (subtitle.isEmpty() ? "" : (" • " + subtitle));
             taskCheckBox.setText(title);
+            
+            // Display multiple medicine names if available
+            if (r.medicineNames != null && r.medicineNames.size() > 1) {
+                medicineNamesText.setVisibility(View.VISIBLE);
+                medicineNamesText.setText("Medicines: " + String.join(", ", r.medicineNames));
+            } else {
+                medicineNamesText.setVisibility(View.GONE);
+            }
+            
+            // Display medicine images if available
+            if (r.imageUrls != null && !r.imageUrls.isEmpty()) {
+                medicineImagesRecyclerView.setVisibility(View.VISIBLE);
+                MedicineImageAdapter imageAdapter = new MedicineImageAdapter(itemView.getContext(), r.imageUrls);
+                medicineImagesRecyclerView.setAdapter(imageAdapter);
+            } else {
+                medicineImagesRecyclerView.setVisibility(View.GONE);
+            }
             
             // For repeating reminders, check if completed today; for others, check isCompleted
             boolean isChecked = r.isRepeating ? r.isCompletedToday() : r.isCompleted;

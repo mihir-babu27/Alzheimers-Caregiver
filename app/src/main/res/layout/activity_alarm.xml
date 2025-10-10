@@ -27,6 +27,43 @@
         android:textSize="18sp"
         android:textColor="#FFFFFF" />
 
+    <!-- Medicine Names Section -->
+    <TextView
+        android:id="@+id/medicineNamesText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="center"
+        android:text="Medicines: Aspirin, Tylenol"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:background="#1E3A1E"
+        android:padding="12dp" />
+
+    <!-- Medicine Images Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Medicine Images:"
+        android:textSize="16sp"
+        android:textColor="#CCCCCC"
+        android:id="@+id/imagesLabel"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/medicineImagesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"

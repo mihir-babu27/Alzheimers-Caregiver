@@ -26,16 +26,23 @@ import android.provider.Settings;
 import android.content.Intent;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.net.Uri;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.text.InputType;
+import java.util.List;
+import java.util.ArrayList;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.mihir.alzheimerscaregiver.alarm.AlarmScheduler;
 import com.mihir.alzheimerscaregiver.data.entity.ReminderEntity;
-
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.mihir.alzheimerscaregiver.data.entity.ReminderEntity;
 import com.mihir.alzheimerscaregiver.ui.reminders.ReminderEntityAdapter;
+import com.mihir.alzheimerscaregiver.ui.reminders.MedicineImageAdapter;
 import com.mihir.alzheimerscaregiver.ui.viewmodel.ReminderViewModel;
-import com.mihir.alzheimerscaregiver.alarm.AlarmScheduler;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,6 +61,12 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
 
     public static final String EXTRA_MEDICATION_MODE = "EXTRA_MEDICATION_MODE";
     private boolean medicationMode = false;
+
+    // Fields for enhanced reminder dialog
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private MedicineImageAdapter currentImageAdapter;
+    private java.util.List<String> currentImageUrls;
+    private java.util.List<String> currentMedicineNames;
 
     // Call this before scheduling an exact alarm
     private boolean checkAndRequestExactAlarmPermission() {
@@ -90,6 +103,9 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
+
+        // Initialize image picker
+        initializeImagePicker();
 
         // Check for alarm permissions as early as possible
         checkAndRequestExactAlarmPermission();
@@ -179,6 +195,32 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                 .show();
     }
 
+    private void initializeImagePicker() {
+        imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri imageUri = result.getData().getData();
+                    if (imageUri != null && currentImageUrls != null) {
+                        // Take persistent URI permission so the image remains accessible
+                        try {
+                            getContentResolver().takePersistableUriPermission(imageUri, 
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        } catch (SecurityException e) {
+                            // Some URIs may not support persistent permissions
+                            android.util.Log.w("RemindersActivity", "Could not take persistent permission for URI: " + imageUri);
+                        }
+                        
+                        currentImageUrls.add(imageUri.toString());
+                        if (currentImageAdapter != null) {
+                            currentImageAdapter.notifyItemInserted(currentImageUrls.size() - 1);
+                        }
+                    }
+                }
+            }
+        );
+    }
+
     private void showAddOrEditDialog(ReminderEntity existing) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_edit_reminder, null, false);
         EditText inputTitle = view.findViewById(R.id.inputTitle);
@@ -186,10 +228,50 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
         EditText inputDateTime = view.findViewById(R.id.inputDateTime);
         CheckBox checkCompleted = view.findViewById(R.id.checkCompleted);
         CheckBox checkRepeating = view.findViewById(R.id.checkRepeating);
+        
+        // Enhanced components for medicine management
+        LinearLayout medicineNamesContainer = view.findViewById(R.id.medicineNamesContainer);
+        Button btnAddMedicine = view.findViewById(R.id.btnAddMedicine);
+        Button btnAddImage = view.findViewById(R.id.btnAddImage);
+        RecyclerView imagesRecyclerView = view.findViewById(R.id.imagesRecyclerView);
+        
+        // Collections to track medicine names and images
+        List<String> medicineNames = new ArrayList<>();
+        currentImageUrls = new ArrayList<>();
+        
+        // Setup images RecyclerView
+        imagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        currentImageAdapter = new MedicineImageAdapter(this, currentImageUrls);
+        currentImageAdapter.setOnImageActionListener(new MedicineImageAdapter.OnImageActionListener() {
+            @Override
+            public void onImageRemoved(int position) {
+                if (position < currentImageUrls.size()) {
+                    currentImageUrls.remove(position);
+                    currentImageAdapter.notifyItemRemoved(position);
+                    toast("Image removed");
+                }
+            }
+        });
+        imagesRecyclerView.setAdapter(currentImageAdapter);
+        
+        // Add Medicine button functionality
+        btnAddMedicine.setOnClickListener(v -> {
+            addMedicineNameField(medicineNamesContainer);
+        });
+        
+        // Add Image button functionality
+        btnAddImage.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            imagePickerLauncher.launch(intent);
+        });
+        
         final Long[] scheduledAt = {null};
         inputTitle.setHint("Medicine (e.g., Aspirin)");
         inputDescription.setHint("Dosage (e.g., 1 tablet)");
         if (existing != null) {
+            // Load basic reminder data
             inputTitle.setText(existing.title);
             inputDescription.setText(existing.description);
             checkCompleted.setChecked(existing.isCompleted);
@@ -199,6 +281,27 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                 inputDateTime.setText(new SimpleDateFormat("EEE, MMM d h:mm a", Locale.getDefault())
                         .format(new Date(existing.scheduledTimeEpochMillis)));
             }
+            
+            // Load existing medicine names
+            if (existing.medicineNames != null && !existing.medicineNames.isEmpty()) {
+                // Set first medicine name in the main input field
+                inputTitle.setText(existing.medicineNames.get(0));
+                
+                // Add additional medicine name fields for remaining medicines
+                for (int i = 1; i < existing.medicineNames.size(); i++) {
+                    addMedicineNameField(medicineNamesContainer);
+                    // Get the last added field and set its text
+                    EditText lastField = (EditText) medicineNamesContainer.getChildAt(medicineNamesContainer.getChildCount() - 1);
+                    lastField.setText(existing.medicineNames.get(i));
+                }
+            }
+            
+            // Load existing images
+            if (existing.imageUrls != null && !existing.imageUrls.isEmpty()) {
+                currentImageUrls.clear();
+                currentImageUrls.addAll(existing.imageUrls);
+                currentImageAdapter.notifyDataSetChanged();
+            }
         }
 
         inputDateTime.setOnClickListener(v -> pickDateTime(scheduledAt, inputDateTime));
@@ -207,22 +310,48 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                 .setTitle(existing == null ? "Add reminder" : "Edit reminder")
                 .setView(view)
                 .setPositiveButton(existing == null ? "Add" : "Save", (dialog, which) -> {
-                    String title = inputTitle.getText().toString().trim();
-                    if (TextUtils.isEmpty(title)) { toast("Title required"); return; }
+                    // Collect all medicine names
+                    medicineNames.clear();
+                    String firstMedicine = inputTitle.getText().toString().trim();
+                    if (!TextUtils.isEmpty(firstMedicine)) {
+                        medicineNames.add(firstMedicine);
+                    }
+                    
+                    // Collect additional medicine names from dynamically added fields
+                    for (int i = 1; i < medicineNamesContainer.getChildCount(); i++) {
+                        View child = medicineNamesContainer.getChildAt(i);
+                        if (child instanceof EditText) {
+                            String medicineName = ((EditText) child).getText().toString().trim();
+                            if (!TextUtils.isEmpty(medicineName)) {
+                                medicineNames.add(medicineName);
+                            }
+                        }
+                    }
+                    
+                    if (medicineNames.isEmpty()) { 
+                        toast("At least one medicine name required"); 
+                        return; 
+                    }
+                    
+                    String title = medicineNames.get(0); // Use first medicine as title for backward compatibility
                     String desc = emptyToNull(inputDescription.getText().toString().trim());
                     boolean completed = checkCompleted.isChecked();
                     boolean repeating = checkRepeating.isChecked();
+                    
                     if (existing == null) {
                         ReminderEntity entity = new ReminderEntity(title, desc, scheduledAt[0], completed, repeating);
-                        toast("Inserting reminder: " + title);
+                        // Store multiple medicine names and images
+                        entity.medicineNames = new ArrayList<>(medicineNames);
+                        entity.imageUrls = new ArrayList<>(currentImageUrls);
+                        toast("Inserting reminder with " + medicineNames.size() + " medicine(s) and " + currentImageUrls.size() + " image(s): " + title);
                         viewModel.insert(entity);
                         
                         // Schedule alarm for non-completed reminders with a scheduled time
                         if (!completed && scheduledAt[0] != null) {
                             if (checkAndRequestExactAlarmPermission()) {
-                                // Use the new AlarmScheduler with proper debugging
+                                // Use the enhanced AlarmScheduler with medicine names and images
                                 AlarmScheduler alarmScheduler = new AlarmScheduler(this);
-                                boolean scheduled = alarmScheduler.scheduleAlarm(entity.id, title, desc, scheduledAt[0], repeating);
+                                boolean scheduled = alarmScheduler.scheduleAlarmWithExtras(entity.id, title, desc, scheduledAt[0], repeating, entity.medicineNames, entity.imageUrls);
                                 
                                 if (scheduled) {
                                     String alarmType = repeating ? "Daily repeating alarm" : "Alarm";
@@ -239,7 +368,10 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                         existing.scheduledTimeEpochMillis = scheduledAt[0];
                         existing.isCompleted = completed;
                         existing.isRepeating = repeating;
-                        toast("Updating reminder: " + title);
+                        // Update medicine names and images
+                        existing.medicineNames = new ArrayList<>(medicineNames);
+                        existing.imageUrls = new ArrayList<>(currentImageUrls);
+                        toast("Updating reminder with " + medicineNames.size() + " medicine(s) and " + currentImageUrls.size() + " image(s): " + title);
                         viewModel.update(existing);
                         
                         // For existing reminders, reschedule or cancel alarm as needed
@@ -249,8 +381,8 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                                 AlarmScheduler alarmScheduler = new AlarmScheduler(this);
                                 alarmScheduler.cancelAlarm(existing.id);
                                 
-                                // Then schedule the new alarm time with repeating flag
-                                boolean scheduled = alarmScheduler.scheduleAlarm(existing.id, title, desc, scheduledAt[0], repeating);
+                                // Then schedule the new alarm time with enhanced data
+                                boolean scheduled = alarmScheduler.scheduleAlarmWithExtras(existing.id, title, desc, scheduledAt[0], repeating, existing.medicineNames, existing.imageUrls);
                                 
                                 if (scheduled) {
                                     String alarmType = repeating ? "Daily repeating alarm" : "Alarm";
@@ -306,6 +438,24 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
         } else {
             toast("Cannot schedule test alarm - permissions not granted");
         }
+    }
+    
+
+    
+    private void addMedicineNameField(LinearLayout container) {
+        EditText medicineInput = new EditText(this);
+        medicineInput.setHint("Medicine Name (e.g., Ibuprofen)");
+        medicineInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        
+        // Set layout parameters
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.topMargin = 16; // Add some margin between fields
+        medicineInput.setLayoutParams(params);
+        
+        container.addView(medicineInput);
     }
     
     private void toast(String s) { Toast.makeText(this, s, Toast.LENGTH_SHORT).show(); }

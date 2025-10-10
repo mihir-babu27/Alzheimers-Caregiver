@@ -45,6 +45,14 @@ public class AlarmReceiver extends BroadcastReceiver {
             boolean isRepeating = intent.getBooleanExtra(EXTRA_IS_REPEATING, false);
             long originalTime = intent.getLongExtra(EXTRA_ORIGINAL_TIME, 0);
             
+            // Get enhanced data
+            String[] medicineNames = intent.getStringArrayExtra("medicine_names");
+            String[] imageUrls = intent.getStringArrayExtra("image_urls");
+            
+            // Debug logging
+            android.util.Log.d(TAG, "AlarmReceiver: Medicine names: " + (medicineNames != null ? java.util.Arrays.toString(medicineNames) : "null"));
+            android.util.Log.d(TAG, "AlarmReceiver: Image URLs: " + (imageUrls != null ? java.util.Arrays.toString(imageUrls) : "null"));
+            
             // Default values if null
             if (title == null) title = "Reminder";
             if (message == null) message = "You have a reminder";
@@ -52,7 +60,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             Log.d(TAG, "Alarm triggered for: " + title + " (repeating: " + isRepeating + ")");
             
             // Start a foreground service that posts a non-dismissible full-screen alarm notification
-            startAlarmService(context, reminderId, title, message, type);
+            startAlarmService(context, reminderId, title, message, type, medicineNames, imageUrls);
             
             // If this is a repeating alarm, automatically reschedule for tomorrow
             if (isRepeating && reminderId != null) {
@@ -67,7 +75,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     /**
      * Shows a full-screen alarm notification that behaves exactly like a clock app
      */
-    private void startAlarmService(Context context, String reminderId, String title, String message, String type) {
+    private void startAlarmService(Context context, String reminderId, String title, String message, String type, String[] medicineNames, String[] imageUrls) {
         try {
             int notificationId = reminderId != null ? reminderId.hashCode() : (int) System.currentTimeMillis();
             Intent serviceIntent = new Intent(context, AlarmForegroundService.class);
@@ -76,6 +84,14 @@ public class AlarmReceiver extends BroadcastReceiver {
             serviceIntent.putExtra(AlarmForegroundService.EXTRA_MESSAGE, message);
             serviceIntent.putExtra(AlarmForegroundService.EXTRA_TYPE, type);
             serviceIntent.putExtra(AlarmForegroundService.EXTRA_NOTIFICATION_ID, notificationId);
+            
+            // Add enhanced data
+            if (medicineNames != null) {
+                serviceIntent.putExtra("medicine_names", medicineNames);
+            }
+            if (imageUrls != null) {
+                serviceIntent.putExtra("image_urls", imageUrls);
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(serviceIntent);
