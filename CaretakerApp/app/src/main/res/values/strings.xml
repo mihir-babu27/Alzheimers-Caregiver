@@ -78,4 +78,26 @@
     <string name="medicines">Medicines</string>
     <string name="images">Images</string>
     <string name="repeat_daily">Repeat daily</string>
+    
+    <!-- New strings for enhanced task feature -->
+    <string name="enhanced_task_dialog_title">Create Enhanced Task</string>
+    <string name="task_settings">Task Settings</string>
+    <string name="repeating_task">Repeating task</string>
+    <string name="enable_alarm_notification">Enable alarm/notification</string>
+    <string name="notify_caretaker_if_missed">Notify caretaker if missed</string>
+    <string name="repeat_on_days">Repeat on days:</string>
+    <string name="daily">Daily</string>
+    <string name="weekdays">Weekdays</string>
+    <string name="weekends">Weekends</string>
+    <string name="sunday_short">S</string>
+    <string name="monday_short">M</string>
+    <string name="tuesday_short">T</string>
+    <string name="wednesday_short">W</string>
+    <string name="thursday_short">T</string>
+    <string name="friday_short">F</string>
+    <string name="saturday_short">S</string>
+    <string name="task_created_successfully">Task created successfully</string>
+    <string name="task_name_required">Task name required</string>
+    <string name="select_date_time">Tap to select date and time</string>
+    <string name="task_category_hint">Category (e.g., Exercise, Medicine)</string>
 </resources>

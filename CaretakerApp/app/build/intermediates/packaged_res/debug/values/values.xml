@@ -32,15 +32,19 @@
     <string name="contact_added_successfully">Emergency contact added successfully!</string>
     <string name="contact_name">Contact Name</string>
     <string name="contact_name_hint">e.g., Dr. Sharma</string>
+    <string name="daily">Daily</string>
     <string name="description_hint">Enter reminder description (optional)</string>
     <string name="dont_have_account">Don\'t have an account? </string>
     <string name="dosage">Dosage</string>
     <string name="dosage_hint">e.g., 10mg</string>
     <string name="due_time">Due Time</string>
     <string name="email">Email</string>
+    <string name="enable_alarm_notification">Enable alarm/notification</string>
+    <string name="enhanced_task_dialog_title">Create Enhanced Task</string>
     <string name="enter_patient_id">Enter Patient ID</string>
     <string name="error">Error</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="friday_short">F</string>
     <string name="gcm_defaultSenderId" translatable="false">1092854188528</string>
     <string name="google_api_key" translatable="false">AIzaSyBbCZZ7NPDeZBA6eYtPSMCaw-L7O4RhDvI</string>
     <string name="google_app_id" translatable="false">1:1092854188528:android:6581dd1fd9af8deee27535</string>
@@ -60,7 +64,9 @@
     <string name="medicine_image">Medicine Image</string>
     <string name="medicine_name_hint_multiple">Enter medicine name</string>
     <string name="medicines">Medicines</string>
+    <string name="monday_short">M</string>
     <string name="network_error">Network error. Please check your connection.</string>
+    <string name="notify_caretaker_if_missed">Notify caretaker if missed</string>
     <string name="password">Password</string>
     <string name="patient_id_hint">Patient ID</string>
     <string name="patient_linked_successfully">Patient linked successfully!</string>
@@ -73,20 +79,34 @@
     <string name="remove_image">Remove Image</string>
     <string name="remove_medicine">Remove Medicine</string>
     <string name="repeat_daily">Repeat daily</string>
+    <string name="repeat_on_days">Repeat on days:</string>
+    <string name="repeating_task">Repeating task</string>
+    <string name="saturday_short">S</string>
     <string name="save">Save</string>
     <string name="scheduled_date_hint">Scheduled Date</string>
+    <string name="select_date_time">Tap to select date and time</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="success">Success</string>
+    <string name="sunday_short">S</string>
     <string name="task_added_successfully">Task added successfully!</string>
+    <string name="task_category_hint">Category (e.g., Exercise, Medicine)</string>
+    <string name="task_created_successfully">Task created successfully</string>
     <string name="task_description">Description</string>
     <string name="task_description_hint">e.g., 30 minutes in the garden</string>
     <string name="task_name">Task Name</string>
     <string name="task_name_hint">e.g., Go for a walk</string>
+    <string name="task_name_required">Task name required</string>
+    <string name="task_settings">Task Settings</string>
+    <string name="thursday_short">T</string>
     <string name="time">Time</string>
     <string name="time_hint">08:00 AM</string>
+    <string name="tuesday_short">T</string>
     <string name="unknown_error">An unknown error occurred.</string>
     <string name="view_patient_data">View Patient Data</string>
+    <string name="wednesday_short">W</string>
+    <string name="weekdays">Weekdays</string>
+    <string name="weekends">Weekends</string>
     <style name="Theme.CaretakerApp" parent="Theme.Material3.DayNight">
         
         <item name="colorPrimary">@color/purple_500</item>

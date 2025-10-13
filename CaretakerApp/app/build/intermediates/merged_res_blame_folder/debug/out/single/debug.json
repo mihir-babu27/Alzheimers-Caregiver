@@ -20,6 +20,10 @@
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-40:\\layout\\activity_register.xml"
     },
     {
+        "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:\\layout_dialog_add_task_enhanced.xml.flat",
+        "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-40:\\layout\\dialog_add_task_enhanced.xml"
+    },
+    {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:\\xml_backup_rules.xml.flat",
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-40:\\xml\\backup_rules.xml"
     },
@@ -34,6 +38,10 @@
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:\\drawable_ic_launcher_background.xml.flat",
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-40:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_add_task.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-40:/layout/activity_add_task.xml"
     },
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:\\layout_item_mmse_result.xml.flat",
@@ -60,8 +68,8 @@
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-40:\\layout\\activity_custom_mmse_questions.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_splash.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-40:/layout/activity_splash.xml"
+        "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:\\layout_activity_splash.xml.flat",
+        "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-40:\\layout\\activity_splash.xml"
     },
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:\\layout_activity_main.xml.flat",
