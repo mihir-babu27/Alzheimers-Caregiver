@@ -18,5 +18,8 @@
   ],
   "firestore": {
     "rules": "CaretakerApp/firestore.rules"
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Custom MMSE Questions"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple_700"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/questionInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Question text"
+        android:layout_marginBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/expectedAnswerInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Expected answer"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:id="@+id/optionsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp">
+        <EditText
+            android:id="@+id/option1Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Option 1" />
+        <EditText
+            android:id="@+id/option2Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Option 2" />
+        <EditText
+            android:id="@+id/option3Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Option 3" />
+        <EditText
+            android:id="@+id/option4Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Option 4" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/scoreInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Score (default 1)"
+        android:inputType="number"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Question"
+        android:backgroundTint="@color/purple_700"
+        android:textColor="@color/white" />
+
+</LinearLayout>

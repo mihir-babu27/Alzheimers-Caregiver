@@ -34,6 +34,7 @@
     <string name="medication_name_hint">e.g., Donepezil</string>
     <string name="dosage">Dosage</string>
     <string name="dosage_hint">e.g., 10mg</string>
+    <string name="description_hint">Enter reminder description (optional)</string>
     <string name="time">Time</string>
     <string name="time_hint">08:00 AM</string>
     <string name="scheduled_date_hint">Scheduled Date</string>
@@ -66,4 +67,15 @@
     <string name="loading">Loading...</string>
     <string name="network_error">Network error. Please check your connection.</string>
     <string name="unknown_error">An unknown error occurred.</string>
+    
+    <!-- New strings for enhanced medication feature -->
+    <string name="medicine_image">Medicine Image</string>
+    <string name="remove_image">Remove Image</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_medicine">Add Medicine</string>
+    <string name="remove_medicine">Remove Medicine</string>
+    <string name="medicine_name_hint_multiple">Enter medicine name</string>
+    <string name="medicines">Medicines</string>
+    <string name="images">Images</string>
+    <string name="repeat_daily">Repeat daily</string>
 </resources>

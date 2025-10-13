@@ -3,6 +3,7 @@ package com.mihir.alzheimerscaregiver.caretaker.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,24 +18,38 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mihir.alzheimerscaregiver.caretaker.PatientLinkActivity;
 import com.mihir.alzheimerscaregiver.caretaker.R;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "LoginActivity";
+    
     private EditText emailEditText, passwordEditText;
     private Button loginButton;
     private TextView registerLink, forgotPasswordLink;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize Firebase Auth
+        Log.d(TAG, "LoginActivity created");
+
+        // Initialize Firebase Auth and SessionManager
         mAuth = FirebaseAuth.getInstance();
+        sessionManager = new SessionManager(this);
+        
+        // Check if user is already authenticated (shouldn't happen with SplashActivity, but safety check)
+        if (sessionManager.isUserAuthenticated()) {
+            Log.d(TAG, "User already authenticated, redirecting to patient link");
+            goToPatientLink();
+            return;
+        }
 
         // Initialize views
         emailEditText = findViewById(R.id.emailEditText);
@@ -80,13 +95,25 @@ public class LoginActivity extends AppCompatActivity {
                         loginButton.setEnabled(true);
 
                         if (task.isSuccessful()) {
-                            // Sign in success, go to patient link activity
-                            goToPatientLink();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                Log.d(TAG, "Login successful for user: " + user.getEmail());
+                                
+                                // Session will be automatically managed by Firebase Auth persistence
+                                // Go to patient link activity
+                                goToPatientLink();
+                            } else {
+                                Log.e(TAG, "Login successful but user is null");
+                                Toast.makeText(LoginActivity.this, "Login error occurred", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, 
-                                "Authentication failed: " + task.getException().getMessage(),
-                                Toast.LENGTH_LONG).show();
+                            String errorMessage = "Authentication failed";
+                            if (task.getException() != null) {
+                                errorMessage += ": " + task.getException().getMessage();
+                            }
+                            Log.w(TAG, errorMessage);
+                            Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
                     }
                 });

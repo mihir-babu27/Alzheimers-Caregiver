@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_margin="4dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@drawable/image_background"
+        android:contentDescription="@string/medicine_image" />
+
+    <ImageButton
+        android:id="@+id/removeImageButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="4dp"
+        android:background="@drawable/circle_red_background"
+        android:src="@drawable/ic_close_white"
+        android:contentDescription="@string/remove_image"
+        android:padding="4dp" />
+
+</FrameLayout>

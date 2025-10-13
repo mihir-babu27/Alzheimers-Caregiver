@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Rules for medicine images
+    match /medicine_images/{patientId}/{imageId} {
+      // Allow authenticated users to upload images for their own patient ID
+      // OR caretakers can upload images for patients they manage
+      allow read, write: if request.auth != null && (
+        // Patient can manage their own images
+        request.auth.uid == patientId ||
+        // Caretakers can upload images (we'll validate caretaker permissions in the app)
+        isValidCaretaker()
+      );
+    }
+    
+    // Allow authenticated users to read any medicine image (for display purposes)
+    match /medicine_images/{allPaths=**} {
+      allow read: if request.auth != null;
+    }
+    
+    // Function to check if user is a valid caretaker
+    function isValidCaretaker() {
+      // For now, allow any authenticated user to be a caretaker
+      // In production, you'd check against a caretaker collection
+      return request.auth != null;
+    }
+  }
+}

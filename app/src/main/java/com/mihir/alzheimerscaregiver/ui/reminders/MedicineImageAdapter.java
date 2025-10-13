@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.mihir.alzheimerscaregiver.R;
 
 import java.io.InputStream;
@@ -84,9 +87,35 @@ public class MedicineImageAdapter extends RecyclerView.Adapter<MedicineImageAdap
                     if (inputStream != null) {
                         inputStream.close();
                     }
+                } else if (imageUrl.startsWith("data:image/")) {
+                    // Load from Base64 string (Free cross-app solution)
+                    try {
+                        // Extract Base64 data from data URL
+                        String base64Data = imageUrl.substring(imageUrl.indexOf(",") + 1);
+                        byte[] decodedBytes = android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                        medicineImageView.setImageBitmap(bitmap);
+                        Log.d("MedicineImageAdapter", "Successfully loaded Base64 image");
+                    } catch (Exception e) {
+                        Log.e("MedicineImageAdapter", "Failed to decode Base64 image", e);
+                        medicineImageView.setImageResource(R.drawable.ic_image_placeholder);
+                    }
+                } else if (imageUrl.startsWith("https://") && imageUrl.contains("firebasestorage.googleapis.com")) {
+                    // Load from Firebase Storage URL (if Firebase Storage is enabled)
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference imageRef = storage.getReferenceFromUrl(imageUrl);
+                    
+                    // Download image and display it
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        medicineImageView.setImageBitmap(bitmap);
+                    }).addOnFailureListener(exception -> {
+                        Log.e("MedicineImageAdapter", "Failed to load image from Firebase Storage", exception);
+                        medicineImageView.setImageResource(R.drawable.ic_image_placeholder);
+                    });
                 } else {
-                    // For now, show placeholder for Firebase URLs or other remote images
-                    // In a full implementation, you'd use Glide or Picasso here
+                    // For other remote images or unknown formats
                     medicineImageView.setImageResource(R.drawable.ic_image_placeholder);
                 }
             } catch (Exception e) {

@@ -5,6 +5,12 @@
         <item>mcq</item>
     </string-array>
     <color name="black">#FF000000</color>
+    <color name="colorAccent">#FF03DAC5</color>
+    <color name="colorPrimary">#FF6200EE</color>
+    <color name="colorPrimaryDark">#FF3700B3</color>
+    <color name="gray_light">#E0E0E0</color>
+    <color name="gray_medium">#9E9E9E</color>
+    <color name="gray_very_light">#F5F5F5</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -13,8 +19,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="add_emergency_contact">Add Emergency Contact</string>
+    <string name="add_image">Add Image</string>
     <string name="add_medication">Add Medication</string>
     <string name="add_medication_reminder">Add Medication Reminder</string>
+    <string name="add_medicine">Add Medicine</string>
     <string name="add_task">Add Task</string>
     <string name="add_task_reminder">Add Task Reminder</string>
     <string name="already_have_account">Already have an account? </string>
@@ -24,6 +32,7 @@
     <string name="contact_added_successfully">Emergency contact added successfully!</string>
     <string name="contact_name">Contact Name</string>
     <string name="contact_name_hint">e.g., Dr. Sharma</string>
+    <string name="description_hint">Enter reminder description (optional)</string>
     <string name="dont_have_account">Don\'t have an account? </string>
     <string name="dosage">Dosage</string>
     <string name="dosage_hint">e.g., 10mg</string>
@@ -37,6 +46,7 @@
     <string name="google_app_id" translatable="false">1:1092854188528:android:6581dd1fd9af8deee27535</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBbCZZ7NPDeZBA6eYtPSMCaw-L7O4RhDvI</string>
     <string name="google_storage_bucket" translatable="false">recallar-12588.firebasestorage.app</string>
+    <string name="images">Images</string>
     <string name="invalid_patient_id">Invalid Patient ID</string>
     <string name="link">Link</string>
     <string name="link_patient">Link Patient</string>
@@ -47,6 +57,9 @@
     <string name="medication_added_successfully">Medication added successfully!</string>
     <string name="medication_name">Medication Name</string>
     <string name="medication_name_hint">e.g., Donepezil</string>
+    <string name="medicine_image">Medicine Image</string>
+    <string name="medicine_name_hint_multiple">Enter medicine name</string>
+    <string name="medicines">Medicines</string>
     <string name="network_error">Network error. Please check your connection.</string>
     <string name="password">Password</string>
     <string name="patient_id_hint">Patient ID</string>
@@ -57,6 +70,9 @@
     <string name="register">Register</string>
     <string name="relation">Relation</string>
     <string name="relation_hint">e.g., Primary Doctor</string>
+    <string name="remove_image">Remove Image</string>
+    <string name="remove_medicine">Remove Medicine</string>
+    <string name="repeat_daily">Repeat daily</string>
     <string name="save">Save</string>
     <string name="scheduled_date_hint">Scheduled Date</string>
     <string name="sign_in">Sign In</string>

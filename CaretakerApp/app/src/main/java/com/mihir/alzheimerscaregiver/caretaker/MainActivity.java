@@ -3,21 +3,23 @@ package com.mihir.alzheimerscaregiver.caretaker;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.mihir.alzheimerscaregiver.caretaker.auth.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+    
     private Button addMedicationButton, addTaskButton, addEmergencyContactButton, logoutButton, viewMmseResultsButton;
     private Button scheduleMmseTestButton, addCustomQuestionsButton, addPatientProfileButton;
     private TextView welcomeText;
-    private FirebaseAuth mAuth;
+    private SessionManager sessionManager;
     private SharedPreferences prefs;
     private String linkedPatientId;
 
@@ -25,10 +27,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        Log.d(TAG, "MainActivity created");
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        // Initialize SessionManager and SharedPreferences
+        sessionManager = new SessionManager(this);
         prefs = getSharedPreferences("CaretakerApp", MODE_PRIVATE);
+        
+        // Verify user is still authenticated before proceeding
+        if (!sessionManager.isUserAuthenticated()) {
+            Log.w(TAG, "User not authenticated in MainActivity, redirecting to splash");
+            redirectToSplash();
+            return;
+        }
 
         // Get linked patient ID
         linkedPatientId = prefs.getString("linkedPatientId", null);
@@ -104,16 +115,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        // Sign out from Firebase
-        mAuth.signOut();
+        Log.d(TAG, "User requesting logout");
+        
+        // Use SessionManager to handle proper logout
+        sessionManager.signOut();
         
         // Clear local preferences
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.apply();
         
-        // Go back to login
-        Intent intent = new Intent(this, com.mihir.alzheimerscaregiver.caretaker.auth.LoginActivity.class);
+        // Redirect to splash (which will route to login)
+        redirectToSplash();
+    }
+    
+    /**
+     * Redirect to SplashActivity for proper authentication flow
+     */
+    private void redirectToSplash() {
+        Intent intent = new Intent(this, SplashActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -122,13 +142,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Check if user is still authenticated
-        if (mAuth.getCurrentUser() == null) {
-            // User not authenticated, go to login
-            Intent intent = new Intent(this, com.mihir.alzheimerscaregiver.caretaker.auth.LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+        
+        // Check if user is still authenticated using SessionManager
+        if (!sessionManager.isUserAuthenticated()) {
+            Log.w(TAG, "User authentication lost, redirecting to splash");
+            redirectToSplash();
         }
     }
 }

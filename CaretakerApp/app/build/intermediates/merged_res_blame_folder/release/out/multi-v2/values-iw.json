@@ -1,8 +1,25 @@
 {
     "logs": [
         {
-            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-35:/values-iw/values-iw.xml",
+            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-36:/values-iw/values-iw.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\5e140008dbff1b20405d8eb5d9395a1e\\transformed\\play-services-basement-18.3.0\\res\\values-iw\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "113",
+                        "endOffsets": "308"
+                    },
+                    "to": {
+                        "startLines": "50",
+                        "startColumns": "4",
+                        "startOffsets": "4688",
+                        "endColumns": "117",
+                        "endOffsets": "4801"
+                    }
+                },
                 {
                     "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\6df52a99ec39c8a6c297479eccaa5576\\transformed\\material-1.11.0\\res\\values-iw\\values-iw.xml",
                     "from": {
@@ -40,23 +57,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\c3dcc598d822a7ff1bdc5f558c723a48\\transformed\\play-services-base-18.0.1\\res\\values-iw\\values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "193,292,442,563,663,798,919,1027,1126,1258,1358,1499,1618,1748,1889,1945,2001",
-                        "endColumns": "98,149,120,99,134,120,107,98,131,99,140,118,129,140,55,55,76",
-                        "endOffsets": "291,441,562,662,797,918,1026,1125,1257,1357,1498,1617,1747,1888,1944,2000,2077"
-                    },
-                    "to": {
-                        "startLines": "42,43,44,45,46,47,48,49,51,52,53,54,55,56,57,58,59",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "3723,3826,3980,4105,4209,4348,4473,4585,4806,4942,5046,5191,5314,5448,5593,5653,5713",
-                        "endColumns": "102,153,124,103,138,124,111,102,135,103,144,122,133,144,59,59,80",
-                        "endOffsets": "3821,3975,4100,4204,4343,4468,4580,4683,4937,5041,5186,5309,5443,5588,5648,5708,5789"
-                    }
-                },
-                {
                     "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\4f2e35475fee0b05967cf35533701264\\transformed\\core-1.9.0\\res\\values-iw\\values-iw.xml",
                     "from": {
                         "startLines": "2",
@@ -91,20 +91,20 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\defb5bbfd1b69bcdb77cfc0bba6add10\\transformed\\play-services-basement-18.1.0\\res\\values-iw\\values.xml",
+                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\dc97446591a36eb030f1781a326755ca\\transformed\\play-services-base-18.1.0\\res\\values-iw\\values.xml",
                     "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "113",
-                        "endOffsets": "308"
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "193,292,442,563,663,798,919,1027,1126,1258,1358,1499,1618,1748,1889,1945,2001",
+                        "endColumns": "98,149,120,99,134,120,107,98,131,99,140,118,129,140,55,55,76",
+                        "endOffsets": "291,441,562,662,797,918,1026,1125,1257,1357,1498,1617,1747,1888,1944,2000,2077"
                     },
                     "to": {
-                        "startLines": "50",
-                        "startColumns": "4",
-                        "startOffsets": "4688",
-                        "endColumns": "117",
-                        "endOffsets": "4801"
+                        "startLines": "42,43,44,45,46,47,48,49,51,52,53,54,55,56,57,58,59",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3723,3826,3980,4105,4209,4348,4473,4585,4806,4942,5046,5191,5314,5448,5593,5653,5713",
+                        "endColumns": "102,153,124,103,138,124,111,102,135,103,144,122,133,144,59,59,80",
+                        "endOffsets": "3821,3975,4100,4204,4343,4468,4580,4683,4937,5041,5186,5309,5443,5588,5648,5708,5789"
                     }
                 }
             ]

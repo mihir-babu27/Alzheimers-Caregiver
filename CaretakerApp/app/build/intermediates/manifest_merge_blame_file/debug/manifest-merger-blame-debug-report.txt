@@ -45,7 +45,7 @@
 24-->[androidx.core:core:1.9.0] C:\Users\mihir\.gradle\caches\transforms-3\4f2e35475fee0b05967cf35533701264\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
 25
 26    <application
-26-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:13:5-93:19
+26-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:13:5-99:19
 27        android:allowBackup="true"
 27-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:14:9-35
 28        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -67,319 +67,353 @@
 37        android:testOnly="true"
 38        android:theme="@style/Theme.CaretakerApp" >
 38-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:21:9-50
-39        <activity
-39-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:24:9-32:20
-40            android:name="com.mihir.alzheimerscaregiver.caretaker.auth.LoginActivity"
-40-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:25:13-47
-41            android:exported="true"
-41-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:26:13-36
-42            android:theme="@style/Theme.CaretakerApp.NoActionBar" >
-42-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:27:13-66
-43            <intent-filter>
-43-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:28:13-31:29
-44                <action android:name="android.intent.action.MAIN" />
-44-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:29:17-69
-44-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:29:25-66
-45
-46                <category android:name="android.intent.category.LAUNCHER" />
-46-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:30:17-77
-46-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:30:27-74
-47            </intent-filter>
-48        </activity>
-49        <activity
-49-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:34:9-37:69
-50            android:name="com.mihir.alzheimerscaregiver.caretaker.auth.RegisterActivity"
-50-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:35:13-50
-51            android:exported="false"
-51-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:36:13-37
-52            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
-52-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:37:13-66
-53        <activity
-53-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:39:9-41:40
-54            android:name="com.mihir.alzheimerscaregiver.caretaker.PatientLinkActivity"
-54-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:40:13-48
-55            android:exported="false" />
-55-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:41:13-37
-56        <activity
-56-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:43:9-45:40
-57            android:name="com.mihir.alzheimerscaregiver.caretaker.ScheduleMmseTestActivity"
-57-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:44:13-53
-58            android:exported="false" />
-58-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:45:13-37
+39
+40        <!-- SplashActivity as the main launcher -->
+41        <activity
+41-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:25:9-33:20
+42            android:name="com.mihir.alzheimerscaregiver.caretaker.SplashActivity"
+42-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:26:13-43
+43            android:exported="true"
+43-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:27:13-36
+44            android:theme="@style/Theme.CaretakerApp.NoActionBar" >
+44-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:28:13-66
+45            <intent-filter>
+45-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:29:13-32:29
+46                <action android:name="android.intent.action.MAIN" />
+46-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:30:17-69
+46-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:30:25-66
+47
+48                <category android:name="android.intent.category.LAUNCHER" />
+48-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:31:17-77
+48-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:31:27-74
+49            </intent-filter>
+50        </activity>
+51        <activity
+51-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:35:9-38:69
+52            android:name="com.mihir.alzheimerscaregiver.caretaker.auth.LoginActivity"
+52-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:36:13-47
+53            android:exported="false"
+53-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:37:13-37
+54            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+54-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:38:13-66
+55        <activity
+55-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:40:9-43:69
+56            android:name="com.mihir.alzheimerscaregiver.caretaker.auth.RegisterActivity"
+56-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:41:13-50
+57            android:exported="false"
+57-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:42:13-37
+58            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+58-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:43:13-66
 59        <activity
-59-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:47:9-49:40
-60            android:name="com.mihir.alzheimerscaregiver.caretaker.MainActivity"
-60-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:48:13-41
+59-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:45:9-47:40
+60            android:name="com.mihir.alzheimerscaregiver.caretaker.PatientLinkActivity"
+60-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:46:13-48
 61            android:exported="false" />
-61-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:49:13-37
+61-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:47:13-37
 62        <activity
-62-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:51:9-53:40
-63            android:name="com.mihir.alzheimerscaregiver.caretaker.AddMedicationActivity"
-63-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:52:13-50
+62-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:49:9-51:40
+63            android:name="com.mihir.alzheimerscaregiver.caretaker.ScheduleMmseTestActivity"
+63-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:50:13-53
 64            android:exported="false" />
-64-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:53:13-37
+64-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:51:13-37
 65        <activity
-65-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:55:9-57:40
-66            android:name="com.mihir.alzheimerscaregiver.caretaker.AddTaskActivity"
-66-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:56:13-44
+65-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:53:9-55:40
+66            android:name="com.mihir.alzheimerscaregiver.caretaker.MainActivity"
+66-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:54:13-41
 67            android:exported="false" />
-67-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:57:13-37
+67-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:55:13-37
 68        <activity
-68-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:59:9-61:40
-69            android:name="com.mihir.alzheimerscaregiver.caretaker.AddEmergencyContactActivity"
-69-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:60:13-56
+68-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:57:9-59:40
+69            android:name="com.mihir.alzheimerscaregiver.caretaker.AddMedicationActivity"
+69-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:58:13-50
 70            android:exported="false" />
-70-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:61:13-37
+70-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:59:13-37
 71        <activity
-71-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:63:9-65:40
-72            android:name="com.mihir.alzheimerscaregiver.caretaker.SettingsActivity"
-72-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:64:13-45
+71-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:61:9-63:40
+72            android:name="com.mihir.alzheimerscaregiver.caretaker.AddTaskActivity"
+72-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:62:13-44
 73            android:exported="false" />
-73-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:65:13-37
+73-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:63:13-37
 74        <activity
-74-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:67:9-69:40
-75            android:name="com.mihir.alzheimerscaregiver.caretaker.MmseResultsActivity"
-75-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:68:13-48
+74-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:65:9-67:40
+75            android:name="com.mihir.alzheimerscaregiver.caretaker.AddEmergencyContactActivity"
+75-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:66:13-56
 76            android:exported="false" />
-76-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:69:13-37
+76-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:67:13-37
 77        <activity
-77-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:72:9-74:40
-78            android:name="com.mihir.alzheimerscaregiver.caretaker.CustomMmseQuestionsActivity"
-78-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:73:13-56
+77-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:69:9-71:40
+78            android:name="com.mihir.alzheimerscaregiver.caretaker.SettingsActivity"
+78-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:70:13-45
 79            android:exported="false" />
-79-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:74:13-37
+79-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:71:13-37
 80        <activity
-80-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:76:9-78:40
-81            android:name="com.mihir.alzheimerscaregiver.caretaker.MmseResultDetailActivity"
-81-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:77:13-53
+80-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:73:9-75:40
+81            android:name="com.mihir.alzheimerscaregiver.caretaker.MmseResultsActivity"
+81-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:74:13-48
 82            android:exported="false" />
-82-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:78:13-37
+82-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:75:13-37
 83        <activity
-83-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:80:9-82:40
-84            android:name="com.mihir.alzheimerscaregiver.caretaker.PatientProfileEntryActivity"
-84-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:81:13-56
+83-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:78:9-80:40
+84            android:name="com.mihir.alzheimerscaregiver.caretaker.CustomMmseQuestionsActivity"
+84-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:79:13-56
 85            android:exported="false" />
-85-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:82:13-37
-86
-87        <!-- Broadcast Receivers for Notifications -->
-88        <receiver
-88-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:85:9-87:40
-89            android:name="com.mihir.alzheimerscaregiver.caretaker.notifications.ReminderReceiver"
-89-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:86:13-59
-90            android:exported="false" />
-90-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:87:13-37
-91        <receiver
-91-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:89:9-91:40
-92            android:name="com.mihir.alzheimerscaregiver.caretaker.notifications.TaskReminderReceiver"
-92-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:90:13-63
-93            android:exported="false" />
-93-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:91:13-37
-94
-95        <activity
-95-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:29:9-46:20
-96            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
-96-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:30:13-80
-97            android:excludeFromRecents="true"
-97-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:31:13-46
-98            android:exported="true"
-98-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:32:13-36
-99            android:launchMode="singleTask"
-99-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:33:13-44
-100            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-100-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:34:13-72
-101            <intent-filter>
-101-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:35:13-45:29
-102                <action android:name="android.intent.action.VIEW" />
-102-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:17-69
-102-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:25-66
-103
-104                <category android:name="android.intent.category.DEFAULT" />
-104-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:17-76
-104-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:27-73
-105                <category android:name="android.intent.category.BROWSABLE" />
-105-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:17-78
-105-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:27-75
-106
-107                <data
-107-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:41:17-44:51
-108                    android:host="firebase.auth"
-108-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:42:21-49
-109                    android:path="/"
-109-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:43:21-37
-110                    android:scheme="genericidp" />
-110-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:44:21-48
-111            </intent-filter>
-112        </activity>
-113        <activity
-113-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:47:9-64:20
-114            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
-114-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:48:13-79
-115            android:excludeFromRecents="true"
-115-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:49:13-46
-116            android:exported="true"
-116-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:50:13-36
-117            android:launchMode="singleTask"
-117-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:51:13-44
-118            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-118-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:52:13-72
-119            <intent-filter>
-119-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:53:13-63:29
-120                <action android:name="android.intent.action.VIEW" />
-120-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:17-69
-120-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:25-66
-121
-122                <category android:name="android.intent.category.DEFAULT" />
-122-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:17-76
-122-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:27-73
-123                <category android:name="android.intent.category.BROWSABLE" />
-123-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:17-78
-123-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:27-75
-124
-125                <data
-125-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:41:17-44:51
-126                    android:host="firebase.auth"
-126-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:42:21-49
-127                    android:path="/"
-127-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:43:21-37
-128                    android:scheme="recaptcha" />
-128-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:44:21-48
-129            </intent-filter>
-130        </activity>
-131
-132        <service
-132-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:66:9-72:19
-133            android:name="com.google.firebase.components.ComponentDiscoveryService"
-133-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:67:13-84
-134            android:directBootAware="true"
-134-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:32:13-43
-135            android:exported="false" >
-135-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:68:13-37
-136            <meta-data
-136-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:69:13-71:85
-137                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
-137-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:70:17-109
-138                android:value="com.google.firebase.components.ComponentRegistrar" />
-138-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:71:17-82
-139            <meta-data
-139-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:17:13-19:85
-140                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
-140-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:18:17-122
-141                android:value="com.google.firebase.components.ComponentRegistrar" />
-141-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:19:17-82
+85-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:80:13-37
+86        <activity
+86-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:82:9-84:40
+87            android:name="com.mihir.alzheimerscaregiver.caretaker.MmseResultDetailActivity"
+87-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:83:13-53
+88            android:exported="false" />
+88-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:84:13-37
+89        <activity
+89-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:86:9-88:40
+90            android:name="com.mihir.alzheimerscaregiver.caretaker.PatientProfileEntryActivity"
+90-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:87:13-56
+91            android:exported="false" />
+91-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:88:13-37
+92
+93        <!-- Broadcast Receivers for Notifications -->
+94        <receiver
+94-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:91:9-93:40
+95            android:name="com.mihir.alzheimerscaregiver.caretaker.notifications.ReminderReceiver"
+95-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:92:13-59
+96            android:exported="false" />
+96-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:93:13-37
+97        <receiver
+97-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:95:9-97:40
+98            android:name="com.mihir.alzheimerscaregiver.caretaker.notifications.TaskReminderReceiver"
+98-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:96:13-63
+99            android:exported="false" />
+99-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:97:13-37
+100
+101        <activity
+101-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:29:9-46:20
+102            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+102-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:30:13-80
+103            android:excludeFromRecents="true"
+103-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:31:13-46
+104            android:exported="true"
+104-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:32:13-36
+105            android:launchMode="singleTask"
+105-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:33:13-44
+106            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+106-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:34:13-72
+107            <intent-filter>
+107-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:35:13-45:29
+108                <action android:name="android.intent.action.VIEW" />
+108-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:17-69
+108-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:25-66
+109
+110                <category android:name="android.intent.category.DEFAULT" />
+110-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:17-76
+110-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:27-73
+111                <category android:name="android.intent.category.BROWSABLE" />
+111-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:17-78
+111-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:27-75
+112
+113                <data
+113-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:41:17-44:51
+114                    android:host="firebase.auth"
+114-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:42:21-49
+115                    android:path="/"
+115-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:43:21-37
+116                    android:scheme="genericidp" />
+116-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:44:21-48
+117            </intent-filter>
+118        </activity>
+119        <activity
+119-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:47:9-64:20
+120            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+120-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:48:13-79
+121            android:excludeFromRecents="true"
+121-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:49:13-46
+122            android:exported="true"
+122-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:50:13-36
+123            android:launchMode="singleTask"
+123-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:51:13-44
+124            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+124-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:52:13-72
+125            <intent-filter>
+125-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:53:13-63:29
+126                <action android:name="android.intent.action.VIEW" />
+126-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:17-69
+126-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:36:25-66
+127
+128                <category android:name="android.intent.category.DEFAULT" />
+128-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:17-76
+128-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:38:27-73
+129                <category android:name="android.intent.category.BROWSABLE" />
+129-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:17-78
+129-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:39:27-75
+130
+131                <data
+131-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:41:17-44:51
+132                    android:host="firebase.auth"
+132-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:42:21-49
+133                    android:path="/"
+133-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:43:21-37
+134                    android:scheme="recaptcha" />
+134-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:44:21-48
+135            </intent-filter>
+136        </activity>
+137
+138        <service
+138-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:66:9-72:19
+139            android:name="com.google.firebase.components.ComponentDiscoveryService"
+139-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:67:13-84
+140            android:directBootAware="true"
+140-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:32:13-43
+141            android:exported="false" >
+141-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:68:13-37
 142            <meta-data
-142-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:20:13-22:85
-143                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-143-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:21:17-111
+142-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:69:13-71:85
+143                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+143-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:70:17-109
 144                android:value="com.google.firebase.components.ComponentRegistrar" />
-144-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:22:17-82
+144-->[com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:71:17-82
 145            <meta-data
-145-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:12:13-14:85
-146                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
-146-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:13:17-116
+145-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:17:13-19:85
+146                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+146-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:18:17-122
 147                android:value="com.google.firebase.components.ComponentRegistrar" />
-147-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:14:17-82
+147-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:19:17-82
 148            <meta-data
-148-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:35:13-37:85
-149                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
-149-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:36:17-109
+148-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:20:13-22:85
+149                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+149-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:21:17-111
 150                android:value="com.google.firebase.components.ComponentRegistrar" />
-150-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:37:17-82
-151        </service>
-152
-153        <provider
-153-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:23:9-28:39
-154            android:name="com.google.firebase.provider.FirebaseInitProvider"
-154-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:24:13-77
-155            android:authorities="com.mihir.alzheimerscaregiver.caretaker.firebaseinitprovider"
-155-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:25:13-72
-156            android:directBootAware="true"
-156-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:26:13-43
-157            android:exported="false"
-157-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:27:13-37
-158            android:initOrder="100" />
-158-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:28:13-36
-159
-160        <activity
-160-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
-161            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-161-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:19-85
-162            android:exported="false"
-162-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:22:19-43
-163            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-163-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:21:19-78
-164
-165        <provider
-165-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-166            android:name="androidx.startup.InitializationProvider"
-166-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
-167            android:authorities="com.mihir.alzheimerscaregiver.caretaker.androidx-startup"
-167-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
-168            android:exported="false" >
-168-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
-169            <meta-data
-169-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-170                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-170-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
-171                android:value="androidx.startup" />
-171-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
-172            <meta-data
-172-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:29:13-31:52
-173                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-173-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:30:17-78
-174                android:value="androidx.startup" />
-174-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:31:17-49
-175            <meta-data
-175-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-176                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-176-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
-177                android:value="androidx.startup" />
-177-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-178        </provider>
-179
-180        <meta-data
-180-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
-181            android:name="com.google.android.gms.version"
-181-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
-182            android:value="@integer/google_play_services_version" />
-182-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
-183
-184        <receiver
-184-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-185            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-185-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-186            android:directBootAware="false"
-186-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-187            android:enabled="true"
-187-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-188            android:exported="true"
-188-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-189            android:permission="android.permission.DUMP" >
-189-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-190            <intent-filter>
-190-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-191                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-191-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-191-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-192            </intent-filter>
-193            <intent-filter>
-193-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-194                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-194-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-194-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-195            </intent-filter>
-196            <intent-filter>
-196-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-197                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-197-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-197-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
-198            </intent-filter>
-199            <intent-filter>
-199-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-200                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-200-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-200-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
-201            </intent-filter>
-202        </receiver>
-203    </application>
-204
-205</manifest>
+150-->[com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:22:17-82
+151            <meta-data
+151-->[com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:30:13-32:85
+152                android:name="com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar"
+152-->[com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:31:17-118
+153                android:value="com.google.firebase.components.ComponentRegistrar" />
+153-->[com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:32:17-82
+154            <meta-data
+154-->[com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:33:13-35:85
+155                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+155-->[com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:34:17-107
+156                android:value="com.google.firebase.components.ComponentRegistrar" />
+156-->[com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:35:17-82
+157            <meta-data
+157-->[com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:25:13-27:85
+158                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar"
+158-->[com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:26:17-120
+159                android:value="com.google.firebase.components.ComponentRegistrar" />
+159-->[com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:27:17-82
+160            <meta-data
+160-->[com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:28:13-30:85
+161                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar"
+161-->[com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:29:17-117
+162                android:value="com.google.firebase.components.ComponentRegistrar" />
+162-->[com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:30:17-82
+163            <meta-data
+163-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:12:13-14:85
+164                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+164-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:13:17-116
+165                android:value="com.google.firebase.components.ComponentRegistrar" />
+165-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:14:17-82
+166            <meta-data
+166-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:35:13-37:85
+167                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+167-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:36:17-109
+168                android:value="com.google.firebase.components.ComponentRegistrar" />
+168-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:37:17-82
+169        </service>
+170
+171        <provider
+171-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:23:9-28:39
+172            android:name="com.google.firebase.provider.FirebaseInitProvider"
+172-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:24:13-77
+173            android:authorities="com.mihir.alzheimerscaregiver.caretaker.firebaseinitprovider"
+173-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:25:13-72
+174            android:directBootAware="true"
+174-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:26:13-43
+175            android:exported="false"
+175-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:27:13-37
+176            android:initOrder="100" />
+176-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:28:13-36
+177
+178        <activity
+178-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+179            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+179-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+180            android:exported="false"
+180-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+181            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+181-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+182
+183        <provider
+183-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+184            android:name="androidx.startup.InitializationProvider"
+184-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+185            android:authorities="com.mihir.alzheimerscaregiver.caretaker.androidx-startup"
+185-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+186            android:exported="false" >
+186-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+187            <meta-data
+187-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+188                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+188-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+189                android:value="androidx.startup" />
+189-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+190            <meta-data
+190-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:29:13-31:52
+191                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+191-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:30:17-78
+192                android:value="androidx.startup" />
+192-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:31:17-49
+193            <meta-data
+193-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+194                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+194-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+195                android:value="androidx.startup" />
+195-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+196        </provider>
+197
+198        <meta-data
+198-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
+199            android:name="com.google.android.gms.version"
+199-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
+200            android:value="@integer/google_play_services_version" />
+200-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
+201
+202        <receiver
+202-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+203            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+203-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+204            android:directBootAware="false"
+204-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+205            android:enabled="true"
+205-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+206            android:exported="true"
+206-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+207            android:permission="android.permission.DUMP" >
+207-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+208            <intent-filter>
+208-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+209                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+209-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+209-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+210            </intent-filter>
+211            <intent-filter>
+211-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+212                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+212-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+212-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+213            </intent-filter>
+214            <intent-filter>
+214-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+215                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+215-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+215-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+216            </intent-filter>
+217            <intent-filter>
+217-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+218                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+218-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+218-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+219            </intent-filter>
+220        </receiver>
+221    </application>
+222
+223</manifest>

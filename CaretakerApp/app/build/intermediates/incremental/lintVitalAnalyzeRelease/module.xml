@@ -1,6 +1,6 @@
 <lint-module
     format="1"
-    dir="C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app"
+    dir="C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app"
     name=":app"
     type="APP"
     maven="CaretakerApp:app:"

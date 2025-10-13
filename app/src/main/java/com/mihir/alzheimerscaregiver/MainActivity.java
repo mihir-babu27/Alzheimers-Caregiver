@@ -170,6 +170,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Client-only mode: no FCM; WorkManager periodic sync is sufficient for background updates.
+        
+        // Set up cross-device notification listeners for CaretakerApp created data
+        setupCrossDeviceNotificationListeners();
     }
 
     // Schedules a quick test alarm in ~10 seconds to validate end-to-end alarm UX
@@ -548,6 +551,174 @@ protected void onResume() {
             startActivity(intent);
         } catch (Exception e) {
             android.util.Log.e("MainActivity", "Could not open app settings", e);
+        }
+    }
+    
+    /**
+     * Set up real-time Firestore listeners to detect new reminders and tasks 
+     * created by the CaretakerApp and schedule local notifications for them
+     */
+    private void setupCrossDeviceNotificationListeners() {
+        String patientId = authManager.getCurrentPatientId();
+        if (patientId == null) {
+            android.util.Log.w("MainActivity", "No patient ID available for cross-device notifications");
+            return;
+        }
+        
+        // Set up listener for medication reminders from CaretakerApp
+        setupRemindersListener(patientId);
+        
+        // Set up listener for tasks from CaretakerApp  
+        setupTasksListener(patientId);
+        
+        android.util.Log.d("MainActivity", "Cross-device notification listeners set up for patient: " + patientId);
+    }
+    
+    /**
+     * Set up real-time listener for medication reminders created by CaretakerApp
+     */
+    private void setupRemindersListener(String patientId) {
+        com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        
+        db.collection("patients")
+            .document(patientId)
+            .collection("reminders")
+            .addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>() {
+                @Override
+                public void onEvent(com.google.firebase.firestore.QuerySnapshot value, com.google.firebase.firestore.FirebaseFirestoreException error) {
+                    if (error != null) {
+                        android.util.Log.e("RemindersListener", "Error listening for reminders", error);
+                        return;
+                    }
+                    
+                    if (value != null) {
+                        for (com.google.firebase.firestore.DocumentChange change : value.getDocumentChanges()) {
+                            if (change.getType() == com.google.firebase.firestore.DocumentChange.Type.ADDED) {
+                                // New reminder added by CaretakerApp - schedule local notification
+                                com.google.firebase.firestore.DocumentSnapshot doc = change.getDocument();
+                                scheduleReminderNotification(doc);
+                            }
+                        }
+                    }
+                }
+            });
+    }
+    
+    /**
+     * Set up real-time listener for tasks created by CaretakerApp
+     */
+    private void setupTasksListener(String patientId) {
+        com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        
+        db.collection("patients")
+            .document(patientId)
+            .collection("tasks")
+            .addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>() {
+                @Override
+                public void onEvent(com.google.firebase.firestore.QuerySnapshot value, com.google.firebase.firestore.FirebaseFirestoreException error) {
+                    if (error != null) {
+                        android.util.Log.e("TasksListener", "Error listening for tasks", error);
+                        return;
+                    }
+                    
+                    if (value != null) {
+                        for (com.google.firebase.firestore.DocumentChange change : value.getDocumentChanges()) {
+                            if (change.getType() == com.google.firebase.firestore.DocumentChange.Type.ADDED) {
+                                // New task added by CaretakerApp - schedule local notification
+                                com.google.firebase.firestore.DocumentSnapshot doc = change.getDocument();
+                                scheduleTaskNotification(doc);
+                            }
+                        }
+                    }
+                }
+            });
+    }
+    
+    /**
+     * Schedule a local alarm for a medication reminder created by CaretakerApp using the existing alarm system
+     */
+    private void scheduleReminderNotification(com.google.firebase.firestore.DocumentSnapshot doc) {
+        try {
+            String title = doc.getString("title");
+            String description = doc.getString("description");
+            Long scheduledTime = doc.getLong("scheduledTimeEpochMillis");
+            Boolean isRepeating = doc.getBoolean("isRepeating");
+            
+            // Get enhanced data for cross-device reminders
+            @SuppressWarnings("unchecked")
+            java.util.List<String> medicineNames = (java.util.List<String>) doc.get("medicineNames");
+            @SuppressWarnings("unchecked")
+            java.util.List<String> imageUrls = (java.util.List<String>) doc.get("imageUrls");
+            
+            if (title != null && description != null && scheduledTime != null) {
+                // Only schedule future alarms
+                if (scheduledTime > System.currentTimeMillis()) {
+                    // Use the existing AlarmScheduler for proper alarm functionality
+                    com.mihir.alzheimerscaregiver.alarm.AlarmScheduler alarmScheduler = 
+                        new com.mihir.alzheimerscaregiver.alarm.AlarmScheduler(this);
+                    
+                    // Create a unique reminder ID for cross-device reminders
+                    String reminderId = "caretaker_" + doc.getId();
+                    
+                    // Handle null values gracefully
+                    if (medicineNames == null) medicineNames = new java.util.ArrayList<>();
+                    if (imageUrls == null) imageUrls = new java.util.ArrayList<>();
+                    if (isRepeating == null) isRepeating = false;
+                    
+                    boolean scheduled = alarmScheduler.scheduleAlarmWithExtras(
+                        reminderId, title, description, scheduledTime, 
+                        isRepeating, medicineNames, imageUrls
+                    );
+                    
+                    if (scheduled) {
+                        String alarmType = isRepeating ? "Daily repeating alarm" : "Alarm";
+                        android.util.Log.d("MainActivity", alarmType + " scheduled from CaretakerApp: " + title + " at " + scheduledTime);
+                    } else {
+                        android.util.Log.w("MainActivity", "Failed to schedule alarm for reminder: " + title);
+                    }
+                } else {
+                    android.util.Log.d("MainActivity", "Skipping past reminder: " + title);
+                }
+            }
+        } catch (Exception e) {
+            android.util.Log.e("MainActivity", "Error scheduling reminder alarm", e);
+        }
+    }
+    
+    /**
+     * Schedule a local alarm for a task created by CaretakerApp using the existing alarm system
+     */
+    private void scheduleTaskNotification(com.google.firebase.firestore.DocumentSnapshot doc) {
+        try {
+            String name = doc.getString("name");
+            String description = doc.getString("description");
+            Long scheduledTime = doc.getLong("scheduledTimeEpochMillis");
+            
+            if (name != null && description != null && scheduledTime != null) {
+                // Only schedule future alarms
+                if (scheduledTime > System.currentTimeMillis()) {
+                    // Use the existing AlarmScheduler for proper alarm functionality
+                    com.mihir.alzheimerscaregiver.alarm.AlarmScheduler alarmScheduler = 
+                        new com.mihir.alzheimerscaregiver.alarm.AlarmScheduler(this);
+                    
+                    // Create a unique reminder ID for cross-device tasks
+                    String reminderId = "caretaker_task_" + doc.getId();
+                    
+                    boolean scheduled = alarmScheduler.scheduleAlarm(
+                        reminderId, name, description, scheduledTime, false
+                    );
+                    
+                    if (scheduled) {
+                        android.util.Log.d("MainActivity", "Task alarm scheduled from CaretakerApp: " + name + " at " + scheduledTime);
+                    } else {
+                        android.util.Log.w("MainActivity", "Failed to schedule alarm for task: " + name);
+                    }
+                } else {
+                    android.util.Log.d("MainActivity", "Skipping past task: " + name);
+                }
+            }
+        } catch (Exception e) {
+            android.util.Log.e("MainActivity", "Error scheduling task alarm", e);
         }
     }
 }

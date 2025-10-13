@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-35:/values-my/values-my.xml",
+            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-36:/values-my/values-my.xml",
             "map": [
                 {
                     "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\bbdbc5911370b193e693fdb91c5cebe3\\transformed\\appcompat-1.6.1\\res\\values-my\\values-my.xml",
@@ -40,7 +40,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\defb5bbfd1b69bcdb77cfc0bba6add10\\transformed\\play-services-basement-18.1.0\\res\\values-my\\values.xml",
+                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\dc97446591a36eb030f1781a326755ca\\transformed\\play-services-base-18.1.0\\res\\values-my\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "193,296,456,586,693,836,964,1083,1189,1361,1463,1629,1768,1922,2105,2171,2240",
+                        "endColumns": "102,159,129,106,142,127,118,105,171,101,165,138,153,182,65,68,84",
+                        "endOffsets": "295,455,585,692,835,963,1082,1188,1360,1462,1628,1767,1921,2104,2170,2239,2324"
+                    },
+                    "to": {
+                        "startLines": "41,42,43,44,45,46,47,48,50,51,52,53,54,55,56,57,58",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3867,3974,4138,4272,4383,4530,4662,4785,5049,5225,5331,5501,5644,5802,5989,6059,6132",
+                        "endColumns": "106,163,133,110,146,131,122,109,175,105,169,142,157,186,69,72,88",
+                        "endOffsets": "3969,4133,4267,4378,4525,4657,4780,4890,5220,5326,5496,5639,5797,5984,6054,6127,6216"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\5e140008dbff1b20405d8eb5d9395a1e\\transformed\\play-services-basement-18.3.0\\res\\values-my\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -71,23 +88,6 @@
                         "startOffsets": "11516",
                         "endColumns": "100",
                         "endOffsets": "11612"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\c3dcc598d822a7ff1bdc5f558c723a48\\transformed\\play-services-base-18.0.1\\res\\values-my\\values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "193,296,456,586,693,836,964,1083,1189,1361,1463,1629,1768,1922,2105,2171,2240",
-                        "endColumns": "102,159,129,106,142,127,118,105,171,101,165,138,153,182,65,68,84",
-                        "endOffsets": "295,455,585,692,835,963,1082,1188,1360,1462,1628,1767,1921,2104,2170,2239,2324"
-                    },
-                    "to": {
-                        "startLines": "41,42,43,44,45,46,47,48,50,51,52,53,54,55,56,57,58",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "3867,3974,4138,4272,4383,4530,4662,4785,5049,5225,5331,5501,5644,5802,5989,6059,6132",
-                        "endColumns": "106,163,133,110,146,131,122,109,175,105,169,142,157,186,69,72,88",
-                        "endOffsets": "3969,4133,4267,4378,4525,4657,4780,4890,5220,5326,5496,5639,5797,5984,6054,6127,6216"
                     }
                 },
                 {

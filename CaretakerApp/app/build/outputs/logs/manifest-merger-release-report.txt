@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-56:12
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-95:12
+INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-95:12
+INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-95:12
+INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:1-95:12
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\mihir\.gradle\caches\transforms-3\6df52a99ec39c8a6c297479eccaa5576\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\mihir\.gradle\caches\transforms-3\26755a2a752df495f6d755b18cb90400\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\mihir\.gradle\caches\transforms-3\4decf1ddfa0735b84c24843545e5c64f\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -11,17 +11,21 @@ MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\mihir\.gradle\caches\t
 MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] C:\Users\mihir\.gradle\caches\transforms-3\1e501a12781e95fd14b4ce2613d947cf\transformed\viewpager2-1.1.0-beta02\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.recyclerview:recyclerview:1.3.2] C:\Users\mihir\.gradle\caches\transforms-3\68cd0c868e57a41f3176eff6758aa93b\transformed\recyclerview-1.3.2\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\72e8f9c55b7af44063f0d5311a50ad99\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\mihir\.gradle\caches\transforms-3\afaf0a987493b256a962d3834fdc1dab\transformed\MPAndroidChart-v3.1.0\AndroidManifest.xml:2:1-20:12
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:17:1-75:12
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:2:1-26:12
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:15:1-39:12
+MERGED from [com.github.bumptech.glide:glide:4.16.0] C:\Users\mihir\.gradle\caches\transforms-3\f967a9aa15ccc6f0d7d04ccb74e28acf\transformed\glide-4.16.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:15:1-34:12
 MERGED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:2:1-18:12
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\mihir\.gradle\caches\transforms-3\f02a4863aa9afcbd0d49628fcdfe1c16\transformed\firebase-auth-interop-20.0.0\AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:15:1-41:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.4.0] C:\Users\mihir\.gradle\caches\transforms-3\c80384c9e2f2c887a9bd83cf5ac46575\transformed\play-services-auth-api-phone-17.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\3399567794b6d68bffc1922894a3dbe5\transformed\firebase-database-collection-18.0.1\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.1.0] C:\Users\mihir\.gradle\caches\transforms-3\9aefe8337e4c1471a389ee7375970a78\transformed\firebase-appcheck-interop-17.1.0\AndroidManifest.xml:15:1-23:12
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:16:1-24:12
 MERGED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.play:integrity:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\340c1dd81f3a4fbd17e592f8dc384d17\transformed\integrity-1.2.0\AndroidManifest.xml:2:1-7:12
-MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\mihir\.gradle\caches\transforms-3\2d4346456634ee027d430908b77f13d1\transformed\firebase-appcheck-interop-17.0.0\AndroidManifest.xml:15:1-25:12
-MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\3399567794b6d68bffc1922894a3dbe5\transformed\firebase-database-collection-18.0.1\AndroidManifest.xml:2:1-9:12
-MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:16:1-24:12
 MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\0448b775c20436a2184eed801daa3667\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:17:1-35:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\3dc6438af48a9b591edeea1a878f3ff3\transformed\drawerlayout-1.1.1\AndroidManifest.xml:17:1-24:12
@@ -45,17 +49,19 @@ MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.1] C:\Users\mihir\.gradle
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\4b5e054b52b636c0d11b5036d96408d7\transformed\lifecycle-viewmodel-2.6.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\bdcb4109e2c5c8f1a61190d295b831ac\transformed\lifecycle-runtime-2.6.1\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\fb394c5ca5800c86bb96b4ddef695fc0\transformed\lifecycle-viewmodel-savedstate-2.6.1\AndroidManifest.xml:17:1-22:12
-MERGED from [com.google.android.gms:play-services-tasks:18.0.2] C:\Users\mihir\.gradle\caches\transforms-3\022da76d7801abe7d950b66f07a0270c\transformed\play-services-tasks-18.0.2\AndroidManifest.xml:2:1-6:12
-MERGED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:16:1-26:12
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\97e22c314dbc798d17f669e51bab6f64\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:16:1-26:12
 MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\mihir\.gradle\caches\transforms-3\69f5daec98c366e49b94f1d99757673e\transformed\fragment-1.3.6\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.activity:activity:1.8.0] C:\Users\mihir\.gradle\caches\transforms-3\9a28aa5bf58e597bbbc6f2914942d752\transformed\activity-1.8.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\dca5fd12ba85d30c0f6d8edd33df7cce\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\13108bfaa36eb9e0db4e66464a249e67\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
-MERGED from [com.google.firebase:firebase-components:17.1.5] C:\Users\mihir\.gradle\caches\transforms-3\49b8d09eba2210f27e5137d98826aed2\transformed\firebase-components-17.1.5\AndroidManifest.xml:15:1-20:12
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.16.0] C:\Users\mihir\.gradle\caches\transforms-3\ae13e94f50e5a9e72455ebc6a18d5302\transformed\gifdecoder-4.16.0\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\mihir\.gradle\caches\transforms-3\110194b91ed9c93e3a05f39197841dc2\transformed\exifinterface-1.3.6\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:17:1-55:12
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\7ea0837654062604342cccb5ec32434c\transformed\startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\401af1fb36f7facf50f452613bd416f5\transformed\tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\13108bfaa36eb9e0db4e66464a249e67\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.firebase:firebase-components:17.1.5] C:\Users\mihir\.gradle\caches\transforms-3\49b8d09eba2210f27e5137d98826aed2\transformed\firebase-components-17.1.5\AndroidManifest.xml:15:1-20:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\e3af232332154f8c95f5f05626523cf6\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\mihir\.gradle\caches\transforms-3\08d347da9f0337149de7d6f2c5aaa783\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\2cb2a0f3267dd4ff7459ef7152c6ff6c\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -64,40 +70,64 @@ MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\mihir\.
 MERGED from [io.grpc:grpc-android:1.57.2] C:\Users\mihir\.gradle\caches\transforms-3\e2fb3f969ed9f00651f802171c75cec7\transformed\grpc-android-1.57.2\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] C:\Users\mihir\.gradle\caches\transforms-3\9761665eb59efa88196635c9f5a892b4\transformed\protolite-well-known-types-18.0.0\AndroidManifest.xml:2:1-11:12
 	package
-		INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
 	xmlns:tools
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:3:5-51
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:5:5-67
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:5:5-67
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:25:5-67
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:25:5-67
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:11:5-67
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:11:5-67
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:24:5-67
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:7:5-67
 MERGED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:7:5-67
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:5:22-64
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:5:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:6:5-79
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:6:5-79
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:26:5-79
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:26:5-79
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:10:5-79
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:10:5-79
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:23:5-79
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:8:5-79
 MERGED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:8:5-79
 MERGED from [io.grpc:grpc-android:1.57.2] C:\Users\mihir\.gradle\caches\transforms-3\e2fb3f969ed9f00651f802171c75cec7\transformed\grpc-android-1.57.2\AndroidManifest.xml:7:5-79
 MERGED from [io.grpc:grpc-android:1.57.2] C:\Users\mihir\.gradle\caches\transforms-3\e2fb3f969ed9f00651f802171c75cec7\transformed\grpc-android-1.57.2\AndroidManifest.xml:7:5-79
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:6:22-76
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:6:22-76
+uses-permission#android.permission.SCHEDULE_EXACT_ALARM
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:7:22-76
+uses-permission#android.permission.USE_EXACT_ALARM
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:8:5-74
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:8:22-71
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:9:5-77
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:9:22-74
+uses-permission#android.permission.VIBRATE
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:10:5-66
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:10:22-63
+uses-permission#android.permission.WAKE_LOCK
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:11:5-68
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:11:22-65
 application
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:8:5-54:19
-INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:8:5-54:19
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:13:5-93:19
+INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:13:5-93:19
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\mihir\.gradle\caches\transforms-3\6df52a99ec39c8a6c297479eccaa5576\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\mihir\.gradle\caches\transforms-3\6df52a99ec39c8a6c297479eccaa5576\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\mihir\.gradle\caches\transforms-3\26755a2a752df495f6d755b18cb90400\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -106,116 +136,168 @@ MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\ca
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:28:5-73:19
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:13:5-24:19
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:13:5-24:19
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:26:5-37:19
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:26:5-37:19
+MERGED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:21:5-32:19
+MERGED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:21:5-32:19
 MERGED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:8:5-16:19
 MERGED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:8:5-16:19
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\mihir\.gradle\caches\transforms-3\f02a4863aa9afcbd0d49628fcdfe1c16\transformed\firebase-auth-interop-20.0.0\AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\mihir\.gradle\caches\transforms-3\f02a4863aa9afcbd0d49628fcdfe1c16\transformed\firebase-auth-interop-20.0.0\AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:22:5-39:19
 MERGED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:22:5-39:19
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.1.0] C:\Users\mihir\.gradle\caches\transforms-3\9aefe8337e4c1471a389ee7375970a78\transformed\firebase-appcheck-interop-17.1.0\AndroidManifest.xml:21:5-20
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.1.0] C:\Users\mihir\.gradle\caches\transforms-3\9aefe8337e4c1471a389ee7375970a78\transformed\firebase-appcheck-interop-17.1.0\AndroidManifest.xml:21:5-20
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:19:5-23:19
 MERGED from [com.google.android.play:integrity:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\340c1dd81f3a4fbd17e592f8dc384d17\transformed\integrity-1.2.0\AndroidManifest.xml:5:5-6:19
 MERGED from [com.google.android.play:integrity:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\340c1dd81f3a4fbd17e592f8dc384d17\transformed\integrity-1.2.0\AndroidManifest.xml:5:5-6:19
-MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\mihir\.gradle\caches\transforms-3\2d4346456634ee027d430908b77f13d1\transformed\firebase-appcheck-interop-17.0.0\AndroidManifest.xml:23:5-20
-MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\mihir\.gradle\caches\transforms-3\2d4346456634ee027d430908b77f13d1\transformed\firebase-appcheck-interop-17.0.0\AndroidManifest.xml:23:5-20
-MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
-MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.core:core:1.9.0] C:\Users\mihir\.gradle\caches\transforms-3\4f2e35475fee0b05967cf35533701264\transformed\core-1.9.0\AndroidManifest.xml:28:5-89
 MERGED from [androidx.core:core:1.9.0] C:\Users\mihir\.gradle\caches\transforms-3\4f2e35475fee0b05967cf35533701264\transformed\core-1.9.0\AndroidManifest.xml:28:5-89
 MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:23:5-33:19
-MERGED from [com.google.android.gms:play-services-tasks:18.0.2] C:\Users\mihir\.gradle\caches\transforms-3\022da76d7801abe7d950b66f07a0270c\transformed\play-services-tasks-18.0.2\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-tasks:18.0.2] C:\Users\mihir\.gradle\caches\transforms-3\022da76d7801abe7d950b66f07a0270c\transformed\play-services-tasks-18.0.2\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:20:5-24:19
-MERGED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:20:5-24:19
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\97e22c314dbc798d17f669e51bab6f64\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\97e22c314dbc798d17f669e51bab6f64\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:20:5-24:19
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:23:5-53:19
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:23:5-53:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\7ea0837654062604342cccb5ec32434c\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\7ea0837654062604342cccb5ec32434c\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
 	android:extractNativeLibs
-		INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.9.0] C:\Users\mihir\.gradle\caches\transforms-3\4f2e35475fee0b05967cf35533701264\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:15:9-35
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:20:9-35
 	android:label
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:13:9-41
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:18:9-41
 	android:fullBackupContent
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:11:9-54
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:16:9-54
 	android:roundIcon
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:14:9-54
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:19:9-54
 	tools:targetApi
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:17:9-29
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:22:9-29
 	android:icon
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:12:9-43
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:17:9-43
 	android:allowBackup
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:9:9-35
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:14:9-35
 	android:theme
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:16:9-50
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:21:9-50
 	android:dataExtractionRules
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:10:9-65
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:15:9-65
 activity#com.mihir.alzheimerscaregiver.caretaker.auth.LoginActivity
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:19:9-27:20
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:24:9-32:20
 	android:exported
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:21:13-36
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:26:13-36
 	android:theme
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:22:13-66
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:27:13-66
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:20:13-47
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:25:13-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:23:13-26:29
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:28:13-31:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:24:17-69
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:29:17-69
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:24:25-66
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:29:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:25:17-77
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:30:17-77
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:25:27-74
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:30:27-74
 activity#com.mihir.alzheimerscaregiver.caretaker.auth.RegisterActivity
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:29:9-32:69
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:34:9-37:69
 	android:exported
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:31:13-37
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:36:13-37
 	android:theme
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:32:13-66
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:37:13-66
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:30:13-50
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:35:13-50
 activity#com.mihir.alzheimerscaregiver.caretaker.PatientLinkActivity
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:34:9-36:40
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:39:9-41:40
 	android:exported
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:36:13-37
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:41:13-37
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:35:13-48
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:40:13-48
+activity#com.mihir.alzheimerscaregiver.caretaker.ScheduleMmseTestActivity
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:43:9-45:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:45:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:44:13-53
 activity#com.mihir.alzheimerscaregiver.caretaker.MainActivity
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:38:9-40:40
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:47:9-49:40
 	android:exported
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:40:13-37
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:49:13-37
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:39:13-41
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:48:13-41
 activity#com.mihir.alzheimerscaregiver.caretaker.AddMedicationActivity
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:42:9-44:40
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:51:9-53:40
 	android:exported
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:44:13-37
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:53:13-37
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:43:13-50
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:52:13-50
 activity#com.mihir.alzheimerscaregiver.caretaker.AddTaskActivity
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:46:9-48:40
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:55:9-57:40
 	android:exported
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:48:13-37
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:57:13-37
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:47:13-44
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:56:13-44
 activity#com.mihir.alzheimerscaregiver.caretaker.AddEmergencyContactActivity
-ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:50:9-52:40
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:59:9-61:40
 	android:exported
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:52:13-37
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:61:13-37
 	android:name
-		ADDED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:51:13-56
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:60:13-56
+activity#com.mihir.alzheimerscaregiver.caretaker.SettingsActivity
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:63:9-65:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:65:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:64:13-45
+activity#com.mihir.alzheimerscaregiver.caretaker.MmseResultsActivity
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:67:9-69:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:69:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:68:13-48
+activity#com.mihir.alzheimerscaregiver.caretaker.CustomMmseQuestionsActivity
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:72:9-74:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:74:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:73:13-56
+activity#com.mihir.alzheimerscaregiver.caretaker.MmseResultDetailActivity
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:76:9-78:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:78:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:77:13-53
+activity#com.mihir.alzheimerscaregiver.caretaker.PatientProfileEntryActivity
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:80:9-82:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:82:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:81:13-56
+receiver#com.mihir.alzheimerscaregiver.caretaker.notifications.ReminderReceiver
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:85:9-87:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:87:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:86:13-59
+receiver#com.mihir.alzheimerscaregiver.caretaker.notifications.TaskReminderReceiver
+ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:89:9-91:40
+	android:exported
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:91:13-37
+	android:name
+		ADDED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:90:13-63
 uses-sdk
-INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
-INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\mihir\.gradle\caches\transforms-3\6df52a99ec39c8a6c297479eccaa5576\transformed\material-1.11.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\mihir\.gradle\caches\transforms-3\6df52a99ec39c8a6c297479eccaa5576\transformed\material-1.11.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\mihir\.gradle\caches\transforms-3\26755a2a752df495f6d755b18cb90400\transformed\constraintlayout-2.1.4\AndroidManifest.xml:5:5-7:41
@@ -230,10 +312,18 @@ MERGED from [androidx.recyclerview:recyclerview:1.3.2] C:\Users\mihir\.gradle\ca
 MERGED from [androidx.recyclerview:recyclerview:1.3.2] C:\Users\mihir\.gradle\caches\transforms-3\68cd0c868e57a41f3176eff6758aa93b\transformed\recyclerview-1.3.2\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\72e8f9c55b7af44063f0d5311a50ad99\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\72e8f9c55b7af44063f0d5311a50ad99\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\mihir\.gradle\caches\transforms-3\afaf0a987493b256a962d3834fdc1dab\transformed\MPAndroidChart-v3.1.0\AndroidManifest.xml:16:5-18:41
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\mihir\.gradle\caches\transforms-3\afaf0a987493b256a962d3834fdc1dab\transformed\MPAndroidChart-v3.1.0\AndroidManifest.xml:16:5-18:41
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:21:5-23:64
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:21:5-23:64
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:6:5-44
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:6:5-44
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:19:5-44
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:19:5-44
+MERGED from [com.github.bumptech.glide:glide:4.16.0] C:\Users\mihir\.gradle\caches\transforms-3\f967a9aa15ccc6f0d7d04ccb74e28acf\transformed\glide-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:glide:4.16.0] C:\Users\mihir\.gradle\caches\transforms-3\f967a9aa15ccc6f0d7d04ccb74e28acf\transformed\glide-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:18:5-44
+MERGED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:18:5-44
 MERGED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\mihir\.gradle\caches\transforms-3\f02a4863aa9afcbd0d49628fcdfe1c16\transformed\firebase-auth-interop-20.0.0\AndroidManifest.xml:5:5-44
@@ -242,16 +332,16 @@ MERGED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\
 MERGED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:19:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.4.0] C:\Users\mihir\.gradle\caches\transforms-3\c80384c9e2f2c887a9bd83cf5ac46575\transformed\play-services-auth-api-phone-17.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.4.0] C:\Users\mihir\.gradle\caches\transforms-3\c80384c9e2f2c887a9bd83cf5ac46575\transformed\play-services-auth-api-phone-17.4.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\3399567794b6d68bffc1922894a3dbe5\transformed\firebase-database-collection-18.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\3399567794b6d68bffc1922894a3dbe5\transformed\firebase-database-collection-18.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.1.0] C:\Users\mihir\.gradle\caches\transforms-3\9aefe8337e4c1471a389ee7375970a78\transformed\firebase-appcheck-interop-17.1.0\AndroidManifest.xml:18:5-44
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.1.0] C:\Users\mihir\.gradle\caches\transforms-3\9aefe8337e4c1471a389ee7375970a78\transformed\firebase-appcheck-interop-17.1.0\AndroidManifest.xml:18:5-44
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:18:5-43
 MERGED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.play:integrity:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\340c1dd81f3a4fbd17e592f8dc384d17\transformed\integrity-1.2.0\AndroidManifest.xml:4:5-44
 MERGED from [com.google.android.play:integrity:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\340c1dd81f3a4fbd17e592f8dc384d17\transformed\integrity-1.2.0\AndroidManifest.xml:4:5-44
-MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\mihir\.gradle\caches\transforms-3\2d4346456634ee027d430908b77f13d1\transformed\firebase-appcheck-interop-17.0.0\AndroidManifest.xml:18:5-20:41
-MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\mihir\.gradle\caches\transforms-3\2d4346456634ee027d430908b77f13d1\transformed\firebase-appcheck-interop-17.0.0\AndroidManifest.xml:18:5-20:41
-MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\3399567794b6d68bffc1922894a3dbe5\transformed\firebase-database-collection-18.0.1\AndroidManifest.xml:5:5-7:41
-MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\3399567794b6d68bffc1922894a3dbe5\transformed\firebase-database-collection-18.0.1\AndroidManifest.xml:5:5-7:41
-MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:18:5-43
-MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:18:5-43
 MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\0448b775c20436a2184eed801daa3667\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\0448b775c20436a2184eed801daa3667\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:21:5-44
@@ -298,28 +388,32 @@ MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] C:\Users\mihir\.gradle\
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\bdcb4109e2c5c8f1a61190d295b831ac\transformed\lifecycle-runtime-2.6.1\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\fb394c5ca5800c86bb96b4ddef695fc0\transformed\lifecycle-viewmodel-savedstate-2.6.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\fb394c5ca5800c86bb96b4ddef695fc0\transformed\lifecycle-viewmodel-savedstate-2.6.1\AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-tasks:18.0.2] C:\Users\mihir\.gradle\caches\transforms-3\022da76d7801abe7d950b66f07a0270c\transformed\play-services-tasks-18.0.2\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-tasks:18.0.2] C:\Users\mihir\.gradle\caches\transforms-3\022da76d7801abe7d950b66f07a0270c\transformed\play-services-tasks-18.0.2\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:18:5-43
-MERGED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\97e22c314dbc798d17f669e51bab6f64\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\97e22c314dbc798d17f669e51bab6f64\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:18:5-43
 MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\mihir\.gradle\caches\transforms-3\69f5daec98c366e49b94f1d99757673e\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\mihir\.gradle\caches\transforms-3\69f5daec98c366e49b94f1d99757673e\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.activity:activity:1.8.0] C:\Users\mihir\.gradle\caches\transforms-3\9a28aa5bf58e597bbbc6f2914942d752\transformed\activity-1.8.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.activity:activity:1.8.0] C:\Users\mihir\.gradle\caches\transforms-3\9a28aa5bf58e597bbbc6f2914942d752\transformed\activity-1.8.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\dca5fd12ba85d30c0f6d8edd33df7cce\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\dca5fd12ba85d30c0f6d8edd33df7cce\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\13108bfaa36eb9e0db4e66464a249e67\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\13108bfaa36eb9e0db4e66464a249e67\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-components:17.1.5] C:\Users\mihir\.gradle\caches\transforms-3\49b8d09eba2210f27e5137d98826aed2\transformed\firebase-components-17.1.5\AndroidManifest.xml:18:5-44
-MERGED from [com.google.firebase:firebase-components:17.1.5] C:\Users\mihir\.gradle\caches\transforms-3\49b8d09eba2210f27e5137d98826aed2\transformed\firebase-components-17.1.5\AndroidManifest.xml:18:5-44
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.16.0] C:\Users\mihir\.gradle\caches\transforms-3\ae13e94f50e5a9e72455ebc6a18d5302\transformed\gifdecoder-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.16.0] C:\Users\mihir\.gradle\caches\transforms-3\ae13e94f50e5a9e72455ebc6a18d5302\transformed\gifdecoder-4.16.0\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\mihir\.gradle\caches\transforms-3\110194b91ed9c93e3a05f39197841dc2\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\mihir\.gradle\caches\transforms-3\110194b91ed9c93e3a05f39197841dc2\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:21:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:21:5-44
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\7ea0837654062604342cccb5ec32434c\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\7ea0837654062604342cccb5ec32434c\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\401af1fb36f7facf50f452613bd416f5\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\401af1fb36f7facf50f452613bd416f5\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\13108bfaa36eb9e0db4e66464a249e67\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\13108bfaa36eb9e0db4e66464a249e67\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-components:17.1.5] C:\Users\mihir\.gradle\caches\transforms-3\49b8d09eba2210f27e5137d98826aed2\transformed\firebase-components-17.1.5\AndroidManifest.xml:18:5-44
+MERGED from [com.google.firebase:firebase-components:17.1.5] C:\Users\mihir\.gradle\caches\transforms-3\49b8d09eba2210f27e5137d98826aed2\transformed\firebase-components-17.1.5\AndroidManifest.xml:18:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mihir\.gradle\caches\transforms-3\46581e1aa2c4856a89a64a3ba27416fc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\e3af232332154f8c95f5f05626523cf6\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\mihir\.gradle\caches\transforms-3\e3af232332154f8c95f5f05626523cf6\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\mihir\.gradle\caches\transforms-3\08d347da9f0337149de7d6f2c5aaa783\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
@@ -337,9 +431,9 @@ MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] C:\Users\mih
 	tools:overrideLibrary
 		ADDED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:23:9-61
 	android:targetSdkVersion
-		INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\mihir\OneDrive\Desktop\Desktop folders\latest rep\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml
 activity#com.google.firebase.auth.internal.GenericIdpActivity
 ADDED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:29:9-46:20
 	android:excludeFromRecents
@@ -392,6 +486,10 @@ service#com.google.firebase.components.ComponentDiscoveryService
 ADDED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\mihir\.gradle\caches\transforms-3\87d7ba37d68f8fdafea49c6e7cd184c1\transformed\firebase-auth-22.3.1\AndroidManifest.xml:66:9-72:19
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:14:9-23:19
 MERGED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:14:9-23:19
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:27:9-36:19
+MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:27:9-36:19
+MERGED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:22:9-31:19
+MERGED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:22:9-31:19
 MERGED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:9:9-15:19
 MERGED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:9:9-15:19
 MERGED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:30:9-38:19
@@ -422,6 +520,30 @@ ADDED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.grad
 		ADDED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:22:17-82
 	android:name
 		ADDED from [com.google.firebase:firebase-firestore:24.10.2] C:\Users\mihir\.gradle\caches\transforms-3\326c2889796506ac09352dcb3c2e8c70\transformed\firebase-firestore-24.10.2\AndroidManifest.xml:21:17-111
+meta-data#com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar
+ADDED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:30:13-32:85
+	android:value
+		ADDED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:32:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:31:17-118
+meta-data#com.google.firebase.components:com.google.firebase.storage.StorageRegistrar
+ADDED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:33:13-35:85
+	android:value
+		ADDED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:35:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\mihir\.gradle\caches\transforms-3\e4b2bef13d65c69743df01fbcf92b7e1\transformed\firebase-storage-20.3.0\AndroidManifest.xml:34:17-107
+meta-data#com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar
+ADDED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:25:13-27:85
+	android:value
+		ADDED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:27:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:26:17-120
+meta-data#com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar
+ADDED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:28:13-30:85
+	android:value
+		ADDED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:30:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-appcheck:17.1.2] C:\Users\mihir\.gradle\caches\transforms-3\6540c2f329f67a82f7312785782e5039\transformed\firebase-appcheck-17.1.2\AndroidManifest.xml:29:17-117
 meta-data#com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar
 ADDED from [com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\2d8cb09a827ccc73be39d951aa5d2364\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:12:13-14:85
 	android:value
@@ -446,18 +568,18 @@ ADDED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\c
 		ADDED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:37:17-82
 	android:name
 		ADDED from [com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:36:17-109
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
 uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
 ADDED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:9:5-98
 	android:name
 		ADDED from [com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\mihir\.gradle\caches\transforms-3\e3ff0435f5a52d36a4618e1721f25992\transformed\recaptcha-18.4.0\AndroidManifest.xml:9:22-95
-activity#com.google.android.gms.common.api.GoogleApiActivity
-ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
-	android:exported
-		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:22:19-43
-	android:theme
-		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:21:19-78
-	android:name
-		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\mihir\.gradle\caches\transforms-3\c3dcc598d822a7ff1bdc5f558c723a48\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:19-85
 provider#androidx.startup.InitializationProvider
 ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:24:9-32:20
@@ -507,11 +629,11 @@ ADDED from [androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\c
 	android:name
 		ADDED from [androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:30:17-78
 meta-data#com.google.android.gms.version
-ADDED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+ADDED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
 	android:value
-		ADDED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+		ADDED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
 	android:name
-		ADDED from [com.google.android.gms:play-services-basement:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\defb5bbfd1b69bcdb77cfc0bba6add10\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+		ADDED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
 meta-data#androidx.profileinstaller.ProfileInstallerInitializer
 ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
 	android:value

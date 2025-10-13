@@ -10,6 +10,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <permission
@@ -47,6 +52,9 @@
             android:name="com.mihir.alzheimerscaregiver.caretaker.PatientLinkActivity"
             android:exported="false" />
         <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.ScheduleMmseTestActivity"
+            android:exported="false" />
+        <activity
             android:name="com.mihir.alzheimerscaregiver.caretaker.MainActivity"
             android:exported="false" />
         <activity
@@ -58,6 +66,30 @@
         <activity
             android:name="com.mihir.alzheimerscaregiver.caretaker.AddEmergencyContactActivity"
             android:exported="false" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.MmseResultsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.CustomMmseQuestionsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.MmseResultDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.PatientProfileEntryActivity"
+            android:exported="false" />
+
+        <!-- Broadcast Receivers for Notifications -->
+        <receiver
+            android:name="com.mihir.alzheimerscaregiver.caretaker.notifications.ReminderReceiver"
+            android:exported="false" />
+        <receiver
+            android:name="com.mihir.alzheimerscaregiver.caretaker.notifications.TaskReminderReceiver"
+            android:exported="false" />
+
         <activity
             android:name="com.google.firebase.auth.internal.GenericIdpActivity"
             android:excludeFromRecents="true"
@@ -107,6 +139,18 @@
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
