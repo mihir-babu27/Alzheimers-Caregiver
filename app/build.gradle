@@ -28,7 +28,7 @@ if (fcmKeysPropertiesFile.exists()) {
     logger.warn("WARNING: secure-keys/fcm-keys.properties not found. Using placeholder values.")
     fcmKeysProperties.setProperty("FIREBASE_PROJECT_ID", "placeholder")
     fcmKeysProperties.setProperty("FCM_SENDER_ID", "placeholder")
-    fcmKeysProperties.setProperty("FIREBASE_SERVICE_ACCOUNT_PATH", "secure-keys/firebase-service-account.json.template")
+    fcmKeysProperties.setProperty("FIREBASE_SERVICE_ACCOUNT_PATH", "firebase-service-account.json.template")
 }
 
 // Note: google-services.json contains actual API keys and is excluded from git
