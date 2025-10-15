@@ -23,6 +23,7 @@ local.properties
 /secure-keys/firebase-service-account.json
 /secure-keys/firebase-service-account.json.json
 **/firebase-service-account.json
-
+app/src/main/assets/firebase-service-account.json
+secure-keys/firebase-service-account.json.json
 # Generated files
 /app/google-services.json.generated
