@@ -58,8 +58,10 @@ public class FCMNotificationSender {
     private String getAccessToken() {
         try {
             String serviceAccountPath = BuildConfig.FIREBASE_SERVICE_ACCOUNT_PATH;
-            if ("firebase-service-account.json.template".equals(serviceAccountPath)) {
-                Log.w(TAG, "Service account not configured! Please download from Firebase Console");
+            if ("firebase-service-account.json.template".equals(serviceAccountPath) || 
+                serviceAccountPath == null || serviceAccountPath.isEmpty()) {
+                Log.w(TAG, "🔐 Firebase service account not configured! FCM notifications disabled.");
+                Log.w(TAG, "📋 To enable notifications: Replace placeholder values in firebase-service-account.json");
                 return null;
             }
             

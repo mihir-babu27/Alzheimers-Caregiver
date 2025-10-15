@@ -18,5 +18,11 @@ local.properties
 /secure-keys/api-keys.properties
 /app/google-services.json
 
+# Firebase Service Account Credentials - SENSITIVE
+/app/src/main/assets/firebase-service-account-real.json
+/secure-keys/firebase-service-account-real.json
+/secure-keys/firebase-service-account.json.json
+**/firebase-service-account-real.json
+
 # Generated files
 /app/google-services.json.generated
