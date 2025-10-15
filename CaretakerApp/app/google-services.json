@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1092854188528",
+    "firebase_url": "https://recallar-12588-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "recallar-12588",
     "storage_bucket": "recallar-12588.firebasestorage.app"
   },
@@ -26,7 +27,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092854188528:android:6581dd1fd9af8deee27535",
+        "mobilesdk_app_id": "1:1092854188528:android:cb219a0d6c0c5f0ee27535",
         "android_client_info": {
           "package_name": "com.mihir.alzheimerscaregiver.caretaker"
         }

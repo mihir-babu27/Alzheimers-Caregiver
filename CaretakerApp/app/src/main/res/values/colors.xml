@@ -18,4 +18,34 @@
     <color name="gray_light">#E0E0E0</color>
     <color name="gray_medium">#9E9E9E</color>
     <color name="gray_very_light">#F5F5F5</color>
+    
+    <!-- App theme colors matching patient app -->
+    <color name="primary_color">#6366F1</color>
+    <color name="primary_dark">#4F46E5</color>
+    <color name="primary_light">#A5B4FC</color>
+    <color name="background_color">#F8FAFC</color>
+    <color name="card_background">#FFFFFF</color>
+    
+    <!-- Status colors -->
+    <color name="success">#10B981</color>
+    <color name="success_light">#D1FAE5</color>
+    <color name="warning">#F59E0B</color>
+    <color name="warning_light">#FEF3C7</color>
+    <color name="error">#EF4444</color>
+    <color name="info">#3B82F6</color>
+    
+    <!-- Location tracking colors -->
+    <color name="teal_50">#F0FDFA</color>
+    <color name="orange_50">#FFF7ED</color>
+    <color name="orange_700">#C2410C</color>
+    
+    <!-- Text colors -->
+    <color name="text_primary">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_hint">#9CA3AF</color>
+    
+    <!-- Notification colors -->
+    <color name="notification_urgent">#FF4444</color>
+    <color name="notification_safe">#4CAF50</color>
+    <color name="notification_primary">#6366F1</color>
 </resources>

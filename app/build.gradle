@@ -16,6 +16,19 @@ if (apiKeysPropertiesFile.exists()) {
     apiKeysProperties.setProperty("FIREBASE_STORAGE_BUCKET", "placeholder")
     apiKeysProperties.setProperty("FIREBASE_APP_ID", "placeholder")
     apiKeysProperties.setProperty("HUGGING_FACE_API_KEY", "placeholder")
+    apiKeysProperties.setProperty("MAPS_API_KEY", "placeholder")
+}
+
+// Load FCM keys from separate properties file (HTTP v1 API)
+def fcmKeysPropertiesFile = rootProject.file("secure-keys/fcm-keys.properties")
+def fcmKeysProperties = new Properties()
+if (fcmKeysPropertiesFile.exists()) {
+    fcmKeysProperties.load(new FileInputStream(fcmKeysPropertiesFile))
+} else {
+    logger.warn("WARNING: secure-keys/fcm-keys.properties not found. Using placeholder values.")
+    fcmKeysProperties.setProperty("FIREBASE_PROJECT_ID", "placeholder")
+    fcmKeysProperties.setProperty("FCM_SENDER_ID", "placeholder")
+    fcmKeysProperties.setProperty("FIREBASE_SERVICE_ACCOUNT_PATH", "secure-keys/firebase-service-account.json.template")
 }
 
 // Note: google-services.json contains actual API keys and is excluded from git
@@ -37,7 +50,17 @@ android {
         // Add API keys as build config fields
         buildConfigField "String", "GOOGLE_API_KEY", "\"${apiKeysProperties['GOOGLE_API_KEY']}\""
         buildConfigField "String", "FIREBASE_PROJECT_ID", "\"${apiKeysProperties['FIREBASE_PROJECT_ID']}\""
+        
+        // Add FCM HTTP v1 API configuration as build config fields
+        buildConfigField "String", "FIREBASE_PROJECT_ID", "\"${fcmKeysProperties['FIREBASE_PROJECT_ID']}\""
+        buildConfigField "String", "FCM_SENDER_ID", "\"${fcmKeysProperties['FCM_SENDER_ID']}\""
+        buildConfigField "String", "FIREBASE_SERVICE_ACCOUNT_PATH", "\"${fcmKeysProperties['FIREBASE_SERVICE_ACCOUNT_PATH']}\""
         buildConfigField "String", "HUGGING_FACE_API_KEY", "\"${apiKeysProperties['HUGGING_FACE_API_KEY']}\""
+        
+        // Read Google Maps API key from secure-keys/api-keys.properties
+        manifestPlaceholders = [
+            mapsApiKey: apiKeysProperties.getProperty('MAPS_API_KEY', 'YOUR_GOOGLE_MAPS_API_KEY_HERE')
+        ]
     }
 
     buildTypes {
@@ -50,6 +73,22 @@ android {
     buildFeatures {
         buildConfig true
     }
+    
+    // Fix for Google Auth Library and Apache HTTP Client duplicate files
+    packaging {
+        resources {
+            excludes += [
+                'META-INF/INDEX.LIST',
+                'META-INF/DEPENDENCIES',
+                'META-INF/NOTICE',
+                'META-INF/LICENSE',
+                'META-INF/*.SF',
+                'META-INF/*.DSA', 
+                'META-INF/*.RSA'
+            ]
+        }
+    }
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -83,6 +122,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-database' // For Realtime Database
+    implementation 'com.google.firebase:firebase-messaging' // For FCM
+    
+    // Google Auth Library for FCM HTTP v1 API OAuth 2.0 tokens
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.23.0'
+    
+    // Google Play Services for location and geofencing
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
     
     // Core Android dependencies
     implementation 'androidx.core:core:1.12.0'
@@ -96,6 +144,10 @@ dependencies {
     
     // Google Gemini AI SDK
     implementation 'com.google.ai.client.generativeai:generativeai:0.9.0'
+    
+    // Google Play Services Location for FusedLocationProviderClient
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
     
     // HTTP client for API calls (if needed)
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'

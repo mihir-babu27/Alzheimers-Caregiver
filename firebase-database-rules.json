@@ -1,0 +1,46 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "patientCaretakerLinks": {
+      "$patientId": {
+        ".read": "auth != null && (root.child('patientCaretakerLinks').child($patientId).val() === auth.uid || auth.uid === $patientId)",
+        ".write": "auth != null && auth.uid == $patientId"
+      }
+    },
+    "locations": {
+      "$patientId": {
+        ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+        ".write": "auth != null && auth.uid == $patientId"
+      }
+    },
+    "locationHistory": {
+      "$patientId": {
+        ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+        ".write": "auth != null && auth.uid == $patientId"
+      }
+    },
+    "geofences": {
+      "$patientId": {
+        ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+        ".write": "auth != null && auth.uid == $patientId"
+      }
+    },
+    "alerts": {
+      "$patientId": {
+        ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+        ".write": "auth != null && auth.uid == $patientId"
+      }
+    },
+    "sharingEnabled": {
+      "$patientId": {
+        ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+        ".write": "auth != null && auth.uid == $patientId"
+      }
+    }
+  }
+}

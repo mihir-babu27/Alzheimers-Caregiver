@@ -191,26 +191,42 @@ public class AddMedicationActivity extends AppCompatActivity implements Medicine
         try {
             Log.d(TAG, "Converting image to Base64 for URI: " + imageUri);
             
-            // Convert image to Base64 string (Free alternative to Firebase Storage)
-            String base64Image = convertImageToBase64(imageUri);
-            if (base64Image != null) {
-                // Add Base64 string to list (prefixed to indicate it's Base64)
-                String base64Url = "data:image/jpeg;base64," + base64Image;
-                imageUrls.add(base64Url);
-                imageAdapter.notifyItemInserted(imageUrls.size() - 1);
-                
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "Image converted to Base64 successfully");
-                Toast.makeText(this, "Image added successfully", Toast.LENGTH_SHORT).show();
-            } else {
-                progressBar.setVisibility(View.GONE);
-                Log.e(TAG, "Failed to convert image to Base64");
-                Toast.makeText(this, "Failed to process image", Toast.LENGTH_SHORT).show();
-            }
+            // Move image processing to background thread to prevent ANR
+            new Thread(() -> {
+                try {
+                    // Convert image to Base64 string (Free alternative to Firebase Storage)
+                    String base64Image = convertImageToBase64(imageUri);
+                    
+                    // Switch back to main thread for UI updates
+                    runOnUiThread(() -> {
+                        if (base64Image != null) {
+                            // Add Base64 string to list (prefixed to indicate it's Base64)
+                            String base64Url = "data:image/jpeg;base64," + base64Image;
+                            imageUrls.add(base64Url);
+                            imageAdapter.notifyItemInserted(imageUrls.size() - 1);
+                            
+                            progressBar.setVisibility(View.GONE);
+                            Log.d(TAG, "Image converted to Base64 successfully");
+                            Toast.makeText(this, "Image added successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e(TAG, "Failed to convert image to Base64");
+                            Toast.makeText(this, "Failed to process image", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    
+                } catch (Exception e) {
+                    runOnUiThread(() -> {
+                        progressBar.setVisibility(View.GONE);
+                        Log.e(TAG, "Error processing image in background", e);
+                        Toast.makeText(this, "Error processing image: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    });
+                }
+            }).start();
             
         } catch (Exception e) {
             progressBar.setVisibility(View.GONE);
-            Log.e(TAG, "Error processing image: " + e.getMessage(), e);
+            Log.e(TAG, "Error starting image processing", e);
             Toast.makeText(this, "Error uploading image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

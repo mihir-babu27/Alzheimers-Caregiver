@@ -1,0 +1,122 @@
+Starting a Gradle Daemon, 2 incompatible and 3 stopped Daemons could not be reused, use --status for details
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :face_recognition:preBuild UP-TO-DATE
+> Task :face_recognition:preDebugBuild UP-TO-DATE
+> Task :face_recognition:writeDebugAarMetadata UP-TO-DATE
+> Task :object_detection:app:preBuild UP-TO-DATE
+> Task :object_detection:app:preDebugBuild UP-TO-DATE
+> Task :object_detection:app:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:processDebugGoogleServices UP-TO-DATE
+> Task :face_recognition:generateDebugResValues UP-TO-DATE
+> Task :face_recognition:generateDebugResources UP-TO-DATE
+> Task :face_recognition:packageDebugResources UP-TO-DATE
+> Task :object_detection:app:generateDebugResValues UP-TO-DATE
+> Task :object_detection:app:generateDebugResources UP-TO-DATE
+> Task :object_detection:app:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :face_recognition:extractDeepLinksDebug UP-TO-DATE
+> Task :face_recognition:processDebugManifest UP-TO-DATE
+> Task :object_detection:app:extractDeepLinksDebug UP-TO-DATE
+> Task :object_detection:app:processDebugManifest UP-TO-DATE
+
+> Task :app:processDebugMainManifest
+[org.tensorflow:tensorflow-lite-support:0.4.4] C:\Users\mihir\.gradle\caches\8.11.1\transforms\052ba9361d6a401837e4475f02c5e8b5\transformed\tensorflow-lite-support-0.4.4\AndroidManifest.xml Warning:
+	Namespace 'org.tensorflow.lite.support' is used in multiple modules and/or libraries: org.tensorflow:tensorflow-lite-support:0.4.4, org.tensorflow:tensorflow-lite-support-api:0.4.4. Please ensure that all modules and libraries have a unique namespace. For more information, See https://developer.android.com/studio/build/configure-app-module#set-namespace
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\app\src\main\AndroidManifest.xml:40:5-298:19 Warning:
+	application@android:theme was tagged at AndroidManifest.xml:40 to replace other declarations but no other declaration present
+
+> Task :app:processDebugManifest
+> Task :face_recognition:compileDebugLibraryResources UP-TO-DATE
+> Task :face_recognition:parseDebugLocalResources UP-TO-DATE
+> Task :face_recognition:generateDebugRFile UP-TO-DATE
+> Task :object_detection:app:compileDebugLibraryResources UP-TO-DATE
+> Task :object_detection:app:parseDebugLocalResources UP-TO-DATE
+> Task :object_detection:app:generateDebugRFile UP-TO-DATE
+> Task :face_recognition:javaPreCompileDebug UP-TO-DATE
+
+> Task :face_recognition:compileDebugJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :app:processDebugManifestForPackage
+> Task :face_recognition:bundleLibCompileToJarDebug
+> Task :object_detection:app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :object_detection:app:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :object_detection:app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :face_recognition:mergeDebugShaders UP-TO-DATE
+> Task :face_recognition:compileDebugShaders NO-SOURCE
+> Task :face_recognition:generateDebugAssets UP-TO-DATE
+> Task :face_recognition:mergeDebugAssets UP-TO-DATE
+> Task :object_detection:app:mergeDebugShaders UP-TO-DATE
+> Task :object_detection:app:compileDebugShaders NO-SOURCE
+> Task :object_detection:app:generateDebugAssets UP-TO-DATE
+> Task :object_detection:app:mergeDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :face_recognition:processDebugJavaRes NO-SOURCE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :face_recognition:mergeDebugJniLibFolders UP-TO-DATE
+> Task :face_recognition:mergeDebugNativeLibs NO-SOURCE
+> Task :face_recognition:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :object_detection:app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :object_detection:app:mergeDebugNativeLibs NO-SOURCE
+> Task :object_detection:app:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :face_recognition:bundleLibRuntimeToDirDebug
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:processDebugResources
+
+> Task :object_detection:app:compileDebugKotlin
+w: file:///C:/Users/mihir/OneDrive/Desktop/temp/AlzheimersCaregiver/object_detection/app/src/main/java/com/mihir/alzheimerscaregiver/objectdetection/MainActivity.kt:195:26 'setTargetAspectRatio(Int): Preview.Builder' is deprecated. Deprecated in Java
+w: file:///C:/Users/mihir/OneDrive/Desktop/temp/AlzheimersCaregiver/object_detection/app/src/main/java/com/mihir/alzheimerscaregiver/objectdetection/MainActivity.kt:202:26 'setTargetAspectRatio(Int): ImageAnalysis.Builder' is deprecated. Deprecated in Java
+
+> Task :object_detection:app:compileDebugJavaWithJavac
+> Task :object_detection:app:bundleLibCompileToJarDebug UP-TO-DATE
+
+> Task :app:compileDebugJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\app\src\main\java\com\mihir\alzheimerscaregiver\MmseQuizActivity.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :object_detection:app:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :object_detection:app:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:dexBuilderDebug
+> Task :app:mergeLibDexDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+[Incubating] Problems report is available at: file:///C:/Users/mihir/OneDrive/Desktop/temp/AlzheimersCaregiver/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 30s
+73 actionable tasks: 15 executed, 58 up-to-date

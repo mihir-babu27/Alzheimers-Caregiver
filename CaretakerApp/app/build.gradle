@@ -3,6 +3,13 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+// Load local.properties file
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+
 android {
     namespace 'com.mihir.alzheimerscaregiver.caretaker'
     compileSdk 34
@@ -15,6 +22,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Read Google Maps API key from local.properties
+        manifestPlaceholders = [
+            mapsApiKey: localProperties.getProperty('MAPS_API_KEY', 'YOUR_GOOGLE_MAPS_API_KEY_HERE')
+        ]
     }
 
     buildTypes {
@@ -42,6 +54,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-messaging'
+    
+    // Google Maps
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     
     // Image loading
     implementation 'com.github.bumptech.glide:glide:4.16.0'

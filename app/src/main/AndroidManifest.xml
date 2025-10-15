@@ -23,6 +23,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!-- On newer Android versions specify type to avoid restrictions -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    
+    <!-- Location permissions for patient tracking -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     
     <!-- Storage permissions for saving generated images -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
@@ -42,6 +48,12 @@
         android:theme="@style/Theme.AlzheimersCaregiver"
         tools:replace="android:theme"
         tools:targetApi="31">
+
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${mapsApiKey}" />
+
         <activity
             android:name=".MedicationActivity"
             android:parentActivityName=".MainActivity" />
@@ -227,6 +239,17 @@
         <activity android:name=".MmseQuizActivity" />
         <activity android:name=".MmseResultActivity" />
         
+        <!-- Location Tracking Activity -->
+        <activity
+            android:name=".TrackingActivity"
+            android:exported="false"
+            android:label="Location Sharing"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        
         <!-- Object Detection Activity -->
         <activity
             android:name=".ObjectDetectionActivity"
@@ -246,6 +269,32 @@
             android:label="Object Detection Camera"
             android:parentActivityName=".ObjectDetectionActivity"
             tools:replace="android:exported" />
+        
+        <!-- Patient Location Tracking Service -->
+        <service
+            android:name=".location.PatientLocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+        
+        <!-- Boot receiver to restart location tracking after reboot -->
+        <receiver
+            android:name=".location.LocationBootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- Geofence transition receiver -->
+        <receiver
+            android:name=".geofence.GeofenceTransitionReceiver"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

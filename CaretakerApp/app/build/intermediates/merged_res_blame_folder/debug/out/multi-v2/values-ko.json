@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeDebugResources-36:/values-ko/values-ko.xml",
+            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeDebugResources-38:/values-ko/values-ko.xml",
             "map": [
                 {
                     "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\4f2e35475fee0b05967cf35533701264\\transformed\\core-1.9.0\\res\\values-ko\\values-ko.xml",

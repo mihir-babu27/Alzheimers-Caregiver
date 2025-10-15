@@ -2,9 +2,14 @@ package com.mihir.alzheimerscaregiver;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +23,7 @@ import java.util.UUID;
 
 import com.mihir.alzheimerscaregiver.auth.FirebaseAuthManager;
 import com.mihir.alzheimerscaregiver.face_recognition.FaceRecognitionActivity;
+import com.mihir.alzheimerscaregiver.geofence.PatientGeofenceClient;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,10 +31,13 @@ public class MainActivity extends AppCompatActivity {
     // UI Elements
     private TextView welcomeText;
     private TextView nameText;
-    private CardView medicationCard, tasksCard, memoryCard, photosCard, emergencyCard, mmseCard, objectDetectionCard, storiesCard;
+    private CardView medicationCard, tasksCard, memoryCard, photosCard, emergencyCard, mmseCard, objectDetectionCard, storiesCard, locationCard;
     
     // Firebase Auth Manager
     private FirebaseAuthManager authManager;
+    
+    // Geofence Client
+    private PatientGeofenceClient geofenceClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Client-only mode: no FCM; WorkManager periodic sync is sufficient for background updates.
         
+        // Initialize and start geofence monitoring for patient safety
+        initializeGeofenceMonitoring();
+        
         // Set up cross-device notification listeners for CaretakerApp created data
         setupCrossDeviceNotificationListeners();
     }
@@ -228,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
         emergencyCard = findViewById(R.id.emergencyCard);
         objectDetectionCard = findViewById(R.id.objectDetectionCard);
         storiesCard = findViewById(R.id.storiesCard);
+        locationCard = findViewById(R.id.locationCard);
     }
 
     /**
@@ -384,6 +397,20 @@ public class MainActivity extends AppCompatActivity {
                     v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
                     showToast("Opening AI Stories...");
                     Intent intent = new Intent(MainActivity.this, com.mihir.alzheimerscaregiver.reminiscence.StoryGenerationActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        
+        // Location Card - Opens Location Sharing settings
+        if (locationCard != null) {
+            locationCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
+                    
+                    // Create intent to start TrackingActivity
+                    Intent intent = new Intent(MainActivity.this, TrackingActivity.class);
                     startActivity(intent);
                 }
             });
@@ -719,6 +746,163 @@ protected void onResume() {
             }
         } catch (Exception e) {
             android.util.Log.e("MainActivity", "Error scheduling task alarm", e);
+        }
+    }
+
+    /**
+     * Initialize and start geofence monitoring for patient safety
+     */
+    private void initializeGeofenceMonitoring() {
+        try {
+            String patientId = authManager.getCurrentPatientId();
+            if (patientId == null) {
+                Log.w("MainActivity", "No patient ID available for geofence monitoring");
+                return;
+            }
+
+            // Check location permissions first
+            checkLocationPermissions();
+            
+            // Initialize geofence client
+            geofenceClient = new PatientGeofenceClient(this, patientId);
+            
+            // Start geofence monitoring
+            geofenceClient.startGeofenceMonitoring();
+            
+            Log.d("MainActivity", "Geofence monitoring initialized for patient: " + patientId);
+            
+            // Show a toast to inform the user that geofence monitoring has started
+            Toast.makeText(this, "Safety monitoring started", Toast.LENGTH_SHORT).show();
+            
+            // Add a test button for geofence debugging (for testing purposes)
+            addGeofenceTestButton();
+            
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error initializing geofence monitoring", e);
+        }
+    }
+    
+    /**
+     * Add a test method for debugging geofence functionality
+     */
+    private void addGeofenceTestButton() {
+        // This is for testing - you can trigger a manual geofence exit test
+        // by long-pressing the location card
+        if (locationCard != null) {
+            locationCard.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    testGeofenceExit();
+                    return true;
+                }
+            });
+        }
+    }
+    
+    /**
+     * Test method to manually trigger a geofence exit event for debugging
+     */
+    private void testGeofenceExit() {
+        try {
+            if (geofenceClient != null) {
+                // Simulate an exit from a safe zone for testing
+                String testGeofenceId = "test-safe-zone";
+                double currentLat = 40.7128; // Example coordinates (New York)
+                double currentLng = -74.0060;
+                
+                Log.d("MainActivity", "Testing geofence exit notification...");
+                Toast.makeText(this, "Testing geofence exit notification...", Toast.LENGTH_SHORT).show();
+                
+                // Manually trigger the geofence transition handler
+                geofenceClient.handleGeofenceTransition(
+                    testGeofenceId, 
+                    com.google.android.gms.location.Geofence.GEOFENCE_TRANSITION_EXIT,
+                    currentLat, 
+                    currentLng
+                );
+                
+                Log.d("MainActivity", "Geofence exit test triggered successfully");
+            }
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error testing geofence exit", e);
+            Toast.makeText(this, "Error testing geofence: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    
+    /**
+     * Check and request location permissions for geofencing
+     */
+    private void checkLocationPermissions() {
+        boolean needsFineLocation = androidx.core.content.ContextCompat.checkSelfPermission(this, 
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED;
+        
+        boolean needsCoarseLocation = androidx.core.content.ContextCompat.checkSelfPermission(this, 
+                android.Manifest.permission.ACCESS_COARSE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED;
+        
+        if (needsFineLocation || needsCoarseLocation) {
+            // Request location permissions
+            androidx.activity.result.ActivityResultLauncher<String[]> locationPermissionLauncher = 
+                registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions(),
+                    permissions -> {
+                        boolean fineLocationGranted = permissions.getOrDefault(android.Manifest.permission.ACCESS_FINE_LOCATION, false);
+                        boolean coarseLocationGranted = permissions.getOrDefault(android.Manifest.permission.ACCESS_COARSE_LOCATION, false);
+                        
+                        if (fineLocationGranted && coarseLocationGranted) {
+                            Log.d("MainActivity", "Location permissions granted for geofencing");
+                            
+                            // Check for background location permission on Android 10+
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                                checkBackgroundLocationPermission();
+                            }
+                        } else {
+                            Log.w("MainActivity", "Location permissions denied - geofencing may not work");
+                            Toast.makeText(this, "Location permissions required for safety monitoring", Toast.LENGTH_LONG).show();
+                        }
+                    });
+            
+            locationPermissionLauncher.launch(new String[]{
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            });
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            // Location permissions already granted, check background location
+            checkBackgroundLocationPermission();
+        }
+    }
+    
+    /**
+     * Check and request background location permission for Android 10+
+     */
+    private void checkBackgroundLocationPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            boolean needsBackgroundLocation = androidx.core.content.ContextCompat.checkSelfPermission(this, 
+                    android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED;
+            
+            if (needsBackgroundLocation) {
+                androidx.activity.result.ActivityResultLauncher<String> backgroundLocationLauncher = 
+                    registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
+                        isGranted -> {
+                            if (isGranted) {
+                                Log.d("MainActivity", "Background location permission granted");
+                                Toast.makeText(this, "Background location monitoring enabled", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.w("MainActivity", "Background location permission denied - geofencing may be limited");
+                                Toast.makeText(this, "For best safety monitoring, please enable 'Allow all the time' location access", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                
+                backgroundLocationLauncher.launch(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+            }
+        }
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        
+        // Clean up geofence monitoring when activity is destroyed
+        if (geofenceClient != null) {
+            geofenceClient.stopGeofenceMonitoring();
         }
     }
 }

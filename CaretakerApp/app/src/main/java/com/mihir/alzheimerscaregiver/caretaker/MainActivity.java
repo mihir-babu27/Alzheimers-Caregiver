@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     
     private Button addMedicationButton, addTaskButton, addEmergencyContactButton, logoutButton, viewMmseResultsButton;
     private Button scheduleMmseTestButton, addCustomQuestionsButton, addPatientProfileButton;
+    private Button viewLocationButton, viewHistoryButton, manageGeofencesButton;
     private TextView welcomeText;
     private SessionManager sessionManager;
     private SharedPreferences prefs;
@@ -62,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
     scheduleMmseTestButton = findViewById(R.id.scheduleMmseTestButton);
     addCustomQuestionsButton = findViewById(R.id.addCustomQuestionsButton);
     addPatientProfileButton = findViewById(R.id.addPatientProfileButton);
+    
+    // Location tracking buttons
+    viewLocationButton = findViewById(R.id.viewLocationButton);
+    viewHistoryButton = findViewById(R.id.viewHistoryButton);
+    manageGeofencesButton = findViewById(R.id.manageGeofencesButton);
 
         // Set welcome text
         welcomeText.setText("Welcome! You are linked to Patient ID: " + linkedPatientId);
@@ -110,6 +116,27 @@ public class MainActivity extends AppCompatActivity {
 
         addPatientProfileButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, PatientProfileEntryActivity.class);
+            startActivity(intent);
+        });
+        
+        // Location tracking click listeners
+        viewLocationButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CaretakerMapActivity.class);
+            intent.putExtra("patientId", linkedPatientId);
+            startActivity(intent);
+        });
+        
+        viewHistoryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            intent.putExtra("patientId", linkedPatientId);
+            startActivity(intent);
+        });
+        
+        manageGeofencesButton.setOnClickListener(v -> {
+            // For now, direct to CaretakerMapActivity where geofence management can be accessed
+            Intent intent = new Intent(MainActivity.this, CaretakerMapActivity.class);
+            intent.putExtra("patientId", linkedPatientId);
+            intent.putExtra("showGeofenceManagement", true); // Flag for geofence mode
             startActivity(intent);
         });
     }

@@ -18,6 +18,14 @@
     <string name="enter_patient_id">Enter Patient ID</string>
     <string name="patient_id_hint">Patient ID</string>
     <string name="link_patient_description">Enter the unique Patient ID to link your account to a patient</string>
+    
+    <!-- Notification Channels -->
+    <string name="notification_channel_critical">Critical Patient Alerts</string>
+    <string name="notification_channel_location">Location Updates</string>
+    <string name="notification_channel_general">App Notifications</string>
+    <string name="notification_channel_critical_desc">Urgent alerts requiring immediate attention for patient safety</string>
+    <string name="notification_channel_location_desc">Updates about patient location and safe zone activities</string>
+    <string name="notification_channel_general_desc">General app notifications and reminders</string>
     <string name="link">Link</string>
     <string name="patient_linked_successfully">Patient linked successfully!</string>
     <string name="invalid_patient_id">Invalid Patient ID</string>
