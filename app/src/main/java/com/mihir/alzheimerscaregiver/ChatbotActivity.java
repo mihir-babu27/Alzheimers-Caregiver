@@ -56,9 +56,13 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     private TextToSpeech textToSpeech;
     private boolean isListening = false;
     private boolean isTtsReady = false;
+    private String lastPartialResult = ""; // Store last partial result as fallback
     
     // AI Service
     private GeminiChatService geminiChatService;
+    
+    // Session tracking
+    private String currentSessionId;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,16 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         micButton.setOnClickListener(v -> {
             v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
             toggleListening();
+        });
+        
+        // Add long-click for testing without speech recognition
+        micButton.setOnLongClickListener(v -> {
+            Log.d(TAG, "🧪 TEST MODE: Long-click detected - testing chatbot without speech");
+            v.performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS);
+            
+            // Test with a sample message
+            testChatbotWithSampleMessage();
+            return true;
         });
     }
     
@@ -159,9 +173,13 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     }
     
     private void toggleListening() {
+        Log.d(TAG, "🎤 Microphone button clicked - Currently listening: " + isListening);
+        
         if (isListening) {
+            Log.d(TAG, "Stopping listening...");
             stopListening();
         } else {
+            Log.d(TAG, "Starting listening...");
             startListening();
         }
     }
@@ -182,8 +200,17 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Please speak...");
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 3000);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+        
+        // Enhanced speech recognition settings for better reliability
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 5000); // 5 seconds
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 3000); // 3 seconds
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 2000); // Minimum 2 seconds
+        intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true); // Enable partial results
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        
+        // Add confidence and alternative results
+        intent.putExtra(RecognizerIntent.EXTRA_CONFIDENCE_SCORES, true);
         
         isListening = true;
         updateMicButtonState();
@@ -210,6 +237,30 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             micButton.setImageResource(R.drawable.ic_mic);
             micButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.primary_color));
         }
+    }
+    
+    /**
+     * Test method to verify chatbot functionality without speech recognition
+     */
+    private void testChatbotWithSampleMessage() {
+        Log.d(TAG, "🧪 Testing chatbot with sample message...");
+        
+        // Show test status
+        statusText.setText("Testing chatbot...");
+        statusText.setVisibility(View.VISIBLE);
+        
+        // Test with a sample patient message that should trigger memory extraction
+        String testMessage = "Hello, I'm doing well today. I was just thinking about my childhood in Chicago with my sister Mary. We used to play in the garden behind our house.";
+        
+        Log.d(TAG, "🧪 TEST INPUT: " + testMessage);
+        
+        // Process the test message
+        processUserInput(testMessage);
+        
+        // Hide status after a delay
+        new android.os.Handler().postDelayed(() -> {
+            statusText.setVisibility(View.GONE);
+        }, 2000);
     }
     
     private void processUserInput(String userText) {
@@ -274,9 +325,197 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     }
     
     private void saveConversation(String userInput, String aiResponse) {
-        // TODO: Implement conversation saving to Firebase for caregiver review
-        // This will store conversations for MMSE analysis and reminiscence therapy
+        // Enhanced conversation saving with memory extraction
         Log.d(TAG, "Saving conversation - User: " + userInput + ", AI: " + aiResponse);
+        
+        // Save to Firebase (simplified for now - will enhance with full repository later)
+        saveConversationToFirebase(userInput, aiResponse);
+        
+        // Extract and analyze for memories and cognitive markers
+        analyzeConversationForMemories(userInput);
+    }
+    
+    private void saveConversationToFirebase(String userInput, String aiResponse) {
+        try {
+            // Get current user ID
+            String patientId = getCurrentPatientId();
+            if (patientId == null) {
+                Log.w(TAG, "No patient ID available, skipping conversation save");
+                return;
+            }
+            
+            // Create conversation data for Firebase
+            java.util.Map<String, Object> conversationData = new java.util.HashMap<>();
+            conversationData.put("patientId", patientId);
+            conversationData.put("timestamp", new java.util.Date());
+            conversationData.put("userInput", userInput);
+            conversationData.put("aiResponse", aiResponse);
+            conversationData.put("sessionId", getCurrentSessionId());
+            
+            // Extract basic memory indicators for immediate storage
+            java.util.List<String> detectedMemories = extractBasicMemories(userInput);
+            conversationData.put("detectedMemories", detectedMemories);
+            
+            // Save to Firebase Firestore under patient's document
+            com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+            db.collection("patients")
+                .document(patientId)
+                .collection("conversations")
+                .add(conversationData)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d(TAG, "Conversation saved successfully with ID: " + documentReference.getId());
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error saving conversation", e);
+                });
+                
+        } catch (Exception e) {
+            Log.e(TAG, "Exception saving conversation", e);
+        }
+    }
+    
+    private String getCurrentPatientId() {
+        // Get patient ID from Firebase Auth or SharedPreferences
+        try {
+            com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
+            com.google.firebase.auth.FirebaseUser user = auth.getCurrentUser();
+            if (user != null) {
+                return user.getUid();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting patient ID", e);
+        }
+        
+        // Fallback to shared preferences or default
+        android.content.SharedPreferences prefs = getSharedPreferences("AlzheimersCaregiverPrefs", MODE_PRIVATE);
+        return prefs.getString("patientId", "default_patient");
+    }
+    
+    private String getCurrentSessionId() {
+        // Generate or retrieve current chat session ID
+        if (currentSessionId == null) {
+            currentSessionId = "chat_" + System.currentTimeMillis();
+        }
+        return currentSessionId;
+    }
+    
+    private java.util.List<String> extractBasicMemories(String text) {
+        java.util.List<String> memories = new java.util.ArrayList<>();
+        if (text == null || text.trim().isEmpty()) return memories;
+        
+        String lowerText = text.toLowerCase();
+        
+        // Basic memory indicators
+        String[] memoryIndicators = {
+            "i remember", "when i was", "back in", "years ago", "i used to", 
+            "my husband", "my wife", "my children", "my mother", "my father"
+        };
+        
+        for (String indicator : memoryIndicators) {
+            if (lowerText.contains(indicator)) {
+                // Extract the sentence containing the memory
+                String[] sentences = text.split("[.!?]+");
+                for (String sentence : sentences) {
+                    if (sentence.toLowerCase().contains(indicator)) {
+                        memories.add(sentence.trim());
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return memories;
+    }
+    
+    private void analyzeConversationForMemories(String userInput) {
+        // Enhanced analysis for therapeutic value and memory extraction
+        if (userInput == null || userInput.trim().isEmpty()) return;
+        
+        String lowerText = userInput.toLowerCase();
+        
+        // Check for high-value therapeutic content
+        String[] therapeuticIndicators = {
+            "happy", "proud", "loved", "family", "children", "wedding",
+            "birthday", "holiday", "vacation", "achievement", "success"
+        };
+        
+        // Check for memory indicators
+        String[] memoryIndicators = {
+            "i remember", "when i was", "back in", "years ago", "i used to", 
+            "my husband", "my wife", "my children", "my mother", "my father"
+        };
+        
+        boolean hasTherapeuticValue = false;
+        boolean hasMemoryContent = false;
+        
+        for (String indicator : therapeuticIndicators) {
+            if (lowerText.contains(indicator)) {
+                hasTherapeuticValue = true;
+                Log.d(TAG, "High therapeutic value detected - contains: " + indicator);
+                break;
+            }
+        }
+        
+        for (String indicator : memoryIndicators) {
+            if (lowerText.contains(indicator)) {
+                hasMemoryContent = true;
+                Log.d(TAG, "Memory content detected - contains: " + indicator);
+                break;
+            }
+        }
+        
+        if (hasTherapeuticValue || hasMemoryContent) {
+            // Mark this conversation as valuable for story generation
+            markConversationForStoryUse(userInput);
+            
+            // Store for enhanced memory extraction
+            storeConversationForMemoryExtraction(userInput, hasTherapeuticValue, hasMemoryContent);
+        }
+    }
+    
+    private void storeConversationForMemoryExtraction(String userInput, boolean hasTherapeuticValue, boolean hasMemoryContent) {
+        try {
+            // Store conversation data for later processing by memory extraction service
+            android.content.SharedPreferences prefs = getSharedPreferences("ConversationMemories", MODE_PRIVATE);
+            android.content.SharedPreferences.Editor editor = prefs.edit();
+            
+            String timestamp = String.valueOf(System.currentTimeMillis());
+            String key = "conversation_" + timestamp;
+            
+            // Store conversation text and metadata
+            editor.putString(key + "_text", userInput);
+            editor.putBoolean(key + "_therapeutic", hasTherapeuticValue);
+            editor.putBoolean(key + "_memory", hasMemoryContent);
+            editor.putLong(key + "_timestamp", System.currentTimeMillis());
+            editor.putString(key + "_session", getCurrentSessionId());
+            
+            editor.apply();
+            
+            Log.d(TAG, "Stored conversation for memory extraction: " + 
+                  userInput.substring(0, Math.min(50, userInput.length())) + "...");
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error storing conversation for memory extraction", e);
+        }
+    }
+    
+    private void markConversationForStoryUse(String userInput) {
+        Log.d(TAG, "Marking conversation for potential story generation: " + 
+              userInput.substring(0, Math.min(50, userInput.length())) + "...");
+        
+        // Store in SharedPreferences for later story generation
+        android.content.SharedPreferences prefs = getSharedPreferences("StoryMemories", MODE_PRIVATE);
+        android.content.SharedPreferences.Editor editor = prefs.edit();
+        
+        // Get existing memories and add new one
+        java.util.Set<String> existingMemories = prefs.getStringSet("therapeutic_memories", new java.util.HashSet<>());
+        java.util.Set<String> updatedMemories = new java.util.HashSet<>(existingMemories);
+        updatedMemories.add(userInput);
+        
+        editor.putStringSet("therapeutic_memories", updatedMemories);
+        editor.apply();
+        
+        Log.d(TAG, "Total therapeutic memories stored: " + updatedMemories.size());
     }
     
     private void scrollToBottom() {
@@ -395,7 +634,13 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             ArrayList<String> voiceResults = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             if (voiceResults != null && !voiceResults.isEmpty()) {
                 String recognizedText = voiceResults.get(0);
-                Log.d(TAG, "Recognized text: " + recognizedText);
+                Log.d(TAG, "✅ Speech Recognition SUCCESS - Recognized text: " + recognizedText);
+                Log.d(TAG, "Results count: " + voiceResults.size());
+                
+                // Log all results for debugging
+                for (int i = 0; i < voiceResults.size(); i++) {
+                    Log.d(TAG, "Result " + i + ": " + voiceResults.get(i));
+                }
                 
                 isListening = false;
                 updateMicButtonState();
@@ -403,12 +648,44 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
                 
                 // Process the recognized text
                 processUserInput(recognizedText);
+            } else {
+                Log.w(TAG, "❌ Speech Recognition - No results in bundle");
+                
+                // Fallback: Use last partial result if available
+                if (lastPartialResult != null && !lastPartialResult.trim().isEmpty()) {
+                    Log.d(TAG, "🔄 Using last partial result as fallback: " + lastPartialResult);
+                    
+                    isListening = false;
+                    updateMicButtonState();
+                    statusText.setVisibility(View.GONE);
+                    
+                    // Process the last partial result
+                    processUserInput(lastPartialResult);
+                    
+                    // Clear the partial result after using it
+                    lastPartialResult = "";
+                } else {
+                    Log.w(TAG, "❌ No partial results available for fallback");
+                    isListening = false;
+                    updateMicButtonState();
+                    statusText.setVisibility(View.GONE);
+                }
             }
         }
         
         @Override
         public void onPartialResults(Bundle partialResults) {
-            // Could show partial results here for better UX
+            ArrayList<String> partialVoiceResults = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            if (partialVoiceResults != null && !partialVoiceResults.isEmpty()) {
+                String partialText = partialVoiceResults.get(0);
+                Log.d(TAG, "Partial recognition: " + partialText);
+                
+                // Store the last partial result as fallback
+                lastPartialResult = partialText;
+                
+                // Update status to show partial results for better user feedback
+                statusText.setText("Listening: " + partialText);
+            }
         }
         
         @Override

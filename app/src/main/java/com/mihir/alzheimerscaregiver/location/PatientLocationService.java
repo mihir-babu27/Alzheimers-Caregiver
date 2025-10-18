@@ -189,24 +189,29 @@ public class PatientLocationService extends Service {
             return;
         }
         
+        Log.d(TAG, "Starting location tracking");
+        
+        // Always start foreground service first to comply with Android requirements
+        // This must be called within 5 seconds of startForegroundService()
+        startForeground(NOTIFICATION_ID, createTrackingNotification(), getLocationForegroundServiceType());
+        
+        // Now check permissions and settings after foreground service is established
         if (!hasLocationPermissions()) {
-            Log.e(TAG, "Location permissions not granted");
+            Log.e(TAG, "Location permissions not granted - stopping service");
+            stopLocationTracking();
             stopSelf();
             return;
         }
         
         // Check if location sharing is enabled in settings
         if (!isLocationSharingEnabled()) {
-            Log.d(TAG, "Location sharing disabled in settings");
+            Log.d(TAG, "Location sharing disabled in settings - stopping service");
+            stopLocationTracking();
             stopSelf();
             return;
         }
         
-        Log.d(TAG, "Starting location tracking");
         isTracking = true;
-        
-        // Start foreground service with notification
-        startForeground(NOTIFICATION_ID, createTrackingNotification(), getLocationForegroundServiceType());
         
         // Request location updates
         try {

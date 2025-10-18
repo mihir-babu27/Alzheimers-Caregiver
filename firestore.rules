@@ -106,6 +106,18 @@ service cloud.firestore {
       );
     }
     
+    // Conversations subcollection under patients - chatbot conversations for MMSE and memory extraction  
+    match /patients/{patientId}/conversations/{conversationId} {
+      // Allow patients to read/write their own conversations
+      // OR allow caretakers to read/write conversations for linked patients
+      allow read, write: if request.auth != null && (
+        // Patient can access their own conversations
+        request.auth.uid == patientId ||
+        // OR caretaker can access if they are linked to this patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId))
+      );
+    }
+    
     // Default deny all other access
     match /{document=**} {
       allow read, write: if false;

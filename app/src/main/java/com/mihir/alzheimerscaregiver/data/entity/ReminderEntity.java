@@ -60,6 +60,19 @@ public class ReminderEntity {
             this.imageUrls = new ArrayList<>();
         }
         
+        // Getter methods for compatibility with main ReminderEntity
+        public String getTitle() {
+            return title;
+        }
+        
+        public long getTimeMillis() {
+            return scheduledTimeEpochMillis != null ? scheduledTimeEpochMillis : 0;
+        }
+        
+        public boolean isRepeating() {
+            return isRepeating;
+        }
+        
         /**
          * Check if this reminder was completed today
          */

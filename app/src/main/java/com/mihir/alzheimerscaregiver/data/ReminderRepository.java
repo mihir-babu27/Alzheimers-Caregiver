@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.mihir.alzheimerscaregiver.alarm.AlarmScheduler;
 import com.mihir.alzheimerscaregiver.caretaker.CaretakerNotificationScheduler;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -248,30 +249,56 @@ public class ReminderRepository {
      * Reschedule alarms for a specific patient ID
      */
     private void rescheduleAlarmsForPatient(String patientId) {
+        Log.d(TAG, "🔍 Querying reminders for patient: " + patientId);
+        
         db.collection(COLLECTION_REMINDERS)
                 .whereEqualTo("patientId", patientId)
                 .whereEqualTo("isCompleted", false)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     int rescheduledCount = 0;
+                    int totalReminders = queryDocumentSnapshots.size();
+                    long currentTime = System.currentTimeMillis();
+                    
+                    Log.d(TAG, "📋 Found " + totalReminders + " incomplete reminders to check");
+                    Log.d(TAG, "⏰ Current time: " + new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).format(new java.util.Date(currentTime)));
                     
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         try {
                             ReminderEntity reminder = doc.toObject(ReminderEntity.class);
-                            if (reminder.getTimeMillis() > System.currentTimeMillis() || reminder.isRepeating()) {
+                            
+                            // Enhanced logging for debugging - using correct getter methods
+                            String reminderTime = new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault())
+                                    .format(new java.util.Date(reminder.getTimeMillis()));
+                            
+                            Log.d(TAG, "📄 Reminder: '" + reminder.getTitle() + "' at " + reminderTime + 
+                                     " (repeating: " + reminder.isRepeating() + 
+                                     ", future: " + (reminder.getTimeMillis() > currentTime) + ")");
+                            
+                            if (reminder.getTimeMillis() > currentTime || reminder.isRepeating()) {
                                 // Reschedule future reminders or repeating reminders (even if past due)
                                 alarmScheduler.scheduleAlarm(reminder, reminder.isRepeating());
                                 rescheduledCount++;
-                                Log.d(TAG, "✅ Rescheduled alarm: " + reminder.getTitle());
+                                Log.i(TAG, "✅ Rescheduled: " + reminder.getTitle() + " at " + reminderTime);
+                            } else {
+                                Log.d(TAG, "⏭️ Skipped past reminder: " + reminder.getTitle() + " at " + reminderTime);
                             }
                         } catch (Exception e) {
-                            Log.w(TAG, "Error rescheduling individual alarm", e);
+                            Log.e(TAG, "❌ Error processing reminder: " + doc.getId(), e);
                         }
                     }
                     
-                    Log.i(TAG, "🎯 Successfully rescheduled " + rescheduledCount + " medication alarms after boot");
+                    Log.i(TAG, "🎯 Successfully rescheduled " + rescheduledCount + "/" + totalReminders + " medication alarms after boot");
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error fetching reminders for rescheduling", e));
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "❌ Failed to fetch reminders for rescheduling", e);
+                    
+                    // Try again after 30 seconds as backup
+                    new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+                        Log.w(TAG, "🔄 Retrying alarm rescheduling after failure...");
+                        rescheduleAlarmsForPatient(patientId);
+                    }, 30000);
+                });
     }
     
     /**

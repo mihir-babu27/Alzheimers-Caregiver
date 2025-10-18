@@ -1,10 +1,13 @@
 package com.mihir.alzheimerscaregiver.location;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
+import androidx.core.app.ActivityCompat;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -49,6 +52,18 @@ public class LocationServiceManager {
     public void startTrackingAfterBoot() {
         if (!isUserAuthenticated()) {
             Log.e(TAG, "Cannot start tracking after boot - user not authenticated");
+            return;
+        }
+        
+        // Check location permissions before attempting to start service
+        if (!hasLocationPermissions()) {
+            Log.e(TAG, "Cannot start tracking after boot - location permissions not granted");
+            return;
+        }
+        
+        // Check if location sharing is enabled
+        if (!isLocationSharingEnabled()) {
+            Log.d(TAG, "Cannot start tracking after boot - location sharing disabled in settings");
             return;
         }
         
@@ -422,5 +437,13 @@ public class LocationServiceManager {
         } catch (Exception e) {
             Log.e(TAG, "Error cancelling boot restart job", e);
         }
+    }
+    
+    /**
+     * Check if app has required location permissions
+     */
+    private boolean hasLocationPermissions() {
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }
