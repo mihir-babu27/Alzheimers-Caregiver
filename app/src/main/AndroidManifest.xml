@@ -7,6 +7,7 @@
         android:required="false" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
@@ -38,6 +39,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
+        android:name=".AlzheimersApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -109,6 +111,18 @@
             android:name=".reminiscence.StoryGenerationActivity"
             android:exported="false"
             android:label="AI Stories"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AlzheimersCaregiver">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        
+        <!-- Conversational AI Chatbot Activity -->
+        <activity
+            android:name=".ChatbotActivity"
+            android:exported="false"
+            android:label="Chat Assistant"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AlzheimersCaregiver">
             <meta-data
@@ -288,12 +302,21 @@
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
                 <data android:scheme="package" />
             </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="com.mihir.alzheimerscaregiver.TEST_BOOT_RECEIVER" />
+            </intent-filter>
         </receiver>
         
         <!-- Geofence transition receiver -->
         <receiver
             android:name=".geofence.GeofenceTransitionReceiver"
             android:enabled="true"
+            android:exported="false" />
+
+        <!-- JobService for reliable boot restart (works even for stopped apps) -->
+        <service
+            android:name=".location.LocationBootJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false" />
     </application>
 

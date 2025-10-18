@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     // UI Elements
     private TextView welcomeText;
     private TextView nameText;
-    private CardView medicationCard, tasksCard, memoryCard, photosCard, emergencyCard, mmseCard, objectDetectionCard, storiesCard, locationCard;
+    private CardView medicationCard, tasksCard, memoryCard, photosCard, emergencyCard, mmseCard, objectDetectionCard, storiesCard, locationCard, chatbotCard;
     
     // Firebase Auth Manager
     private FirebaseAuthManager authManager;
@@ -180,8 +180,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Client-only mode: no FCM; WorkManager periodic sync is sufficient for background updates.
         
-        // Initialize and start geofence monitoring for patient safety
-        initializeGeofenceMonitoring();
+        // TODO: Initialize and start geofence monitoring for patient safety (disabled for now)
+        // initializeGeofenceMonitoring();
         
         // Set up cross-device notification listeners for CaretakerApp created data
         setupCrossDeviceNotificationListeners();
@@ -241,6 +241,9 @@ public class MainActivity extends AppCompatActivity {
         objectDetectionCard = findViewById(R.id.objectDetectionCard);
         storiesCard = findViewById(R.id.storiesCard);
         locationCard = findViewById(R.id.locationCard);
+        chatbotCard = findViewById(R.id.chatbotCard);
+        
+        // Location card is now enabled for location sharing functionality
     }
 
     /**
@@ -402,6 +405,19 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         
+        // Chat Assistant Card - Voice-enabled AI chatbot for conversation and cognitive assessment
+        if (chatbotCard != null) {
+            chatbotCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
+                    showToast("Opening Chat Assistant...");
+                    Intent intent = new Intent(MainActivity.this, ChatbotActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        
         // Location Card - Opens Location Sharing settings
         if (locationCard != null) {
             locationCard.setOnClickListener(new View.OnClickListener() {
@@ -414,6 +430,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+            
+            // Add test functionality for debugging
+            addBootReceiverTestButton();
         }
     }
 
@@ -774,8 +793,8 @@ protected void onResume() {
             // Show a toast to inform the user that geofence monitoring has started
             Toast.makeText(this, "Safety monitoring started", Toast.LENGTH_SHORT).show();
             
-            // Add a test button for geofence debugging (for testing purposes)
-            addGeofenceTestButton();
+            // TODO: Add a test button for geofence debugging (disabled for now)
+            // addGeofenceTestButton();
             
         } catch (Exception e) {
             Log.e("MainActivity", "Error initializing geofence monitoring", e);
@@ -783,25 +802,160 @@ protected void onResume() {
     }
     
     /**
-     * Add a test method for debugging geofence functionality
+     * Add a test method for debugging boot receiver functionality
      */
-    private void addGeofenceTestButton() {
-        // This is for testing - you can trigger a manual geofence exit test
-        // by long-pressing the location card
+    private void addBootReceiverTestButton() {
+        // Test LocationBootReceiver by long-pressing the location card
         if (locationCard != null) {
             locationCard.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    testGeofenceExit();
+                    testLocationBootReceiver();
                     return true;
                 }
             });
         }
     }
     
+    private void testLocationBootReceiver() {
+        Log.i("MainActivity", "*** TESTING LocationBootReceiver manually ***");
+        Toast.makeText(this, "Testing LocationBootReceiver - check logs", Toast.LENGTH_SHORT).show();
+        
+        try {
+            // Check if receiver is registered in manifest
+            android.content.pm.PackageManager pm = getPackageManager();
+            android.content.pm.PackageInfo packageInfo = pm.getPackageInfo(getPackageName(), 
+                android.content.pm.PackageManager.GET_RECEIVERS);
+            
+            if (packageInfo.receivers != null) {
+                Log.i("MainActivity", "Found " + packageInfo.receivers.length + " receivers in manifest");
+                for (android.content.pm.ActivityInfo receiver : packageInfo.receivers) {
+                    Log.i("MainActivity", "Receiver: " + receiver.name + " (enabled=" + receiver.enabled + ", exported=" + receiver.exported + ")");
+                    if (receiver.name.contains("LocationBootReceiver")) {
+                        Log.i("MainActivity", "✅ LocationBootReceiver found in manifest!");
+                    }
+                }
+            }
+            
+            // Test manual instantiation
+            Log.i("MainActivity", "Testing manual LocationBootReceiver instantiation...");
+            com.mihir.alzheimerscaregiver.location.LocationBootReceiver testReceiver = 
+                new com.mihir.alzheimerscaregiver.location.LocationBootReceiver();
+            Log.i("MainActivity", "✅ LocationBootReceiver instantiated successfully");
+            
+            // Create and send custom broadcast to test the receiver
+            Intent testIntent = new Intent("com.mihir.alzheimerscaregiver.TEST_BOOT_RECEIVER");
+            testIntent.setPackage(getPackageName());
+            sendBroadcast(testIntent);
+            Log.i("MainActivity", "Test broadcast sent to LocationBootReceiver");
+            
+            // Also test with BOOT_COMPLETED action
+            Intent bootIntent = new Intent(Intent.ACTION_BOOT_COMPLETED);
+            bootIntent.setPackage(getPackageName());
+            sendBroadcast(bootIntent);
+            Log.i("MainActivity", "BOOT_COMPLETED broadcast sent to LocationBootReceiver");
+            
+            // Test manual call
+            testReceiver.onReceive(this, bootIntent);
+            Log.i("MainActivity", "Manual onReceive call completed");
+            
+            // Also schedule aggressive JobService for stopped app compatibility
+            scheduleAggressiveBootJob();
+            
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error testing LocationBootReceiver", e);
+            Toast.makeText(this, "Error testing receiver: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    
+    /**
+     * Schedule aggressive boot job for stopped app compatibility
+     */
+    private void scheduleAggressiveBootJob() {
+        try {
+            Log.i("MainActivity", "Scheduling aggressive boot job for stopped app compatibility...");
+            
+            android.app.job.JobScheduler jobScheduler = 
+                (android.app.job.JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            
+            if (jobScheduler == null) {
+                Log.e("MainActivity", "JobScheduler not available");
+                return;
+            }
+            
+            // Cancel existing jobs
+            jobScheduler.cancel(1001);
+            jobScheduler.cancel(1002);
+            
+            android.content.ComponentName serviceName = 
+                new android.content.ComponentName(this, com.mihir.alzheimerscaregiver.location.LocationBootJobService.class);
+            
+            android.os.PersistableBundle extras = new android.os.PersistableBundle();
+            extras.putString("reason", "manual_aggressive_schedule");
+            extras.putLong("scheduled_time", System.currentTimeMillis());
+            
+            // Create very aggressive boot job
+            android.app.job.JobInfo bootJob = new android.app.job.JobInfo.Builder(1001, serviceName)
+                    .setRequiredNetworkType(android.app.job.JobInfo.NETWORK_TYPE_NONE)
+                    .setPersisted(true) // Critical: survive reboots even for stopped apps
+                    .setRequiresCharging(false)
+                    .setRequiresDeviceIdle(false)
+                    .setRequiresBatteryNotLow(false)
+                    .setMinimumLatency(500) // Start immediately after boot
+                    .setOverrideDeadline(15000) // Must run within 15 seconds
+                    .setExtras(extras)
+                    .build();
+            
+            int result = jobScheduler.schedule(bootJob);
+            
+            if (result == android.app.job.JobScheduler.RESULT_SUCCESS) {
+                Log.i("MainActivity", "✅ Aggressive boot job scheduled successfully!");
+                Toast.makeText(this, "✅ Boot restart job scheduled!", Toast.LENGTH_SHORT).show();
+                
+                // Also schedule periodic backup
+                schedulePeriodicBackup(jobScheduler, serviceName);
+                
+            } else {
+                Log.e("MainActivity", "❌ Failed to schedule boot job");
+                Toast.makeText(this, "❌ Failed to schedule boot job", Toast.LENGTH_SHORT).show();
+            }
+            
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error scheduling aggressive boot job", e);
+        }
+    }
+    
+    /**
+     * Schedule periodic backup job
+     */
+    private void schedulePeriodicBackup(android.app.job.JobScheduler jobScheduler, 
+                                      android.content.ComponentName serviceName) {
+        try {
+            android.os.PersistableBundle extras = new android.os.PersistableBundle();
+            extras.putString("reason", "periodic_backup");
+            
+            android.app.job.JobInfo periodicJob = new android.app.job.JobInfo.Builder(1002, serviceName)
+                    .setRequiredNetworkType(android.app.job.JobInfo.NETWORK_TYPE_NONE)
+                    .setPersisted(true)
+                    .setRequiresCharging(false)
+                    .setRequiresDeviceIdle(false)
+                    .setPeriodic(24 * 60 * 60 * 1000) // Daily check
+                    .setExtras(extras)
+                    .build();
+            
+            jobScheduler.schedule(periodicJob);
+            Log.i("MainActivity", "✅ Periodic backup job scheduled");
+            
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error scheduling periodic job", e);
+        }
+    }
+    
     /**
      * Test method to manually trigger a geofence exit event for debugging
      */
+    // TODO: Test geofence functionality (disabled for now)
+    /*
     private void testGeofenceExit() {
         try {
             if (geofenceClient != null) {
@@ -828,6 +982,7 @@ protected void onResume() {
             Toast.makeText(this, "Error testing geofence: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+    */
     
     /**
      * Check and request location permissions for geofencing

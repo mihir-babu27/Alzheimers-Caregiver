@@ -62,6 +62,7 @@ public class PatientLocationService extends Service {
     public static final String ACTION_START_TRACKING = "start_tracking";
     public static final String ACTION_STOP_TRACKING = "stop_tracking";
     public static final String ACTION_REQUEST_CURRENT_LOCATION = "request_current_location";
+    public static final String ACTION_VERIFY_LOCATION_UPDATES = "verify_location_updates";
     
     // Configuration constants imported from centralized LocationConfig
     // Best practices configuration values as per requirements
@@ -140,6 +141,12 @@ public class PatientLocationService extends Service {
         
         switch (action != null ? action : "") {
             case ACTION_START_TRACKING:
+                boolean isPostBootRestart = intent.getBooleanExtra("post_boot_restart", false);
+                if (isPostBootRestart) {
+                    Log.d(TAG, "Starting location tracking after device boot");
+                    // For post-boot restart, ensure we completely reinitialize the location client
+                    reinitializeLocationClientAfterBoot();
+                }
                 startLocationTracking();
                 break;
             case ACTION_STOP_TRACKING:
@@ -147,6 +154,9 @@ public class PatientLocationService extends Service {
                 break;
             case ACTION_REQUEST_CURRENT_LOCATION:
                 requestCurrentLocation();
+                break;
+            case ACTION_VERIFY_LOCATION_UPDATES:
+                verifyLocationUpdatesWorking();
                 break;
             default:
                 Log.w(TAG, "Unknown action: " + action);
@@ -362,6 +372,9 @@ public class PatientLocationService extends Service {
                 
                 Location location = locationResult.getLastLocation();
                 if (location != null) {
+                    // Update last location update timestamp for verification
+                    prefs.edit().putLong("last_location_update", System.currentTimeMillis()).apply();
+                    
                     String logMessage = "📍 Location update: " + String.format("%.6f", location.getLatitude()) + 
                                        ", " + String.format("%.6f", location.getLongitude()) + 
                                        " (accuracy: " + location.getAccuracy() + "m, provider: " + location.getProvider() + ")";
@@ -599,5 +612,68 @@ public class PatientLocationService extends Service {
         stopIntent.setAction(ACTION_STOP_TRACKING);
         return PendingIntent.getService(this, 0, stopIntent, 
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    }
+    
+    /**
+     * Reinitialize the location client after device boot
+     * This ensures the FusedLocationProviderClient is properly reset
+     */
+    private void reinitializeLocationClientAfterBoot() {
+        Log.d(TAG, "Reinitializing location client after device boot");
+        
+        // Stop any existing location updates first
+        if (fusedLocationClient != null && isTracking) {
+            try {
+                fusedLocationClient.removeLocationUpdates(locationCallback);
+                Log.d(TAG, "Removed existing location updates before reinitializing");
+            } catch (Exception e) {
+                Log.w(TAG, "Error removing location updates during reinitialization", e);
+            }
+        }
+        
+        // Recreate the location client
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        
+        // Reset tracking state to ensure clean restart
+        isTracking = false;
+        
+        Log.d(TAG, "Location client reinitialized successfully");
+    }
+    
+    /**
+     * Verify that location updates are actually working
+     * Called by LocationServiceManager to check post-boot functionality
+     */
+    private void verifyLocationUpdatesWorking() {
+        Log.d(TAG, "Verifying location updates are working...");
+        
+        if (!isTracking) {
+            Log.w(TAG, "Location tracking not active during verification");
+            // Restart tracking if it should be active but isn't
+            if (isLocationSharingEnabled()) {
+                Log.d(TAG, "Restarting location tracking during verification");
+                startLocationTracking();
+            }
+            return;
+        }
+        
+        // Check if we've received a location update recently (within last 5 minutes)
+        long lastUpdateTime = prefs.getLong("last_location_update", 0);
+        long currentTime = System.currentTimeMillis();
+        long timeSinceLastUpdate = currentTime - lastUpdateTime;
+        
+        if (timeSinceLastUpdate > 300000) { // 5 minutes
+            Log.w(TAG, "No location updates received in last 5 minutes (" + timeSinceLastUpdate + "ms), restarting location client");
+            
+            // Restart location tracking to fix the issue
+            stopLocationTracking();
+            
+            // Wait a moment before restarting
+            new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+                startLocationTracking();
+            }, 3000); // 3 second delay
+        } else {
+            Log.d(TAG, "Location updates are working correctly (last update " + timeSinceLastUpdate + "ms ago)");
+        }
     }
 }

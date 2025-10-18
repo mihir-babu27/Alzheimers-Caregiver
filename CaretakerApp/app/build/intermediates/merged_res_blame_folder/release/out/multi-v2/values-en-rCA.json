@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-36:/values-en-rCA/values-en-rCA.xml",
+            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-38:/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
                     "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\977ddb93cf4723cdb231c1116babc903\\transformed\\browser-1.4.0\\res\\values-en-rCA\\values-en-rCA.xml",

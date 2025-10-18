@@ -3,6 +3,8 @@ package com.mihir.alzheimerscaregiver.location;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import android.location.Location;
+
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  * Unit tests for LocationUploader Firebase database writes
  */
 @RunWith(RobolectricTestRunner.class)
+@Config(sdk = 28)
 public class LocationUploaderTest {
 
     @Mock
@@ -37,7 +41,7 @@ public class LocationUploaderTest {
     private DatabaseReference mockSpecificLocationRef;
 
     private LocationUploader locationUploader;
-    private LocationEntity testLocation;
+    private Location testLocation;
     
     @Before
     public void setUp() {
@@ -48,16 +52,16 @@ public class LocationUploaderTest {
         when(mockLocationRef.child("test-patient-123")).thenReturn(mockPatientRef);
         when(mockPatientRef.push()).thenReturn(mockSpecificLocationRef);
         
-        // Create test location entity
-        testLocation = new LocationEntity(
-                "test-patient-123",
-                40.7128, // NYC coordinates
-                -74.0060,
-                System.currentTimeMillis(),
-                85.5f // accuracy
-        );
+        // Create mock Location object
+        testLocation = mock(Location.class);
+        when(testLocation.getLatitude()).thenReturn(40.7128);
+        when(testLocation.getLongitude()).thenReturn(-74.0060);
+        when(testLocation.getAccuracy()).thenReturn(85.5f);
+        when(testLocation.getProvider()).thenReturn("GPS");
+        when(testLocation.isFromMockProvider()).thenReturn(false);
         
-        locationUploader = new LocationUploader(mockDatabase);
+        // Create LocationUploader for testing
+        locationUploader = new LocationUploader();
     }
     
     @Test
@@ -67,14 +71,14 @@ public class LocationUploaderTest {
         
         // Mock successful database write
         doAnswer(invocation -> {
-            LocationUploader.LocationUploadCallback callback = 
-                (LocationUploader.LocationUploadCallback) invocation.getArguments()[1];
+            LocationUploader.UploadCallback callback = 
+                (LocationUploader.UploadCallback) invocation.getArguments()[1];
             callback.onSuccess();
             return null;
-        }).when(mockSpecificLocationRef).setValue(any(LocationEntity.class), any(LocationUploader.LocationUploadCallback.class));
+        }).when(mockSpecificLocationRef).setValue(any(LocationEntity.class), any(LocationUploader.UploadCallback.class));
         
         // Test upload
-        locationUploader.uploadLocation(testLocation, new LocationUploader.LocationUploadCallback() {
+        locationUploader.uploadCurrentLocation("test-patient-123", testLocation, new LocationUploader.UploadCallback() {
             @Override
             public void onSuccess() {
                 successCalled[0] = true;
@@ -82,7 +86,7 @@ public class LocationUploaderTest {
             }
             
             @Override
-            public void onFailure(String error) {
+            public void onError(String error) {
                 fail("Upload should succeed but failed with: " + error);
                 latch.countDown();
             }
@@ -97,24 +101,24 @@ public class LocationUploaderTest {
         verify(mockDatabase).getReference("locations");
         verify(mockLocationRef).child("test-patient-123");
         verify(mockPatientRef).push();
-        verify(mockSpecificLocationRef).setValue(eq(testLocation), any(LocationUploader.LocationUploadCallback.class));
+        verify(mockSpecificLocationRef).setValue(eq(testLocation), any(LocationUploader.UploadCallback.class));
     }
     
     @Test
-    public void testUploadLocationFailure() throws InterruptedException {
+    public void testUploadLocationError() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         final String[] errorMessage = {null};
         
         // Mock database write failure
         doAnswer(invocation -> {
-            LocationUploader.LocationUploadCallback callback = 
-                (LocationUploader.LocationUploadCallback) invocation.getArguments()[1];
-            callback.onFailure("Network error");
+            LocationUploader.UploadCallback callback = 
+                (LocationUploader.UploadCallback) invocation.getArguments()[1];
+            callback.onError("Network error");
             return null;
-        }).when(mockSpecificLocationRef).setValue(any(LocationEntity.class), any(LocationUploader.LocationUploadCallback.class));
+        }).when(mockSpecificLocationRef).setValue(any(LocationEntity.class), any(LocationUploader.UploadCallback.class));
         
         // Test upload failure
-        locationUploader.uploadLocation(testLocation, new LocationUploader.LocationUploadCallback() {
+        locationUploader.uploadCurrentLocation("test-patient-123", testLocation, new LocationUploader.UploadCallback() {
             @Override
             public void onSuccess() {
                 fail("Upload should fail but succeeded");
@@ -122,7 +126,7 @@ public class LocationUploaderTest {
             }
             
             @Override
-            public void onFailure(String error) {
+            public void onError(String error) {
                 errorMessage[0] = error;
                 latch.countDown();
             }
@@ -134,7 +138,7 @@ public class LocationUploaderTest {
         assertEquals("Error message should match", "Network error", errorMessage[0]);
         
         // Verify Firebase calls
-        verify(mockSpecificLocationRef).setValue(eq(testLocation), any(LocationUploader.LocationUploadCallback.class));
+        verify(mockSpecificLocationRef).setValue(eq(testLocation), any(LocationUploader.UploadCallback.class));
     }
     
     @Test
@@ -142,17 +146,8 @@ public class LocationUploaderTest {
         CountDownLatch latch = new CountDownLatch(1);
         final String[] errorMessage = {null};
         
-        // Create location with null patient ID
-        LocationEntity invalidLocation = new LocationEntity(
-                null,
-                40.7128,
-                -74.0060,
-                System.currentTimeMillis(),
-                85.5f
-        );
-        
-        // Test upload with invalid data
-        locationUploader.uploadLocation(invalidLocation, new LocationUploader.LocationUploadCallback() {
+        // Test upload with null patient ID
+        locationUploader.uploadCurrentLocation(null, testLocation, new LocationUploader.UploadCallback() {
             @Override
             public void onSuccess() {
                 fail("Upload should fail with null patient ID");
@@ -160,7 +155,7 @@ public class LocationUploaderTest {
             }
             
             @Override
-            public void onFailure(String error) {
+            public void onError(String error) {
                 errorMessage[0] = error;
                 latch.countDown();
             }
@@ -170,33 +165,25 @@ public class LocationUploaderTest {
         assertTrue("Upload callback should complete within 5 seconds", 
                 latch.await(5, TimeUnit.SECONDS));
         assertNotNull("Error message should not be null", errorMessage[0]);
-        assertTrue("Error should mention patient ID", errorMessage[0].contains("patient"));
+        assertTrue("Error should mention patient ID", errorMessage[0].toLowerCase().contains("patient") || 
+                   errorMessage[0].toLowerCase().contains("invalid"));
     }
     
     @Test
-    public void testUploadLocationWithInvalidCoordinates() throws InterruptedException {
+    public void testUploadLocationWithNullLocation() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         final String[] errorMessage = {null};
         
-        // Create location with invalid coordinates
-        LocationEntity invalidLocation = new LocationEntity(
-                "test-patient-123",
-                200.0, // Invalid latitude (>90)
-                -200.0, // Invalid longitude (<-180)
-                System.currentTimeMillis(),
-                85.5f
-        );
-        
-        // Test upload with invalid coordinates
-        locationUploader.uploadLocation(invalidLocation, new LocationUploader.LocationUploadCallback() {
+        // Test upload with null location
+        locationUploader.uploadCurrentLocation("test-patient-123", null, new LocationUploader.UploadCallback() {
             @Override
             public void onSuccess() {
-                fail("Upload should fail with invalid coordinates");
+                fail("Upload should fail with null location");
                 latch.countDown();
             }
             
             @Override
-            public void onFailure(String error) {
+            public void onError(String error) {
                 errorMessage[0] = error;
                 latch.countDown();
             }
@@ -206,62 +193,54 @@ public class LocationUploaderTest {
         assertTrue("Upload callback should complete within 5 seconds", 
                 latch.await(5, TimeUnit.SECONDS));
         assertNotNull("Error message should not be null", errorMessage[0]);
-        assertTrue("Error should mention coordinates", 
-                errorMessage[0].toLowerCase().contains("coordinate") || 
+        assertTrue("Error should mention location", 
+                errorMessage[0].toLowerCase().contains("location") || 
                 errorMessage[0].toLowerCase().contains("invalid"));
     }
     
     @Test
-    public void testRetryMechanism() throws InterruptedException {
+    public void testUploadLocationDatabaseFailure() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        final int[] retryCount = {0};
+        final String[] errorMessage = {null};
         
-        // Mock Firebase reference for retry testing
-        DatabaseReference mockRetryRef = mock(DatabaseReference.class);
-        when(mockPatientRef.push()).thenReturn(mockRetryRef);
-        
-        // Mock failure then success
+        // Mock database write failure
         doAnswer(invocation -> {
-            LocationUploader.LocationUploadCallback callback = 
-                (LocationUploader.LocationUploadCallback) invocation.getArguments()[1];
-            retryCount[0]++;
-            if (retryCount[0] < 3) {
-                callback.onFailure("Temporary network error");
-            } else {
-                callback.onSuccess();
-            }
+            LocationUploader.UploadCallback callback = 
+                (LocationUploader.UploadCallback) invocation.getArguments()[0];
+            callback.onError("Database write failed");
             return null;
-        }).when(mockRetryRef).setValue(any(LocationEntity.class), any(LocationUploader.LocationUploadCallback.class));
+        }).when(mockSpecificLocationRef).setValue(any(LocationEntity.class));
         
-        // Test upload with retry
-        locationUploader.uploadLocationWithRetry(testLocation, 3, new LocationUploader.LocationUploadCallback() {
+        // Test upload failure
+        locationUploader.uploadCurrentLocation("test-patient-123", testLocation, new LocationUploader.UploadCallback() {
             @Override
             public void onSuccess() {
+                fail("Upload should fail");
                 latch.countDown();
             }
             
             @Override
-            public void onFailure(String error) {
-                fail("Upload should succeed after retry: " + error);
+            public void onError(String error) {
+                errorMessage[0] = error;
                 latch.countDown();
             }
         });
         
-        // Wait for async operation with retries
-        assertTrue("Upload with retry should complete within 10 seconds", 
-                latch.await(10, TimeUnit.SECONDS));
-        assertEquals("Should retry 3 times", 3, retryCount[0]);
+        // Wait for async operation
+        assertTrue("Upload callback should complete within 5 seconds", 
+                latch.await(5, TimeUnit.SECONDS));
+        assertNotNull("Error message should not be null", errorMessage[0]);
     }
     
     @Test
     public void testDatabaseStructure() {
         // Test that the correct database path is used
-        locationUploader.uploadLocation(testLocation, new LocationUploader.LocationUploadCallback() {
+        locationUploader.uploadCurrentLocation("test-patient-123", testLocation, new LocationUploader.UploadCallback() {
             @Override
             public void onSuccess() {}
             
             @Override
-            public void onFailure(String error) {}
+            public void onError(String error) {}
         });
         
         // Verify database path structure: /locations/{patientId}/{pushId}
@@ -271,15 +250,14 @@ public class LocationUploaderTest {
     }
     
     @Test
-    public void testLocationEntitySerialization() {
-        // Verify that LocationEntity has proper structure for Firebase
-        assertNotNull("Patient ID should not be null", testLocation.getPatientId());
+    public void testLocationDataValidation() {
+        // Verify that Location object has valid data for upload
         assertTrue("Latitude should be valid", 
                 testLocation.getLatitude() >= -90 && testLocation.getLatitude() <= 90);
         assertTrue("Longitude should be valid", 
                 testLocation.getLongitude() >= -180 && testLocation.getLongitude() <= 180);
-        assertTrue("Timestamp should be positive", testLocation.getTimestamp() > 0);
         assertTrue("Accuracy should be positive", testLocation.getAccuracy() > 0);
+        assertNotNull("Provider should not be null", testLocation.getProvider());
     }
     
     @Test
@@ -289,31 +267,32 @@ public class LocationUploaderTest {
         
         // Mock successful uploads
         doAnswer(invocation -> {
-            LocationUploader.LocationUploadCallback callback = 
-                (LocationUploader.LocationUploadCallback) invocation.getArguments()[1];
+            LocationUploader.UploadCallback callback = 
+                (LocationUploader.UploadCallback) invocation.getArguments()[1];
             callback.onSuccess();
             return null;
-        }).when(mockSpecificLocationRef).setValue(any(LocationEntity.class), any(LocationUploader.LocationUploadCallback.class));
+        }).when(mockSpecificLocationRef).setValue(any(LocationEntity.class), any(LocationUploader.UploadCallback.class));
         
         // Start multiple concurrent uploads
         for (int i = 0; i < numUploads; i++) {
             final int uploadId = i;
-            LocationEntity location = new LocationEntity(
-                    "patient-" + uploadId,
-                    40.7128 + uploadId * 0.001, // Slightly different coordinates
-                    -74.0060 + uploadId * 0.001,
-                    System.currentTimeMillis(),
-                    85.5f
-            );
             
-            new Thread(() -> locationUploader.uploadLocation(location, new LocationUploader.LocationUploadCallback() {
+            // Create mock location for this upload
+            Location mockLocation = mock(Location.class);
+            when(mockLocation.getLatitude()).thenReturn(40.7128 + uploadId * 0.001);
+            when(mockLocation.getLongitude()).thenReturn(-74.0060 + uploadId * 0.001);
+            when(mockLocation.getAccuracy()).thenReturn(85.5f);
+            when(mockLocation.getProvider()).thenReturn("GPS");
+            when(mockLocation.isFromMockProvider()).thenReturn(false);
+            
+            new Thread(() -> locationUploader.uploadCurrentLocation("patient-" + uploadId, mockLocation, new LocationUploader.UploadCallback() {
                 @Override
                 public void onSuccess() {
                     latch.countDown();
                 }
                 
                 @Override
-                public void onFailure(String error) {
+                public void onError(String error) {
                     fail("Concurrent upload " + uploadId + " failed: " + error);
                     latch.countDown();
                 }

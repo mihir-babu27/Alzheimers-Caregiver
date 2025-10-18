@@ -43,6 +43,101 @@ public class LocationServiceManager {
     }
     
     /**
+     * Start location tracking service after device boot
+     * Handles Android 8+ background service restrictions and ensures location updates resume
+     */
+    public void startTrackingAfterBoot() {
+        if (!isUserAuthenticated()) {
+            Log.e(TAG, "Cannot start tracking after boot - user not authenticated");
+            return;
+        }
+        
+        Log.d(TAG, "Starting location tracking service after device boot");
+        
+        try {
+            Intent intent = new Intent(context, PatientLocationService.class);
+            intent.setAction(PatientLocationService.ACTION_START_TRACKING);
+            // Add extra flag to indicate this is a post-boot restart
+            intent.putExtra("post_boot_restart", true);
+            
+            // For Android 8+, use startForegroundService to handle background restrictions
+            // The service will immediately show a persistent notification
+            context.startForegroundService(intent);
+            
+            // Update preferences to ensure local state is consistent
+            setLocationSharingEnabled(true);
+            
+            Log.d(TAG, "Location tracking service started successfully after boot");
+            
+            // Schedule verification that location updates are actually working
+            verifyLocationUpdatesAfterBoot();
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to start location tracking after boot", e);
+            
+            // Fallback: schedule for later if immediate start fails
+            scheduleDelayedStart();
+        }
+    }
+    
+    /**
+     * Verify that location updates are actually working after boot restart
+     * If not working after 2 minutes, restart the service
+     */
+    private void verifyLocationUpdatesAfterBoot() {
+        android.os.Handler handler = new android.os.Handler(android.os.Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            Log.d(TAG, "Verifying location updates are working after boot...");
+            
+            // Check if service is still running and if we've received recent location updates
+            // We'll add a method to the service to check last update time
+            Intent verifyIntent = new Intent(context, PatientLocationService.class);
+            verifyIntent.setAction(PatientLocationService.ACTION_VERIFY_LOCATION_UPDATES);
+            
+            try {
+                context.startService(verifyIntent);
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to send verification intent", e);
+                // If verification fails, restart tracking
+                restartTrackingAfterBootFailure();
+            }
+        }, 120000); // Check after 2 minutes
+    }
+    
+    /**
+     * Restart tracking if post-boot verification fails
+     */
+    private void restartTrackingAfterBootFailure() {
+        Log.w(TAG, "Restarting location tracking due to post-boot verification failure");
+        
+        // Stop current service first
+        stopTracking();
+        
+        // Wait a moment, then restart
+        android.os.Handler handler = new android.os.Handler(android.os.Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            startTracking();
+        }, 5000); // 5 second delay before restart
+    }
+    
+    /**
+     * Schedule delayed start if immediate boot start fails
+     */
+    private void scheduleDelayedStart() {
+        Log.d(TAG, "Scheduling delayed location tracking start");
+        
+        android.os.Handler handler = new android.os.Handler(android.os.Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            try {
+                startTracking();
+                Log.d(TAG, "Delayed location tracking start successful");
+            } catch (Exception e) {
+                Log.e(TAG, "Delayed location tracking start also failed", e);
+            }
+        }, 30000); // 30 second delay for final retry
+    }
+    
+    /**
      * Stop location tracking service
      */
     public void stopTracking() {
@@ -92,6 +187,17 @@ public class LocationServiceManager {
      */
     public void setLocationSharingEnabled(boolean enabled) {
         setLocationSharingEnabledLocally(enabled);
+        
+        // Schedule or cancel boot job based on sharing state
+        try {
+            if (enabled) {
+                scheduleBootRestartJob();
+            } else {
+                cancelBootRestartJob();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error managing boot restart job", e);
+        }
         
         // Also update Firebase state
         String patientId = getCurrentPatientId();
@@ -251,5 +357,70 @@ public class LocationServiceManager {
     public void clearPreferences() {
         prefs.edit().clear().apply();
         Log.d(TAG, "Location preferences cleared");
+    }
+    
+    /**
+     * Schedule JobService to restart location after boot
+     */
+    private void scheduleBootRestartJob() {
+        try {
+            Log.i(TAG, "Scheduling JobService for boot restart...");
+            
+            android.app.job.JobScheduler jobScheduler = 
+                (android.app.job.JobScheduler) context.getSystemService(context.JOB_SCHEDULER_SERVICE);
+            
+            if (jobScheduler == null) {
+                Log.e(TAG, "JobScheduler not available");
+                return;
+            }
+            
+            // Cancel existing job
+            jobScheduler.cancel(1001);
+            
+            android.content.ComponentName serviceName = 
+                new android.content.ComponentName(context, LocationBootJobService.class);
+            
+            android.os.PersistableBundle extras = new android.os.PersistableBundle();
+            extras.putString("reason", "location_boot_restart");
+            
+            android.app.job.JobInfo jobInfo = new android.app.job.JobInfo.Builder(1001, serviceName)
+                    .setRequiredNetworkType(android.app.job.JobInfo.NETWORK_TYPE_NONE)
+                    .setPersisted(true) // Survive reboots
+                    .setRequiresCharging(false)
+                    .setRequiresDeviceIdle(false)
+                    .setExtras(extras)
+                    .build();
+            
+            int result = jobScheduler.schedule(jobInfo);
+            
+            if (result == android.app.job.JobScheduler.RESULT_SUCCESS) {
+                Log.i(TAG, "✅ Boot restart JobService scheduled successfully");
+            } else {
+                Log.e(TAG, "❌ Failed to schedule boot restart JobService");
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error scheduling boot restart job", e);
+        }
+    }
+    
+    /**
+     * Cancel JobService for boot restart
+     */
+    private void cancelBootRestartJob() {
+        try {
+            Log.i(TAG, "Cancelling JobService for boot restart...");
+            
+            android.app.job.JobScheduler jobScheduler = 
+                (android.app.job.JobScheduler) context.getSystemService(context.JOB_SCHEDULER_SERVICE);
+            
+            if (jobScheduler != null) {
+                jobScheduler.cancel(1001);
+                Log.i(TAG, "Boot restart JobService cancelled");
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error cancelling boot restart job", e);
+        }
     }
 }

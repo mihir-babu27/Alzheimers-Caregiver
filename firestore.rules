@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Caretaker-patient linking collection
+    match /caretakerPatients/{caretakerUid} {
+      // Caretakers can only access their own linking documents
+      allow read, write: if request.auth != null && request.auth.uid == caretakerUid;
+      
+      match /linkedPatients/{patientId} {
+        allow read, write: if request.auth != null && request.auth.uid == caretakerUid;
+      }
+    }
+    
+    // Patient document rules - consolidated to avoid conflicts
+    match /patients/{patientId} {
+      // Allow patients to read/write their own document
+      // OR allow caretakers to read/write if they are linked to this patient
+      allow read, write: if request.auth != null && (
+        // Patient can access their own document
+        request.auth.uid == patientId ||
+        // OR caretaker can access if they are linked to this patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId))
+      );
+      
+      // Allow access to subcollections with same rules
+      match /{subcollection}/{document=**} {
+        allow read, write: if request.auth != null && (
+          // Patient can access their own subcollections
+          request.auth.uid == patientId ||
+          // OR caretaker can access if they are linked to this patient
+          exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId))
+        );
+      }
+    }
+    
+    // Reminders collection - top-level collection used by patient app
+    match /reminders/{reminderId} {
+      // Allow patients to read/write their own reminders
+      // OR allow caretakers to read/write reminders for linked patients
+      allow read, write: if request.auth != null && (
+        // Patient can access their own reminders (check patientId field)
+        request.auth.uid == resource.data.patientId ||
+        // OR caretaker can access if they are linked to the patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(resource.data.patientId)) ||
+        // For create operations, check the incoming data
+        (request.auth.uid == request.resource.data.patientId) ||
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(request.resource.data.patientId))
+      );
+    }
+    
+    // Tasks collection - top-level collection used by patient app  
+    match /tasks/{taskId} {
+      // Allow patients to read/write their own tasks
+      // OR allow caretakers to read/write tasks for linked patients
+      allow read, write: if request.auth != null && (
+        // Patient can access their own tasks (check patientId field)
+        request.auth.uid == resource.data.patientId ||
+        // OR caretaker can access if they are linked to the patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(resource.data.patientId)) ||
+        // For create operations, check the incoming data
+        (request.auth.uid == request.resource.data.patientId) ||
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(request.resource.data.patientId))
+      );
+    }
+    
+    // Stories collection - top-level collection used by patient app
+    match /stories/{storyId} {
+      // Allow patients to read/write their own stories
+      // OR allow caretakers to read/write stories for linked patients
+      allow read, write: if request.auth != null && (
+        // Patient can access their own stories (check patientId field)
+        request.auth.uid == resource.data.patientId ||
+        // OR caretaker can access if they are linked to the patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(resource.data.patientId)) ||
+        // For create operations, check the incoming data
+        (request.auth.uid == request.resource.data.patientId) ||
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(request.resource.data.patientId))
+      );
+    }
+    
+    // Location sharing states - top-level collection
+    match /locationSharing/{patientId} {
+      // Allow patients to read/write their own location sharing state
+      // OR allow caretakers to read/write if they are linked to this patient
+      allow read, write: if request.auth != null && (
+        // Patient can access their own location sharing state
+        request.auth.uid == patientId ||
+        // OR caretaker can access if they are linked to this patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId))
+      );
+    }
+    
+    // Location data - top-level collection
+    match /locations/{locationId} {
+      // Allow patients to read/write their own location data
+      // OR allow caretakers to read/write location data for linked patients
+      allow read, write: if request.auth != null && (
+        // Patient can access their own location data (check patientId field)
+        request.auth.uid == resource.data.patientId ||
+        // OR caretaker can access if they are linked to the patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(resource.data.patientId)) ||
+        // For create operations, check the incoming data
+        (request.auth.uid == request.resource.data.patientId) ||
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(request.resource.data.patientId))
+      );
+    }
+    
+    // Default deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

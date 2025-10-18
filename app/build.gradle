@@ -17,6 +17,7 @@ if (apiKeysPropertiesFile.exists()) {
     apiKeysProperties.setProperty("FIREBASE_APP_ID", "placeholder")
     apiKeysProperties.setProperty("HUGGING_FACE_API_KEY", "placeholder")
     apiKeysProperties.setProperty("MAPS_API_KEY", "placeholder")
+    apiKeysProperties.setProperty("GEMINI_API_KEY", "placeholder")
 }
 
 // Load FCM keys from separate properties file (HTTP v1 API)
@@ -56,6 +57,9 @@ android {
         buildConfigField "String", "FCM_SENDER_ID", "\"${fcmKeysProperties['FCM_SENDER_ID']}\""
         buildConfigField "String", "FIREBASE_SERVICE_ACCOUNT_PATH", "\"${fcmKeysProperties['FIREBASE_SERVICE_ACCOUNT_PATH']}\""
         buildConfigField "String", "HUGGING_FACE_API_KEY", "\"${apiKeysProperties['HUGGING_FACE_API_KEY']}\""
+        
+        // Add Gemini AI API key
+        buildConfigField "String", "GEMINI_API_KEY", "\"${apiKeysProperties['GEMINI_API_KEY']}\""
         
         // Read Google Maps API key from secure-keys/api-keys.properties
         manifestPlaceholders = [
@@ -113,6 +117,12 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    
+    // Testing dependencies
+    testImplementation 'org.mockito:mockito-core:5.7.0'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+    testImplementation 'org.robolectric:robolectric:4.11.1'
+    androidTestImplementation 'org.mockito:mockito-android:5.7.0'
 
     implementation project(':face_recognition')
     implementation project(':object_detection:app')

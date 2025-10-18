@@ -3,6 +3,8 @@ package com.mihir.alzheimerscaregiver.alarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.mihir.alzheimerscaregiver.data.ReminderRepository;
@@ -41,12 +43,9 @@ public class BootReceiver extends BroadcastReceiver {
             // First, restore any repeating alarms that might have been scheduled
             restoreRepeatingAlarms(context, alarmScheduler);
             
-            // Create repository and reschedule all alarms from Firestore
-            ReminderRepository repository = new ReminderRepository(alarmScheduler);
-            
-            // Reschedule all alarms from database
-            repository.rescheduleAllAlarms();
-            Log.d(TAG, "Initiated Firestore alarm rescheduling");
+            // Schedule delayed alarm rescheduling to allow Firebase initialization
+            scheduleDelayedAlarmRescheduling(context, alarmScheduler);
+            Log.d(TAG, "Scheduled delayed alarm rescheduling");
             
             // Also ensure periodic sync is scheduled as a safety net
             try {
@@ -88,5 +87,39 @@ public class BootReceiver extends BroadcastReceiver {
         } catch (Exception e) {
             Log.e(TAG, "Error restoring repeating alarms", e);
         }
+    }
+    
+    /**
+     * Schedule delayed alarm rescheduling to allow Firebase to initialize
+     */
+    private void scheduleDelayedAlarmRescheduling(Context context, AlarmScheduler alarmScheduler) {
+        // Use Handler to delay the rescheduling
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            try {
+                Log.d(TAG, "Starting delayed alarm rescheduling...");
+                
+                // Create repository and reschedule all alarms from Firestore
+                ReminderRepository repository = new ReminderRepository(alarmScheduler);
+                
+                // Reschedule all alarms from database with retry logic
+                repository.rescheduleAllAlarms();
+                Log.d(TAG, "Delayed Firestore alarm rescheduling initiated");
+                
+            } catch (Exception e) {
+                Log.e(TAG, "Error in delayed alarm rescheduling", e);
+                
+                // If first attempt fails, try again after longer delay
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    try {
+                        Log.d(TAG, "Retry delayed alarm rescheduling...");
+                        ReminderRepository retryRepository = new ReminderRepository(alarmScheduler);
+                        retryRepository.rescheduleAllAlarms();
+                        
+                    } catch (Exception retryE) {
+                        Log.e(TAG, "Failed retry alarm rescheduling", retryE);
+                    }
+                }, 30000); // Retry after 30 seconds
+            }
+        }, 10000); // Initial delay of 10 seconds to allow Firebase initialization
     }
 }

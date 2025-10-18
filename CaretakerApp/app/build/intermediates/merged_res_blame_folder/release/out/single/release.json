@@ -1,102 +1,166 @@
 [
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/xml_data_extraction_rules.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/xml/data_extraction_rules.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_splash.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_splash.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_item_custom_mmse_question.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/item_custom_mmse_question.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_export.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_export.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/drawable_image_background.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/drawable/image_background.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_custom_mmse_questions.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_custom_mmse_questions.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_custom_mmse_questions.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_custom_mmse_questions.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_item_medicine_image.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/item_medicine_image.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_add_emergency_contact.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_add_emergency_contact.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_circle_red_background.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/circle_red_background.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_caretaker_mmse_results.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_caretaker_mmse_results.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_warning.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_warning.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_patient_link.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_patient_link.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_item_background.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/item_background.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_caretaker_mmse_result_detail.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_caretaker_mmse_result_detail.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_notification_location.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_notification_location.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_add_task.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_add_task.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_main.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_main.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_login.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_login.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_medication_placeholder.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_medication_placeholder.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_main.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_main.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_close_white.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_close_white.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_caretaker_settings.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_caretaker_settings.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_caretaker_settings.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_caretaker_settings.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_register.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_register.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_image_background.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/image_background.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_item_medicine_image.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/item_medicine_image.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/mipmap-hdpi/ic_launcher.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_item_mmse_result.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/item_mmse_result.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_geofence_management.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_geofence_management.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/drawable/ic_launcher_background.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/mipmap-hdpi/ic_launcher_round.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_schedule_mmse_test.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_schedule_mmse_test.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_schedule_mmse_test.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_schedule_mmse_test.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/drawable_ic_close_white.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/drawable/ic_close_white.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_dialog_add_task_enhanced.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/dialog_add_task_enhanced.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/mipmap-hdpi_ic_launcher.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/mipmap-hdpi/ic_launcher.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_caretaker_mmse_results.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_caretaker_mmse_results.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/xml_backup_rules.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/xml/backup_rules.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_history.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_history.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/drawable_circle_red_background.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/drawable/circle_red_background.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_patient_link.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_patient_link.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_patient_profile_entry.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_patient_profile_entry.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_patient_profile_entry.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_patient_profile_entry.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/mipmap-hdpi_ic_launcher_round.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/mipmap-hdpi/ic_launcher_round.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_location.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_location.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/layout_activity_add_medication.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/layout/activity_add_medication.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/xml_data_extraction_rules.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-38:/drawable_ic_medication_placeholder.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-39:/drawable/ic_medication_placeholder.xml"
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_add_emergency_contact.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_add_emergency_contact.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_item_custom_mmse_question.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/item_custom_mmse_question.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_item_time_point.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/item_time_point.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_fence.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_fence.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_caretaker_mmse_result_detail.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_caretaker_mmse_result_detail.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_register.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_register.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_dialog_create_geofence.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/dialog_create_geofence.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_login.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/xml_backup_rules.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_item_mmse_result.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/item_mmse_result.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_add_medication.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_add_medication.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_caretaker_map.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_caretaker_map.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_circle_background.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/circle_background.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_add_task.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_add_task.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_history.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/layout/activity_history.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/drawable_rounded_background_light.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-41:/drawable/rounded_background_light.xml"
     }
 ]

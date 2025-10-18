@@ -218,9 +218,13 @@ public class TrackingActivity extends AppCompatActivity {
                 Log.d(TAG, "Firebase sharing state updated to enabled");
                 // Start the service
                 locationManager.startTracking();
+                
+                // Schedule aggressive boot job for stopped app compatibility
+                scheduleBootJobForStoppedApps();
+                
                 runOnUiThread(() -> {
                     updateUI();
-                    Toast.makeText(TrackingActivity.this, "Location sharing enabled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrackingActivity.this, "Location sharing enabled & boot restart scheduled", Toast.LENGTH_SHORT).show();
                 });
             }
             
@@ -634,5 +638,73 @@ public class TrackingActivity extends AppCompatActivity {
                 });
             }
         }).start();
+    }
+    
+    /**
+     * Schedule boot job for stopped app compatibility
+     */
+    private void scheduleBootJobForStoppedApps() {
+        try {
+            Log.i(TAG, "Scheduling boot job for stopped app compatibility...");
+            
+            android.app.job.JobScheduler jobScheduler = 
+                (android.app.job.JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            
+            if (jobScheduler == null) {
+                Log.e(TAG, "JobScheduler not available");
+                return;
+            }
+            
+            // Cancel existing boot jobs
+            jobScheduler.cancel(1001);
+            jobScheduler.cancel(1002);
+            
+            android.content.ComponentName serviceName = 
+                new android.content.ComponentName(this, com.mihir.alzheimerscaregiver.location.LocationBootJobService.class);
+            
+            android.os.PersistableBundle extras = new android.os.PersistableBundle();
+            extras.putString("reason", "location_sharing_enabled");
+            extras.putLong("enabled_time", System.currentTimeMillis());
+            
+            // Create aggressive boot job for stopped apps
+            android.app.job.JobInfo bootJob = new android.app.job.JobInfo.Builder(1001, serviceName)
+                    .setRequiredNetworkType(android.app.job.JobInfo.NETWORK_TYPE_NONE)
+                    .setPersisted(true) // Critical: survive reboots for stopped apps
+                    .setRequiresCharging(false)
+                    .setRequiresDeviceIdle(false)
+                    .setRequiresBatteryNotLow(false)
+                    .setMinimumLatency(100) // Start almost immediately after boot
+                    .setOverrideDeadline(10000) // Must run within 10 seconds of boot
+                    .setExtras(extras)
+                    .build();
+            
+            int result = jobScheduler.schedule(bootJob);
+            
+            if (result == android.app.job.JobScheduler.RESULT_SUCCESS) {
+                Log.i(TAG, "✅ Boot job scheduled successfully for stopped apps!");
+                
+                // Schedule periodic backup job
+                android.os.PersistableBundle periodicExtras = new android.os.PersistableBundle();
+                periodicExtras.putString("reason", "periodic_location_check");
+                
+                android.app.job.JobInfo periodicJob = new android.app.job.JobInfo.Builder(1002, serviceName)
+                        .setRequiredNetworkType(android.app.job.JobInfo.NETWORK_TYPE_NONE)
+                        .setPersisted(true)
+                        .setRequiresCharging(false)
+                        .setRequiresDeviceIdle(false)
+                        .setPeriodic(12 * 60 * 60 * 1000) // Check every 12 hours
+                        .setExtras(periodicExtras)
+                        .build();
+                
+                jobScheduler.schedule(periodicJob);
+                Log.i(TAG, "✅ Periodic backup job also scheduled");
+                
+            } else {
+                Log.e(TAG, "❌ Failed to schedule boot job for stopped apps");
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error scheduling boot job for stopped apps", e);
+        }
     }
 }

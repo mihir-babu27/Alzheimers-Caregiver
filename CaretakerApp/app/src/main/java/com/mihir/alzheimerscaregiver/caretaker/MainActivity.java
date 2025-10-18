@@ -68,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
     viewLocationButton = findViewById(R.id.viewLocationButton);
     viewHistoryButton = findViewById(R.id.viewHistoryButton);
     manageGeofencesButton = findViewById(R.id.manageGeofencesButton);
+    
+    // TODO: Hide geofencing functionality for now
+    if (manageGeofencesButton != null) {
+        manageGeofencesButton.setVisibility(View.GONE);
+    }
 
         // Set welcome text
         welcomeText.setText("Welcome! You are linked to Patient ID: " + linkedPatientId);
@@ -132,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         
+        // TODO: Geofence management functionality (disabled for now)
+        /*
         manageGeofencesButton.setOnClickListener(v -> {
             // For now, direct to CaretakerMapActivity where geofence management can be accessed
             Intent intent = new Intent(MainActivity.this, CaretakerMapActivity.class);
@@ -139,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("showGeofenceManagement", true); // Flag for geofence mode
             startActivity(intent);
         });
+        */
     }
 
     private void logout() {

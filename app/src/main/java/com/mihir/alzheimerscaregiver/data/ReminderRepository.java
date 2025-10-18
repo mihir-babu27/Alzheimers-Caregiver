@@ -224,23 +224,52 @@ public class ReminderRepository {
     public void rescheduleAllAlarms() {
         String patientId = getCurrentPatientId();
         if (patientId == null) {
-            Log.w(TAG, "rescheduleAllAlarms: No authenticated user");
+            Log.w(TAG, "rescheduleAllAlarms: No authenticated user, will retry in 15 seconds");
+            
+            // Schedule a retry after 15 seconds to allow authentication
+            new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+                String retryPatientId = getCurrentPatientId();
+                if (retryPatientId != null) {
+                    Log.i(TAG, "Retry successful - rescheduling alarms for patient: " + retryPatientId);
+                    rescheduleAlarmsForPatient(retryPatientId);
+                } else {
+                    Log.w(TAG, "Retry failed - still no authenticated user");
+                }
+            }, 15000);
+            
             return;
         }
         
+        Log.i(TAG, "Rescheduling alarms for authenticated patient: " + patientId);
+        rescheduleAlarmsForPatient(patientId);
+    }
+    
+    /**
+     * Reschedule alarms for a specific patient ID
+     */
+    private void rescheduleAlarmsForPatient(String patientId) {
         db.collection(COLLECTION_REMINDERS)
                 .whereEqualTo("patientId", patientId)
                 .whereEqualTo("isCompleted", false)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int rescheduledCount = 0;
+                    
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        ReminderEntity reminder = doc.toObject(ReminderEntity.class);
-                        if (reminder.getTimeMillis() > System.currentTimeMillis() || reminder.isRepeating()) {
-                            // Reschedule future reminders or repeating reminders (even if past due)
-                            alarmScheduler.scheduleAlarm(reminder, reminder.isRepeating());
-                            Log.d(TAG, "Rescheduled alarm for reminder: " + reminder.getId());
+                        try {
+                            ReminderEntity reminder = doc.toObject(ReminderEntity.class);
+                            if (reminder.getTimeMillis() > System.currentTimeMillis() || reminder.isRepeating()) {
+                                // Reschedule future reminders or repeating reminders (even if past due)
+                                alarmScheduler.scheduleAlarm(reminder, reminder.isRepeating());
+                                rescheduledCount++;
+                                Log.d(TAG, "✅ Rescheduled alarm: " + reminder.getTitle());
+                            }
+                        } catch (Exception e) {
+                            Log.w(TAG, "Error rescheduling individual alarm", e);
                         }
                     }
+                    
+                    Log.i(TAG, "🎯 Successfully rescheduled " + rescheduledCount + " medication alarms after boot");
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error fetching reminders for rescheduling", e));
     }
