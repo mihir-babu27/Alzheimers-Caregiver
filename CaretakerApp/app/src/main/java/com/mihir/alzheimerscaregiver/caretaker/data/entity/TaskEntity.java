@@ -1,12 +1,9 @@
 package com.mihir.alzheimerscaregiver.caretaker.data.entity;
 
-import androidx.annotation.NonNull;
-
 public class TaskEntity {
 
     public String id;
 
-    @NonNull
     public String name;
 
     public String description;
@@ -38,7 +35,7 @@ public class TaskEntity {
     public boolean enableAlarm; // whether to set alarms/notifications
     public boolean enableCaretakerNotification; // whether to notify caretakers if missed
 
-    public TaskEntity(@NonNull String name,
+    public TaskEntity(String name,
                       String description,
                       boolean isCompleted,
                       String category,
@@ -67,7 +64,7 @@ public class TaskEntity {
         this.enableCaretakerNotification = true;
     }
     
-    public TaskEntity(@NonNull String name,
+    public TaskEntity(String name,
                       String description,
                       boolean isCompleted,
                       String category,
@@ -126,6 +123,19 @@ public class TaskEntity {
         } else {
             return isCompleted;
         }
+    }
+    
+    // Getter methods
+    public String getTaskId() { 
+        return id; 
+    }
+    
+    public String getTaskName() { 
+        return name; 
+    }
+    
+    public boolean isRepeating() { 
+        return isRepeating; 
     }
     
     /**

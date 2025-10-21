@@ -1,3 +1,0 @@
-com.mihir.alzheimerscaregiver.caretaker.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme

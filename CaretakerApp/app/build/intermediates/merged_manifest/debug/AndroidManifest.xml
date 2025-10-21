@@ -51,6 +51,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/Theme.CaretakerApp" >
 
         <!-- Google Maps API Key -->
@@ -102,6 +103,16 @@
         <activity
             android:name="com.mihir.alzheimerscaregiver.caretaker.AddTaskActivity"
             android:exported="false" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.activities.TaskListActivity"
+            android:exported="false"
+            android:label="Task Management"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.activities.AddEditTaskActivity"
+            android:exported="false"
+            android:label="Task Details"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
         <activity
             android:name="com.mihir.alzheimerscaregiver.caretaker.AddEmergencyContactActivity"
             android:exported="false" />

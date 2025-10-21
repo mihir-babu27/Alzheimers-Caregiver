@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         addTaskButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
+            Intent intent = new Intent(MainActivity.this, com.mihir.alzheimerscaregiver.caretaker.activities.TaskListActivity.class);
             intent.putExtra("patientId", linkedPatientId);
             startActivity(intent);
         });

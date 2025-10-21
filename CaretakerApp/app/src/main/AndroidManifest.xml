@@ -84,6 +84,18 @@
             android:exported="false" />
 
         <activity
+            android:name=".activities.TaskListActivity"
+            android:exported="false"
+            android:label="Task Management"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+
+        <activity
+            android:name=".activities.AddEditTaskActivity"
+            android:exported="false"
+            android:label="Task Details"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+
+        <activity
             android:name=".AddEmergencyContactActivity"
             android:exported="false" />
 

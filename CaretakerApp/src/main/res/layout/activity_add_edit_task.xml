@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Details"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Task Name -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary">
+
+            <EditText
+                android:id="@+id/inputTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Task name"
+                android:inputType="textCapSentences"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Task Description -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary">
+
+            <EditText
+                android:id="@+id/inputTaskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description (optional)"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="2"
+                android:maxLines="4"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Task Category -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary">
+
+            <EditText
+                android:id="@+id/inputTaskCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category (e.g., Exercise, Medication)"
+                android:inputType="textCapWords"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Task Time -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary">
+
+            <EditText
+                android:id="@+id/inputTaskTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Scheduled time (tap to pick)"
+                android:focusable="false"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_access_time"
+                android:drawablePadding="12dp"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Repeat Options Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Repeat Options"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginBottom="12dp" />
+
+                <CheckBox
+                    android:id="@+id/checkRepeating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable repeat"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="12dp"
+                    android:buttonTint="@color/colorPrimary" />
+
+                <!-- Days of Week Selection -->
+                <TextView
+                    android:id="@+id/labelDaysOfWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Repeat on:"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layoutDaysOfWeek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone">
+
+                    <ToggleButton
+                        android:id="@+id/buttonSunday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textOff="S"
+                        android:textOn="S"
+                        android:textSize="12sp"
+                        android:layout_margin="2dp" />
+
+                    <ToggleButton
+                        android:id="@+id/buttonMonday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textOff="M"
+                        android:textOn="M"
+                        android:textSize="12sp"
+                        android:layout_margin="2dp" />
+
+                    <ToggleButton
+                        android:id="@+id/buttonTuesday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textOff="T"
+                        android:textOn="T"
+                        android:textSize="12sp"
+                        android:layout_margin="2dp" />
+
+                    <ToggleButton
+                        android:id="@+id/buttonWednesday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textOff="W"
+                        android:textOn="W"
+                        android:textSize="12sp"
+                        android:layout_margin="2dp" />
+
+                    <ToggleButton
+                        android:id="@+id/buttonThursday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textOff="T"
+                        android:textOn="T"
+                        android:textSize="12sp"
+                        android:layout_margin="2dp" />
+
+                    <ToggleButton
+                        android:id="@+id/buttonFriday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textOff="F"
+                        android:textOn="F"
+                        android:textSize="12sp"
+                        android:layout_margin="2dp" />
+
+                    <ToggleButton
+                        android:id="@+id/buttonSaturday"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textOff="S"
+                        android:textOn="S"
+                        android:textSize="12sp"
+                        android:layout_margin="2dp" />
+
+                </LinearLayout>
+
+                <!-- Quick Repeat Options -->
+                <LinearLayout
+                    android:id="@+id/layoutQuickRepeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/buttonDaily"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Daily"
+                        android:layout_margin="2dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/buttonWeekdays"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Weekdays"
+                        android:layout_margin="2dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/buttonWeekends"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Weekends"
+                        android:layout_margin="2dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Notification Options Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notification Options"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginBottom="12dp" />
+
+                <CheckBox
+                    android:id="@+id/checkEnableAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable alarm/notification"
+                    android:textSize="16sp"
+                    android:checked="true"
+                    android:buttonTint="@color/colorPrimary" />
+
+                <CheckBox
+                    android:id="@+id/checkCaretakerNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notify caretaker if missed"
+                    android:textSize="16sp"
+                    android:checked="true"
+                    android:buttonTint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:layout_marginEnd="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Task"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
