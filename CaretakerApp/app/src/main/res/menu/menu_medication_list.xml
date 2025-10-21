@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_filter_all"
+        android:title="All Medications"
+        android:icon="@android:drawable/ic_menu_agenda"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_filter_active"
+        android:title="Active Only"
+        android:icon="@android:drawable/ic_menu_agenda"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_filter_overdue"
+        android:title="Overdue"
+        android:icon="@drawable/ic_warning"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_filter_today"
+        android:title="Due Today"
+        android:icon="@android:drawable/ic_menu_today"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:title="Refresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -134,6 +134,8 @@
     <string name="wednesday_short">W</string>
     <string name="weekdays">Weekdays</string>
     <string name="weekends">Weekends</string>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.Material3.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.Material3"/>
     <style name="Theme.CaretakerApp" parent="Theme.Material3.DayNight">
         
         <item name="colorPrimary">@color/purple_500</item>

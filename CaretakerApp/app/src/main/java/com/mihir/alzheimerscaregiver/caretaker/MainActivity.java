@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     
-    private Button addMedicationButton, addTaskButton, addEmergencyContactButton, logoutButton, viewMmseResultsButton;
+    private Button addMedicationButton, viewMedicationsButton, addTaskButton, addEmergencyContactButton, logoutButton, viewMmseResultsButton;
     private Button scheduleMmseTestButton, addCustomQuestionsButton, addPatientProfileButton;
     private Button viewLocationButton, viewHistoryButton, manageGeofencesButton;
     private TextView welcomeText;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize views
         addMedicationButton = findViewById(R.id.addMedicationButton);
+        viewMedicationsButton = findViewById(R.id.viewMedicationsButton);
         addTaskButton = findViewById(R.id.addTaskButton);
         addEmergencyContactButton = findViewById(R.id.addEmergencyContactButton);
         logoutButton = findViewById(R.id.logoutButton);
@@ -81,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
         addMedicationButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddMedicationActivity.class);
             intent.putExtra("patientId", linkedPatientId);
+            startActivity(intent);
+        });
+
+        viewMedicationsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.mihir.alzheimerscaregiver.caretaker.activities.MedicationListActivity.class);
+            intent.putExtra("patientId", linkedPatientId);
+            intent.putExtra("patientName", "Patient"); // TODO: Get actual patient name
             startActivity(intent);
         });
 

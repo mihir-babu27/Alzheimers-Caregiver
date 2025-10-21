@@ -90,6 +90,16 @@
             android:name="com.mihir.alzheimerscaregiver.caretaker.AddMedicationActivity"
             android:exported="false" />
         <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.activities.MedicationListActivity"
+            android:exported="false"
+            android:label="Medications"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+        <activity
+            android:name="com.mihir.alzheimerscaregiver.caretaker.activities.MedicationDetailActivity"
+            android:exported="false"
+            android:label="Medication Details"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+        <activity
             android:name="com.mihir.alzheimerscaregiver.caretaker.AddTaskActivity"
             android:exported="false" />
         <activity
@@ -220,9 +230,6 @@
                 android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
-                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
-                android:value="com.google.firebase.components.ComponentRegistrar" />
-            <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
@@ -233,6 +240,9 @@
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
         </service>
 
@@ -264,22 +274,10 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <service
-            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-            android:exported="false" >
-            <meta-data
-                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-                android:value="cct" />
-        </service>
-        <service
-            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" >
-        </service>
-
-        <receiver
-            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-            android:exported="false" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <provider
             android:name="com.google.firebase.provider.FirebaseInitProvider"
@@ -288,10 +286,9 @@
             android:exported="false"
             android:initOrder="100" />
 
-        <activity
-            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -308,10 +305,22 @@
                 android:value="androidx.startup" />
         </provider>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        <service
+            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+            android:exported="false" >
+            <meta-data
+                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+                android:value="cct" />
+        </service>
+        <service
+            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+        </service>
 
+        <receiver
+            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+            android:exported="false" />
         <receiver
             android:name="androidx.profileinstaller.ProfileInstallReceiver"
             android:directBootAware="false"

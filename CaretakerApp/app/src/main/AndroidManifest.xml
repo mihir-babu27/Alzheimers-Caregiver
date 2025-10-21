@@ -68,6 +68,18 @@
             android:exported="false" />
 
         <activity
+            android:name=".activities.MedicationListActivity"
+            android:exported="false"
+            android:label="Medications"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+
+        <activity
+            android:name=".activities.MedicationDetailActivity"
+            android:exported="false"
+            android:label="Medication Details"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+
+        <activity
             android:name=".AddTaskActivity"
             android:exported="false" />
 

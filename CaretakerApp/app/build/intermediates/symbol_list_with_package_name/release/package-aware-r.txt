@@ -3086,6 +3086,7 @@ drawable design_snackbar_background
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_arrow_back_black_24
+drawable ic_check_circle
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_close_white
@@ -3098,12 +3099,17 @@ drawable ic_location
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
+drawable ic_medication_default
 drawable ic_medication_placeholder
 drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_notification_location
+drawable ic_pause
+drawable ic_pause_circle
+drawable ic_play_arrow
+drawable ic_schedule
 drawable ic_search_black_24
 drawable ic_warning
 drawable image_background
@@ -3244,12 +3250,17 @@ id action_bar_title
 id action_container
 id action_context_bar
 id action_divider
+id action_filter_active
+id action_filter_all
+id action_filter_overdue
+id action_filter_today
 id action_image
 id action_menu_divider
 id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
+id action_refresh
 id action_text
 id actions
 id activity_chooser_view_content
@@ -3320,10 +3331,14 @@ id buttonViewList
 id buttonWednesday
 id buttonWeekdays
 id buttonWeekends
+id button_delete
+id button_edit
+id button_toggle_status
 id cache_measures
 id callMeasure
 id cancelButton
 id cancel_button
+id card_medication
 id carryVelocity
 id center
 id centerCrop
@@ -3390,6 +3405,7 @@ id disableIntraAutoTransition
 id disablePostScroll
 id disableScroll
 id disjoint
+id divider_overdue
 id dosageEditText
 id dragAnticlockwise
 id dragClockwise
@@ -3409,6 +3425,7 @@ id edge
 id editTextZoneDescription
 id editTextZoneName
 id edit_query
+id edit_text_search
 id elastic
 id emailEditText
 id embed
@@ -3424,6 +3441,7 @@ id expectedAnswerInput
 id exportButton
 id fabAddGeofence
 id fabCenterOnPatient
+id fab_add_medication
 id fade
 id fill
 id fill_horizontal
@@ -3467,6 +3485,8 @@ id ignoreRequest
 id image
 id imageStatusIcon
 id imageView
+id image_medicine
+id image_status
 id imagesRecyclerView
 id immediateStop
 id included
@@ -3636,6 +3656,7 @@ id postLayout
 id pressed
 id professionEditText
 id progressBar
+id progress_bar
 id progress_circular
 id progress_horizontal
 id questionInput
@@ -3645,6 +3666,7 @@ id ratio
 id rectangles
 id recyclerTimePoints
 id recyclerView
+id recycler_view_medications
 id registerButton
 id registerLink
 id relationEditText
@@ -3768,9 +3790,16 @@ id textStaleWarning
 id textStart
 id textTime
 id textTop
+id text_category
+id text_dosage
+id text_empty_view
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
+id text_last_updated
+id text_medication_name
+id text_status
+id text_time
 id textinput_counter
 id textinput_error
 id textinput_helper_text
@@ -3954,6 +3983,7 @@ layout activity_geofence_management
 layout activity_history
 layout activity_login
 layout activity_main
+layout activity_medication_list
 layout activity_patient_link
 layout activity_patient_profile_entry
 layout activity_register
@@ -3980,6 +4010,7 @@ layout design_text_input_start_icon
 layout dialog_add_task_enhanced
 layout dialog_create_geofence
 layout item_custom_mmse_question
+layout item_medication
 layout item_medicine_image
 layout item_mmse_result
 layout item_time_point
@@ -4044,6 +4075,7 @@ layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
+menu menu_medication_list
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
@@ -4337,6 +4369,8 @@ style Animation_Material3_SideSheetDialog
 style Animation_Material3_SideSheetDialog_Left
 style Animation_Material3_SideSheetDialog_Right
 style Animation_MaterialComponents_BottomSheetDialog
+style AppTheme_AppBarOverlay
+style AppTheme_PopupOverlay
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
 style Base_Animation_AppCompat_Dialog

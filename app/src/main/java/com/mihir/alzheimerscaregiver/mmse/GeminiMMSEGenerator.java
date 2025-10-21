@@ -48,6 +48,7 @@ public class GeminiMMSEGenerator {
     private static final String BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/";
     private static final String[] MODEL_NAMES = {
         "gemini-2.0-flash-exp",  // Latest experimental 2.0 Flash model
+        "gemini-2.0-flash",      // Stable 2.0 Flash model (NEW - more quota)
         "gemini-1.5-flash-8b",   // Lightweight flash model
         "gemini-1.5-flash",      // Standard flash model
         "gemini-1.5-pro"         // Pro version fallback

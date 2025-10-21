@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_medication"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Overdue indicator -->
+        <View
+            android:id="@+id/divider_overdue"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@android:color/holo_red_dark"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <!-- Medicine Image -->
+            <ImageView
+                android:id="@+id/image_medicine"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/circle_background"
+                android:padding="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_medication_placeholder"
+                tools:src="@drawable/ic_medication_placeholder" />
+
+            <!-- Main Content -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Medication Name and Status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/text_medication_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        tools:text="Medication Name" />
+
+                    <ImageView
+                        android:id="@+id/image_status"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_warning"
+                        tools:tint="@android:color/holo_green_dark" />
+
+                </LinearLayout>
+
+                <!-- Dosage and Time -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:id="@+id/text_dosage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        tools:text="10mg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" • "
+                        android:textSize="14sp"
+                        android:textColor="?android:attr/textColorSecondary" />
+
+                    <TextView
+                        android:id="@+id/text_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        tools:text="8:00 AM" />
+
+                </LinearLayout>
+
+                <!-- Category -->
+                <TextView
+                    android:id="@+id/text_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/rounded_background_light"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:visibility="gone"
+                    tools:text="Heart Medicine"
+                    tools:visibility="visible" />
+
+                <!-- Status Text -->
+                <TextView
+                    android:id="@+id/text_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="ACTIVE"
+                    tools:textColor="@android:color/holo_green_dark" />
+
+                <!-- Last Updated -->
+                <TextView
+                    android:id="@+id/text_last_updated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textSize="11sp"
+                    android:textColor="?android:attr/textColorTertiary"
+                    android:visibility="gone"
+                    tools:text="Updated: Dec 15, 2024"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <ImageButton
+                    android:id="@+id/button_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:contentDescription="Edit medication"
+                    android:layout_marginBottom="4dp" />
+
+                <ImageButton
+                    android:id="@+id/button_toggle_status"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_media_pause"
+                    android:contentDescription="Toggle medication status"
+                    android:layout_marginBottom="4dp" />
+
+                <ImageButton
+                    android:id="@+id/button_delete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_delete"
+                    android:contentDescription="Delete medication" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

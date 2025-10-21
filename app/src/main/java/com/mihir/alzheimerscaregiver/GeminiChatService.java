@@ -32,6 +32,7 @@ public class GeminiChatService {
     private static final String BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/";
     private static final String[] MODEL_NAMES = {
         "gemini-2.0-flash-exp",  // Latest experimental model
+        "gemini-2.0-flash",      // Stable 2.0 Flash model (NEW - more quota)
         "gemini-1.5-flash",      // Fallback to 1.5 Flash
         "gemini-1.5-pro",        // Pro version fallback
         "gemini-pro"             // Original model as final fallback
@@ -157,7 +158,26 @@ public class GeminiChatService {
                             String responseBody = r.body() != null ? r.body().string() : "No response body";
                             Log.e(TAG, "API call unsuccessful for " + currentModel + ": " + r.code() + " - " + r.message());
                             
-                            // Try next model
+                            // Handle rate limiting with exponential backoff
+                            if (r.code() == 429) {
+                                int delaySeconds = (int) Math.pow(2, modelIndex) * 3; // 3s, 6s, 12s, 24s
+                                Log.w(TAG, "Rate limit hit for chat model " + currentModel + ", waiting " + delaySeconds + " seconds before retry");
+                                
+                                // Use executor to handle the delay without blocking main thread
+                                executor.execute(() -> {
+                                    try {
+                                        Thread.sleep(delaySeconds * 1000);
+                                        mainHandler.post(() -> tryModelOrFallback(userMessage, callback, modelIndex + 1, prompt));
+                                    } catch (InterruptedException ie) {
+                                        Thread.currentThread().interrupt();
+                                        Log.w(TAG, "Rate limit delay interrupted");
+                                        mainHandler.post(() -> tryModelOrFallback(userMessage, callback, modelIndex + 1, prompt));
+                                    }
+                                });
+                                return;
+                            }
+                            
+                            // Try next model for other errors
                             mainHandler.post(() -> tryModelOrFallback(userMessage, callback, modelIndex + 1, prompt));
                             return;
                         }
@@ -464,17 +484,129 @@ public class GeminiChatService {
             truncatedConversation = conversationText.substring(0, 2000) + "...";
         }
         
-        String languageInstruction = "";
-        if (!preferredLanguage.equals(LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
-            languageInstruction = "The conversation may contain " + preferredLanguage + " text. ";
+        // Enhanced multi-language instructions with cultural context
+        String enhancedLanguageInstructions = getEnhancedLanguageInstructions(preferredLanguage);
+        String cultureSpecificExamples = getCultureSpecificMemoryExamples(preferredLanguage);
+        
+        return "You are an expert memory analyst specialized in Alzheimer's patient conversations across multiple languages and cultures.\n\n" +
+                enhancedLanguageInstructions + "\n\n" +
+                "CRITICAL MEMORY EXTRACTION GUIDELINES:\n" +
+                "• Extract ONLY the most significant memories from the conversation\n" +
+                "• Focus on: personal activities, relationships, places, hobbies, experiences\n" +
+                "• Preserve original language terms for cultural elements\n" +
+                "• Prioritize memories suitable for cognitive assessment questions\n" +
+                "• LIMIT to maximum 5-6 most important memories to avoid overwhelming\n\n" +
+                "CONVERSATION TO ANALYZE:\n" + truncatedConversation + "\n\n" +
+                cultureSpecificExamples + "\n\n" +
+                "Extract the TOP 5 most important memories as a simple JSON array:\n" +
+                "[\"activity: specific activity mentioned\", \"memory: significant personal experience\", \"location: important place\", \"relationship: family/friends mentioned\", \"hobby: interests shared\"]\n\n" +
+                "FOCUS on memories that would make good fill-in-the-blank questions.\n" +
+                "Return ONLY the JSON array, nothing else. If no significant memories found, return []";
+    }
+    
+    /**
+     * Get enhanced language instructions based on preferred language
+     */
+    private String getEnhancedLanguageInstructions(String language) {
+        StringBuilder instructions = new StringBuilder();
+        instructions.append("LANGUAGE & CULTURAL ANALYSIS:\n");
+        
+        switch (language) {
+            case "Hindi":
+                instructions.append("• The conversation may contain Hindi (हिंदी) text with terms like: माँ (mother), पापा (father), गाँव (village), याद है (I remember)\n");
+                instructions.append("• Look for cultural references: त्योहार (festivals), रिश्तेदार (relatives), पुराने दिन (old days)\n");
+                instructions.append("• Extract Hindi place names, relationship terms, and activity descriptions naturally\n");
+                break;
+                
+            case "Tamil":
+                instructions.append("• The conversation may contain Tamil (தமிழ்) text with terms like: அம்மா (mother), அப்பா (father), ஊர் (town), நினைவிருக்கிறது (I remember)\n");
+                instructions.append("• Look for cultural references: பண்டிகை (festivals), உறவினர் (relatives), பழைய காலம் (old times)\n");
+                instructions.append("• Extract Tamil place names, relationship terms, and cultural activities\n");
+                break;
+                
+            case "Telugu":
+                instructions.append("• The conversation may contain Telugu (తెలుగు) text with terms like: అమ్మ (mother), నాన్న (father), ఊరు (town), గుర్తుంది (I remember)\n");
+                instructions.append("• Look for cultural references: పండుగలు (festivals), బంధువులు (relatives), పాత రోజులు (old days)\n");
+                instructions.append("• Extract Telugu place names, relationship terms, and traditional activities\n");
+                break;
+                
+            case "Kannada":
+                instructions.append("• The conversation may contain Kannada (ಕನ್ನಡ) text with terms like: ಅಮ್ಮ (mother), ಅಪ್ಪ (father), ಊರು (town), ನೆನಪಿದೆ (I remember)\n");
+                instructions.append("• Look for cultural references: ಹಬ್ಬಗಳು (festivals), ಬಂಧುಗಳು (relatives), ಹಳೆಯ ದಿನಗಳು (old days)\n");
+                instructions.append("• Extract Kannada place names, relationship terms, and cultural practices\n");
+                break;
+                
+            case "Malayalam":
+                instructions.append("• The conversation may contain Malayalam (മലയാളം) text with terms like: അമ്മ (mother), അച്ഛൻ (father), നാട് (place), ഓർമയുണ്ട് (I remember)\n");
+                instructions.append("• Look for cultural references: ഉത്സവങ്ങൾ (festivals), ബന്ധുക്കൾ (relatives), പഴയ കാലം (old times)\n");
+                instructions.append("• Extract Malayalam place names, relationship terms, and traditional activities\n");
+                break;
+                
+            default: // English
+                instructions.append("• The conversation is primarily in English but may contain mixed language terms\n");
+                instructions.append("• Look for Indian cultural references: family terms, place names, festivals, traditions\n");
+                instructions.append("• Extract memories in their original language when mentioned\n");
+                break;
         }
         
-        return "You are an expert memory analyst for Alzheimer's patients. " + languageInstruction +
-                "Analyze this conversation and extract important memories, relationships, and locations mentioned.\n\n" +
-                "Conversation text:\n" + truncatedConversation + "\n\n" +
-                "Extract important memories as a simple JSON array:\n" +
-                "[\"location: Bengaluru\", \"greeting in local language\", \"memory or relationship mentioned\"]\n\n" +
-                "Return only the JSON array, nothing else. If no memories found, return []";
+        instructions.append("• IMPORTANT: Preserve original language terms - don't translate cultural elements\n");
+        instructions.append("• Multi-language conversations are common - extract memories from ALL languages used\n");
+        
+        return instructions.toString();
+    }
+    
+    /**
+     * Get culture-specific memory examples to guide AI extraction
+     */
+    private String getCultureSpecificMemoryExamples(String language) {
+        StringBuilder examples = new StringBuilder();
+        examples.append("EXTRACTION EXAMPLES FOR ").append(language.toUpperCase()).append(":\n");
+        
+        switch (language) {
+            case "Hindi":
+                examples.append("Input: \"मैं अपने गाँव में माँ के साथ रहता था\"\n");
+                examples.append("Extract: [\"memory: lived with माँ in गाँव\", \"relationship: माँ (mother)\", \"location: गाँव\"]\n\n");
+                examples.append("Input: \"हमारे यहाँ दिवाली बहुत धूमधाम से मनाते थे\"\n");
+                examples.append("Extract: [\"festival: दिवाली celebration\", \"activity: धूमधाम से मनाना\", \"cultural: traditional celebration\"]\n");
+                break;
+                
+            case "Tamil":
+                examples.append("Input: \"என் அம்மா என்னை சென்னையில் வளர்த்தார்\"\n");
+                examples.append("Extract: [\"memory: raised by அம்மா in Chennai\", \"relationship: அம்மா (mother)\", \"location: சென்னை\"]\n\n");
+                examples.append("Input: \"பொங்கல் நாள்ல எங்க வீட்ல பெரிய கொண்டாட்டம்\"\n");
+                examples.append("Extract: [\"festival: பொங்கல் celebration\", \"location: எங்க வீடு\", \"activity: பெரிய கொண்டாட்டம்\"]\n");
+                break;
+                
+            case "Telugu":
+                examples.append("Input: \"మా అమ్మ నన్ను హైదరాబాద్‌లో పెంచింది\"\n");
+                examples.append("Extract: [\"memory: raised by అమ్మ in Hyderabad\", \"relationship: అమ్మ (mother)\", \"location: హైదరాబాద్\"]\n\n");
+                examples.append("Input: \"మా ఊల్లో ఉగాది చాలా గొప్పగా జరుపుకుంటాం\"\n");
+                examples.append("Extract: [\"festival: ఉగాది celebration\", \"location: మా ఊరు\", \"activity: గొప్పగా జరుపుకోవడం\"]\n");
+                break;
+                
+            case "Kannada":
+                examples.append("Input: \"ನಮ್ಮ ಅಮ್ಮ ನನ್ನನ್ನು ಬೆಂಗಳೂರಿನಲ್ಲಿ ಬೆಳೆಸಿದ್ದು\"\n");
+                examples.append("Extract: [\"memory: raised by ಅಮ್ಮ in Bengaluru\", \"relationship: ಅಮ್ಮ (mother)\", \"location: ಬೆಂಗಳೂರು\"]\n\n");
+                examples.append("Input: \"ದಸರಾ ಹಬ್ಬದಲ್ಲಿ ನಮ್ಮ ಮನೆಯಲ್ಲಿ ದೊಡ್ಡ ಸಂಭ್ರಮ\"\n");
+                examples.append("Extract: [\"festival: ದಸರಾ celebration\", \"location: ನಮ್ಮ ಮನೆ\", \"activity: ದೊಡ್ಡ ಸಂಭ್ರಮ\"]\n");
+                break;
+                
+            case "Malayalam":
+                examples.append("Input: \"എന്റെ അമ്മ എന്നെ കൊച്ചിയിൽ വളർത്തി\"\n");
+                examples.append("Extract: [\"memory: raised by അമ്മ in Kochi\", \"relationship: അമ്മ (mother)\", \"location: കൊച്ചി\"]\n\n");
+                examples.append("Input: \"ഓണാഘോഷം ഞങ്ങളുടെ വീട്ടിൽ വലിയ ആഘോഷം\"\n");
+                examples.append("Extract: [\"festival: ഓണം celebration\", \"location: ഞങ്ങളുടെ വീട്\", \"activity: വലിയ ആഘോഷം\"]\n");
+                break;
+                
+            default: // English
+                examples.append("Input: \"My grandmother used to make amazing biryani during Eid\"\n");
+                examples.append("Extract: [\"memory: grandmother's biryani during Eid\", \"relationship: grandmother\", \"activity: making biryani\", \"festival: Eid\"]\n\n");
+                examples.append("Input: \"We lived in Mumbai near the beach\"\n");
+                examples.append("Extract: [\"memory: lived in Mumbai\", \"location: Mumbai near beach\", \"activity: living near beach\"]\n");
+                break;
+        }
+        
+        return examples.toString();
     }
     
     private void tryMemoryExtractionOrFallback(String prompt, MemoryExtractionCallback callback, int modelIndex) {

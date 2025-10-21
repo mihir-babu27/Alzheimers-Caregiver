@@ -65,6 +65,11 @@ public class AddMedicationActivity extends AppCompatActivity implements Medicine
     private FirebaseStorage storage;
     private String patientId;
     
+    // Edit mode variables
+    private boolean isEditMode = false;
+    private String editingMedicationId = null;
+    private ReminderEntity existingReminder = null;
+    
     // Data lists
     private List<String> medicineNames = new ArrayList<>();
     private List<String> imageUrls = new ArrayList<>();
@@ -107,6 +112,9 @@ public class AddMedicationActivity extends AppCompatActivity implements Medicine
         
         // Add initial medicine field
         addMedicineField();
+        
+        // Check if this is edit mode and load existing data
+        checkEditMode();
     }
 
     private void initializeViews() {
@@ -242,6 +250,144 @@ public class AddMedicationActivity extends AppCompatActivity implements Medicine
         cancelButton.setOnClickListener(v -> finish());
         addMedicineButton.setOnClickListener(v -> addMedicineField());
         addImageButton.setOnClickListener(v -> openImagePicker());
+    }
+
+    private void checkEditMode() {
+        // Check if we're in edit mode
+        isEditMode = getIntent().getBooleanExtra("edit_mode", false);
+        editingMedicationId = getIntent().getStringExtra("medication_id");
+        
+        if (isEditMode && editingMedicationId != null) {
+            // Load existing medication data
+            loadExistingMedicationData();
+        }
+    }
+
+    private void loadExistingMedicationData() {
+        // Show progress while loading
+        progressBar.setVisibility(View.VISIBLE);
+        
+        // Get medication from Firebase
+        db.collection("patients")
+                .document(patientId)
+                .collection("reminders")
+                .document(editingMedicationId)
+                .get()
+                .addOnSuccessListener(document -> {
+                    progressBar.setVisibility(View.GONE);
+                    
+                    if (document.exists()) {
+                        existingReminder = document.toObject(ReminderEntity.class);
+                        if (existingReminder != null) {
+                            populateFieldsWithExistingData();
+                        }
+                    } else {
+                        Toast.makeText(this, "Medication not found", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    progressBar.setVisibility(View.GONE);
+                    Log.e(TAG, "Error loading medication data: " + e.getMessage(), e);
+                    Toast.makeText(this, "Failed to load medication data", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+    }
+
+    private void populateFieldsWithExistingData() {
+        if (existingReminder == null) return;
+        
+        // Populate description field
+        if (existingReminder.description != null) {
+            descriptionEditText.setText(existingReminder.description);
+        }
+        
+        // Convert scheduled time back to date and time strings
+        if (existingReminder.scheduledTimeEpochMillis != null) {
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTimeInMillis(existingReminder.scheduledTimeEpochMillis);
+            
+            // Format date
+            String dateString = String.format(java.util.Locale.getDefault(), "%d-%02d-%02d", 
+                calendar.get(java.util.Calendar.YEAR), 
+                calendar.get(java.util.Calendar.MONTH) + 1, 
+                calendar.get(java.util.Calendar.DAY_OF_MONTH));
+            scheduledDateEditText.setText(dateString);
+            
+            // Format time
+            int hour = calendar.get(java.util.Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(java.util.Calendar.MINUTE);
+            String timeString = String.format(java.util.Locale.getDefault(), "%02d:%02d %s", 
+                hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour),
+                minute,
+                hour >= 12 ? "PM" : "AM");
+            timeEditText.setText(timeString);
+        }
+        
+        // Set repeating checkbox
+        checkRepeating.setChecked(existingReminder.isRepeating);
+        
+        // Clear the initial medicine field and populate with existing names
+        medicineNamesContainer.removeAllViews();
+        medicineNames.clear();
+        
+        if (existingReminder.medicineNames != null && !existingReminder.medicineNames.isEmpty()) {
+            for (String medicineName : existingReminder.medicineNames) {
+                medicineNames.add(medicineName);
+                addMedicineFieldWithText(medicineName);
+            }
+            
+            // Extract dosage from title if possible (title format: "MedicineName - Dosage")
+            if (existingReminder.title != null && existingReminder.title.contains(" - ")) {
+                String[] parts = existingReminder.title.split(" - ");
+                if (parts.length > 1) {
+                    dosageEditText.setText(parts[1]);
+                }
+            }
+        } else if (existingReminder.title != null) {
+            // Fallback - extract medicine name and dosage from title
+            String titleText = existingReminder.title;
+            if (titleText.contains(" - ")) {
+                String[] parts = titleText.split(" - ");
+                medicineNames.add(parts[0]);
+                addMedicineFieldWithText(parts[0]);
+                if (parts.length > 1) {
+                    dosageEditText.setText(parts[1]);
+                }
+            } else {
+                medicineNames.add(titleText);
+                addMedicineFieldWithText(titleText);
+            }
+        } else {
+            // Add empty field if no names
+            addMedicineField();
+        }
+        
+        // Load existing images
+        if (existingReminder.imageUrls != null && !existingReminder.imageUrls.isEmpty()) {
+            imageUrls.clear();
+            imageUrls.addAll(existingReminder.imageUrls);
+            imageAdapter.notifyDataSetChanged();
+        }
+        
+        // Update UI for edit mode
+        saveButton.setText("Update Medication");
+    }
+
+    private void addMedicineFieldWithText(String text) {
+        // Create new EditText for medicine name with existing text
+        EditText medicineNameEditText = new EditText(this);
+        medicineNameEditText.setHint(R.string.medicine_name_hint_multiple);
+        medicineNameEditText.setText(text);
+        medicineNameEditText.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        medicineNameEditText.setPadding(16, 16, 16, 16);
+        medicineNameEditText.setBackgroundResource(android.R.drawable.editbox_background);
+        
+        // Add to container
+        medicineNamesContainer.addView(medicineNameEditText);
     }
 
     private void addMedicineField() {
@@ -596,24 +742,53 @@ public class AddMedicationActivity extends AppCompatActivity implements Medicine
             new ArrayList<>(firebaseImageUrls) // Use Firebase Storage URLs
         );
         
+        // If we're updating existing medication, preserve the ID
+        if (isEditMode && existingReminder != null) {
+            medicationReminder.id = existingReminder.id;
+        }
+        
         // Save to Firestore - use 'reminders' collection to match patient app
-        db.collection("patients")
-                .document(patientId)
-                .collection("reminders")
-                .add(medicationReminder)
-                .addOnCompleteListener(task -> {
-                    progressBar.setVisibility(View.GONE);
-                    saveButton.setEnabled(true);
+        if (isEditMode && editingMedicationId != null) {
+            // Update existing medication
+            db.collection("patients")
+                    .document(patientId)
+                    .collection("reminders")
+                    .document(editingMedicationId)
+                    .set(medicationReminder)
+                    .addOnCompleteListener(task -> {
+                        progressBar.setVisibility(View.GONE);
+                        saveButton.setEnabled(true);
 
-                    if (task.isSuccessful()) {
-                        Toast.makeText(AddMedicationActivity.this, 
-                            R.string.medication_added_successfully, Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(AddMedicationActivity.this, 
-                            "Failed to add medication: " + task.getException().getMessage(),
-                            Toast.LENGTH_LONG).show();
-                    }
-                });
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AddMedicationActivity.this, 
+                                "Medication updated successfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(AddMedicationActivity.this, 
+                                "Failed to update medication: " + task.getException().getMessage(),
+                                Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } else {
+            // Create new medication
+            db.collection("patients")
+                    .document(patientId)
+                    .collection("reminders")
+                    .add(medicationReminder)
+                    .addOnCompleteListener(task -> {
+                        progressBar.setVisibility(View.GONE);
+                        saveButton.setEnabled(true);
+
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AddMedicationActivity.this, 
+                                R.string.medication_added_successfully, Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(AddMedicationActivity.this, 
+                                "Failed to add medication: " + task.getException().getMessage(),
+                                Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 }

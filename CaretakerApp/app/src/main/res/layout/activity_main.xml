@@ -183,7 +183,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_medication"
+                android:text="Medication Management"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/purple_700"
@@ -192,17 +192,42 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add medication reminders for the patient"
+                android:text="Manage medication reminders and view all medications for the patient"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/addMedicationButton"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="@string/add_medication"
-                app:cornerRadius="8dp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/addMedicationButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Add Medication"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/purple_700"
+                    app:cornerRadius="8dp"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/viewMedicationsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="View All"
+                    android:textColor="@color/purple_700"
+                    android:backgroundTint="@color/white"
+                    app:strokeColor="@color/purple_700"
+                    app:strokeWidth="2dp"
+                    app:cornerRadius="8dp"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
