@@ -19,6 +19,9 @@ import android.view.inputmethod.EditorInfo;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
+
+import com.mihir.alzheimerscaregiver.services.ProactiveQuestionGeneratorService;
+import com.mihir.alzheimerscaregiver.data.entity.MemoryQuestionEntity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -74,6 +77,7 @@ public class ChatbotActivity extends AppCompatActivity {
     
     // AI Service
     private GeminiChatService geminiChatService;
+    private ProactiveQuestionGeneratorService questionGeneratorService;
     
     // Session tracking
     private String currentSessionId;
@@ -198,6 +202,7 @@ public class ChatbotActivity extends AppCompatActivity {
     
     private void initializeGeminiService() {
         geminiChatService = new GeminiChatService(currentLanguage);
+        questionGeneratorService = new ProactiveQuestionGeneratorService(this);
     }
     
     @Override
@@ -466,6 +471,37 @@ public class ChatbotActivity extends AppCompatActivity {
                 
                 // Save to Firebase with the extracted memories
                 saveConversationToFirebase(conversationData, patientId);
+                
+                // 🚀 PROACTIVE QUESTION GENERATION - Generate questions immediately from extracted memories
+                if (memories != null && !memories.isEmpty()) {
+                    Log.d(TAG, "🎯 Triggering proactive question generation for " + memories.size() + " memories");
+                    
+                    String conversationId = generateConversationId(patientId);
+                    
+                    questionGeneratorService.generateQuestionsFromMemories(
+                        patientId, 
+                        memories, 
+                        conversationId, 
+                        new ProactiveQuestionGeneratorService.QuestionGenerationCallback() {
+                            @Override
+                            public void onQuestionsGenerated(java.util.List<MemoryQuestionEntity> questions) {
+                                Log.d(TAG, "✅ Generated " + questions.size() + " MMSE questions for future use!");
+                                
+                                // Questions are automatically stored in Firebase by the service
+                                for (MemoryQuestionEntity question : questions) {
+                                    Log.d(TAG, "  📝 Question: " + question.getQuestion());
+                                    Log.d(TAG, "     Answer: " + question.getCorrectAnswer());
+                                }
+                            }
+                            
+                            @Override
+                            public void onError(String error) {
+                                Log.e(TAG, "❌ Question generation failed: " + error);
+                                // Continue normally even if question generation fails
+                            }
+                        }
+                    );
+                }
                 
                 // Log for debugging
                 Log.d(TAG, "AI extracted " + memories.size() + " memories:");
@@ -1042,5 +1078,12 @@ public class ChatbotActivity extends AppCompatActivity {
         public void onEvent(int eventType, Bundle params) {
             // Not used
         }
+    }
+    
+    /**
+     * Generate a unique conversation ID for linking questions to conversations
+     */
+    private String generateConversationId(String patientId) {
+        return patientId + "_conv_" + System.currentTimeMillis();
     }
 }

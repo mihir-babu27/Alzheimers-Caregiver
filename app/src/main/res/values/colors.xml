@@ -47,6 +47,11 @@
     <color name="secondary_color">#FF9800</color>       <!-- Secondary color for buttons -->
     <color name="border_color">#E2E8F0</color>
     <color name="shadow_color">#1E293B</color>
+    
+    <!-- Missing color aliases for enhanced MMSE -->
+    <color name="primary_text">@color/text_primary</color>
+    <color name="secondary_text">@color/text_secondary</color>
+    <color name="accent_color">@color/primary_color</color>
 
     <color name="button_normal">#E0E0E0</color>
     

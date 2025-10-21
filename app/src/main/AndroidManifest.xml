@@ -253,6 +253,31 @@
         <activity android:name=".MmseQuizActivity" />
         <activity android:name=".MmseResultActivity" />
         
+        <!-- Enhanced AI-Powered MMSE Activities -->
+        <activity
+            android:name=".EnhancedMmseQuizActivity"
+            android:exported="false"
+            android:label="AI-Enhanced MMSE Quiz"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AlzheimersCaregiver">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        
+        <activity
+            android:name=".EnhancedMmseResultActivity"
+            android:exported="false"
+            android:label="AI-Enhanced MMSE Results"
+            android:parentActivityName=".EnhancedMmseQuizActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AlzheimersCaregiver">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EnhancedMmseQuizActivity" />
+        </activity>
+        
         <!-- Location Tracking Activity -->
         <activity
             android:name=".TrackingActivity"

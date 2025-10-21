@@ -118,6 +118,18 @@ service cloud.firestore {
       );
     }
     
+    // Memory questions subcollection - proactive MMSE questions generated from conversations
+    match /patients/{patientId}/memory_questions/{questionId} {
+      // Allow patients to read/write their own memory questions
+      // OR allow caretakers to read/write memory questions for linked patients
+      allow read, write: if request.auth != null && (
+        // Patient can access their own memory questions
+        request.auth.uid == patientId ||
+        // OR caretaker can access if they are linked to this patient
+        exists(/databases/$(database)/documents/caretakerPatients/$(request.auth.uid)/linkedPatients/$(patientId))
+      );
+    }
+    
     // Default deny all other access
     match /{document=**} {
       allow read, write: if false;

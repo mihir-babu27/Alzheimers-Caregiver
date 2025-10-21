@@ -5,13 +5,14 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mihir.alzheimerscaregiver.MmseQuizActivity;
+import com.mihir.alzheimerscaregiver.EnhancedMmseQuizActivity;
 import com.mihir.alzheimerscaregiver.notifications.NotificationUtils;
 
 import java.util.Calendar;
@@ -70,10 +71,17 @@ public class MmseScheduleManager {
     public void onReceive(Context context, Intent intent) {
         String scheduleId = intent.getStringExtra("scheduleId");
         Log.d(TAG, "MmseScheduleReceiver.onReceive: Received alarm for scheduleId=" + scheduleId);
-        // Show notification to take MMSE test
-        Intent openIntent = new Intent(context, MmseQuizActivity.class);
+        // Show notification to take MMSE test - use Enhanced MMSE with AI personalization
+        Intent openIntent = new Intent(context, EnhancedMmseQuizActivity.class);
         openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         openIntent.putExtra("scheduleId", scheduleId);
+        
+        // Add patient ID from shared preferences for AI personalization
+        SharedPreferences prefs = context.getSharedPreferences("alzheimers_caregiver", Context.MODE_PRIVATE);
+        String patientId = prefs.getString("patient_id", null);
+        if (patientId != null) {
+            openIntent.putExtra("patient_id", patientId);
+        }
         PendingIntent contentIntent = PendingIntent.getActivity(
             context,
             REQUEST_CODE_BASE + (scheduleId != null ? scheduleId.hashCode() : 0),

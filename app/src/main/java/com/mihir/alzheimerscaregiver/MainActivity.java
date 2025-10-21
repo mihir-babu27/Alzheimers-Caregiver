@@ -24,6 +24,7 @@ import java.util.UUID;
 import com.mihir.alzheimerscaregiver.auth.FirebaseAuthManager;
 import com.mihir.alzheimerscaregiver.face_recognition.FaceRecognitionActivity;
 import com.mihir.alzheimerscaregiver.geofence.PatientGeofenceClient;
+import com.mihir.alzheimerscaregiver.testing.EnhancedMMSETester;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -362,8 +363,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
 
-                Intent intent = new Intent(MainActivity.this, MmseQuizActivity.class);
-                startActivity(intent);
+                // Get current patient information
+                String patientId = authManager.getCurrentPatientId();
+                
+                if (patientId != null) {
+                    // Launch Enhanced MMSE with AI personalization
+                    Intent intent = new Intent(MainActivity.this, EnhancedMmseQuizActivity.class);
+                    intent.putExtra("patient_id", patientId);
+                    
+                    // Add patient profile data for AI generation
+                    // These will be populated from patient profile when available
+                    intent.putExtra("patient_name", ""); // TODO: Get from profile
+                    intent.putExtra("patient_birth_year", ""); // TODO: Get from profile  
+                    intent.putExtra("patient_birthplace", ""); // TODO: Get from profile
+                    intent.putExtra("patient_profession", ""); // TODO: Get from profile
+                    intent.putExtra("patient_other_details", ""); // TODO: Get from profile
+                    
+                    startActivity(intent);
+                } else {
+                    // Fallback to standard MMSE if no patient ID
+                    showToast("Please complete profile setup first");
+                    Intent intent = new Intent(MainActivity.this, MmseQuizActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -505,6 +527,10 @@ protected void onResume() {
         } else if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
+            return true;
+        } else if (id == R.id.action_developer_test) {
+            // Run Enhanced MMSE Tests
+            runEnhancedMMSETests();
             return true;
         }
         
@@ -1048,6 +1074,58 @@ protected void onResume() {
                 
                 backgroundLocationLauncher.launch(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION);
             }
+        }
+    }
+    
+    /**
+     * Run Enhanced MMSE Testing Suite
+     * 
+     * This method initiates comprehensive testing of the Enhanced MMSE system:
+     * - AI question generation quality (40/30/30 distribution)
+     * - Answer evaluation accuracy (synonyms, partial credit)
+     * - Performance and error handling
+     * 
+     * Results are displayed in Toast messages and detailed logs in logcat.
+     */
+    private void runEnhancedMMSETests() {
+        Log.d("MainActivity", "🚀 Starting Enhanced MMSE Testing Suite...");
+        
+        Toast.makeText(this, "Starting Enhanced MMSE Tests\nCheck logcat for detailed results", 
+                      Toast.LENGTH_LONG).show();
+        
+        try {
+            // Initialize the tester
+            EnhancedMMSETester tester = new EnhancedMMSETester(this);
+            
+            // Show initial test status
+            showToast("Running Question Generation Test...");
+            
+            // Run question generation quality test
+            tester.testQuestionGenerationQuality();
+            
+            // Schedule evaluation test after a delay to avoid overwhelming API
+            new android.os.Handler().postDelayed(() -> {
+                showToast("Running Answer Evaluation Test...");
+                tester.testAnswerEvaluationAccuracy();
+            }, 8000); // 8 second delay
+            
+            // Schedule performance test
+            new android.os.Handler().postDelayed(() -> {
+                showToast("Running Performance Test...");
+                tester.testPerformanceAndErrorHandling();
+                
+                // Final summary
+                new android.os.Handler().postDelayed(() -> {
+                    showToast("Enhanced MMSE Tests Completed!\nCheck logcat for detailed results:\nadb logcat | grep 'EnhancedMMSE'");
+                }, 5000);
+            }, 15000); // 15 second delay
+            
+            Log.d("MainActivity", "📊 Enhanced MMSE Testing Suite initiated successfully");
+            Log.d("MainActivity", "Monitor progress with: adb logcat | grep 'EnhancedMMSE'");
+            
+        } catch (Exception e) {
+            Log.e("MainActivity", "❌ Failed to start Enhanced MMSE tests: " + e.getMessage());
+            showToast("Failed to start tests: " + e.getMessage());
         }
     }
     

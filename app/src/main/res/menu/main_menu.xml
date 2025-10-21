@@ -15,6 +15,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_developer_test"
+        android:title="Test Enhanced MMSE"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_sign_out"
         android:title="Sign Out"
         android:icon="@drawable/ic_settings"

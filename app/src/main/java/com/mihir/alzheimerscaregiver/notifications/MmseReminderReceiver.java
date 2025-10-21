@@ -5,13 +5,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.mihir.alzheimerscaregiver.MmseQuizActivity;
+import android.content.SharedPreferences;
+
+import com.mihir.alzheimerscaregiver.EnhancedMmseQuizActivity;
 
 public class MmseReminderReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent openIntent = new Intent(context, MmseQuizActivity.class);
+        Intent openIntent = new Intent(context, EnhancedMmseQuizActivity.class);
         openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        
+        // Add patient ID for AI personalization
+        SharedPreferences prefs = context.getSharedPreferences("alzheimers_caregiver", Context.MODE_PRIVATE);
+        String patientId = prefs.getString("patient_id", null);
+        if (patientId != null) {
+            openIntent.putExtra("patient_id", patientId);
+        }
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context,
                 2001,
