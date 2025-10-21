@@ -5,12 +5,16 @@
         <item>mcq</item>
     </string-array>
     <color name="background_color">#F8FAFC</color>
+    <color name="background_light">#F9FAFB</color>
     <color name="black">#FF000000</color>
     <color name="card_background">#FFFFFF</color>
     <color name="colorAccent">#FF03DAC5</color>
     <color name="colorPrimary">#FF6200EE</color>
     <color name="colorPrimaryDark">#FF3700B3</color>
+    <color name="emergency_color">#DC2626</color>
+    <color name="emergency_light">#FEE2E2</color>
     <color name="error">#EF4444</color>
+    <color name="error_background">#FECACA</color>
     <color name="gray_light">#E0E0E0</color>
     <color name="gray_medium">#9E9E9E</color>
     <color name="gray_very_light">#F5F5F5</color>
@@ -20,6 +24,7 @@
     <color name="notification_urgent">#FF4444</color>
     <color name="orange_50">#FFF7ED</color>
     <color name="orange_700">#C2410C</color>
+    <color name="patient_info_background">#F3F4F6</color>
     <color name="primary_color">#6366F1</color>
     <color name="primary_dark">#4F46E5</color>
     <color name="primary_light">#A5B4FC</color>
@@ -38,7 +43,7 @@
     <color name="warning">#F59E0B</color>
     <color name="warning_light">#FEF3C7</color>
     <color name="white">#FFFFFFFF</color>
-    <string name="add_emergency_contact">Add Emergency Contact</string>
+    <string name="add_emergency_contact">Emergency Contacts</string>
     <string name="add_image">Add Image</string>
     <string name="add_medication">Add Medication</string>
     <string name="add_medication_reminder">Add Medication Reminder</string>
@@ -98,7 +103,7 @@
     <string name="patient_id_hint">Patient ID</string>
     <string name="patient_linked_successfully">Patient linked successfully!</string>
     <string name="phone_number">Phone Number</string>
-    <string name="phone_number_hint">+91-9876543210</string>
+    <string name="phone_number_hint">9876543210 (+91 added automatically)</string>
     <string name="project_id" translatable="false">recallar-12588</string>
     <string name="register">Register</string>
     <string name="relation">Relation</string>

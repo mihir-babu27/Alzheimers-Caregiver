@@ -33,7 +33,7 @@
     <!-- Main Menu -->
     <string name="add_medication">Add Medication</string>
     <string name="add_task">Add Task</string>
-    <string name="add_emergency_contact">Add Emergency Contact</string>
+    <string name="add_emergency_contact">Emergency Contacts</string>
     <string name="view_patient_data">View Patient Data</string>
     <string name="logout">Logout</string>
     
@@ -64,7 +64,7 @@
     <string name="relation">Relation</string>
     <string name="relation_hint">e.g., Primary Doctor</string>
     <string name="phone_number">Phone Number</string>
-    <string name="phone_number_hint">+91-9876543210</string>
+    <string name="phone_number_hint">9876543210 (+91 added automatically)</string>
     <string name="contact_added_successfully">Emergency contact added successfully!</string>
     
     <!-- Common -->

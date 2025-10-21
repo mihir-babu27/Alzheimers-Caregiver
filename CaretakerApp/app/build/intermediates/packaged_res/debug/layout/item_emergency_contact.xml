@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    android:backgroundTint="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Primary Indicator -->
+        <View
+            android:id="@+id/primaryIndicator"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:background="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <!-- Contact Avatar/Icon -->
+        <ImageView
+            android:id="@+id/contactIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_background_light"
+            android:src="@drawable/ic_emergency_contact"
+            android:scaleType="center"
+            android:contentDescription="Emergency contact icon"
+            app:tint="@color/emergency_color" />
+
+        <!-- Contact Information -->
+        <LinearLayout
+            android:id="@+id/contactInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/contactIcon"
+            android:layout_toStartOf="@id/callButton"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <!-- Contact Name -->
+            <TextView
+                android:id="@+id/contactNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="Dr. Sarah Johnson" />
+
+            <!-- Phone Number -->
+            <TextView
+                android:id="@+id/phoneNumberText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="+1 (555) 123-4567" />
+
+            <!-- Relationship -->
+            <TextView
+                android:id="@+id/relationshipText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:visibility="gone"
+                tools:text="Primary Doctor"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <!-- Call Button -->
+        <ImageButton
+            android:id="@+id/callButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_phone"
+            android:contentDescription="Call emergency contact"
+            android:padding="8dp"
+            app:tint="@color/colorPrimary" />
+
+        <!-- Primary Badge -->
+        <TextView
+            android:id="@+id/primaryBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_primary_badge"
+            android:text="PRIMARY"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

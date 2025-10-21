@@ -13,6 +13,9 @@
     <!-- Location permissions for maps -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
+    <!-- Phone permission for emergency contacts -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -98,6 +101,19 @@
         <activity
             android:name=".AddEmergencyContactActivity"
             android:exported="false" />
+
+        <!-- Emergency Contacts Activities -->
+        <activity
+            android:name=".activities.EmergencyContactsActivity"
+            android:exported="false"
+            android:label="Emergency Contacts"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
+
+        <activity
+            android:name=".activities.AddEditEmergencyContactActivity"
+            android:exported="false"
+            android:label="Add Emergency Contact"
+            android:theme="@style/Theme.CaretakerApp.NoActionBar" />
 
         <activity
             android:name=".SettingsActivity"

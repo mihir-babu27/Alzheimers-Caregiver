@@ -340,7 +340,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add emergency contacts for the patient"
+                android:text="Manage emergency contacts with phone integration and primary contact designation"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp" />

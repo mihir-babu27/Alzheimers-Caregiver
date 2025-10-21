@@ -2,12 +2,16 @@ R_DEF: Internal format may change without notice
 local
 array mmse_question_types
 color background_color
+color background_light
 color black
 color card_background
 color colorAccent
 color colorPrimary
 color colorPrimaryDark
+color emergency_color
+color emergency_light
 color error
+color error_background
 color gray_light
 color gray_medium
 color gray_very_light
@@ -17,6 +21,7 @@ color notification_safe
 color notification_urgent
 color orange_50
 color orange_700
+color patient_info_background
 color primary_color
 color primary_dark
 color primary_light
@@ -36,16 +41,23 @@ color warning
 color warning_light
 color white
 drawable bg_category_tag
+drawable bg_checkbox_container
+drawable bg_primary_badge
 drawable circle_background
 drawable circle_red_background
 drawable ic_access_time
 drawable ic_add
 drawable ic_alarm
+drawable ic_arrow_back
 drawable ic_check_circle
 drawable ic_close_white
 drawable ic_delete
 drawable ic_edit
+drawable ic_emergency
+drawable ic_emergency_contact
+drawable ic_emergency_contacts_empty
 drawable ic_export
+drawable ic_family
 drawable ic_fence
 drawable ic_history
 drawable ic_launcher_background
@@ -56,6 +68,8 @@ drawable ic_notification
 drawable ic_notification_location
 drawable ic_pause
 drawable ic_pause_circle
+drawable ic_person
+drawable ic_phone
 drawable ic_play_arrow
 drawable ic_schedule
 drawable ic_task_empty
@@ -70,6 +84,7 @@ id action_filter_overdue
 id action_filter_today
 id action_refresh
 id addButton
+id addContactFab
 id addCustomQuestionsButton
 id addEmergencyContactButton
 id addImageButton
@@ -106,6 +121,8 @@ id buttonWeekdays
 id buttonWeekends
 id button_delete
 id button_edit
+id call911Text
+id callButton
 id cancelButton
 id cardViewTask
 id checkBox
@@ -117,7 +134,12 @@ id checkTaskEnableAlarm
 id checkTaskRepeating
 id checkboxCompleted
 id confirmPasswordEditText
+id contactCountText
+id contactIcon
+id contactInfo
 id contactNameEditText
+id contactNameInputLayout
+id contactNameText
 id dateText
 id deleteButton
 id descriptionEditText
@@ -128,6 +150,7 @@ id editTextZoneDescription
 id editTextZoneName
 id edit_text_search
 id emailEditText
+id emergencyContactsRecyclerView
 id emptyStateLayout
 id emptyText
 id expectedAnswerInput
@@ -170,9 +193,15 @@ id otherDetailsEditText
 id passwordEditText
 id patientIdEditText
 id patientNameEditText
+id patientNameText
 id phoneNumberEditText
+id phoneNumberInputLayout
+id phoneNumberText
 id pickDateButton
 id pickTimeButton
+id primaryBadge
+id primaryCheckBox
+id primaryIndicator
 id professionEditText
 id progressBar
 id progress_bar
@@ -185,6 +214,9 @@ id recycler_view_medications
 id registerButton
 id registerLink
 id relationEditText
+id relationshipEditText
+id relationshipInputLayout
+id relationshipText
 id removeImageButton
 id saveButton
 id savePatientProfileButton
@@ -235,6 +267,7 @@ id timeEditText
 id timeText
 id titleText
 id toolbar
+id toolbarTitle
 id typeSpinner
 id typeText
 id viewHistoryButton
@@ -242,6 +275,7 @@ id viewLocationButton
 id viewMedicationsButton
 id viewMmseResultsButton
 id welcomeText
+layout activity_add_edit_emergency_contact
 layout activity_add_edit_task
 layout activity_add_emergency_contact
 layout activity_add_medication
@@ -251,6 +285,7 @@ layout activity_caretaker_mmse_result_detail
 layout activity_caretaker_mmse_results
 layout activity_caretaker_settings
 layout activity_custom_mmse_questions
+layout activity_emergency_contacts
 layout activity_geofence_management
 layout activity_history
 layout activity_login
@@ -266,6 +301,7 @@ layout activity_task_list
 layout dialog_add_task_enhanced
 layout dialog_create_geofence
 layout item_custom_mmse_question
+layout item_emergency_contact
 layout item_medication
 layout item_medicine_image
 layout item_mmse_result

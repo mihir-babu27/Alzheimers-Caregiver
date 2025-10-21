@@ -1385,6 +1385,7 @@ color androidx_core_secondary_text_default_material_light
 color background_color
 color background_floating_material_dark
 color background_floating_material_light
+color background_light
 color background_material_dark
 color background_material_light
 color black
@@ -1461,7 +1462,10 @@ color dim_foreground_disabled_material_dark
 color dim_foreground_disabled_material_light
 color dim_foreground_material_dark
 color dim_foreground_material_light
+color emergency_color
+color emergency_light
 color error
+color error_background
 color error_color_material_dark
 color error_color_material_light
 color foreground_material_dark
@@ -2130,6 +2134,7 @@ color notification_safe
 color notification_urgent
 color orange_50
 color orange_700
+color patient_info_background
 color primary_color
 color primary_dark
 color primary_dark_material_dark
@@ -3050,6 +3055,8 @@ drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
 drawable bg_category_tag
+drawable bg_checkbox_container
+drawable bg_primary_badge
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3089,6 +3096,7 @@ drawable googleg_standard_color_18
 drawable ic_access_time
 drawable ic_add
 drawable ic_alarm
+drawable ic_arrow_back
 drawable ic_arrow_back_black_24
 drawable ic_check_circle
 drawable ic_clear_black_24
@@ -3096,7 +3104,11 @@ drawable ic_clock_black_24dp
 drawable ic_close_white
 drawable ic_delete
 drawable ic_edit
+drawable ic_emergency
+drawable ic_emergency_contact
+drawable ic_emergency_contacts_empty
 drawable ic_export
+drawable ic_family
 drawable ic_fence
 drawable ic_history
 drawable ic_keyboard_black_24dp
@@ -3115,6 +3127,8 @@ drawable ic_notification
 drawable ic_notification_location
 drawable ic_pause
 drawable ic_pause_circle
+drawable ic_person
+drawable ic_phone
 drawable ic_play_arrow
 drawable ic_schedule
 drawable ic_search_black_24
@@ -3275,6 +3289,7 @@ id actions
 id activity_chooser_view_content
 id add
 id addButton
+id addContactFab
 id addCustomQuestionsButton
 id addEmergencyContactButton
 id addImageButton
@@ -3347,6 +3362,8 @@ id buttonWeekends
 id button_delete
 id button_edit
 id cache_measures
+id call911Text
+id callButton
 id callMeasure
 id cancelButton
 id cancel_button
@@ -3382,7 +3399,12 @@ id compress
 id confirmPasswordEditText
 id confirm_button
 id constraint
+id contactCountText
+id contactIcon
+id contactInfo
 id contactNameEditText
+id contactNameInputLayout
+id contactNameText
 id container
 id content
 id contentPanel
@@ -3444,6 +3466,7 @@ id edit_text_search
 id elastic
 id emailEditText
 id embed
+id emergencyContactsRecyclerView
 id emptyStateLayout
 id emptyText
 id end
@@ -3662,9 +3685,12 @@ id path
 id pathRelative
 id patientIdEditText
 id patientNameEditText
+id patientNameText
 id peekHeight
 id percent
 id phoneNumberEditText
+id phoneNumberInputLayout
+id phoneNumberText
 id pickDateButton
 id pickTimeButton
 id pin
@@ -3672,6 +3698,9 @@ id pooling_container_listener_holder_tag
 id position
 id postLayout
 id pressed
+id primaryBadge
+id primaryCheckBox
+id primaryIndicator
 id professionEditText
 id progressBar
 id progress_bar
@@ -3689,6 +3718,9 @@ id recycler_view_medications
 id registerButton
 id registerLink
 id relationEditText
+id relationshipEditText
+id relationshipInputLayout
+id relationshipText
 id removeImageButton
 id report_drawn
 id reverseSawtooth
@@ -3845,6 +3877,7 @@ id titleText
 id title_template
 id toggle
 id toolbar
+id toolbarTitle
 id top
 id topPanel
 id touch_outside
@@ -4002,6 +4035,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_add_edit_emergency_contact
 layout activity_add_edit_task
 layout activity_add_emergency_contact
 layout activity_add_medication
@@ -4011,6 +4045,7 @@ layout activity_caretaker_mmse_result_detail
 layout activity_caretaker_mmse_results
 layout activity_caretaker_settings
 layout activity_custom_mmse_questions
+layout activity_emergency_contacts
 layout activity_geofence_management
 layout activity_history
 layout activity_login
@@ -4044,6 +4079,7 @@ layout design_text_input_start_icon
 layout dialog_add_task_enhanced
 layout dialog_create_geofence
 layout item_custom_mmse_question
+layout item_emergency_contact
 layout item_medication
 layout item_medicine_image
 layout item_mmse_result

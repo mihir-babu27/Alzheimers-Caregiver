@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mihir.alzheimerscaregiver.caretaker.activities.EmergencyContactsActivity;
 import com.mihir.alzheimerscaregiver.caretaker.auth.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         addEmergencyContactButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddEmergencyContactActivity.class);
+            Intent intent = new Intent(MainActivity.this, EmergencyContactsActivity.class);
             intent.putExtra("patientId", linkedPatientId);
             startActivity(intent);
         });
