@@ -342,7 +342,7 @@ public class MemoryExtractionService {
     }
     
     /**
-     * Get saved memories for story generation
+     * Get saved memories for story generation from SharedPreferences
      */
     public List<ExtractedMemory> getMemoriesForStoryGeneration() {
         List<ExtractedMemory> memories = new ArrayList<>();
@@ -357,7 +357,11 @@ public class MemoryExtractionService {
                 ExtractedMemory memory = new ExtractedMemory((String) allPrefs.get(key));
                 
                 String category = prefs.getString(baseKey + "_category", "general");
-                memory.category = MemoryCategory.valueOf(category.toUpperCase());
+                try {
+                    memory.category = MemoryCategory.valueOf(category.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    memory.category = MemoryCategory.GENERAL;
+                }
                 memory.emotionalTone = prefs.getString(baseKey + "_emotion", "neutral");
                 memory.confidenceScore = prefs.getFloat(baseKey + "_confidence", 0.5f);
                 memory.isTherapeuticallyValuable = true;

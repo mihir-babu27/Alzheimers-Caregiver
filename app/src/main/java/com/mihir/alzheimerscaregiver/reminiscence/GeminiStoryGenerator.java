@@ -8,6 +8,7 @@ import android.util.Log;
 import com.mihir.alzheimerscaregiver.BuildConfig;
 import com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager;
 
+
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -125,9 +126,95 @@ public class GeminiStoryGenerator {
      * Generates a reminiscence story based on patient details with context
      */
     public void generateReminiscenceStory(PatientDetails patientDetails, android.content.Context context, StoryGenerationCallback callback) {
-        
-
-        
+        // First, populate the memory cache from Firebase before generating the story
+        if (context != null) {
+            populateMemoryCache(context, () -> {
+                // Once memories are cached, proceed with story generation
+                generateStoryWithCachedMemories(patientDetails, context, callback);
+            });
+        } else {
+            // Proceed without memory context if no context available
+            generateStoryWithCachedMemories(patientDetails, context, callback);
+        }
+    }
+    
+    /**
+     * Populate memory cache from Firebase conversations
+     */
+    private void populateMemoryCache(android.content.Context context, Runnable onComplete) {
+        try {
+            // Get current patient ID from Firebase Auth
+            com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
+            if (auth.getCurrentUser() == null) {
+                Log.d(TAG, "No authenticated user, proceeding without memory cache");
+                onComplete.run();
+                return;
+            }
+            
+            String patientId = auth.getCurrentUser().getUid();
+            Log.d(TAG, "Populating memory cache for patient: " + patientId);
+            
+            // Get Firebase Firestore instance
+            com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+            
+            // Query recent conversations and filter for memories in code to avoid index requirement
+            db.collection("patients")
+                .document(patientId)
+                .collection("conversations")
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(10) // Get last 10 conversations and filter for memories in code
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        StringBuilder memoriesContext = new StringBuilder();
+                        int memoryCount = 0;
+                        
+                        for (com.google.firebase.firestore.QueryDocumentSnapshot document : task.getResult()) {
+                            try {
+                                @SuppressWarnings("unchecked")
+                                java.util.List<String> detectedMemories = (java.util.List<String>) document.get("detectedMemories");
+                                
+                                // Only process conversations that have detected memories
+                                if (detectedMemories != null && !detectedMemories.isEmpty()) {
+                                    for (String memoryText : detectedMemories) {
+                                        if (memoryCount >= 5) break; // Limit to 5 memories
+                                        
+                                        memoriesContext.append("• ").append(memoryText).append("\n");
+                                        memoryCount++;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error processing conversation document: " + document.getId(), e);
+                            }
+                            
+                            if (memoryCount >= 5) break;
+                        }
+                        
+                        Log.d(TAG, "Memory cache populated with " + memoryCount + " memories from recent conversations");
+                        
+                        // Update the cache
+                        synchronized (GeminiStoryGenerator.class) {
+                            cachedMemoriesContext = memoriesContext.toString();
+                        }
+                        
+                        onComplete.run();
+                        
+                    } else {
+                        Log.w(TAG, "Failed to retrieve memories from Firebase", task.getException());
+                        onComplete.run();
+                    }
+                });
+                
+        } catch (Exception e) {
+            Log.e(TAG, "Error populating memory cache", e);
+            onComplete.run();
+        }
+    }
+    
+    /**
+     * Generate story with cached memories (internal method)
+     */
+    private void generateStoryWithCachedMemories(PatientDetails patientDetails, android.content.Context context, StoryGenerationCallback callback) {
         // REAL GEMINI API CODE:
         // Validate input
         if (patientDetails == null) {
@@ -329,6 +416,12 @@ public class GeminiStoryGenerator {
         if (context != null) {
             preferredLanguage = com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager.getPreferredLanguage(context);
         }
+        
+        // Get extracted memories for personalization
+        String extractedMemoriesContext = "";
+        if (context != null) {
+            extractedMemoriesContext = getExtractedMemoriesForStory(context);
+        }
         // Therapeutically safe story themes focused on sensory memories and emotional comfort
         String[] storyThemes = {
             // Theme 1: Community and relationships
@@ -430,6 +523,14 @@ public class GeminiStoryGenerator {
         prompt.append("• Emotion: Create feelings of warmth, belonging, pride, and comfort through gentle reminiscence\n");
         prompt.append("• Pacing: Use gentle, non-judgmental phrasing with supportive and calming language\n");
         
+        // Add extracted memories for personalization
+        if (!extractedMemoriesContext.isEmpty()) {
+            prompt.append("\n🧠 PERSONALIZATION FROM RECENT CONVERSATIONS:\n");
+            prompt.append("The following memories were mentioned during recent chats. You may gently weave SIMILAR themes, people, places, or experiences into the story to make it more personally meaningful, but do NOT use these as direct facts:\n");
+            prompt.append(extractedMemoriesContext);
+            prompt.append("\nIMPORTANT: Use these as INSPIRATION only - create fictional scenarios that echo these themes while maintaining therapeutic safety.\n");
+        }
+        
         // Add historical context if birth year is available
         if (details.birthYear != null && !details.birthYear.trim().isEmpty()) {
             int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
@@ -489,5 +590,53 @@ public class GeminiStoryGenerator {
         // This will incorporate location-specific imagery and context
         Log.d(TAG, "Location context feature not yet implemented");
         generateReminiscenceStory(patientDetails, callback);
+    }
+    
+    /**
+     * Get extracted memories from recent conversations for story personalization
+     */
+    private String getExtractedMemoriesForStory(Context context) {
+        synchronized (GeminiStoryGenerator.class) {
+            if (cachedMemoriesContext != null && !cachedMemoriesContext.isEmpty()) {
+                Log.d(TAG, "Using cached memories for story personalization");
+                return cachedMemoriesContext;
+            } else {
+                Log.d(TAG, "No cached memories available for story personalization");
+                return "";
+            }
+        }
+    }
+    
+    // Static cache for memories context
+    private static String cachedMemoriesContext = "";
+    
+    /**
+     * Mark memories as used in story generation to avoid repetition
+     */
+    public void markMemoriesAsUsedInStory(Context context, java.util.List<String> usedMemoryTexts) {
+        if (context == null || usedMemoryTexts == null || usedMemoryTexts.isEmpty()) {
+            return;
+        }
+        
+        try {
+            // Use ConversationRepository to mark memories as used
+            com.mihir.alzheimerscaregiver.repository.ConversationRepository repository = 
+                new com.mihir.alzheimerscaregiver.repository.ConversationRepository();
+            
+            // For each used memory text, find and mark corresponding Firebase memory as used
+            for (String memoryText : usedMemoryTexts) {
+                // This would need patient ID to work properly with Firebase
+                Log.d(TAG, "Marking memory as used in story: " + memoryText.substring(0, Math.min(50, memoryText.length())));
+                
+                // Note: In a full implementation, we would:
+                // 1. Search for memories by text content
+                // 2. Update their usedInStory flag to true  
+                // 3. Set lastUsedInStory timestamp
+                // This requires patient ID which isn't available in this context
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error marking memories as used in story", e);
+        }
     }
 }

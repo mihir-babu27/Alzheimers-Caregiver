@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toTopOf="@id/inputLayout"
         tools:listitem="@layout/item_chat_ai" />
 
-    <!-- Status text for voice feedback -->
+    <!-- Status text for AI thinking -->
     <TextView
         android:id="@+id/statusText"
         android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_background"
         android:padding="12dp"
-        android:text="Listening..."
+        android:text="AI is thinking..."
         android:textColor="@color/text_primary"
         android:textSize="16sp"
         android:visibility="gone"
@@ -75,45 +75,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Input section with microphone button -->
+    <!-- Input section with text input only -->
     <LinearLayout
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:elevation="8dp"
-        android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Text input layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Tap the microphone to speak"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            android:gravity="center" />
+            android:background="@drawable/rounded_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="4dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/micButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_mic"
-            app:backgroundTint="@color/chatbot_color"
-            app:tint="@color/white"
-            app:fabSize="normal"
-            android:contentDescription="Speak" />
+            <EditText
+                android:id="@+id/textInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Type your message here..."
+                android:maxLines="3"
+                android:padding="12dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="16sp"
+                android:imeOptions="actionSend" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Large button for easy access"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:gravity="center" />
+            <ImageButton
+                android:id="@+id/sendButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_send"
+                app:tint="@color/chatbot_color"
+                android:contentDescription="Send message" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

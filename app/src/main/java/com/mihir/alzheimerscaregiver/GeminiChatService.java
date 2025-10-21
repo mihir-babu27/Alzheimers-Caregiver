@@ -3,6 +3,8 @@ package com.mihir.alzheimerscaregiver;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import com.mihir.alzheimerscaregiver.BuildConfig;
+import com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,19 +43,36 @@ public class GeminiChatService {
     private final ExecutorService executor;
     private final Handler mainHandler;
     private StringBuilder conversationHistory;
+    private String preferredLanguage;
     
-    public GeminiChatService() {
+    public GeminiChatService(String language) {
         httpClient = new OkHttpClient.Builder().build();
         executor = Executors.newSingleThreadExecutor();
         mainHandler = new Handler(Looper.getMainLooper());
         conversationHistory = new StringBuilder();
+        preferredLanguage = language != null ? language : LanguagePreferenceManager.DEFAULT_LANGUAGE;
         setupAlzheimerSpecificPrompt();
         
-        Log.d(TAG, "GeminiChatService initialized with REST API");
+        Log.d(TAG, "GeminiChatService initialized with REST API for language: " + preferredLanguage);
     }
     
     private void setupAlzheimerSpecificPrompt() {
-        String systemPrompt = "You are a compassionate AI assistant designed to help elderly people with Alzheimer's disease. " +
+        // Get language-specific instructions
+        String culturalContext = LanguagePreferenceManager.getCulturalContext(preferredLanguage);
+        String languageSpecificPhrases = LanguagePreferenceManager.getLanguageSpecificPhrases(preferredLanguage);
+        
+        // Build language-aware system prompt
+        String languageInstruction = "";
+        if (!preferredLanguage.equals(LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
+            languageInstruction = "IMPORTANT: Respond ONLY in " + preferredLanguage + ". " +
+                    "Use native " + preferredLanguage + " words and expressions naturally. " +
+                    "DO NOT provide translations, transliterations, or English explanations. " +
+                    "Keep the conversation purely in " + preferredLanguage + ". " +
+                    languageSpecificPhrases + " " + culturalContext + "\n\n";
+        }
+        
+        String systemPrompt = languageInstruction +
+                "You are a compassionate AI assistant designed to help elderly people with Alzheimer's disease. " +
                 "Your goals are to:\n" +
                 "1. Provide emotional support and companionship\n" +
                 "2. Engage in meaningful conversations that stimulate memory\n" +
@@ -409,6 +428,199 @@ public class GeminiChatService {
         // This would generate a summary of the conversation for caregiver review
         // and extract key points for MMSE assessment
         return conversationHistory.toString();
+    }
+    
+    /**
+     * Extract memories using AI analysis instead of keyword matching
+     * This method is much more effective for multi-language content
+     */
+    public void extractMemoriesWithAI(String conversationText, MemoryExtractionCallback callback) {
+        Log.d(TAG, "🔍 Starting AI memory extraction...");
+        
+        if (conversationText == null || conversationText.trim().isEmpty()) {
+            Log.w(TAG, "Empty conversation text, returning empty memories");
+            callback.onMemoriesExtracted(new java.util.ArrayList<>());
+            return;
+        }
+        
+        Log.d(TAG, "📝 Conversation to analyze: " + conversationText);
+        Log.d(TAG, "🌐 Language: " + preferredLanguage);
+        
+        // Create specialized memory extraction prompt
+        String memoryExtractionPrompt = createMemoryExtractionPrompt(conversationText);
+        
+        Log.d(TAG, "💭 Memory extraction prompt created, executing...");
+        
+        executor.execute(() -> {
+            // Try with the same model fallback system
+            tryMemoryExtractionOrFallback(memoryExtractionPrompt, callback, 0);
+        });
+    }
+    
+    private String createMemoryExtractionPrompt(String conversationText) {
+        // Truncate very long conversations to avoid API limits
+        String truncatedConversation = conversationText;
+        if (conversationText.length() > 2000) {
+            truncatedConversation = conversationText.substring(0, 2000) + "...";
+        }
+        
+        String languageInstruction = "";
+        if (!preferredLanguage.equals(LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
+            languageInstruction = "The conversation may contain " + preferredLanguage + " text. ";
+        }
+        
+        return "You are an expert memory analyst for Alzheimer's patients. " + languageInstruction +
+                "Analyze this conversation and extract important memories, relationships, and locations mentioned.\n\n" +
+                "Conversation text:\n" + truncatedConversation + "\n\n" +
+                "Extract important memories as a simple JSON array:\n" +
+                "[\"location: Bengaluru\", \"greeting in local language\", \"memory or relationship mentioned\"]\n\n" +
+                "Return only the JSON array, nothing else. If no memories found, return []";
+    }
+    
+    private void tryMemoryExtractionOrFallback(String prompt, MemoryExtractionCallback callback, int modelIndex) {
+        if (modelIndex >= MODEL_NAMES.length) {
+            Log.e(TAG, "❌ All memory extraction models failed");
+            mainHandler.post(() -> callback.onError("Memory extraction failed - all models unavailable"));
+            return;
+        }
+        
+        String currentModel = MODEL_NAMES[modelIndex];
+        Log.d(TAG, "🤖 Trying memory extraction with model: " + currentModel + " (attempt " + (modelIndex + 1) + "/" + MODEL_NAMES.length + ")");
+        
+        String apiKey = BuildConfig.GOOGLE_API_KEY;
+        String url = BASE_URL + currentModel + GENERATE_ENDPOINT + apiKey;
+        
+        try {
+            // Create request body for memory extraction
+            JSONObject requestBody = new JSONObject();
+            JSONArray contents = new JSONArray();
+            JSONObject content = new JSONObject();
+            JSONArray parts = new JSONArray();
+            JSONObject part = new JSONObject();
+            part.put("text", prompt);
+            parts.put(part);
+            content.put("parts", parts);
+            contents.put(content);
+            requestBody.put("contents", contents);
+            
+            RequestBody body = RequestBody.create(requestBody.toString(), JSON);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+            
+            httpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.w(TAG, "Memory extraction failed with model " + currentModel + ": " + e.getMessage());
+                    // Try next model
+                    tryMemoryExtractionOrFallback(prompt, callback, modelIndex + 1);
+                }
+                
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d(TAG, "📡 Memory extraction API response received, code: " + response.code());
+                    
+                    if (response.isSuccessful()) {
+                        try {
+                            String responseBody = response.body().string();
+                            Log.d(TAG, "📋 Raw memory extraction response: " + responseBody);
+                            
+                            JSONObject jsonResponse = new JSONObject(responseBody);
+                            JSONArray candidates = jsonResponse.getJSONArray("candidates");
+                            if (candidates.length() > 0) {
+                                JSONObject firstCandidate = candidates.getJSONObject(0);
+                                JSONObject content = firstCandidate.getJSONObject("content");
+                                JSONArray parts = content.getJSONArray("parts");
+                                if (parts.length() > 0) {
+                                    String aiResponse = parts.getJSONObject(0).getString("text");
+                                    Log.d(TAG, "🧠 AI memory extraction result: " + aiResponse);
+                                    
+                                    // Parse memories from AI response into list format
+                                    java.util.List<String> memories = parseMemoriesFromAIResponse(aiResponse);
+                                    Log.d(TAG, "✅ Parsed memories: " + memories.toString());
+                                    
+                                    mainHandler.post(() -> callback.onMemoriesExtracted(memories));
+                                    return;
+                                }
+                            }
+                            
+                            Log.e(TAG, "❌ Invalid memory extraction response structure");
+                            mainHandler.post(() -> callback.onError("Invalid response structure"));
+                        } catch (Exception e) {
+                            Log.e(TAG, "❌ Error parsing memory extraction response", e);
+                            mainHandler.post(() -> callback.onError("Response parsing error: " + e.getMessage()));
+                        }
+                    } else {
+                        String errorBody = "";
+                        try {
+                            errorBody = response.body().string();
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error reading error response", e);
+                        }
+                        Log.e(TAG, "❌ Memory extraction API error: " + response.code() + " - " + response.message());
+                        Log.e(TAG, "❌ Error body: " + errorBody);
+                        
+                        // Try next model if available
+                        tryMemoryExtractionOrFallback(prompt, callback, modelIndex + 1);
+                    }
+                }
+            });
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating memory extraction request", e);
+            // Try next model
+            tryMemoryExtractionOrFallback(prompt, callback, modelIndex + 1);
+        }
+    }
+    
+    private java.util.List<String> parseMemoriesFromAIResponse(String aiResponse) {
+        java.util.List<String> memories = new java.util.ArrayList<>();
+        
+        try {
+            // The AI should return JSON, but let's be defensive
+            String jsonText = aiResponse.trim();
+            
+            // Remove any markdown formatting if present
+            if (jsonText.startsWith("```json")) {
+                jsonText = jsonText.substring(7);
+            }
+            if (jsonText.endsWith("```")) {
+                jsonText = jsonText.substring(0, jsonText.length() - 3);
+            }
+            jsonText = jsonText.trim();
+            
+            // Parse the JSON array (simple string format)
+            JSONArray memoriesArray = new JSONArray(jsonText);
+            
+            for (int i = 0; i < memoriesArray.length(); i++) {
+                String memoryStr = memoriesArray.getString(i).trim();
+                if (!memoryStr.isEmpty()) {
+                    memories.add(memoryStr);
+                }
+            }
+            
+            Log.d(TAG, "Successfully parsed " + memories.size() + " memories from AI response");
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error parsing AI memory response: " + aiResponse, e);
+            // If JSON parsing fails, try to extract some basic info from the raw text
+            if (aiResponse.contains("sister") || aiResponse.contains("brother") || 
+                aiResponse.contains("mother") || aiResponse.contains("father")) {
+                memories.add("Memory: " + aiResponse.substring(0, Math.min(100, aiResponse.length())));
+            }
+        }
+        
+        return memories;
+    }
+    
+    /**
+     * Callback interface for memory extraction
+     */
+    public interface MemoryExtractionCallback {
+        void onMemoriesExtracted(java.util.List<String> memories);
+        void onError(String error);
     }
     
     /**

@@ -7,24 +7,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.view.inputmethod.EditorInfo;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mihir.alzheimerscaregiver.utils.LanguagePreferenceManager;
+import com.mihir.alzheimerscaregiver.utils.TextToSpeechManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * ChatbotActivity - Voice-enabled AI chatbot for Alzheimer's patients
@@ -36,7 +45,7 @@ import java.util.Locale;
  * - Conversation history management
  * - Elderly-friendly UI with large buttons
  */
-public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class ChatbotActivity extends AppCompatActivity {
 
     private static final String TAG = "ChatbotActivity";
     private static final int RECORD_AUDIO_PERMISSION_CODE = 1001;
@@ -44,8 +53,9 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     // UI Components
     private RecyclerView chatRecyclerView;
     private TextView statusText;
-    private FloatingActionButton micButton;
     private ImageButton backButton;
+    private EditText textInput;
+    private ImageButton sendButton;
     
     // Chat Components
     private ChatAdapter chatAdapter;
@@ -53,10 +63,14 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     
     // Speech Components
     private SpeechRecognizer speechRecognizer;
-    private TextToSpeech textToSpeech;
+    private TextToSpeechManager textToSpeechManager;
     private boolean isListening = false;
     private boolean isTtsReady = false;
     private String lastPartialResult = ""; // Store last partial result as fallback
+    
+    // Language support
+    private String currentLanguage;
+    private Map<String, Locale> languageLocales;
     
     // AI Service
     private GeminiChatService geminiChatService;
@@ -69,6 +83,7 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbot);
         
+        initializeLanguageSupport();
         initializeViews();
         setupRecyclerView();
         initializeSpeechServices();
@@ -79,11 +94,30 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         addWelcomeMessage();
     }
     
+    /**
+     * Initialize language support based on user preferences
+     */
+    private void initializeLanguageSupport() {
+        // Get user's language preference
+        currentLanguage = LanguagePreferenceManager.getPreferredLanguage(this);
+        Log.d(TAG, "Initializing chatbot with language: " + currentLanguage);
+        
+        // Initialize language locale mapping (same as TextToSpeechManager)
+        languageLocales = new HashMap<>();
+        languageLocales.put(LanguagePreferenceManager.LANGUAGE_ENGLISH, Locale.ENGLISH);
+        languageLocales.put(LanguagePreferenceManager.LANGUAGE_HINDI, new Locale("hi", "IN"));
+        languageLocales.put(LanguagePreferenceManager.LANGUAGE_KANNADA, new Locale("kn", "IN"));
+        languageLocales.put(LanguagePreferenceManager.LANGUAGE_TAMIL, new Locale("ta", "IN"));
+        languageLocales.put(LanguagePreferenceManager.LANGUAGE_TELUGU, new Locale("te", "IN"));
+        languageLocales.put(LanguagePreferenceManager.LANGUAGE_MALAYALAM, new Locale("ml", "IN"));
+    }
+    
     private void initializeViews() {
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
         statusText = findViewById(R.id.statusText);
-        micButton = findViewById(R.id.micButton);
         backButton = findViewById(R.id.backButton);
+        textInput = findViewById(R.id.textInput);
+        sendButton = findViewById(R.id.sendButton);
         
         // Set up back button
         backButton.setOnClickListener(v -> {
@@ -91,20 +125,28 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             finish();
         });
         
-        // Set up microphone button
-        micButton.setOnClickListener(v -> {
-            v.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
-            toggleListening();
+        // Set up send button for text input
+        sendButton.setOnClickListener(v -> {
+            String message = textInput.getText().toString().trim();
+            if (!message.isEmpty()) {
+                sendTextMessage(message);
+                textInput.setText("");
+                textInput.clearFocus();
+            }
         });
         
-        // Add long-click for testing without speech recognition
-        micButton.setOnLongClickListener(v -> {
-            Log.d(TAG, "🧪 TEST MODE: Long-click detected - testing chatbot without speech");
-            v.performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS);
-            
-            // Test with a sample message
-            testChatbotWithSampleMessage();
-            return true;
+        // Set up text input enter key
+        textInput.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEND) {
+                String message = textInput.getText().toString().trim();
+                if (!message.isEmpty()) {
+                    sendTextMessage(message);
+                    textInput.setText("");
+                    textInput.clearFocus();
+                }
+                return true;
+            }
+            return false;
         });
     }
     
@@ -129,17 +171,64 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             Toast.makeText(this, "Speech recognition not available on this device", Toast.LENGTH_LONG).show();
         }
         
-        // Initialize Text-to-Speech
-        textToSpeech = new TextToSpeech(this, this);
+        // Initialize Text-to-Speech with language support
+        textToSpeechManager = new TextToSpeechManager(this, new TextToSpeechManager.TTSCallback() {
+            @Override
+            public void onTTSInitialized() {
+                isTtsReady = true;
+                Log.d(TAG, "TTS initialized for language: " + currentLanguage);
+            }
+            
+            @Override
+            public void onSpeechStart() {
+                // TTS started speaking
+            }
+            
+            @Override
+            public void onSpeechDone() {
+                // TTS finished speaking
+            }
+            
+            @Override
+            public void onTTSError(String error) {
+                Log.e(TAG, "TTS Error: " + error);
+            }
+        });
     }
     
     private void initializeGeminiService() {
-        geminiChatService = new GeminiChatService();
+        geminiChatService = new GeminiChatService(currentLanguage);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh welcome message in case language changed
+        refreshWelcomeMessage();
+    }
+    
+    private void refreshWelcomeMessage() {
+        // Update current language from preferences
+        currentLanguage = LanguagePreferenceManager.getPreferredLanguage(this);
+        
+        // Update Gemini service language
+        if (geminiChatService != null) {
+            geminiChatService = new GeminiChatService(currentLanguage);
+        }
+        
+        // Update welcome message if it's the first message in chat
+        if (!chatMessages.isEmpty() && !chatMessages.get(0).isFromUser()) {
+            String newWelcomeText = getWelcomeMessageForLanguage(currentLanguage);
+            chatMessages.get(0).setText(newWelcomeText);
+            chatAdapter.notifyItemChanged(0);
+            
+            // Speak the new welcome message
+            speakText(newWelcomeText);
+        }
     }
     
     private void addWelcomeMessage() {
-        String welcomeText = "Hello! I'm your AI assistant. I'm here to chat with you and help with your daily activities. " +
-                           "You can tap the microphone button to speak with me, or we can have a conversation about anything you'd like!";
+        String welcomeText = getWelcomeMessageForLanguage(currentLanguage);
         
         ChatMessage welcomeMessage = new ChatMessage(welcomeText, false, System.currentTimeMillis());
         chatMessages.add(welcomeMessage);
@@ -148,6 +237,23 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         
         // Speak welcome message
         speakText(welcomeText);
+    }
+    
+    private String getWelcomeMessageForLanguage(String language) {
+        switch (language) {
+            case "Hindi":
+                return "नमस्ते! मैं आपका AI सहायक हूं। मैं आपसे बात करने और आपकी दैनिक गतिविधियों में मदद करने के लिए यहां हूं। आप टेक्स्ट बॉक्स का उपयोग करके मुझसे कुछ भी पूछ सकते हैं!";
+            case "Tamil":
+                return "வணக்கம்! நான் உங்கள் AI உதவியாளர். நான் உங்களுடன் பேசவும் உங்கள் தினசரி செயல்பாடுகளில் உதவவும் இங்கே இருக்கிறேன். நீங்கள் டெக்ஸ்ட் பாக்ஸைப் பயன்படுத்தி என்னிடம் எதுவும் கேட்கலாம்!";
+            case "Telugu":
+                return "నమస్కారం! నేను మీ AI సహాయకుడిని. మీతో మాట్లాడటానికి మరియు మీ రోజువారీ కార్యకలాపాలలో సహాయం చేయడానికి నేను ఇక్కడ ఉన్నాను. మీరు టెక్స్ట్ బాక్స్ ఉపయోగించి నన్ను ఏదైనా అడగవచ్చు!";
+            case "Kannada":
+                return "ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ AI ಸಹಾಯಕ. ನಿಮ್ಮೊದನೆ ಮಾತನಾಡಲು ಮತ್ತು ನಿಮ್ಮ ದೈನಂದಿನ ಚಟುವಟಿಕೆಗಳಲ್ಲಿ ಸಹಾಯ ಮಾಡಲು ನಾನು ಇಲ್ಲಿದ್ದೇನೆ. ನೀವು ಟೆಕ್ಸ್ಟ್ ಬಾಕ್ಸ್ ಬಳಸಿ ನನ್ನನ್ನು ಏನು ಬೇಕಾದರೂ ಕೇಳಬಹುದು!";
+            case "Malayalam":
+                return "നമസ്കാരം! ഞാൻ നിങ്ങളുടെ AI സഹായകനാണ്. നിങ്ങളോട് സംസാരിക്കാനും നിങ്ങളുടെ ദൈനംദിന പ്രവർത്തനങ്ങളിൽ സഹായിക്കാനും ഞാൻ ഇവിടെയുണ്ട്. നിങ്ങൾക്ക് ടെക്സ്റ്റ് ബോക്സ് ഉപയോഗിച്ച് എന്നോട് എന്തും ചോദിക്കാം!";
+            default: // English
+                return "Hello! I'm your AI assistant. I'm here to chat with you and help with your daily activities. You can use the text box to ask me anything you'd like!";
+        }
     }
     
     private void checkPermissions() {
@@ -184,61 +290,25 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         }
     }
     
+    /**
+     * Send a text message (from keyboard input)
+     */
+    private void sendTextMessage(String message) {
+        Log.d(TAG, "📝 Sending text message: " + message);
+        
+        // Process the text input (processUserInput will handle adding message to chat)
+        processUserInput(message);
+    }
+    
+    // Speech recognition methods removed - using text input only
     private void startListening() {
-        if (speechRecognizer == null) {
-            Toast.makeText(this, "Speech recognition not available", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) 
-                != PackageManager.PERMISSION_GRANTED) {
-            checkPermissions();
-            return;
-        }
-        
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Please speak...");
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
-        
-        // Enhanced speech recognition settings for better reliability
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 5000); // 5 seconds
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 3000); // 3 seconds
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 2000); // Minimum 2 seconds
-        intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true); // Enable partial results
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
-        
-        // Add confidence and alternative results
-        intent.putExtra(RecognizerIntent.EXTRA_CONFIDENCE_SCORES, true);
-        
-        isListening = true;
-        updateMicButtonState();
-        statusText.setText("Listening... Please speak");
-        statusText.setVisibility(View.VISIBLE);
-        
-        speechRecognizer.startListening(intent);
+        // Method kept for compatibility but not used
     }
     
     private void stopListening() {
-        if (speechRecognizer != null && isListening) {
-            speechRecognizer.stopListening();
-        }
-        isListening = false;
-        updateMicButtonState();
-        statusText.setVisibility(View.GONE);
+        // Method kept for compatibility but not used  
     }
-    
-    private void updateMicButtonState() {
-        if (isListening) {
-            micButton.setImageResource(R.drawable.ic_mic_off);
-            micButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.error));
-        } else {
-            micButton.setImageResource(R.drawable.ic_mic);
-            micButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.primary_color));
-        }
-    }
-    
+
     /**
      * Test method to verify chatbot functionality without speech recognition
      */
@@ -316,22 +386,40 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     }
     
     private void speakText(String text) {
-        if (textToSpeech != null && isTtsReady) {
-            // Configure TTS for elderly users
-            textToSpeech.setSpeechRate(0.8f); // Slightly slower for better comprehension
-            textToSpeech.setPitch(1.0f); // Normal pitch
-            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "chatbot_response");
+        if (textToSpeechManager != null && isTtsReady) {
+            // Use TextToSpeechManager with current language
+            textToSpeechManager.speak(text, currentLanguage);
         }
     }
     
     private void saveConversation(String userInput, String aiResponse) {
-        // Enhanced conversation saving with memory extraction
+        // Enhanced conversation saving with AI-powered memory extraction
         Log.d(TAG, "Saving conversation - User: " + userInput + ", AI: " + aiResponse);
         
-        // Save to Firebase (simplified for now - will enhance with full repository later)
-        saveConversationToFirebase(userInput, aiResponse);
+        try {
+            // Get current user ID
+            String patientId = getCurrentPatientId();
+            if (patientId == null) {
+                Log.w(TAG, "No patient ID available, skipping conversation save");
+                return;
+            }
+
+            // Create conversation data for Firebase
+            java.util.Map<String, Object> conversationData = new java.util.HashMap<>();
+            conversationData.put("patientId", patientId);
+            conversationData.put("timestamp", new java.util.Date());
+            conversationData.put("userInput", userInput);
+            conversationData.put("aiResponse", aiResponse);
+            conversationData.put("sessionId", getCurrentSessionId());
+            
+            // Use AI-powered memory extraction for better multi-language support
+            extractMemoriesWithAI(userInput, aiResponse, conversationData, patientId);
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Exception saving conversation", e);
+        }
         
-        // Extract and analyze for memories and cognitive markers
+        // Keep the old memory analysis for additional insights
         analyzeConversationForMemories(userInput);
     }
     
@@ -352,10 +440,56 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             conversationData.put("aiResponse", aiResponse);
             conversationData.put("sessionId", getCurrentSessionId());
             
-            // Extract basic memory indicators for immediate storage
-            java.util.List<String> detectedMemories = extractBasicMemories(userInput);
-            conversationData.put("detectedMemories", detectedMemories);
+        } catch (Exception e) {
+            Log.e(TAG, "Exception saving conversation", e);
+        }
+    }
+    
+    /**
+     * Extract memories using AI analysis for better multi-language support
+     */
+    private void extractMemoriesWithAI(String userInput, String aiResponse, java.util.Map<String, Object> conversationData, String patientId) {
+        // Extract memories only from user input (not AI response to avoid false memories)
+        String userOnlyText = "User said: " + userInput;
+        
+        Log.d(TAG, "🧠 Starting AI memory extraction for conversation");
+        Log.d(TAG, "Analyzing user input only: " + userOnlyText);
+        
+        // Use GeminiChatService for AI-powered memory extraction (user input only)
+        geminiChatService.extractMemoriesWithAI(userOnlyText, new GeminiChatService.MemoryExtractionCallback() {
+            @Override
+            public void onMemoriesExtracted(java.util.List<String> memories) {
+                Log.d(TAG, "✅ AI memory extraction successful! Found " + memories.size() + " memories");
+                
+                // Add extracted memories to conversation data
+                conversationData.put("detectedMemories", memories);
+                
+                // Save to Firebase with the extracted memories
+                saveConversationToFirebase(conversationData, patientId);
+                
+                // Log for debugging
+                Log.d(TAG, "AI extracted " + memories.size() + " memories:");
+                for (String memory : memories) {
+                    Log.d(TAG, "  - " + memory);
+                }
+            }
             
+            @Override
+            public void onError(String error) {
+                Log.e(TAG, "❌ AI memory extraction failed: " + error);
+                
+                // Fallback to empty memories list and still save the conversation
+                conversationData.put("detectedMemories", new java.util.ArrayList<String>());
+                saveConversationToFirebase(conversationData, patientId);
+            }
+        });
+    }
+    
+    /**
+     * Save conversation data to Firebase
+     */
+    private void saveConversationToFirebase(java.util.Map<String, Object> conversationData, String patientId) {
+        try {
             // Save to Firebase Firestore under patient's document
             com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
             db.collection("patients")
@@ -364,13 +498,22 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
                 .add(conversationData)
                 .addOnSuccessListener(documentReference -> {
                     Log.d(TAG, "Conversation saved successfully with ID: " + documentReference.getId());
+                    
+                    // Log the extracted memories for debugging
+                    @SuppressWarnings("unchecked")
+                    java.util.List<String> memories = (java.util.List<String>) conversationData.get("detectedMemories");
+                    if (memories != null && !memories.isEmpty()) {
+                        Log.d(TAG, "AI extracted " + memories.size() + " memories for story generation");
+                        for (String memory : memories) {
+                            Log.d(TAG, "  Memory: " + memory);
+                        }
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error saving conversation", e);
                 });
-                
         } catch (Exception e) {
-            Log.e(TAG, "Exception saving conversation", e);
+            Log.e(TAG, "Exception saving conversation to Firebase", e);
         }
     }
     
@@ -399,32 +542,255 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
         return currentSessionId;
     }
     
+    /**
+     * Get language code for speech recognition based on current language
+     */
+    private String getLanguageCode(String language) {
+        Locale locale = languageLocales.get(language);
+        if (locale != null) {
+            return locale.toString();
+        }
+        return Locale.getDefault().toString();
+    }
+    
     private java.util.List<String> extractBasicMemories(String text) {
         java.util.List<String> memories = new java.util.ArrayList<>();
         if (text == null || text.trim().isEmpty()) return memories;
         
         String lowerText = text.toLowerCase();
         
-        // Basic memory indicators
-        String[] memoryIndicators = {
-            "i remember", "when i was", "back in", "years ago", "i used to", 
-            "my husband", "my wife", "my children", "my mother", "my father"
-        };
+        // Get language-specific memory patterns
+        Map<String, String[]> languageMemoryPatterns = getLanguageSpecificMemoryPatterns();
+        Map<String, String[]> languageRelationshipWords = getLanguageSpecificRelationshipWords();
+        Map<String, String[]> languageLocationWords = getLanguageSpecificLocationWords();
+        Map<String, String[]> languageTimeWords = getLanguageSpecificTimeWords();
         
+        // Default English patterns
+        String[] memoryIndicators = languageMemoryPatterns.getOrDefault(currentLanguage, languageMemoryPatterns.get(LanguagePreferenceManager.LANGUAGE_ENGLISH));
+        String[] relationshipWords = languageRelationshipWords.getOrDefault(currentLanguage, languageRelationshipWords.get(LanguagePreferenceManager.LANGUAGE_ENGLISH));
+        String[] locationWords = languageLocationWords.getOrDefault(currentLanguage, languageLocationWords.get(LanguagePreferenceManager.LANGUAGE_ENGLISH));
+        String[] timeWords = languageTimeWords.getOrDefault(currentLanguage, languageTimeWords.get(LanguagePreferenceManager.LANGUAGE_ENGLISH));
+        
+        // Check for memory indicator phrases and extract surrounding context
         for (String indicator : memoryIndicators) {
-            if (lowerText.contains(indicator)) {
+            if (lowerText.contains(indicator.toLowerCase())) {
                 // Extract the sentence containing the memory
                 String[] sentences = text.split("[.!?]+");
                 for (String sentence : sentences) {
-                    if (sentence.toLowerCase().contains(indicator)) {
-                        memories.add(sentence.trim());
+                    if (sentence.toLowerCase().contains(indicator.toLowerCase())) {
+                        memories.add("Memory: " + sentence.trim());
                         break;
                     }
                 }
             }
         }
         
+        // Check for relationship mentions
+        for (String relationship : relationshipWords) {
+            if (lowerText.contains(relationship.toLowerCase())) {
+                memories.add("Relationship: " + relationship);
+            }
+        }
+        
+        // Check for location mentions
+        for (String location : locationWords) {
+            if (lowerText.contains(location.toLowerCase())) {
+                memories.add("Location: " + location);
+            }
+        }
+        
+        // Check for time references
+        for (String timeRef : timeWords) {
+            if (lowerText.contains(timeRef.toLowerCase())) {
+                memories.add("Time reference: " + timeRef);
+            }
+        }
+        
         return memories;
+    }
+    
+    /**
+     * Get language-specific memory indicator patterns
+     */
+    private Map<String, String[]> getLanguageSpecificMemoryPatterns() {
+        Map<String, String[]> patterns = new HashMap<>();
+        
+        // English patterns
+        patterns.put(LanguagePreferenceManager.LANGUAGE_ENGLISH, new String[]{
+            "i remember", "when i was", "back in", "years ago", "i used to", 
+            "my husband", "my wife", "my children", "my mother", "my father",
+            "my sister", "my brother", "childhood", "growing up", "we used to",
+            "i was thinking about", "reminds me of"
+        });
+        
+        // Hindi patterns
+        patterns.put(LanguagePreferenceManager.LANGUAGE_HINDI, new String[]{
+            "मुझे याद है", "जब मैं था", "बचपन में", "पहले", "मेरा पति", "मेरी पत्नी",
+            "मेरे बच्चे", "मेरी माँ", "मेरे पिता", "मेरा भाई", "मेरी बहन",
+            "बड़े होते समय", "हम करते थे", "याद आता है", "सोच रहा था"
+        });
+        
+        // Tamil patterns
+        patterns.put(LanguagePreferenceManager.LANGUAGE_TAMIL, new String[]{
+            "எனக்கு நினைவிருக்கிறது", "நான் இருந்த போது", "சிறுவயதில்", "முன்பு", "என் கணவர்", "என் மனைவி",
+            "என் குழந்தைகள்", "என் அம்மா", "என் அப்பா", "என் சகோதரன்", "என் சகோதரி",
+            "வளர்ந்த காலம்", "நாங்கள் செய்தோம்", "நினைவு வருகிறது", "நினைத்துக் கொண்டிருந்தேன்"
+        });
+        
+        // Telugu patterns
+        patterns.put(LanguagePreferenceManager.LANGUAGE_TELUGU, new String[]{
+            "నాకు గుర్తుంది", "నేను ఉన్నప్పుడు", "చిన్నప్పుడు", "మునుపు", "నా భర్త", "నా భార్య",
+            "నా పిల్లలు", "నా అమ్మ", "నా నాన్న", "నా అన్న", "నా అక్క",
+            "పెరిగిన కాలం", "మేము చేసేవాళ్ళం", "గుర్తు వస్తుంది", "ఆలోచిస్తున్నాను"
+        });
+        
+        // Kannada patterns
+        patterns.put(LanguagePreferenceManager.LANGUAGE_KANNADA, new String[]{
+            "ನನಗೆ ನೆನಪಿದೆ", "ನಾನು ಇದ್ದಾಗ", "ಬಾಲ್ಯದಲ್ಲಿ", "ಮೊದಲು", "ನನ್ನ ಗಂಡ", "ನನ್ನ ಹೆಂಡತಿ",
+            "ನನ್ನ ಮಕ್ಕಳು", "ನನ್ನ ಅಮ್ಮ", "ನನ್ನ ಅಪ್ಪ", "ನನ್ನ ಅಣ್ಣ", "ನನ್ನ ಅಕ್ಕ",
+            "ಬೆಳೆದ ಕಾಲ", "ನಾವು ಮಾಡುತ್ತಿದ್ದೆವು", "ನೆನಪಾಗುತ್ತದೆ", "ಯೋಚಿಸುತ್ತಿದ್ದೆ"
+        });
+        
+        // Malayalam patterns
+        patterns.put(LanguagePreferenceManager.LANGUAGE_MALAYALAM, new String[]{
+            "എനിക്ക് ഓർമയുണ്ട്", "ഞാൻ ഉണ്ടായിരുന്നപ്പോൾ", "കുട്ടിക്കാലത്ത്", "മുമ്പ്", "എന്റെ ഭർത്താവ്", "എന്റെ ഭാര്യ",
+            "എന്റെ കുട്ടികൾ", "എന്റെ അമ്മ", "എന്റെ അച്ഛൻ", "എന്റെ സഹോദരൻ", "എന്റെ സഹോദരി",
+            "വളർന്ന കാലം", "ഞങ്ങൾ ചെയ്തിരുന്നു", "ഓർമ വരുന്നു", "ചിന്തിക്കുകയായിരുന്നു"
+        });
+        
+        return patterns;
+    }
+    
+    /**
+     * Get language-specific relationship words
+     */
+    private Map<String, String[]> getLanguageSpecificRelationshipWords() {
+        Map<String, String[]> relationships = new HashMap<>();
+        
+        // English relationships
+        relationships.put(LanguagePreferenceManager.LANGUAGE_ENGLISH, new String[]{
+            "husband", "wife", "mother", "father", "son", "daughter", 
+            "brother", "sister", "friend", "neighbor", "colleague", 
+            "boss", "teacher", "doctor", "nurse", "grandson", "granddaughter"
+        });
+        
+        // Hindi relationships
+        relationships.put(LanguagePreferenceManager.LANGUAGE_HINDI, new String[]{
+            "पति", "पत्नी", "माँ", "पिता", "बेटा", "बेटी", "भाई", "बहन",
+            "दोस्त", "पड़ोसी", "सहयोगी", "बॉस", "शिक्षक", "डॉक्टर", "नर्स", "पोता", "पोती"
+        });
+        
+        // Tamil relationships
+        relationships.put(LanguagePreferenceManager.LANGUAGE_TAMIL, new String[]{
+            "கணவர்", "மனைவி", "அம்மா", "அப்பா", "மகன்", "மகள்", "சகோதரன்", "சகோதரி",
+            "நண்பர்", "அண்டை வீட்டார்", "சக பணியாளர்", "முதலாளி", "ஆசிரியர்", "மருத்துவர்", "செவிலியர்", "பேரன்", "பேத்தி"
+        });
+        
+        // Telugu relationships
+        relationships.put(LanguagePreferenceManager.LANGUAGE_TELUGU, new String[]{
+            "భర్త", "భార్య", "అమ్మ", "నాన్న", "కొడుకు", "కూతురు", "అన్న", "అక్క",
+            "స్నేహితుడు", "పొరుగువాడు", "సహోద్యోగి", "యజమాని", "గురువు", "వైద్యుడు", "నర్సు", "మనవడు", "మనవరాలు"
+        });
+        
+        // Kannada relationships
+        relationships.put(LanguagePreferenceManager.LANGUAGE_KANNADA, new String[]{
+            "ಗಂಡ", "ಹೆಂಡತಿ", "ಅಮ್ಮ", "ಅಪ್ಪ", "ಮಗ", "ಮಗಳು", "ಅಣ್ಣ", "ಅಕ್ಕ",
+            "ಸ್ನೇಹಿತ", "ನೆರೆಹೊರೆಯವರು", "ಸಹೋದ್ಯೋಗಿ", "ಮುಖ್ಯಸ್ಥ", "ಗುರು", "ವೈದ್ಯ", "ನರ್ಸ್", "ಮೊಮ್ಮಗ", "ಮೊಮ್ಮಗಳು"
+        });
+        
+        // Malayalam relationships
+        relationships.put(LanguagePreferenceManager.LANGUAGE_MALAYALAM, new String[]{
+            "ഭർത്താവ്", "ഭാര്യ", "അമ്മ", "അച്ഛൻ", "മകൻ", "മകൾ", "സഹോദരൻ", "സഹോദരി",
+            "സുഹൃത്ത്", "അയൽവാസി", "സഹപ്രവർത്തകൻ", "മുഖ്യൻ", "ഗുരു", "ഡോക്ടർ", "നഴ്സ്", "കൊച്ചുമകൻ", "കൊച്ചുമകൾ"
+        });
+        
+        return relationships;
+    }
+    
+    /**
+     * Get language-specific location words
+     */
+    private Map<String, String[]> getLanguageSpecificLocationWords() {
+        Map<String, String[]> locations = new HashMap<>();
+        
+        // English locations
+        locations.put(LanguagePreferenceManager.LANGUAGE_ENGLISH, new String[]{
+            "lived in", "grew up in", "moved to", "traveled to", "visited",
+            "hometown", "neighborhood", "city", "country", "house", "home",
+            "school", "church", "hospital", "work", "office", "factory", "garden"
+        });
+        
+        // Hindi locations
+        locations.put(LanguagePreferenceManager.LANGUAGE_HINDI, new String[]{
+            "रहता था", "बड़ा हुआ", "गया", "घूमा", "गया था", "शहर", "गाँव", "घर",
+            "स्कूल", "मंदिर", "अस्पताल", "काम", "ऑफिस", "फैक्टरी", "बगीचा"
+        });
+        
+        // Tamil locations
+        locations.put(LanguagePreferenceManager.LANGUAGE_TAMIL, new String[]{
+            "வாழ்ந்தேன்", "வளர்ந்தேன்", "சென்றேன்", "பயணம்", "போனேன்", "ஊர்", "ஒரு", "வீடு",
+            "பள்ளி", "கோயில்", "மருத்துவமனை", "வேலை", "அலுவலகம்", "தொழிற்சாலை", "தோட்டம்"
+        });
+        
+        // Telugu locations
+        locations.put(LanguagePreferenceManager.LANGUAGE_TELUGU, new String[]{
+            "ఉన్నాను", "పెరిగాను", "వెళ్ళాను", "యాత్ర", "వెళ్ళాను", "ఊరు", "ఇంటి", "ఇల్లు",
+            "పాఠశాల", "దేవాలయం", "ఆసుపత్రి", "పని", "కార్యాలయం", "కర్మాగారం", "తోట"
+        });
+        
+        // Kannada locations
+        locations.put(LanguagePreferenceManager.LANGUAGE_KANNADA, new String[]{
+            "ಇದ್ದೆ", "ಬೆಳೆದೆ", "ಹೋದೆ", "ಪ್ರಯಾಣ", "ಹೋಗಿದ್ದೆ", "ಊರು", "ಮನೆ", "ಮನೆ",
+            "ಶಾಲೆ", "ದೇವಾಲಯ", "ಆಸ್ಪತ್ರೆ", "ಕೆಲಸ", "ಕಚೇರಿ", "ಕಾರ್ಖಾನೆ", "ತೋಟ"
+        });
+        
+        // Malayalam locations
+        locations.put(LanguagePreferenceManager.LANGUAGE_MALAYALAM, new String[]{
+            "താമസിച്ചു", "വളർന്നു", "പോയി", "യാത്ര", "പോയിരുന്നു", "നാട്", "വീട്", "വീട്",
+            "സ്കൂൾ", "ക്ഷേത്രം", "ആശുപത്രി", "ജോലി", "ഓഫീസ്", "ഫാക്ടറി", "തോട്ടം"
+        });
+        
+        return locations;
+    }
+    
+    /**
+     * Get language-specific time reference words
+     */
+    private Map<String, String[]> getLanguageSpecificTimeWords() {
+        Map<String, String[]> timeWords = new HashMap<>();
+        
+        // English time references
+        timeWords.put(LanguagePreferenceManager.LANGUAGE_ENGLISH, new String[]{
+            "childhood", "when i was young", "years ago", "back then",
+            "in my twenties", "in my thirties", "growing up"
+        });
+        
+        // Hindi time references
+        timeWords.put(LanguagePreferenceManager.LANGUAGE_HINDI, new String[]{
+            "बचपन", "जब मैं छोटा था", "साल पहले", "उस समय", "बीस साल की उम्र में", "तीस साल की उम्र में", "बड़े होते समय"
+        });
+        
+        // Tamil time references
+        timeWords.put(LanguagePreferenceManager.LANGUAGE_TAMIL, new String[]{
+            "சிறுவயது", "நான் சிறியவனாக இருந்தபோது", "வருடங்களுக்கு முன்பு", "அந்த நேரத்தில்", "இருபதுகளில்", "முப்பதுகளில்", "வளரும் போது"
+        });
+        
+        // Telugu time references
+        timeWords.put(LanguagePreferenceManager.LANGUAGE_TELUGU, new String[]{
+            "చిన్నప్పుడు", "నేను చిన్నవాడిగా ఉన్నప్పుడు", "సంవత్సరాల క్రితం", "ఆ సమయంలో", "ఇరవైలలో", "ముప్పైలలో", "పెరుగుతున్న సమయంలో"
+        });
+        
+        // Kannada time references
+        timeWords.put(LanguagePreferenceManager.LANGUAGE_KANNADA, new String[]{
+            "ಬಾಲ್ಯ", "ನಾನು ಚಿಕ್ಕವನಾಗಿದ್ದಾಗ", "ವರ್ಷಗಳ ಹಿಂದೆ", "ಆ ಸಮಯದಲ್ಲಿ", "ಇಪ್ಪತ್ತರಲ್ಲಿ", "ಮೂವತ್ತರಲ್ಲಿ", "ಬೆಳೆಯುತ್ತಿರುವಾಗ"
+        });
+        
+        // Malayalam time references
+        timeWords.put(LanguagePreferenceManager.LANGUAGE_MALAYALAM, new String[]{
+            "കുട്ടിക്കാലം", "ഞാൻ ചെറുപ്പത്തിൽ", "വർഷങ്ങൾക്കു മുമ്പ്", "ആ കാലത്ത്", "ഇരുപതിലെത്തിയപ്പോൾ", "മുപ്പതിലെത്തിയപ്പോൾ", "വളരുന്ന സമയത്ത്"
+        });
+        
+        return timeWords;
     }
     
     private void analyzeConversationForMemories(String userInput) {
@@ -525,21 +891,6 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
     }
     
     @Override
-    public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-            int result = textToSpeech.setLanguage(Locale.getDefault());
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e(TAG, "TTS language not supported");
-            } else {
-                isTtsReady = true;
-                Log.d(TAG, "TTS initialized successfully");
-            }
-        } else {
-            Log.e(TAG, "TTS initialization failed");
-        }
-    }
-    
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         
@@ -547,9 +898,8 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             speechRecognizer.destroy();
         }
         
-        if (textToSpeech != null) {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
+        if (textToSpeechManager != null) {
+            textToSpeechManager.shutdown();
         }
     }
     
@@ -621,7 +971,7 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
             Log.e(TAG, "Speech recognition error: " + errorMessage);
             
             isListening = false;
-            updateMicButtonState();
+            // Microphone state update removed - text input only
             statusText.setVisibility(View.GONE);
             
             if (error != SpeechRecognizer.ERROR_NO_MATCH && error != SpeechRecognizer.ERROR_SPEECH_TIMEOUT) {
@@ -643,7 +993,7 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
                 }
                 
                 isListening = false;
-                updateMicButtonState();
+                // Microphone state update removed - text input only
                 statusText.setVisibility(View.GONE);
                 
                 // Process the recognized text
@@ -656,7 +1006,7 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
                     Log.d(TAG, "🔄 Using last partial result as fallback: " + lastPartialResult);
                     
                     isListening = false;
-                    updateMicButtonState();
+                    // Microphone state update removed - text input only
                     statusText.setVisibility(View.GONE);
                     
                     // Process the last partial result
@@ -667,7 +1017,7 @@ public class ChatbotActivity extends AppCompatActivity implements TextToSpeech.O
                 } else {
                     Log.w(TAG, "❌ No partial results available for fallback");
                     isListening = false;
-                    updateMicButtonState();
+                    // Microphone state update removed - text input only
                     statusText.setVisibility(View.GONE);
                 }
             }
