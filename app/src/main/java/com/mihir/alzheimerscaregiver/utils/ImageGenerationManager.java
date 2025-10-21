@@ -318,11 +318,31 @@ public class ImageGenerationManager {
         // FLUX.1-dev excels with detailed, structured prompts
         prompt.append("A ").append(params.style).append(" depicting a ").append(params.mood).append(" therapeutic scene. ");
         
-        // Use story content as primary context if available
-        if (storyContent != null && !storyContent.trim().isEmpty()) {
-            // Extract key scene elements from the story for the image
-            String sceneContext = extractSceneFromStory(storyContent);
-            prompt.append(sceneContext).append(". ");
+        // Get extracted memories for personalized image generation
+        String extractedMemories = getExtractedMemoriesForImage();
+        
+        if (!extractedMemories.isEmpty()) {
+            Log.d(TAG, "Using extracted memories for image generation");
+            // Build scene based on actual extracted memories (PRIMARY)
+            String memoryBasedScene = buildSceneFromExtractedMemories(extractedMemories);
+            prompt.append(memoryBasedScene).append(". ");
+            
+            // Use story content as supplementary context if available
+            if (storyContent != null && !storyContent.trim().isEmpty()) {
+                String storyContext = extractSceneFromStory(storyContent);
+                prompt.append("Enhanced with ").append(storyContext).append(". ");
+            }
+        } else {
+            Log.d(TAG, "No extracted memories available, using story/profile fallback");
+            // Fallback to story content if no extracted memories
+            if (storyContent != null && !storyContent.trim().isEmpty()) {
+                String sceneContext = extractSceneFromStory(storyContent);
+                prompt.append(sceneContext).append(". ");
+            } else {
+                // Last resort: use basic patient profile
+                String scenery = buildSceneryDescription(patientProfile);
+                prompt.append(scenery.replace("Setting: ", "")).append(". ");
+            }
         }
         
         // Add cultural context for personalization
@@ -331,29 +351,186 @@ public class ImageGenerationManager {
             prompt.append(culturalContext).append(". ");
         }
         
-        // If no story content, build scene based on patient details
-        if (storyContent == null || storyContent.trim().isEmpty()) {
-            String scenery = buildSceneryDescription(patientProfile);
-            prompt.append(scenery.replace("Setting: ", "")).append(". ");
-            
-            // Add hobby/interest elements with more detail for FLUX.1-dev
-            String hobbyElements = buildHobbyElements(patientProfile);
-            if (!hobbyElements.isEmpty()) {
-                prompt.append("Scene includes elements of ").append(hobbyElements.replace("Activities: ", "")).append(". ");
-            }
-            
-            // Add pet elements if applicable
-            String petElements = buildPetElements(patientProfile);
-            if (!petElements.isEmpty()) {
-                prompt.append(petElements.replace("Companions: ", "")).append(". ");
-            }
-        }
-        
         // FLUX.1-dev quality and style instructions - more specific for better results
         prompt.append("Masterpiece quality, highly detailed, perfect composition, ");
         prompt.append("peaceful mood, therapeutic, memory-evoking, cultural authenticity.");
         
         return prompt.toString();
+    }
+    
+    /**
+     * Access the same extracted memories cache used by GeminiStoryGenerator
+     */
+    private String getExtractedMemoriesForImage() {
+        try {
+            // Access the static memory cache from GeminiStoryGenerator
+            java.lang.reflect.Field field = com.mihir.alzheimerscaregiver.reminiscence.GeminiStoryGenerator.class
+                .getDeclaredField("cachedMemoriesContext");
+            field.setAccessible(true);
+            String cachedMemories = (String) field.get(null);
+            
+            if (cachedMemories != null && !cachedMemories.trim().isEmpty()) {
+                Log.d(TAG, "Retrieved cached memories for image generation: " + 
+                    (cachedMemories.length() > 100 ? cachedMemories.substring(0, 100) + "..." : cachedMemories));
+                return cachedMemories;
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Could not access cached memories, using fallback", e);
+        }
+        return "";
+    }
+    
+    /**
+     * Build visual scene description based on extracted conversation memories
+     */
+    private String buildSceneFromExtractedMemories(String extractedMemories) {
+        StringBuilder scene = new StringBuilder();
+        String[] memoryLines = extractedMemories.split("\n");
+        
+        // Collect visual elements from memories
+        java.util.Set<String> places = new java.util.HashSet<>();
+        java.util.Set<String> activities = new java.util.HashSet<>();
+        java.util.Set<String> schools = new java.util.HashSet<>();
+        java.util.Set<String> pets = new java.util.HashSet<>();
+        java.util.Set<String> themes = new java.util.HashSet<>();
+        
+        for (String memoryLine : memoryLines) {
+            if (memoryLine.trim().isEmpty()) continue;
+            
+            String line = memoryLine.trim();
+            String lowerLine = line.toLowerCase();
+            
+            // Extract places for scene setting
+            if (lowerLine.contains("location:") || lowerLine.contains("place:")) {
+                String place = extractAfterColon(line);
+                if (place != null && !place.isEmpty()) {
+                    places.add(place);
+                }
+            }
+            
+            // Extract activities for scene elements
+            else if (lowerLine.contains("activity:")) {
+                String activity = extractAfterColon(line);
+                if (activity != null && !activity.isEmpty()) {
+                    activities.add(activity);
+                }
+            }
+            
+            // Extract schools for educational environment
+            else if (lowerLine.contains("school:")) {
+                String school = extractAfterColon(line);
+                if (school != null && !school.isEmpty()) {
+                    schools.add(school);
+                }
+            }
+            
+            // Extract pets for companions
+            else if (lowerLine.contains("pet:")) {
+                String pet = extractAfterColon(line);
+                if (pet != null && !pet.isEmpty()) {
+                    pets.add(pet);
+                }
+            }
+            
+            // Extract relationship themes for atmosphere
+            else if (lowerLine.contains("theme:")) {
+                String theme = extractAfterColon(line);
+                if (theme != null && !theme.isEmpty()) {
+                    themes.add(theme);
+                }
+            }
+        }
+        
+        // Build scene description from extracted elements
+        
+        // Primary location/setting
+        if (!places.isEmpty()) {
+            String primaryPlace = places.iterator().next();
+            if (primaryPlace.toLowerCase().contains("bangalore") || primaryPlace.toLowerCase().contains("bengaluru")) {
+                scene.append("A warm residential setting in Bangalore with traditional South Indian architectural elements, ");
+                scene.append("lush gardens with flowering plants typical of Karnataka, ");
+            } else if (primaryPlace.toLowerCase().contains("karwar")) {
+                scene.append("A coastal home environment in Karwar with elements of seaside living, ");
+                scene.append("palm trees and coastal vegetation, traditional Konkani architectural features, ");
+            } else if (primaryPlace.toLowerCase().contains("vijayanagar") || primaryPlace.toLowerCase().contains("vijaynagar")) {
+                scene.append("A comfortable neighborhood home in Vijayanagar with urban residential charm, ");
+                scene.append("well-maintained gardens and modern Indian home elements, ");
+            } else {
+                scene.append("A peaceful residential setting with traditional Indian home elements, ");
+                scene.append("beautiful gardens and comfortable living spaces, ");
+            }
+        }
+        
+        // Add school/educational elements
+        if (!schools.isEmpty()) {
+            scene.append("educational elements like books, study areas, and learning materials suggesting ");
+            scene.append("childhood memories of school days, ");
+        }
+        
+        // Add activity-based scene elements
+        if (!activities.isEmpty()) {
+            for (String activity : activities) {
+                if (activity.toLowerCase().contains("cricket")) {
+                    scene.append("recreational elements like cricket equipment and play areas suggesting active childhood, ");
+                } else if (activity.toLowerCase().contains("gta") || activity.toLowerCase().contains("prince of persia") || 
+                          activity.toLowerCase().contains("gaming") || activity.toLowerCase().contains("playing")) {
+                    scene.append("cozy indoor entertainment area with comfortable seating for leisure activities, ");
+                } else {
+                    scene.append("elements suggesting ").append(activity.toLowerCase()).append(" activities, ");
+                }
+            }
+        }
+        
+        // Add pet/companion elements
+        if (!pets.isEmpty()) {
+            for (String pet : pets) {
+                if (pet.toLowerCase().contains("cat")) {
+                    scene.append("a peaceful corner with cat-friendly elements like comfortable resting spots, ");
+                } else if (pet.toLowerCase().contains("dog") || pet.toLowerCase().contains("labrador")) {
+                    scene.append("pet-friendly outdoor space with areas for a beloved dog companion, ");
+                } else {
+                    scene.append("pet-loving household elements, ");
+                }
+            }
+        }
+        
+        // Add family/relationship atmosphere
+        if (!themes.isEmpty()) {
+            for (String theme : themes) {
+                if (theme.toLowerCase().contains("sister") || theme.toLowerCase().contains("sibling")) {
+                    scene.append("family-oriented spaces suggesting close sibling relationships, ");
+                } else if (theme.toLowerCase().contains("parent") || theme.toLowerCase().contains("family")) {
+                    scene.append("warm family gathering areas with comfortable seating for bonding, ");
+                } else if (theme.toLowerCase().contains("friend")) {
+                    scene.append("welcoming social spaces for childhood friendships, ");
+                }
+            }
+        }
+        
+        // Clean up and finalize scene description
+        String sceneDescription = scene.toString();
+        if (sceneDescription.endsWith(", ")) {
+            sceneDescription = sceneDescription.substring(0, sceneDescription.length() - 2);
+        }
+        
+        // Add fallback if no specific elements found
+        if (sceneDescription.trim().isEmpty()) {
+            sceneDescription = "A warm, memory-filled home environment with comfortable spaces for reflection and comfort";
+        }
+        
+        Log.d(TAG, "Built scene from memories: " + sceneDescription);
+        return sceneDescription;
+    }
+    
+    /**
+     * Helper method to extract text after colon in memory lines
+     */
+    private String extractAfterColon(String line) {
+        int colonIndex = line.indexOf(":");
+        if (colonIndex >= 0 && colonIndex < line.length() - 1) {
+            return line.substring(colonIndex + 1).trim();
+        }
+        return null;
     }
     
     /**

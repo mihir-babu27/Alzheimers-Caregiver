@@ -157,44 +157,77 @@ public class GeminiStoryGenerator {
             // Get Firebase Firestore instance
             com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
             
-            // Query recent conversations and filter for memories in code to avoid index requirement
+            // Query ALL conversations with memories for comprehensive randomization
             db.collection("patients")
                 .document(patientId)
                 .collection("conversations")
                 .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
-                .limit(10) // Get last 10 conversations and filter for memories in code
-                .get()
+                .get() // Get ALL conversations, no limit
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
                         StringBuilder memoriesContext = new StringBuilder();
                         int memoryCount = 0;
                         
+                        // Collect all conversations with memories first
+                        java.util.List<com.google.firebase.firestore.QueryDocumentSnapshot> conversationsWithMemories = new java.util.ArrayList<>();
+                        
                         for (com.google.firebase.firestore.QueryDocumentSnapshot document : task.getResult()) {
+                            @SuppressWarnings("unchecked")
+                            java.util.List<String> detectedMemories = (java.util.List<String>) document.get("detectedMemories");
+                            
+                            if (detectedMemories != null && !detectedMemories.isEmpty()) {
+                                conversationsWithMemories.add(document);
+                            }
+                        }
+                        
+                        // Randomly shuffle conversations for variety
+                        java.util.Collections.shuffle(conversationsWithMemories);
+                        Log.d(TAG, "Found " + conversationsWithMemories.size() + " conversations with memories, selecting randomly");
+                        
+                        // Collect ALL memories from randomly selected conversations
+                        java.util.List<String> allMemories = new java.util.ArrayList<>();
+                        
+                        for (com.google.firebase.firestore.QueryDocumentSnapshot document : conversationsWithMemories) {
                             try {
                                 @SuppressWarnings("unchecked")
                                 java.util.List<String> detectedMemories = (java.util.List<String>) document.get("detectedMemories");
                                 
-                                // Only process conversations that have detected memories
                                 if (detectedMemories != null && !detectedMemories.isEmpty()) {
-                                    for (String memoryText : detectedMemories) {
-                                        if (memoryCount >= 5) break; // Limit to 5 memories
-                                        
-                                        memoriesContext.append("• ").append(memoryText).append("\n");
-                                        memoryCount++;
-                                    }
+                                    allMemories.addAll(detectedMemories);
                                 }
                             } catch (Exception e) {
                                 Log.e(TAG, "Error processing conversation document: " + document.getId(), e);
                             }
-                            
-                            if (memoryCount >= 5) break;
                         }
                         
-                        Log.d(TAG, "Memory cache populated with " + memoryCount + " memories from recent conversations");
+                        // Randomly shuffle all memories for additional variety
+                        java.util.Collections.shuffle(allMemories);
                         
-                        // Update the cache
-                        synchronized (GeminiStoryGenerator.class) {
-                            cachedMemoriesContext = memoriesContext.toString();
+                        // Use ALL available memories for richest possible personalization
+                        // (Can be configured based on prompt length constraints if needed)
+                        int maxMemories = Math.max(10, Math.min(allMemories.size(), 25)); // Use 10-25 memories
+                        int memoriesToUse = Math.min(allMemories.size(), maxMemories);
+                        Log.d(TAG, "Using " + memoriesToUse + " memories out of " + allMemories.size() + " total memories found");
+                        
+                        for (int i = 0; i < memoriesToUse; i++) {
+                            memoriesContext.append("• ").append(allMemories.get(i)).append("\n");
+                            memoryCount++;
+                        }
+                        
+                        if (memoryCount > 0) {
+                            Log.d(TAG, "Memory cache populated with " + memoryCount + " memories from recent conversations");
+                            
+                            // Update the cache with conversation memories
+                            synchronized (GeminiStoryGenerator.class) {
+                                cachedMemoriesContext = memoriesContext.toString();
+                            }
+                        } else {
+                            Log.d(TAG, "No memories found in recent conversations, will use patient profile as fallback");
+                            
+                            // Clear cache so we use patient profile details instead
+                            synchronized (GeminiStoryGenerator.class) {
+                                cachedMemoriesContext = "";
+                            }
                         }
                         
                         onComplete.run();
@@ -491,18 +524,49 @@ public class GeminiStoryGenerator {
             details.birthplace, details.profession,
             details.birthplace));
         
-        // Add additional context if provided - emphasize personal details
-        if (details.otherDetails != null && !details.otherDetails.trim().isEmpty()) {
-            prompt.append("\n\nPERSONAL CONTEXT (Very Important - weave these details throughout the story): ")
-                  .append(details.otherDetails)
-                  .append(" - These personal details should be central to creating authentic, meaningful memories in the story.");
+        // Prioritize extracted memories over basic patient profile for personalization
+        if (!extractedMemoriesContext.isEmpty()) {
+            // PRIMARY PERSONALIZATION: Use extracted conversation memories
+            prompt.append("\n\n🧠 PRIMARY PERSONAL CONTEXT (CRITICAL - Use these specific details as the foundation of the story):\n");
+            prompt.append("Create a story inspired by these REAL places, activities, and life themes from conversations. ");
+            prompt.append("These should be the MAIN elements woven throughout the story:\n");
+            
+            // Process and anonymize the memories
+            String anonymizedMemories = processMemoriesForStoryInspiration(extractedMemoriesContext);
+            prompt.append(anonymizedMemories);
+            
+            // Add basic patient profile as supplementary context only
+            if (details.otherDetails != null && !details.otherDetails.trim().isEmpty()) {
+                prompt.append("\nSUPPLEMENTARY CONTEXT (Secondary details to blend in naturally): ")
+                      .append(details.otherDetails);
+            }
+            
+            prompt.append("\n\nCRITICAL PERSONALIZATION RULES:\n");
+            prompt.append("• 🎯 PRIMARY FOCUS: Use the places, activities, and themes from PRIMARY PERSONAL CONTEXT above\n");
+            prompt.append("• ✅ DO include specific places, locations, and neighborhoods mentioned\n");
+            prompt.append("• ✅ DO include specific activities, games, and hobbies mentioned\n");
+            prompt.append("• ✅ DO include specific schools, institutions, and landmarks mentioned\n");
+            prompt.append("• ✅ DO include pets and animals mentioned (but use fictional names)\n");
+            prompt.append("• ❌ NEVER use real people's names from the memories\n");
+            prompt.append("• ❌ NEVER make it autobiographical - keep it as a fictional character's story\n");
+            prompt.append("• 🎯 Create a fictional character who lived in these real places and did these real activities\n");
+            prompt.append("• 🎯 The story should feel personally familiar while being about someone else\n");
+            
+        } else {
+            // FALLBACK: Use basic patient profile when no extracted memories available
+            if (details.otherDetails != null && !details.otherDetails.trim().isEmpty()) {
+                prompt.append("\n\nPERSONAL CONTEXT (Very Important - weave these details throughout the story): ")
+                      .append(details.otherDetails)
+                      .append(" - These personal details should be central to creating authentic, meaningful memories in the story.");
+            }
         }
         
         // Add detailed therapeutic writing guidelines
         prompt.append("\n\nTHERAPEUTIC WRITING GUIDELINES:\n");
-        prompt.append("• NARRATIVE STYLE: Write in THIRD PERSON about a FICTIONAL CHARACTER (use 'he', 'she', or character name)\n");
-        prompt.append("• CHARACTER: Create a relatable fictional person whose life experiences are INSPIRED BY the provided details\n");
-        prompt.append("• SAFETY: This is NOT a factual record or biography about the patient - it's fiction inspired by life details\n");
+        prompt.append("• NARRATIVE STYLE: Write in THIRD PERSON about a FICTIONAL CHARACTER (use generic names like 'Ravi', 'Priya', 'Kumar')\n");
+        prompt.append("• CHARACTER: Create a completely fictional person whose experiences echo universal themes, not specific personal details\n");
+        prompt.append("• PRIVACY: NEVER use real names, specific addresses, or identifiable personal information from memories\n");
+        prompt.append("• THERAPEUTIC GOAL: Create feelings of familiarity and comfort without being autobiographical\n");
         prompt.append("• Length: 4-5 sentences (approximately 80-120 words)\n");
         
         // Add language-specific instructions
@@ -523,14 +587,6 @@ public class GeminiStoryGenerator {
         prompt.append("• Emotion: Create feelings of warmth, belonging, pride, and comfort through gentle reminiscence\n");
         prompt.append("• Pacing: Use gentle, non-judgmental phrasing with supportive and calming language\n");
         
-        // Add extracted memories for personalization
-        if (!extractedMemoriesContext.isEmpty()) {
-            prompt.append("\n🧠 PERSONALIZATION FROM RECENT CONVERSATIONS:\n");
-            prompt.append("The following memories were mentioned during recent chats. You may gently weave SIMILAR themes, people, places, or experiences into the story to make it more personally meaningful, but do NOT use these as direct facts:\n");
-            prompt.append(extractedMemoriesContext);
-            prompt.append("\nIMPORTANT: Use these as INSPIRATION only - create fictional scenarios that echo these themes while maintaining therapeutic safety.\n");
-        }
-        
         // Add historical context if birth year is available
         if (details.birthYear != null && !details.birthYear.trim().isEmpty()) {
             int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
@@ -547,15 +603,15 @@ public class GeminiStoryGenerator {
         }
         
         // Final therapeutic safety instructions with language emphasis
-        prompt.append("\n\nFINAL INSTRUCTIONS: ");
-        if (!preferredLanguage.equals(LanguagePreferenceManager.LANGUAGE_ENGLISH)) {
+        prompt.append("\n\nFINAL INSTRUCTIONS FOR THERAPEUTIC STORY CREATION: ");
+        if (!preferredLanguage.equals("English")) {
             prompt.append("Write the COMPLETE story in ").append(preferredLanguage).append(" language using native script. ");
         }
-        prompt.append("Write a gentle reminiscence story INSPIRED BY life details from ");
-        prompt.append(details.birthplace).append(", but do NOT claim it as factual biography. ");
-        prompt.append("The story should evoke warm, familiar feelings and sensory memories that feel emotionally supportive. ");
-        prompt.append("Focus on creating therapeutic comfort through gentle nostalgia, peaceful imagery, and positive emotions. ");
-        prompt.append("This is therapeutic reminiscence, not historical documentation - prioritize emotional safety and comfort above all else.");
+        prompt.append("Create a gentle, immersive story set in ").append(details.birthplace).append(" that feels familiar and comforting. ");
+        prompt.append("The story should make the reader feel 'this could have been my experience' without being autobiographical. ");
+        prompt.append("Use universal human experiences that create therapeutic resonance - family warmth, simple pleasures, sensory comfort, peaceful moments. ");
+        prompt.append("Focus on creating an emotional safe space through gentle storytelling that honors human dignity and promotes wellbeing. ");
+        prompt.append("The goal is therapeutic comfort and positive reminiscence, not factual accuracy or personal documentation.");
         
         return prompt.toString();
     }
@@ -599,6 +655,10 @@ public class GeminiStoryGenerator {
         synchronized (GeminiStoryGenerator.class) {
             if (cachedMemoriesContext != null && !cachedMemoriesContext.isEmpty()) {
                 Log.d(TAG, "Using cached memories for story personalization");
+                // Debug: Show first few characters of cached memories
+                String preview = cachedMemoriesContext.length() > 100 ? 
+                    cachedMemoriesContext.substring(0, 100) + "..." : cachedMemoriesContext;
+                Log.d(TAG, "Cached memories preview: " + preview);
                 return cachedMemoriesContext;
             } else {
                 Log.d(TAG, "No cached memories available for story personalization");
@@ -609,6 +669,204 @@ public class GeminiStoryGenerator {
     
     // Static cache for memories context
     private static String cachedMemoriesContext = "";
+    
+    /**
+     * Process memories to include specific places and activities while removing personal identifiers
+     * Handles both structured (key:value) and natural language memory formats
+     */
+    private String processMemoriesForStoryInspiration(String rawMemoriesContext) {
+        Log.d(TAG, "Processing " + rawMemoriesContext.split("\n").length + " memory lines for story inspiration");
+        StringBuilder processedMemories = new StringBuilder();
+        String[] memoryLines = rawMemoriesContext.split("\n");
+        
+        for (String memoryLine : memoryLines) {
+            if (memoryLine.trim().isEmpty()) continue;
+            
+            String processed = memoryLine.trim();
+            String lowerProcessed = processed.toLowerCase();
+            
+            // Debug: Log each memory line being processed
+            Log.v(TAG, "Processing memory line: " + processed);
+            
+            // Skip lines with personal names for privacy
+            if (lowerProcessed.contains("name:") || isPersonalName(processed)) {
+                continue;
+            }
+            
+            // Handle structured format (key:value)
+            if (processed.contains(":")) {
+                processStructuredMemory(processed, lowerProcessed, processedMemories);
+            } 
+            // Handle natural language memories - extract relevant information
+            else {
+                processNaturalLanguageMemory(processed, lowerProcessed, processedMemories);
+            }
+        }
+        
+        Log.d(TAG, "Processed memories result: " + processedMemories.toString());
+        return processedMemories.toString();
+    }
+    
+    /**
+     * Process structured memories in key:value format
+     */
+    private void processStructuredMemory(String processed, String lowerProcessed, StringBuilder processedMemories) {
+        // Include specific locations and places
+        if (lowerProcessed.contains("location:")) {
+            processedMemories.append("• PLACE: ").append(processed.substring(processed.indexOf(":") + 1).trim()).append("\n");
+        }
+        // Include specific schools
+        else if (lowerProcessed.contains("school:")) {
+            processedMemories.append("• SCHOOL: ").append(processed.substring(processed.indexOf(":") + 1).trim()).append("\n");
+        }
+        // Include specific activities
+        else if (lowerProcessed.contains("activity:")) {
+            processedMemories.append("• ACTIVITY: ").append(processed.substring(processed.indexOf(":") + 1).trim()).append("\n");
+        }
+        // Convert relationships to general themes (no specific names)
+        else if (lowerProcessed.contains("relationship:")) {
+            String relationshipType = processed.substring(processed.indexOf(":") + 1).trim().toLowerCase();
+            if (relationshipType.contains("parent")) {
+                processedMemories.append("• THEME: Living with caring parents, family support\n");
+            } else if (relationshipType.contains("sister")) {
+                processedMemories.append("• THEME: Having a sister, sibling bond\n");
+            } else if (relationshipType.contains("brother")) {
+                processedMemories.append("• THEME: Having a brother, sibling companionship\n");
+            } else if (relationshipType.contains("friend")) {
+                processedMemories.append("• THEME: School friendships, childhood companions\n");
+            }
+        }
+        // Include pets with specific details
+        else if (lowerProcessed.contains("pet:")) {
+            processedMemories.append("• PET: ").append(processed.substring(processed.indexOf(":") + 1).trim()).append("\n");
+        }
+        // Include memories/experiences
+        else if (lowerProcessed.contains("memory:")) {
+            processedMemories.append("• MEMORY: ").append(processed.substring(processed.indexOf(":") + 1).trim()).append("\n");
+        }
+    }
+    
+    /**
+     * Process natural language memories and extract relevant themes
+     */
+    private void processNaturalLanguageMemory(String processed, String lowerProcessed, StringBuilder processedMemories) {
+        // Extract places mentioned
+        if (containsPlace(lowerProcessed)) {
+            String place = extractPlace(processed);
+            if (place != null) {
+                processedMemories.append("• PLACE: ").append(place).append("\n");
+            }
+        }
+        
+        // Extract activities mentioned
+        if (containsActivity(lowerProcessed)) {
+            String activity = extractActivity(processed);
+            if (activity != null) {
+                processedMemories.append("• ACTIVITY: ").append(activity).append("\n");
+            }
+        }
+        
+        // Extract school mentions
+        if (containsSchool(lowerProcessed)) {
+            String school = extractSchool(processed);
+            if (school != null) {
+                processedMemories.append("• SCHOOL: ").append(school).append("\n");
+            }
+        }
+        
+        // Extract relationship themes
+        if (containsRelationship(lowerProcessed)) {
+            String theme = extractRelationshipTheme(processed);
+            if (theme != null) {
+                processedMemories.append("• THEME: ").append(theme).append("\n");
+            }
+        }
+        
+        // Extract pet mentions
+        if (containsPet(lowerProcessed)) {
+            String pet = extractPet(processed);
+            if (pet != null) {
+                processedMemories.append("• PET: ").append(pet).append("\n");
+            }
+        }
+        
+        // If it's a general memory that doesn't fit specific categories, include as memory
+        if (!containsPlace(lowerProcessed) && !containsActivity(lowerProcessed) && 
+            !containsSchool(lowerProcessed) && !containsRelationship(lowerProcessed) && 
+            !containsPet(lowerProcessed) && processed.length() > 10) {
+            processedMemories.append("• MEMORY: ").append(processed).append("\n");
+        }
+    }
+    
+    // Helper methods for natural language processing
+    private boolean isPersonalName(String text) {
+        // Simple check for personal names - can be enhanced
+        return text.toLowerCase().matches(".*\\b(my name is|i am|called me)\\b.*");
+    }
+    
+    private boolean containsPlace(String text) {
+        return text.contains("bangalore") || text.contains("bengaluru") || text.contains("karwar") || 
+               text.contains("vijaynagar") || text.contains("city") || text.contains("place") ||
+               text.contains("town") || text.contains("area");
+    }
+    
+    private String extractPlace(String text) {
+        if (text.toLowerCase().contains("bangalore")) return "Bangalore";
+        if (text.toLowerCase().contains("bengaluru")) return "Bengaluru";
+        if (text.toLowerCase().contains("karwar")) return "Karwar";  
+        if (text.toLowerCase().contains("vijaynagar")) return "Vijaynagar";
+        return null;
+    }
+    
+    private boolean containsActivity(String text) {
+        return text.contains("playing") || text.contains("cricket") || text.contains("game") ||
+               text.contains("gta") || text.contains("prince of persia") || text.contains("sport");
+    }
+    
+    private String extractActivity(String text) {
+        if (text.toLowerCase().contains("cricket")) return "Playing Cricket";
+        if (text.toLowerCase().contains("gta")) return "Playing GTA";
+        if (text.toLowerCase().contains("prince of persia")) return "Playing Prince of Persia";
+        if (text.toLowerCase().contains("playing")) return text; // Include full playing context
+        return null;
+    }
+    
+    private boolean containsSchool(String text) {
+        return text.contains("school") || text.contains("cambridge") || text.contains("nursery");
+    }
+    
+    private String extractSchool(String text) {
+        if (text.toLowerCase().contains("cambridge")) return "The New Cambridge English School";
+        if (text.toLowerCase().contains("nursery")) return "Tiny Tots Nursery School";
+        return text; // Return full school reference
+    }
+    
+    private boolean containsRelationship(String text) {
+        return text.contains("sister") || text.contains("parent") || text.contains("family") ||
+               text.contains("brother") || text.contains("friend");
+    }
+    
+    private String extractRelationshipTheme(String text) {
+        if (text.toLowerCase().contains("sister")) return "Having a sister, sibling bond";
+        if (text.toLowerCase().contains("brother")) return "Having a brother, sibling companionship";
+        if (text.toLowerCase().contains("parent")) return "Living with caring parents, family support";
+        if (text.toLowerCase().contains("family")) return "Living with caring parents, family support";
+        if (text.toLowerCase().contains("friend")) return "School friendships, childhood companions";
+        return null;
+    }
+    
+    private boolean containsPet(String text) {
+        return text.contains("cat") || text.contains("dog") || text.contains("pet") ||
+               text.contains("oli") || text.contains("tommy") || text.contains("labrador");
+    }
+    
+    private String extractPet(String text) {
+        if (text.toLowerCase().contains("white cat")) return "white cat named Ali, fondness for playing with it";
+        if (text.toLowerCase().contains("yellow cat")) return "yellow cat named Tommy";
+        if (text.toLowerCase().contains("labrador")) return "white labrador, strong attachment";
+        if (text.toLowerCase().contains("cat")) return text; // Include full cat reference
+        return null;
+    }
     
     /**
      * Mark memories as used in story generation to avoid repetition
