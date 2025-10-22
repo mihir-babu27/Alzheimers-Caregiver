@@ -170,6 +170,9 @@
         <receiver android:name=".notifications.ReminderReceiver" />
         <receiver android:name=".notifications.TaskReminderReceiver" />
         <receiver android:name=".notifications.MmseReminderReceiver" />
+        <receiver android:name=".notifications.MissedMedicationReceiver"
+                  android:enabled="true"
+                  android:exported="false" />
         <receiver
             android:name="com.mihir.alzheimerscaregiver.mmse.MmseScheduleManager$MmseScheduleReceiver"
             android:exported="false" />

@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mihir.alzheimerscaregiver.caretaker.activities.EmergencyContactsActivity;
 import com.mihir.alzheimerscaregiver.caretaker.auth.SessionManager;
+import com.mihir.alzheimerscaregiver.caretaker.managers.FCMTokenManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private SharedPreferences prefs;
     private String linkedPatientId;
+    private FCMTokenManager fcmTokenManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         // Initialize SessionManager and SharedPreferences
         sessionManager = new SessionManager(this);
         prefs = getSharedPreferences("CaretakerApp", MODE_PRIVATE);
+        
+        // Initialize FCM Token Manager for receiving missed medication alerts
+        fcmTokenManager = new FCMTokenManager(this);
         
         // Verify user is still authenticated before proceeding
         if (!sessionManager.isUserAuthenticated()) {
@@ -83,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set welcome text
         welcomeText.setText("Welcome! You are linked to Patient ID: " + linkedPatientId);
+        
+        // 🎯 CRITICAL: Register FCM token for missed medication alerts
+        initializeFCMForMissedMedicationAlerts();
 
         // Set click listeners
         addMedicationButton.setOnClickListener(v -> {
@@ -198,5 +207,66 @@ public class MainActivity extends AppCompatActivity {
             Log.w(TAG, "User authentication lost, redirecting to splash");
             redirectToSplash();
         }
+    }
+    
+    /**
+     * 🎯 CRITICAL: Initialize FCM token for receiving missed medication alerts from Patient app
+     * This registers CaretakerApp with Firebase Database so Patient app can send notifications
+     */
+    private void initializeFCMForMissedMedicationAlerts() {
+        try {
+            // Get current caretaker user ID
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            if (auth.getCurrentUser() == null) {
+                Log.w(TAG, "❌ No authenticated user for FCM token registration");
+                return;
+            }
+            
+            String caretakerId = auth.getCurrentUser().getUid();
+            
+            Log.d(TAG, "🔔 Initializing FCM for missed medication alerts...");
+            Log.d(TAG, "👤 Caretaker ID: " + caretakerId);
+            Log.d(TAG, "👥 Patient ID: " + linkedPatientId);
+            
+            // Initialize FCM token first, then associate with patient
+            // The association will happen in the FCM token callback
+            Log.d(TAG, "🔄 Starting FCM token generation and patient association...");
+            initializeFCMTokenAndAssociate(caretakerId, linkedPatientId);
+            
+            Log.d(TAG, "✅ FCM registration completed!");
+            Log.d(TAG, "📱 CaretakerApp is now ready to receive missed medication alerts");
+            
+        } catch (Exception e) {
+            Log.e(TAG, "❌ Error initializing FCM for missed medication alerts", e);
+        }
+    }
+    
+    /**
+     * 🎯 Initialize FCM token and associate with patient (proper sequence)
+     */
+    private void initializeFCMTokenAndAssociate(String caretakerId, String patientId) {
+        // Generate FCM token with callback to associate with patient
+        com.google.firebase.messaging.FirebaseMessaging.getInstance().getToken()
+            .addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "❌ FCM token generation failed", task.getException());
+                    return;
+                }
+                
+                String token = task.getResult();
+                Log.d(TAG, "✅ FCM Token generated: " + token.substring(0, 20) + "...");
+                
+                // Store token locally
+                fcmTokenManager.storeTokenLocally(token, caretakerId);
+                
+                // Now associate with patient using the generated token
+                fcmTokenManager.associateWithPatient(caretakerId, patientId);
+                
+                Log.d(TAG, "🎯 FCM token registered for missed medication alerts!");
+                Log.d(TAG, "📱 CaretakerApp ready to receive notifications from Patient app");
+            })
+            .addOnFailureListener(e -> {
+                Log.e(TAG, "❌ Failed to generate FCM token", e);
+            });
     }
 }

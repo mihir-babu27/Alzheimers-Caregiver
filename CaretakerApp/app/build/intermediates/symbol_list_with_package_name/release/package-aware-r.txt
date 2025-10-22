@@ -3291,13 +3291,13 @@ id activity_chooser_view_content
 id add
 id addButton
 id addContactFab
-id addCustomQuestionsButton
-id addEmergencyContactButton
+id addCustomQuestionsCard
+id addEmergencyContactCard
 id addImageButton
 id addMedicationButton
 id addMedicineButton
-id addPatientProfileButton
-id addTaskButton
+id addPatientProfileCard
+id addTaskCard
 id adjust_height
 id adjust_width
 id alertTitle
@@ -3567,9 +3567,8 @@ id listMode
 id list_item
 id loginButton
 id loginLink
-id logoutButton
+id logoutCard
 id m3_side_sheet
-id manageGeofencesButton
 id mapView
 id marquee
 id masked
@@ -3743,7 +3742,7 @@ id save_overlay_view
 id sawtooth
 id scale
 id scheduleButton
-id scheduleMmseTestButton
+id scheduleMmseTestCard
 id scheduledDateEditText
 id scoreInput
 id scoreText
@@ -3905,7 +3904,7 @@ id vertical_only
 id viewHistoryButton
 id viewLocationButton
 id viewMedicationsButton
-id viewMmseResultsButton
+id viewMmseResultsCard
 id view_offset_helper
 id view_transition
 id view_tree_lifecycle_owner

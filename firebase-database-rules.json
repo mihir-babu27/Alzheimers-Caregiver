@@ -41,6 +41,24 @@
         ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
         ".write": "auth != null && auth.uid == $patientId"
       }
+    },
+    "patient_caretaker_tokens": {
+      "$patientId": {
+        ".read": "auth != null && auth.uid == $patientId",
+        ".write": "auth != null && auth.uid == $patientId",
+        "$caretakerId": {
+          ".read": "auth != null && (auth.uid == $patientId || auth.uid == $caretakerId)",
+          ".write": "auth != null && auth.uid == $caretakerId"
+        }
+      }
+    },
+    "fcm_tokens": {
+      "caretakers": {
+        "$caretakerId": {
+          ".read": "auth != null && auth.uid == $caretakerId",
+          ".write": "auth != null && auth.uid == $caretakerId"
+        }
+      }
     }
   }
 }

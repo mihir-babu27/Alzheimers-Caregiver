@@ -18,12 +18,15 @@ local.properties
 /secure-keys/api-keys.properties
 /app/google-services.json
 
-# Firebase Service Account Credentials - SENSITIVE
+# Firebase Service Account Credentials - SENSITIVE - NEVER COMMIT!
 /app/src/main/assets/firebase-service-account.json
 /secure-keys/firebase-service-account.json
 /secure-keys/firebase-service-account.json.json
 **/firebase-service-account.json
 app/src/main/assets/firebase-service-account.json
 secure-keys/firebase-service-account.json.json
+firebase-service-account*.json
+**/firebase-service-account*.json
+CaretakerApp/app/src/main/assets/firebase-service-account.json
 # Generated files
 /app/google-services.json.generated

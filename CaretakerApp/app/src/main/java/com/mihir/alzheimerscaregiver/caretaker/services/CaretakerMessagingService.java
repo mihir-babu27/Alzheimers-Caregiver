@@ -64,7 +64,7 @@ public class CaretakerMessagingService extends FirebaseMessagingService {
     }
     
     /**
-     * Handle FCM data messages containing geofence alert information
+     * Handle FCM data messages containing geofence alert and missed medication information
      */
     private void handleDataMessage(Map<String, String> data) {
         try {
@@ -90,6 +90,31 @@ public class CaretakerMessagingService extends FirebaseMessagingService {
                 
                 Log.d(TAG, "Geofence alert displayed: " + patientName + " - " + 
                       transitionType + " " + geofenceName);
+                
+            } else if ("missed_medication".equals(alertType)) {
+                // 💊 Handle missed medication notifications from Patient app
+                String patientName = data.get("patientName");
+                String medicationName = data.get("medicationName");
+                String scheduledTime = data.get("scheduledTime");
+                String timestamp = data.get("timestamp");
+                
+                Log.d(TAG, "🚨 MISSED MEDICATION ALERT RECEIVED!");
+                Log.d(TAG, "👤 Patient: " + patientName);
+                Log.d(TAG, "💊 Medication: " + medicationName);
+                Log.d(TAG, "⏰ Scheduled Time: " + scheduledTime);
+                
+                // Show missed medication notification
+                if (notificationHelper != null) {
+                    notificationHelper.showMissedMedicationAlert(
+                        patientName != null ? patientName : "Patient",
+                        medicationName != null ? medicationName : "Medication",
+                        scheduledTime != null ? scheduledTime : "Unknown time"
+                    );
+                    
+                    Log.d(TAG, "✅ Missed medication notification displayed to caretaker");
+                } else {
+                    Log.e(TAG, "❌ NotificationHelper is null - cannot display notification");
+                }
                 
             } else {
                 Log.w(TAG, "Unknown alert type: " + alertType);

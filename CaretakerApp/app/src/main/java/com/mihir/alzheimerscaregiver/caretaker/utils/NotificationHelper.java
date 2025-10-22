@@ -212,4 +212,63 @@ public class NotificationHelper {
     public void cancelAllNotifications() {
         notificationManager.cancelAll();
     }
+    
+    /**
+     * 💊 Show missed medication alert notification from Patient app
+     */
+    public void showMissedMedicationAlert(String patientName, String medicationName, String scheduledTime) {
+        createNotificationChannels();
+        
+        // Create intent to open main activity when notification is tapped
+        Intent intent = new Intent(context, com.mihir.alzheimerscaregiver.caretaker.MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+            context, 
+            0, 
+            intent, 
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        
+        // Build the notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, GEOFENCE_CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.ic_dialog_alert) // Use generic alert icon
+                .setContentTitle("💊 Medication Reminder Missed")
+                .setContentText(patientName + " has not taken " + medicationName + " scheduled at " + scheduledTime)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(patientName + " has not taken their " + medicationName + 
+                                " medication scheduled at " + scheduledTime + 
+                                ". Please check on them to ensure they take their medication."))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .setColor(context.getResources().getColor(android.R.color.holo_orange_dark, null)) // Orange for medication alerts
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        
+        // Add action buttons for quick response
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        PendingIntent callPendingIntent = PendingIntent.getActivity(
+            context, 
+            1, 
+            callIntent, 
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        
+        builder.addAction(android.R.drawable.ic_menu_call, "Call Patient", callPendingIntent);
+        
+        // Generate unique notification ID based on medication and time
+        int notificationId = (patientName + medicationName + scheduledTime).hashCode();
+        
+        // Show the notification
+        notificationManager.notify(notificationId, builder.build());
+        
+        // Log for debugging
+        android.util.Log.d("NotificationHelper", "📱 Missed medication notification displayed:");
+        android.util.Log.d("NotificationHelper", "👤 Patient: " + patientName);
+        android.util.Log.d("NotificationHelper", "💊 Medication: " + medicationName);
+        android.util.Log.d("NotificationHelper", "⏰ Time: " + scheduledTime);
+        android.util.Log.d("NotificationHelper", "🔔 Notification ID: " + notificationId);
+    }
 }

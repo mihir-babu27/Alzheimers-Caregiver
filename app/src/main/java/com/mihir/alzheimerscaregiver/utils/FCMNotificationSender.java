@@ -350,6 +350,136 @@ public class FCMNotificationSender {
     }
     
     /**
+     * Send missed medication alert notification to caretakers
+     */
+    public void sendMissedMedicationAlert(String patientId, String patientName, String medicationName, String scheduledTime) {
+        databaseReference.child("patient_caretaker_tokens")
+                .child(patientId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot caretakerSnapshot : dataSnapshot.getChildren()) {
+                            try {
+                                String token = caretakerSnapshot.child("token").getValue(String.class);
+                                Boolean active = caretakerSnapshot.child("active").getValue(Boolean.class);
+                                
+                                if (token != null && (active == null || active)) {
+                                    sendMissedMedicationFCM(token, patientName, medicationName, scheduledTime);
+                                }
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error processing caretaker token for missed medication alert", e);
+                            }
+                        }
+                    }
+                    
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "Failed to load caretaker tokens for missed medication alert", databaseError.toException());
+                    }
+                });
+    }
+    
+    /**
+     * Send missed medication FCM notification using HTTP v1 API
+     * FIXED: Now runs on background thread to prevent NetworkOnMainThreadException
+     */
+    private void sendMissedMedicationFCM(String token, String patientName, String medicationName, String scheduledTime) {
+        // Move FCM operations to background thread to prevent NetworkOnMainThreadException
+        new Thread(() -> {
+            try {
+                Log.d(TAG, "🔄 Starting FCM notification on background thread...");
+                
+                // Get OAuth 2.0 access token (network operation)
+                String accessToken = getAccessToken();
+            if (accessToken == null) {
+                Log.e(TAG, "Cannot send missed medication FCM notification: Access token not available");
+                return;
+            }
+            
+            String fcmUrl = getFCMUrl();
+            if (fcmUrl == null) {
+                Log.e(TAG, "Cannot send missed medication FCM notification: FCM URL not configured");
+                return;
+            }
+            
+            // Create notification object (HTTP v1 format)
+            JSONObject notification = new JSONObject();
+            notification.put("title", "💊 Medication Reminder Missed");
+            notification.put("body", patientName + " has not taken their " + medicationName + " medication scheduled at " + scheduledTime + ". Please check on them.");
+            
+            // Create data payload - all values must be strings in HTTP v1
+            JSONObject data = new JSONObject();
+            data.put("alertType", "missed_medication");
+            data.put("patientName", patientName);
+            data.put("medicationName", medicationName);
+            data.put("scheduledTime", scheduledTime);
+            data.put("timestamp", String.valueOf(System.currentTimeMillis()));
+            
+            // Create Android-specific configuration
+            JSONObject androidNotification = new JSONObject();
+            androidNotification.put("icon", "ic_notification_medication");
+            androidNotification.put("click_action", "OPEN_MEDICATION_MANAGEMENT");
+            androidNotification.put("tag", "missed_medication_alert");
+            androidNotification.put("sound", "medication_alert");
+            androidNotification.put("color", "#FF9800"); // Orange color for medication alerts
+            
+            JSONObject androidConfig = new JSONObject();
+            androidConfig.put("notification", androidNotification);
+            androidConfig.put("priority", "high");
+            
+            // Create the message object (HTTP v1 format)
+            JSONObject message = new JSONObject();
+            message.put("token", token); // Use 'token' instead of 'to'
+            message.put("notification", notification);
+            message.put("data", data);
+            message.put("android", androidConfig);
+            
+            // Create the root payload
+            JSONObject payload = new JSONObject();
+            payload.put("message", message);
+            
+            // Send HTTP v1 request to FCM
+            RequestBody requestBody = RequestBody.create(
+                MediaType.parse("application/json"), 
+                payload.toString()
+            );
+            
+            Request request = new Request.Builder()
+                    .url(fcmUrl) // Use HTTP v1 URL
+                    .post(requestBody)
+                    .addHeader("Authorization", "Bearer " + accessToken) // OAuth 2.0 Bearer token
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+            
+            httpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "Failed to send missed medication FCM HTTP v1 notification", e);
+                }
+                
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "Missed medication FCM HTTP v1 notification sent successfully: " + 
+                              patientName + " - " + medicationName);
+                    } else {
+                        String responseBody = response.body() != null ? response.body().string() : "No response body";
+                        Log.w(TAG, "Missed medication FCM HTTP v1 notification failed: " + response.code() + 
+                              " - " + response.message() + " - " + responseBody);
+                    }
+                    response.close();
+                }
+            });
+            
+            } catch (JSONException e) {
+                Log.e(TAG, "Error creating missed medication FCM notification JSON", e);
+            } catch (Exception e) {
+                Log.e(TAG, "Error sending missed medication FCM notification", e);
+            }
+        }).start(); // Start the background thread
+    }
+    
+    /**
      * Get appropriate notification image URL based on transition type and severity
      */
     private String getNotificationImageUrl(String transitionType, String severity) {

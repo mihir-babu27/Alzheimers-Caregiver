@@ -177,9 +177,9 @@ document.getElementById(id).style.display = 'none';
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Lint Report: 4 errors and 490 warnings</span>
+      <span class="mdl-layout-title">Lint Report: 4 errors and 511 warnings</span>
       <div class="mdl-layout-spacer"></div>
-      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Wed Oct 22 09:23:53 IST 2025 by AGP (8.2.2)</nav>
+      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Wed Oct 22 12:55:36 IST 2025 by AGP (8.2.2)</nav>
     </div>
   </header>
   <div class="mdl-layout__drawer">
@@ -205,16 +205,16 @@ document.getElementById(id).style.display = 'none';
       <a class="mdl-navigation__link" href="#InefficientWeight"><i class="material-icons warning-icon">warning</i>Inefficient layout weight (1)</a>
       <a class="mdl-navigation__link" href="#NestedWeights"><i class="material-icons warning-icon">warning</i>Nested layout weights (1)</a>
       <a class="mdl-navigation__link" href="#Overdraw"><i class="material-icons warning-icon">warning</i>Overdraw: Painting regions more than once (19)</a>
-      <a class="mdl-navigation__link" href="#UnusedResources"><i class="material-icons warning-icon">warning</i>Unused resources (78)</a>
+      <a class="mdl-navigation__link" href="#UnusedResources"><i class="material-icons warning-icon">warning</i>Unused resources (81)</a>
       <a class="mdl-navigation__link" href="#TypographyEllipsis"><i class="material-icons warning-icon">warning</i>Ellipsis string can be replaced with ellipsis character (1)</a>
       <a class="mdl-navigation__link" href="#MonochromeLauncherIcon"><i class="material-icons warning-icon">warning</i>Monochrome icon is not defined (2)</a>
       <a class="mdl-navigation__link" href="#ButtonStyle"><i class="material-icons warning-icon">warning</i>Button should be borderless (1)</a>
       <a class="mdl-navigation__link" href="#TextFields"><i class="material-icons warning-icon">warning</i>Missing <code>inputType</code> (7)</a>
       <a class="mdl-navigation__link" href="#SmallSp"><i class="material-icons warning-icon">warning</i>Text size is too small (1)</a>
       <a class="mdl-navigation__link" href="#Autofill"><i class="material-icons warning-icon">warning</i>Use Autofill (17)</a>
-      <a class="mdl-navigation__link" href="#ContentDescription"><i class="material-icons warning-icon">warning</i>Image without <code>contentDescription</code> (4)</a>
+      <a class="mdl-navigation__link" href="#ContentDescription"><i class="material-icons warning-icon">warning</i>Image without <code>contentDescription</code> (13)</a>
       <a class="mdl-navigation__link" href="#SetTextI18n"><i class="material-icons warning-icon">warning</i>TextView Internationalization (48)</a>
-      <a class="mdl-navigation__link" href="#HardcodedText"><i class="material-icons warning-icon">warning</i>Hardcoded text (252)</a>
+      <a class="mdl-navigation__link" href="#HardcodedText"><i class="material-icons warning-icon">warning</i>Hardcoded text (261)</a>
       <a class="mdl-navigation__link" href="#RtlHardcoded"><i class="material-icons warning-icon">warning</i>Using left/right instead of start/end attributes (2)</a>
     </nav>
   </div>
@@ -294,7 +294,7 @@ document.getElementById(id).style.display = 'none';
 <td class="countColumn">19</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#Overdraw">Overdraw</a>: Overdraw: Painting regions more than once</td></tr>
 <tr>
-<td class="countColumn">78</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
+<td class="countColumn">81</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#UnusedResources">UnusedResources</a>: Unused resources</td></tr>
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Usability:Typography">Usability:Typography</a>
 </td></tr>
@@ -323,7 +323,7 @@ document.getElementById(id).style.display = 'none';
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Accessibility">Accessibility</a>
 </td></tr>
 <tr>
-<td class="countColumn">4</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
+<td class="countColumn">13</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#ContentDescription">ContentDescription</a>: Image without <code>contentDescription</code></td></tr>
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Internationalization">Internationalization</a>
 </td></tr>
@@ -331,7 +331,7 @@ document.getElementById(id).style.display = 'none';
 <td class="countColumn">48</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#SetTextI18n">SetTextI18n</a>: TextView Internationalization</td></tr>
 <tr>
-<td class="countColumn">252</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
+<td class="countColumn">261</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#HardcodedText">HardcodedText</a>: Hardcoded text</td></tr>
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Internationalization:Bidirectional Text">Internationalization:Bidirectional Text</a>
 </td></tr>
@@ -1765,11 +1765,11 @@ Dismiss</button>            </div>
 </span><span class="lineno">  12 </span><span class="attribute">        </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"120dp"</span>
 </pre>
 
-<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:6</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/white</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.CaretakerApp</code>)</span><br /><pre class="errorlines">
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:6</span>: <span class="message">Possible overdraw: Root element paints background <code>@color/background_light</code> with a theme that also paints a background (inferred theme is <code>@style/Theme.CaretakerApp</code>)</span><br /><pre class="errorlines">
 <span class="lineno">   3 </span>    <span class="prefix">xmlns:</span><span class="attribute">app</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span>
 <span class="lineno">   4 </span>    <span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"match_parent"</span>
 <span class="lineno">   5 </span>    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"match_parent"</span>
-<span class="caretline"><span class="lineno">   6 </span>    <span class="warning"><span class="prefix">android:</span><span class="attribute">background</span>=<span class="value">"@color/white"</span></span>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="caretline"><span class="lineno">   6 </span>    <span class="warning"><span class="prefix">android:</span><span class="attribute">background</span>=<span class="value">"@color/background_light"</span></span>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 <span class="lineno">   7 </span>
 <span class="lineno">   8 </span><span class="tag">&lt;LinearLayout</span><span class="attribute">
 </span><span class="lineno">   9 </span><span class="attribute">    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"match_parent"</span>
@@ -1926,18 +1926,28 @@ Dismiss</button>            </div>
 <span class="lineno"> 34 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"error"</span>>#EF4444<span class="tag">&lt;/color></span>
 </pre>
 
-<span class="location"><a href="../../src/main/res/values/colors.xml">../../src/main/res/values/colors.xml</a>:35</span>: <span class="message">The resource <code>R.color.info</code> appears to be unused</span><br /><pre class="errorlines">
-<span class="lineno"> 32 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"warning"</span>>#F59E0B<span class="tag">&lt;/color></span>
-<span class="lineno"> 33 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"warning_light"</span>>#FEF3C7<span class="tag">&lt;/color></span>
-<span class="lineno"> 34 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"error"</span>>#EF4444<span class="tag">&lt;/color></span>
-<span class="caretline"><span class="lineno"> 35 </span>    <span class="tag">&lt;color</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"info"</span></span>>#3B82F6<span class="tag">&lt;/color></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="location"><a href="../../src/main/res/values/colors.xml">../../src/main/res/values/colors.xml</a>:39</span>: <span class="message">The resource <code>R.color.orange_50</code> appears to be unused</span><br /><pre class="errorlines">
 <span class="lineno"> 36 </span>    
 <span class="lineno"> 37 </span>    <span class="comment">&lt;!-- Location tracking colors --></span>
 <span class="lineno"> 38 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"teal_50"</span>>#F0FDFA<span class="tag">&lt;/color></span>
+<span class="caretline"><span class="lineno"> 39 </span>    <span class="tag">&lt;color</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"orange_50"</span></span>>#FFF7ED<span class="tag">&lt;/color></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 40 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"orange_700"</span>>#C2410C<span class="tag">&lt;/color></span>
+<span class="lineno"> 41 </span>    
+<span class="lineno"> 42 </span>    <span class="comment">&lt;!-- Text colors --></span>
 </pre>
 
-<button class="mdl-button mdl-js-button mdl-button--primary" id="UnusedResourcesDivLink" onclick="reveal('UnusedResourcesDiv');" />+ 73 More Occurrences...</button>
+<button class="mdl-button mdl-js-button mdl-button--primary" id="UnusedResourcesDivLink" onclick="reveal('UnusedResourcesDiv');" />+ 76 More Occurrences...</button>
 <div id="UnusedResourcesDiv" style="display: none">
+<span class="location"><a href="../../src/main/res/values/colors.xml">../../src/main/res/values/colors.xml</a>:40</span>: <span class="message">The resource <code>R.color.orange_700</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno"> 37 </span>    <span class="comment">&lt;!-- Location tracking colors --></span>
+<span class="lineno"> 38 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"teal_50"</span>>#F0FDFA<span class="tag">&lt;/color></span>
+<span class="lineno"> 39 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"orange_50"</span>>#FFF7ED<span class="tag">&lt;/color></span>
+<span class="caretline"><span class="lineno"> 40 </span>    <span class="tag">&lt;color</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"orange_700"</span></span>>#C2410C<span class="tag">&lt;/color></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 41 </span>    
+<span class="lineno"> 42 </span>    <span class="comment">&lt;!-- Text colors --></span>
+<span class="lineno"> 43 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"text_primary"</span>>#1F2937<span class="tag">&lt;/color></span>
+</pre>
+
 <span class="location"><a href="../../src/main/res/values/colors.xml">../../src/main/res/values/colors.xml</a>:45</span>: <span class="message">The resource <code>R.color.text_hint</code> appears to be unused</span><br /><pre class="errorlines">
 <span class="lineno"> 42 </span>    <span class="comment">&lt;!-- Text colors --></span>
 <span class="lineno"> 43 </span>    <span class="tag">&lt;color</span><span class="attribute"> name</span>=<span class="value">"text_primary"</span>>#1F2937<span class="tag">&lt;/color></span>
@@ -2252,6 +2262,16 @@ Dismiss</button>            </div>
 <span class="lineno">  53 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"view_patient_data"</span>>View Patient Data<span class="tag">&lt;/string></span>
 </pre>
 
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:51</span>: <span class="message">The resource <code>R.string.add_task</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  48 </span>    
+<span class="lineno">  49 </span>    <span class="comment">&lt;!-- Main Menu --></span>
+<span class="lineno">  50 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_medication"</span>>Add Medication<span class="tag">&lt;/string></span>
+<span class="caretline"><span class="lineno">  51 </span>    <span class="tag">&lt;string</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"add_task"</span></span>>Add Task<span class="tag">&lt;/string></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno">  52 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_emergency_contact"</span>>Emergency Contacts<span class="tag">&lt;/string></span>
+<span class="lineno">  53 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"view_patient_data"</span>>View Patient Data<span class="tag">&lt;/string></span>
+<span class="lineno">  54 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"logout"</span>>Logout<span class="tag">&lt;/string></span>
+</pre>
+
 <span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:53</span>: <span class="message">The resource <code>R.string.view_patient_data</code> appears to be unused</span><br /><pre class="errorlines">
 <span class="lineno">  50 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_medication"</span>>Add Medication<span class="tag">&lt;/string></span>
 <span class="lineno">  51 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_task"</span>>Add Task<span class="tag">&lt;/string></span>
@@ -2260,6 +2280,16 @@ Dismiss</button>            </div>
 <span class="lineno">  54 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"logout"</span>>Logout<span class="tag">&lt;/string></span>
 <span class="lineno">  55 </span>    
 <span class="lineno">  56 </span>    <span class="comment">&lt;!-- Medication --></span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:54</span>: <span class="message">The resource <code>R.string.logout</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  51 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_task"</span>>Add Task<span class="tag">&lt;/string></span>
+<span class="lineno">  52 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_emergency_contact"</span>>Emergency Contacts<span class="tag">&lt;/string></span>
+<span class="lineno">  53 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"view_patient_data"</span>>View Patient Data<span class="tag">&lt;/string></span>
+<span class="caretline"><span class="lineno">  54 </span>    <span class="tag">&lt;string</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"logout"</span></span>>Logout<span class="tag">&lt;/string></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno">  55 </span>    
+<span class="lineno">  56 </span>    <span class="comment">&lt;!-- Medication --></span>
+<span class="lineno">  57 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"medication_name"</span>>Medication Name<span class="tag">&lt;/string></span>
 </pre>
 
 <span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:57</span>: <span class="message">The resource <code>R.string.medication_name</code> appears to be unused</span><br /><pre class="errorlines">
@@ -2342,37 +2372,7 @@ Dismiss</button>            </div>
 <span class="lineno">  74 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_task_reminder"</span>>Add Task Reminder<span class="tag">&lt;/string></span>
 </pre>
 
-<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:72</span>: <span class="message">The resource <code>R.string.task_description_hint</code> appears to be unused</span><br /><pre class="errorlines">
-<span class="lineno">  69 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_name"</span>>Task Name<span class="tag">&lt;/string></span>
-<span class="lineno">  70 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_name_hint"</span>>e.g., Go for a walk<span class="tag">&lt;/string></span>
-<span class="lineno">  71 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_description"</span>>Description<span class="tag">&lt;/string></span>
-<span class="caretline"><span class="lineno">  72 </span>    <span class="tag">&lt;string</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"task_description_hint"</span></span>>e.g., 30 minutes in the garden<span class="tag">&lt;/string></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno">  73 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"due_time"</span>>Due Time<span class="tag">&lt;/string></span>
-<span class="lineno">  74 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_task_reminder"</span>>Add Task Reminder<span class="tag">&lt;/string></span>
-<span class="lineno">  75 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_added_successfully"</span>>Task added successfully!<span class="tag">&lt;/string></span>
-</pre>
-
-<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:73</span>: <span class="message">The resource <code>R.string.due_time</code> appears to be unused</span><br /><pre class="errorlines">
-<span class="lineno">  70 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_name_hint"</span>>e.g., Go for a walk<span class="tag">&lt;/string></span>
-<span class="lineno">  71 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_description"</span>>Description<span class="tag">&lt;/string></span>
-<span class="lineno">  72 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_description_hint"</span>>e.g., 30 minutes in the garden<span class="tag">&lt;/string></span>
-<span class="caretline"><span class="lineno">  73 </span>    <span class="tag">&lt;string</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"due_time"</span></span>>Due Time<span class="tag">&lt;/string></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno">  74 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_task_reminder"</span>>Add Task Reminder<span class="tag">&lt;/string></span>
-<span class="lineno">  75 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_added_successfully"</span>>Task added successfully!<span class="tag">&lt;/string></span>
-<span class="lineno">  76 </span>    
-</pre>
-
-<span class="location"><a href="../../src/main/res/values/strings.xml">../../src/main/res/values/strings.xml</a>:75</span>: <span class="message">The resource <code>R.string.task_added_successfully</code> appears to be unused</span><br /><pre class="errorlines">
-<span class="lineno">  72 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"task_description_hint"</span>>e.g., 30 minutes in the garden<span class="tag">&lt;/string></span>
-<span class="lineno">  73 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"due_time"</span>>Due Time<span class="tag">&lt;/string></span>
-<span class="lineno">  74 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"add_task_reminder"</span>>Add Task Reminder<span class="tag">&lt;/string></span>
-<span class="caretline"><span class="lineno">  75 </span>    <span class="tag">&lt;string</span><span class="attribute"> </span><span class="warning"><span class="attribute">name</span>=<span class="value">"task_added_successfully"</span></span>>Task added successfully!<span class="tag">&lt;/string></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno">  76 </span>    
-<span class="lineno">  77 </span>    <span class="comment">&lt;!-- Emergency Contacts --></span>
-<span class="lineno">  78 </span>    <span class="tag">&lt;string</span><span class="attribute"> name</span>=<span class="value">"contact_name"</span>>Contact Name<span class="tag">&lt;/string></span>
-</pre>
-
-<br/><b>NOTE: 28 results omitted.</b><br/><br/></div>
+<br/><b>NOTE: 31 results omitted.</b><br/><br/></div>
 </div>
 <div class="metadata"><div class="explanation" id="explanationUnusedResources" style="display: none;">
 Unused resources make applications larger and slow down builds.<br/>
@@ -2965,6 +2965,98 @@ Dismiss</button>            </div>
 <span class="lineno">  87 </span>            <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@drawable/ic_warning"</span>
 </pre>
 
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:91</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno">  88 </span>                <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
+<span class="lineno">  89 </span>                <span class="prefix">android:</span><span class="attribute">padding</span>=<span class="value">"20dp"</span>>
+<span class="lineno">  90 </span>
+<span class="caretline"><span class="lineno">  91 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno">  92 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"48dp"</span>
+<span class="lineno">  93 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"48dp"</span>
+<span class="lineno">  94 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_add"</span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:166</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 163 </span>                <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
+<span class="lineno"> 164 </span>                <span class="prefix">android:</span><span class="attribute">padding</span>=<span class="value">"20dp"</span>>
+<span class="lineno"> 165 </span>
+<span class="caretline"><span class="lineno"> 166 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 167 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 168 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 169 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_today"</span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:214</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 211 </span>                <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
+<span class="lineno"> 212 </span>                <span class="prefix">android:</span><span class="attribute">padding</span>=<span class="value">"20dp"</span>>
+<span class="lineno"> 213 </span>
+<span class="caretline"><span class="lineno"> 214 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 215 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 216 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 217 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_edit"</span>
+</pre>
+
+<button class="mdl-button mdl-js-button mdl-button--primary" id="ContentDescriptionDivLink" onclick="reveal('ContentDescriptionDiv');" />+ 8 More Occurrences...</button>
+<div id="ContentDescriptionDiv" style="display: none">
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:270</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 267 </span>                <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
+<span class="lineno"> 268 </span>                <span class="prefix">android:</span><span class="attribute">padding</span>=<span class="value">"20dp"</span>>
+<span class="lineno"> 269 </span>
+<span class="caretline"><span class="lineno"> 270 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 271 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 272 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 273 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_view"</span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:342</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 339 </span>                <span class="prefix">android:</span><span class="attribute">orientation</span>=<span class="value">"horizontal"</span>
+<span class="lineno"> 340 </span>                <span class="prefix">android:</span><span class="attribute">layout_marginBottom</span>=<span class="value">"16dp"</span>>
+<span class="lineno"> 341 </span>
+<span class="caretline"><span class="lineno"> 342 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 343 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"32dp"</span>
+<span class="lineno"> 344 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"32dp"</span>
+<span class="lineno"> 345 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_mylocation"</span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:513</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 510 </span>                <span class="prefix">android:</span><span class="attribute">orientation</span>=<span class="value">"horizontal"</span>
+<span class="lineno"> 511 </span>                <span class="prefix">android:</span><span class="attribute">layout_marginBottom</span>=<span class="value">"16dp"</span>>
+<span class="lineno"> 512 </span>
+<span class="caretline"><span class="lineno"> 513 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 514 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"32dp"</span>
+<span class="lineno"> 515 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"32dp"</span>
+<span class="lineno"> 516 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_agenda"</span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:610</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 607 </span>                <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
+<span class="lineno"> 608 </span>                <span class="prefix">android:</span><span class="attribute">padding</span>=<span class="value">"20dp"</span>>
+<span class="lineno"> 609 </span>
+<span class="caretline"><span class="lineno"> 610 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 611 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 612 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 613 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_agenda"</span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:658</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 655 </span>                <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
+<span class="lineno"> 656 </span>                <span class="prefix">android:</span><span class="attribute">padding</span>=<span class="value">"20dp"</span>>
+<span class="lineno"> 657 </span>
+<span class="caretline"><span class="lineno"> 658 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 659 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 660 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 661 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_call"</span>
+</pre>
+
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:725</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 722 </span>                <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
+<span class="lineno"> 723 </span>                <span class="prefix">android:</span><span class="attribute">padding</span>=<span class="value">"20dp"</span>>
+<span class="lineno"> 724 </span>
+<span class="caretline"><span class="lineno"> 725 </span>                <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 726 </span><span class="attribute">                    </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 727 </span>                    <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"48dp"</span>
+<span class="lineno"> 728 </span>                    <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@android:drawable/ic_menu_revert"</span>
+</pre>
+
 <span class="location"><a href="../../src/main/res/layout/activity_task_list.xml">../../src/main/res/layout/activity_task_list.xml</a>:147</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
 <span class="lineno"> 144 </span>        <span class="prefix">android:</span><span class="attribute">gravity</span>=<span class="value">"center"</span>
 <span class="lineno"> 145 </span>        <span class="prefix">android:</span><span class="attribute">visibility</span>=<span class="value">"gone"</span>>
@@ -2985,6 +3077,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 177 </span>        <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"wrap_content"</span>
 </pre>
 
+</div>
 </div>
 <div class="metadata"><div class="explanation" id="explanationContentDescription" style="display: none;">
 Non-textual widgets like ImageViews and ImageButtons should use the <code>contentDescription</code> attribute to specify a textual description of the widget such that screen readers and other accessibility tools can adequately describe the user interface.<br/>
@@ -3203,24 +3296,24 @@ Dismiss</button>            </div>
 <span class="lineno"> 361 </span>        
 </pre>
 
-<span class="location"><a href="../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java">../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java</a>:80</span>: <span class="message">Do not concatenate text displayed with <code>setText</code>. Use resource string with placeholders.</span><br /><pre class="errorlines">
-<span class="lineno">  77 </span>    }
-<span class="lineno">  78 </span>
-<span class="lineno">  79 </span>        <span class="comment">// Set welcome text</span>
-<span class="caretline"><span class="lineno">  80 </span>        welcomeText.setText(<span class="warning"><span class="string">"Welcome! You are linked to Patient ID: "</span> + linkedPatientId</span>);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno">  81 </span>
-<span class="lineno">  82 </span>        <span class="comment">// Set click listeners</span>
-<span class="lineno">  83 </span>        addMedicationButton.setOnClickListener(v -> {
+<span class="location"><a href="../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java">../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java</a>:91</span>: <span class="message">Do not concatenate text displayed with <code>setText</code>. Use resource string with placeholders.</span><br /><pre class="errorlines">
+<span class="lineno">  88 </span>    }
+<span class="lineno">  89 </span>
+<span class="lineno">  90 </span>        <span class="comment">// Set welcome text</span>
+<span class="caretline"><span class="lineno">  91 </span>        welcomeText.setText(<span class="warning"><span class="string">"Welcome! You are linked to Patient ID: "</span> + linkedPatientId</span>);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno">  92 </span>        
+<span class="lineno">  93 </span>        <span class="comment">// 🎯 CRITICAL: Register FCM token for missed medication alerts</span>
+<span class="lineno">  94 </span>        initializeFCMForMissedMedicationAlerts();
 </pre>
 
-<span class="location"><a href="../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java">../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java</a>:80</span>: <span class="message">String literal in <code>setText</code> can not be translated. Use Android resources instead.</span><br /><pre class="errorlines">
-<span class="lineno">  77 </span>    }
-<span class="lineno">  78 </span>
-<span class="lineno">  79 </span>        <span class="comment">// Set welcome text</span>
-<span class="caretline"><span class="lineno">  80 </span>        welcomeText.setText(<span class="warning"><span class="string">"Welcome! You are linked to Patient ID: "</span></span> + linkedPatientId);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno">  81 </span>
-<span class="lineno">  82 </span>        <span class="comment">// Set click listeners</span>
-<span class="lineno">  83 </span>        addMedicationButton.setOnClickListener(v -> {
+<span class="location"><a href="../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java">../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/MainActivity.java</a>:91</span>: <span class="message">String literal in <code>setText</code> can not be translated. Use Android resources instead.</span><br /><pre class="errorlines">
+<span class="lineno">  88 </span>    }
+<span class="lineno">  89 </span>
+<span class="lineno">  90 </span>        <span class="comment">// Set welcome text</span>
+<span class="caretline"><span class="lineno">  91 </span>        welcomeText.setText(<span class="warning"><span class="string">"Welcome! You are linked to Patient ID: "</span></span> + linkedPatientId);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno">  92 </span>        
+<span class="lineno">  93 </span>        <span class="comment">// 🎯 CRITICAL: Register FCM token for missed medication alerts</span>
+<span class="lineno">  94 </span>        initializeFCMForMissedMedicationAlerts();
 </pre>
 
 <span class="location"><a href="../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/adapters/MedicationAdapter.java">../../src/main/java/com/mihir/alzheimerscaregiver/caretaker/adapters/MedicationAdapter.java</a>:106</span>: <span class="message">String literal in <code>setText</code> can not be translated. Use Android resources instead.</span><br /><pre class="errorlines">
@@ -3592,7 +3685,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 118 </span>                        <span class="prefix">android:</span><span class="attribute">textSize</span>=<span class="value">"16sp"</span> />
 </pre>
 
-<button class="mdl-button mdl-js-button mdl-button--primary" id="HardcodedTextDivLink" onclick="reveal('HardcodedTextDiv');" />+ 247 More Occurrences...</button>
+<button class="mdl-button mdl-js-button mdl-button--primary" id="HardcodedTextDivLink" onclick="reveal('HardcodedTextDiv');" />+ 256 More Occurrences...</button>
 <div id="HardcodedTextDiv" style="display: none">
 <span class="location"><a href="../../src/main/res/layout/activity_add_edit_emergency_contact.xml">../../src/main/res/layout/activity_add_edit_emergency_contact.xml</a>:140</span>: <span class="message">Hardcoded string "Phone Number * (e.g., 9876543210)", should use <code>@string</code> resource</span><br /><pre class="errorlines">
 <span class="lineno"> 137 </span><span class="attribute">                        </span><span class="prefix">android:</span><span class="attribute">id</span>=<span class="value">"@+id/phoneNumberEditText"</span>
@@ -4044,7 +4137,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 124 </span>            <span class="prefix">android:</span><span class="attribute">layout_marginBottom</span>=<span class="value">"8dp"</span> />
 </pre>
 
-<br/><b>NOTE: 202 results omitted.</b><br/><br/></div>
+<br/><b>NOTE: 211 results omitted.</b><br/><br/></div>
 </div>
 <div class="metadata"><div class="explanation" id="explanationHardcodedText" style="display: none;">
 Hardcoding text attributes directly in layout files is bad for several reasons:<br/>

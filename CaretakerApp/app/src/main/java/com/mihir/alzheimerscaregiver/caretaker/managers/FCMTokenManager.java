@@ -49,8 +49,9 @@ public class FCMTokenManager {
                     // Store token and caretaker ID locally
                     storeTokenLocally(token, caretakerId);
                     
-                    // Send token to Firebase
-                    registerTokenWithFirebase(token, caretakerId);
+                    // NOTE: We don't call registerTokenWithFirebase() here anymore
+                    // The token will be stored in patient_caretaker_tokens path via associateWithPatient()
+                    Log.d(TAG, "✅ FCM Token generated and stored locally - ready for patient association");
                 });
     }
     
@@ -86,6 +87,7 @@ public class FCMTokenManager {
     
     /**
      * Associate caretaker FCM token with a patient for notifications
+     * CRITICAL: This stores the token in the exact path the Patient app expects!
      */
     public void associateWithPatient(String caretakerId, String patientId) {
         String token = getStoredToken();
@@ -94,24 +96,29 @@ public class FCMTokenManager {
             return;
         }
         
-        Map<String, Object> associationData = new HashMap<>();
-        associationData.put("caretakerId", caretakerId);
-        associationData.put("patientId", patientId);
-        associationData.put("token", token);
-        associationData.put("createdAt", System.currentTimeMillis());
-        associationData.put("active", true);
+        // IMPORTANT: Store in the exact format the Patient app FCMNotificationSender expects
+        Map<String, Object> tokenData = new HashMap<>();
+        tokenData.put("token", token);  // Patient app looks for "token" field
+        tokenData.put("active", true);  // Patient app checks "active" field
+        tokenData.put("deviceInfo", "CaretakerApp Android");
+        tokenData.put("caretakerId", caretakerId);
+        tokenData.put("patientId", patientId);
+        tokenData.put("registeredAt", System.currentTimeMillis());
         
-        // Store association in Firebase
+        // Store in the EXACT path the Patient app FCMNotificationSender queries:
+        // patient_caretaker_tokens/{patientId}/{caretakerId}
         databaseReference.child("patient_caretaker_tokens")
                 .child(patientId)
                 .child(caretakerId)
-                .setValue(associationData)
+                .setValue(tokenData)
                 .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Caretaker associated with patient successfully: " + 
-                           caretakerId + " -> " + patientId);
+                    Log.d(TAG, "🎯 FCM TOKEN REGISTERED FOR MISSED MEDICATION ALERTS!");
+                    Log.d(TAG, "✅ Patient App can now send notifications to CaretakerApp");
+                    Log.d(TAG, "📋 Path: patient_caretaker_tokens/" + patientId + "/" + caretakerId);
+                    Log.d(TAG, "🔑 Token: " + token.substring(0, 20) + "...");
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Failed to associate caretaker with patient", e);
+                    Log.e(TAG, "❌ Failed to register FCM token for missed medication alerts", e);
                 });
     }
     
@@ -147,7 +154,7 @@ public class FCMTokenManager {
     /**
      * Store token and caretaker ID locally
      */
-    private void storeTokenLocally(String token, String caretakerId) {
+    public void storeTokenLocally(String token, String caretakerId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_FCM_TOKEN, token);
         editor.putString(KEY_CARETAKER_ID, caretakerId);

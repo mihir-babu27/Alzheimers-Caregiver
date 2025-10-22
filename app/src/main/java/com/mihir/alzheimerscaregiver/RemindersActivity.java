@@ -29,6 +29,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import com.mihir.alzheimerscaregiver.notifications.MissedMedicationScheduler;
 import android.widget.TextView;
 import android.text.InputType;
 import java.util.List;
@@ -357,6 +358,13 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                                     String alarmType = repeating ? "Daily repeating alarm" : "Alarm";
                                     toast(alarmType + " scheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
                                           Locale.getDefault()).format(new Date(scheduledAt[0])));
+                                    
+                                    // NEW: Schedule missed medication check (5 minutes after medication time)
+                                    if (entity.medicineNames != null && !entity.medicineNames.isEmpty()) {
+                                        MissedMedicationScheduler missedScheduler = new MissedMedicationScheduler(this);
+                                        missedScheduler.scheduleMissedMedicationCheck(entity);
+                                        android.util.Log.d("RemindersActivity", "Scheduled missed medication check for: " + entity.title);
+                                    }
                                 } else {
                                     toast("Failed to schedule alarm");
                                 }
@@ -388,6 +396,13 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                                     String alarmType = repeating ? "Daily repeating alarm" : "Alarm";
                                     toast(alarmType + " rescheduled for: " + new SimpleDateFormat("EEE, MMM d h:mm a", 
                                           Locale.getDefault()).format(new Date(scheduledAt[0])));
+                                    
+                                    // NEW: Schedule missed medication check for updated reminder
+                                    if (existing.medicineNames != null && !existing.medicineNames.isEmpty()) {
+                                        MissedMedicationScheduler missedScheduler = new MissedMedicationScheduler(this);
+                                        missedScheduler.scheduleMissedMedicationCheck(existing);
+                                        android.util.Log.d("RemindersActivity", "Scheduled missed medication check for updated reminder: " + existing.title);
+                                    }
                                 } else {
                                     toast("Failed to schedule alarm");
                                 }
