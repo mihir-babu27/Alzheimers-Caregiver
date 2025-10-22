@@ -2,6 +2,7 @@
     <string name="app_name">CaretakerApp</string>
     
     <!-- Authentication -->
+    <!-- Web client ID is automatically generated from google-services.json during build -->
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="email">Email</string>
@@ -12,6 +13,21 @@
     <string name="already_have_account">Already have an account? </string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="account_linking">Account Linking</string>
+    <string name="link_accounts">Link Accounts</string>
+    
+    <!-- OAuth Error Messages -->
+    <string name="oauth_config_error">OAuth sign-in not properly configured. Please contact support.</string>
+    <string name="oauth_cancelled">OAuth sign-in was cancelled</string>
+    <string name="oauth_failed">OAuth sign-in failed</string>
+    <string name="account_exists_title">Account Already Exists</string>
+    <string name="account_exists_message">An account with this email already exists using %s. Would you like to sign in and link your accounts?</string>
+    <string name="account_link_success">Accounts linked successfully!</string>
+    <string name="account_link_failed">Failed to link accounts</string>
+    <string name="sign_in_to_link">Sign in to link accounts</string>
+    <string name="enter_password_to_link">Enter your password to link accounts:</string>
     
     <!-- Patient Linking -->
     <string name="link_patient">Link Patient</string>

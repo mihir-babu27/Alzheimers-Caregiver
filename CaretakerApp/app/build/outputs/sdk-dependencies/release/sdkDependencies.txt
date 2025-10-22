@@ -823,10 +823,10 @@ library {
   maven_library {
     groupId: "com.google.android.gms"
     artifactId: "play-services-auth-api-phone"
-    version: "17.4.0"
+    version: "18.0.1"
   }
   digests {
-    sha256: "\234\r\344\365\274\323\032\377@\210\372\305\016~\026\270\275\301\322\0054\\\212\367z\020\311\326\321?\361\314"
+    sha256: "\225d\025NE\346%\322\346$\a@\372\212 R\205\260\326\235\3728q\322\271\b\266\3125\272X\'"
   }
   repo_index {
   }
@@ -1446,6 +1446,42 @@ library {
   }
   digests {
     sha256: "\274\211\361\246\021\211e!kEC\236~\223`\246\362\005FT\344\2023Tv\216x\204\373;k\f"
+  }
+  repo_index {
+  }
+}
+library {
+  maven_library {
+    groupId: "com.google.android.gms"
+    artifactId: "play-services-auth"
+    version: "20.7.0"
+  }
+  digests {
+    sha256: "\025\004\224\327\240R\253\252\254\233\270)\242\214\212\322j\303\312Y\305v\301ig\275\276(\252\252N\026"
+  }
+  repo_index {
+  }
+}
+library {
+  maven_library {
+    groupId: "com.google.android.gms"
+    artifactId: "play-services-auth-base"
+    version: "18.0.4"
+  }
+  digests {
+    sha256: "\253RK\030r]\220\243\006\r\247\\A\3241\3237\266\331\017^\2259\357\356\337!Zu\336\266?"
+  }
+  repo_index {
+  }
+}
+library {
+  maven_library {
+    groupId: "com.google.android.gms"
+    artifactId: "play-services-fido"
+    version: "20.0.1"
+  }
+  digests {
+    sha256: "\263Ro\f\256\332\251lRl\304\311\272\224\262)\332\325\257\343\0372\364ol\326h\2406$\375B"
   }
   repo_index {
   }
@@ -2305,20 +2341,44 @@ library_dependencies {
 }
 library_dependencies {
   library_index: 119
-  library_dep_index: 120
-  library_dep_index: 121
-  library_dep_index: 122
   library_dep_index: 22
-  library_dep_index: 41
-  library_dep_index: 123
-  library_dep_index: 30
+  library_dep_index: 25
+  library_dep_index: 68
+  library_dep_index: 120
+  library_dep_index: 69
+  library_dep_index: 21
+  library_dep_index: 121
+  library_dep_index: 20
 }
 library_dependencies {
   library_index: 120
-  library_dep_index: 2
+  library_dep_index: 6
+  library_dep_index: 69
+  library_dep_index: 21
+  library_dep_index: 20
+}
+library_dependencies {
+  library_index: 121
+  library_dep_index: 69
+  library_dep_index: 21
+  library_dep_index: 20
+}
+library_dependencies {
+  library_index: 122
+  library_dep_index: 123
+  library_dep_index: 124
+  library_dep_index: 125
+  library_dep_index: 22
+  library_dep_index: 41
+  library_dep_index: 126
+  library_dep_index: 30
 }
 library_dependencies {
   library_index: 123
+  library_dep_index: 2
+}
+library_dependencies {
+  library_index: 126
   library_dep_index: 2
 }
 module_dependencies {
@@ -2339,6 +2399,7 @@ module_dependencies {
   dependency_index: 118
   dependency_index: 20
   dependency_index: 119
+  dependency_index: 122
 }
 repositories {
   maven_repo {

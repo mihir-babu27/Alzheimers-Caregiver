@@ -11,4 +11,12 @@
     <string name="verification_check_button">Check Verification Status</string>
     <string name="verification_resend_button">Resend Verification Email</string>
     <string name="verification_signin_button">Back to Sign In</string>
+    
+    <!-- OAuth Strings -->
+    <string name="google_signin_error">Google Sign-In failed. Please try again.</string>
+    <string name="account_collision_title">Account Already Exists</string>
+    <string name="account_collision_message">An account with this email already exists. Please sign in with your email and password first, then you can link your Google account in settings.</string>
+    <string name="link_account_button">Link Account</string>
+    <string name="oauth_linking_success">Google account linked successfully!</string>
+    <string name="oauth_linking_error">Failed to link Google account: %1$s</string>
 </resources>

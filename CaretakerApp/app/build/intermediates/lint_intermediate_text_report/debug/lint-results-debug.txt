@@ -1,0 +1,1821 @@
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\utils\NotificationHelper.java:171: Error: Call requires permission which may be rejected by user: code should explicitly check to see if permission is available (with checkPermission) or explicitly handle a potential SecurityException [MissingPermission]
+        notificationManager.notify(notificationId, builder.build());
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\utils\NotificationHelper.java:199: Error: Call requires permission which may be rejected by user: code should explicitly check to see if permission is available (with checkPermission) or explicitly handle a potential SecurityException [MissingPermission]
+        notificationManager.notify(1, builder.build());
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "MissingPermission":
+   This check scans through your code and libraries and looks at the APIs
+   being used, and checks this against the set of permissions required to
+   access those APIs. If the code using those APIs is called at runtime, then
+   the program will crash.
+
+   Furthermore, for permissions that are revocable (with targetSdkVersion 23),
+   client code must also be prepared to handle the calls throwing an exception
+   if the user rejects the request for permission at runtime.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\SplashActivity.java:189: Error: Overriding method should call super.onBackPressed [MissingSuperCall]
+    public void onBackPressed() {
+                ~~~~~~~~~~~~~
+
+   Explanation for issues of type "MissingSuperCall":
+   Some methods, such as View#onDetachedFromWindow, require that you also call
+   the super implementation as part of your method.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_medication.xml:35: Warning: The vertically scrolling ScrollView should not contain another vertically scrolling widget (ScrollView) [NestedScrolling]
+    <ScrollView
+     ~~~~~~~~~~
+
+   Explanation for issues of type "NestedScrolling":
+   A scrolling widget such as a ScrollView should not contain any nested
+   scrolling widgets since this has various usability issues
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CaretakerMapActivity.java:387: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+                warningText.setText(String.format("Location data is %d minutes old", minutesStale));
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\EmergencyContactAdapter.java:265: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+            String lowerQuery = query.toLowerCase().trim();
+                                      ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\EmergencyContactAdapter.java:268: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+                if ((contact.getName() != null && contact.getName().toLowerCase().contains(lowerQuery)) ||
+                                                                    ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\EmergencyContactAdapter.java:270: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+                    (contact.getRelationship() != null && contact.getRelationship().toLowerCase().contains(lowerQuery))) {
+                                                                                    ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\data\repository\EmergencyContactRepository.java:182: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+                String lowerQuery = query.toLowerCase().trim();
+                                          ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\data\repository\EmergencyContactRepository.java:185: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+                    if (contact.name != null && contact.name.toLowerCase().contains(lowerQuery) ||
+                                                             ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\data\repository\EmergencyContactRepository.java:187: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+                        contact.relationship != null && contact.relationship.toLowerCase().contains(lowerQuery)) {
+                                                                             ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\GeofenceManagementActivity.java:270: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+        textLocation.setText(String.format("Lat: %.6f, Lng: %.6f", 
+                             ^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\GeofenceManagementActivity.java:420: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+                          "\nLocation: " + String.format("%.6f, %.6f", geofence.lat, geofence.lng))
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\MedicationListActivity.java:205: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+            String query = searchQuery.toLowerCase();
+                                       ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\MedicationListActivity.java:219: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+        return (medication.name != null && medication.name.toLowerCase().contains(query)) ||
+                                                           ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\MedicationListActivity.java:220: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+               (medication.category != null && medication.category.toLowerCase().contains(query)) ||
+                                                                   ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\MedicationListActivity.java:221: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+               (medication.dosage != null && medication.dosage.toLowerCase().contains(query)) ||
+                                                               ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\MedicationListActivity.java:222: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+               (medication.description != null && medication.description.toLowerCase().contains(query));
+                                                                         ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\ScheduleMmseTestActivity.java:61: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+            dateText.setText(String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth));
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\ScheduleMmseTestActivity.java:71: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+            timeText.setText(String.format("%02d:%02d", hourOfDay, minute));
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "DefaultLocale":
+   Calling String#toLowerCase() or #toUpperCase() without specifying an
+   explicit locale is a common source of bugs. The reason for that is that
+   those methods will use the current locale on the user's device, and even
+   though the code appears to work correctly when you are developing the app,
+   it will fail in some locales. For example, in the Turkish locale, the
+   uppercase replacement for i is not I.
+
+   If you want the methods to just perform ASCII replacement, for example to
+   convert an enum name, call String#toUpperCase(Locale.US) instead. If you
+   really want to use the current locale, call
+   String#toUpperCase(Locale.getDefault()) instead.
+
+   https://developer.android.com/reference/java/util/Locale.html#default_locale
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:20: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+        targetSdk 34
+        ~~~~~~~~~~~~
+
+   Explanation for issues of type "OldTargetApi":
+   When your application runs on a version of Android that is more recent than
+   your targetSdkVersion specifies that it has been tested with, various
+   compatibility modes kick in. This ensures that your application continues
+   to work, but it may look out of place. For example, if the targetSdkVersion
+   is less than 14, your app may get an option button in the UI.
+
+   To fix this issue, set the targetSdkVersion to the highest available value.
+   Then test your app to make sure everything works correctly. You may want to
+   consult the compatibility notes to see what changes apply to each version
+   you are adding support for:
+   https://developer.android.com/reference/android/os/Build.VERSION_CODES.html
+   as well as follow this guide:
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.
+   html
+
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.html
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\SplashActivity.java:32: Warning: The application should not provide its own launch screen [CustomSplashScreen]
+public class SplashActivity extends AppCompatActivity {
+             ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "CustomSplashScreen":
+   Starting in Android 12 (API 31+), the application's Launch Screen is
+   provided by the system and the application should not create its own,
+   otherwise the user will see two splashscreens. Please check the
+   SplashScreen class to check how the Splash Screen can be controlled and
+   customized.
+
+   https://developer.android.com/guide/topics/ui/splash-screen
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\SettingsActivity.java:16: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialCode from androidx.appcompat]
+    private Switch mmseSwitch;
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UseSwitchCompatOrMaterialCode":
+   Use SwitchCompat from AppCompat or SwitchMaterial from Material library
+
+   Vendor: Android Open Source Project
+   Identifier: androidx.appcompat
+   Feedback: https://issuetracker.google.com/issues/new?component=460343
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_settings.xml:16: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialXml from androidx.appcompat]
+    <Switch
+    ^
+
+   Explanation for issues of type "UseSwitchCompatOrMaterialXml":
+   Use SwitchCompat from AppCompat or SwitchMaterial from Material library
+
+   Vendor: Android Open Source Project
+   Identifier: androidx.appcompat
+   Feedback: https://issuetracker.google.com/issues/new?component=460343
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:45: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.1 [GradleDependency]
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:46: Warning: A newer version of com.google.android.material:material than 1.11.0 is available: 1.13.0 [GradleDependency]
+    implementation 'com.google.android.material:material:1.11.0'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:47: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:48: Warning: A newer version of androidx.recyclerview:recyclerview than 1.3.2 is available: 1.4.0 [GradleDependency]
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:53: Warning: A newer version of com.google.firebase:firebase-bom than 32.7.2 is available: 34.4.0 [GradleDependency]
+    implementation platform('com.google.firebase:firebase-bom:32.7.2')
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:61: Warning: A newer version of com.google.android.gms:play-services-maps than 18.2.0 is available: 19.2.0 [GradleDependency]
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:62: Warning: A newer version of com.google.android.gms:play-services-location than 21.0.1 is available: 21.3.0 [GradleDependency]
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:63: Warning: A newer version of com.google.android.gms:play-services-tasks than 18.0.2 is available: 18.4.0 [GradleDependency]
+    implementation 'com.google.android.gms:play-services-tasks:18.0.2'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:66: Warning: A newer version of com.google.android.gms:play-services-auth than 20.7.0 is available: 21.4.0 [GradleDependency]
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:74: Warning: A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.3.0 [GradleDependency]
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\build.gradle:75: Warning: A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.7.0 [GradleDependency]
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:376: Warning: Use app:drawableStartCompat instead of android:drawableStart [UseCompatTextViewDrawableXml from androidx.appcompat]
+            android:drawableStart="@android:drawable/ic_secure"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:377: Warning: Use app:drawableTint instead of android:drawableTint [UseCompatTextViewDrawableXml from androidx.appcompat]
+            android:drawableTint="@color/text_secondary"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UseCompatTextViewDrawableXml":
+   TextView uses android: compound drawable attributes instead of app: ones
+
+   Vendor: Android Open Source Project
+   Identifier: androidx.appcompat
+   Feedback: https://issuetracker.google.com/issues/new?component=460343
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:18: Error: Permission exists without corresponding hardware <uses-feature android:name="android.hardware.telephony" required="false"> tag [PermissionImpliesUnsupportedChromeOsHardware]
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+     ~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "PermissionImpliesUnsupportedChromeOsHardware":
+   The <uses-permission> element should not require a permission that implies
+   an unsupported large screen hardware feature. Google Play assumes that
+   certain hardware related permissions indicate that the underlying hardware
+   features are required by default. To fix the issue, consider declaring the
+   corresponding <uses-feature> element with required="false" attribute.
+
+   https://developer.android.com/topic/arc/manifest.html#implied-features
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:11: Warning: Did you mean android.permission.WAKE_LOCK? [SystemPermissionTypo]
+    <uses-permission android:name="android.permission.WAKE_LOAD" />
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SystemPermissionTypo":
+   This check looks for required permissions that look like well-known system
+   permissions or permissions from the Android SDK, but aren't, and may be
+   typos.
+
+   Please double check the permission value you have supplied.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\AddMedicationActivity.java:370: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+            imageAdapter.notifyDataSetChanged();
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CustomMmseQuestionsActivity.java:102: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+                    adapter.notifyDataSetChanged();
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\EmergencyContactAdapter.java:196: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\EmergencyContactAdapter.java:276: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\EmergencyContactsActivity.java:163: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+                contactAdapter.notifyDataSetChanged();
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\LocationTimePointsAdapter.java:31: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\MedicationAdapter.java:65: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\MedicationListActivity.java:214: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        adapter.notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\ui\MedicineImageAdapter.java:95: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\ui\MmseResultsAdapter.java:33: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\TaskListActivity.java:108: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+                    taskAdapter.notifyDataSetChanged();
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\TaskListActivity.java:155: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+                            taskAdapter.notifyDataSetChanged(); // Reset checkbox state
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\TaskListActivity.java:174: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+                            taskAdapter.notifyDataSetChanged(); // Reset checkbox state
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NotifyDataSetChanged":
+   The RecyclerView adapter's onNotifyDataSetChanged method does not specify
+   what about the data set has changed, forcing any observers to assume that
+   all existing items and structure may no longer be valid. `LayoutManager`s
+   will be forced to fully rebind and relayout all visible views.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\utils\NotificationHelper.java:40: Warning: Unnecessary; SDK_INT is always >= 26 [ObsoleteSdkInt]
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\notifications\NotificationUtils.java:20: Warning: Unnecessary; SDK_INT is always >= 26 [ObsoleteSdkInt]
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\themes.xml:13: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+                                            ~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ObsoleteSdkInt":
+   This check flags version checks that are not necessary, because the
+   minSdkVersion (or surrounding known API level) is already at least as high
+   as the version checked for.
+
+   Similarly, it also looks for resources in -vNN folders, such as values-v14
+   where the version qualifier is less than or equal to the minSdkVersion,
+   where the contents should be merged into the best folder.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:72: Warning: This tag and its children can be replaced by one <TextView/> and a compound drawable [UseCompoundDrawables]
+                <LinearLayout
+                 ~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:37: Warning: This tag and its children can be replaced by one <TextView/> and a compound drawable [UseCompoundDrawables]
+        <LinearLayout
+         ~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:61: Warning: This tag and its children can be replaced by one <TextView/> and a compound drawable [UseCompoundDrawables]
+        <LinearLayout
+         ~~~~~~~~~~~~
+
+   Explanation for issues of type "UseCompoundDrawables":
+   A LinearLayout which contains an ImageView and a TextView can be more
+   efficiently handled as a compound drawable (a single TextView, using the
+   drawableTop, drawableLeft, drawableRight and/or drawableBottom attributes
+   to draw one or more images adjacent to the text).
+
+   If the two widgets are offset from each other with margins, this can be
+   replaced with a drawablePadding attribute.
+
+   There's a lint quickfix to perform this conversion in the Eclipse plugin.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:93: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+    <LinearLayout
+     ~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:38: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+        <LinearLayout
+         ~~~~~~~~~~~~
+
+   Explanation for issues of type "DisableBaselineAlignment":
+   When a LinearLayout is used to distribute the space proportionally between
+   nested layouts, the baseline alignment property should be turned off to
+   make the layout computation faster.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:145: Warning: Use a layout_width of 0dp instead of wrap_content for better performance [InefficientWeight]
+                android:layout_width="wrap_content"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "InefficientWeight":
+   When only a single widget in a LinearLayout defines a weight, it is more
+   efficient to assign a width/height of 0dp to it since it will absorb all
+   the remaining space anyway. With a declared width/height of 0dp it does not
+   have to measure its own size first.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:103: Warning: Nested weights are bad for performance [NestedWeights]
+            android:layout_weight="2">
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NestedWeights":
+   Layout weights require a widget to be measured twice. When a LinearLayout
+   with non-zero weights is nested inside another LinearLayout with non-zero
+   weights, then the number of measurements increase exponentially.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:7: Warning: Possible overdraw: Root element paints background @color/background_color with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/background_color"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:6: Warning: Possible overdraw: Root element paints background #F5F5F5 with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="#F5F5F5">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_emergency_contact.xml:8: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_medication.xml:6: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/white"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:6: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:7: Warning: Possible overdraw: Root element paints background @color/background_color with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/background_color">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:7: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:8: Warning: Possible overdraw: Root element paints background @color/background_color with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/background_color"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_geofence_management.xml:8: Warning: Possible overdraw: Root element paints background @color/background_color with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/background_color">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:7: Warning: Possible overdraw: Root element paints background @color/background_color with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/background_color">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_login.xml:9: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:6: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:7: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/white"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_link.xml:9: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:8: Warning: Possible overdraw: Root element paints background @color/background_color with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/background_color"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_register.xml:9: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_schedule_mmse_test.xml:7: Warning: Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/Theme.CaretakerApp) [Overdraw]
+    android:background="@color/white">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_splash.xml:7: Warning: Possible overdraw: Root element paints background @color/colorPrimary with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="@color/colorPrimary"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:7: Warning: Possible overdraw: Root element paints background #F5F5F5 with a theme that also paints a background (inferred theme is @style/Theme_CaretakerApp_NoActionBar) [Overdraw]
+    android:background="#F5F5F5"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "Overdraw":
+   If you set a background drawable on a root view, then you should use a
+   custom theme where the theme background is null. Otherwise, the theme
+   background will be painted first, only to have your custom background
+   completely cover it; this is called "overdraw".
+
+   NOTE: This detector relies on figuring out which layouts are associated
+   with which activities based on scanning the Java code, and it's currently
+   doing that using an inexact pattern matching algorithm. Therefore, it can
+   incorrectly conclude which activity the layout is associated with and then
+   wrongly complain that a background-theme is hidden.
+
+   If you want your custom background on multiple pages, then you should
+   consider making a custom theme with your custom background and just using
+   that theme instead of a root element background.
+
+   Of course it's possible that your custom drawable is translucent and you
+   want it to be mixed with the background. However, you will get better
+   performance if you pre-mix the background with your drawable and use that
+   resulting image or color as a custom theme background instead.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:3: Warning: The resource R.color.purple_200 appears to be unused [UnusedResources]
+    <color name="purple_200">#FFBB86FC</color>
+           ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:14: Warning: The resource R.color.colorPrimaryDark appears to be unused [UnusedResources]
+    <color name="colorPrimaryDark">#FF3700B3</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:24: Warning: The resource R.color.primary_dark appears to be unused [UnusedResources]
+    <color name="primary_dark">#4F46E5</color>
+           ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:31: Warning: The resource R.color.success_light appears to be unused [UnusedResources]
+    <color name="success_light">#D1FAE5</color>
+           ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:35: Warning: The resource R.color.info appears to be unused [UnusedResources]
+    <color name="info">#3B82F6</color>
+           ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:45: Warning: The resource R.color.text_hint appears to be unused [UnusedResources]
+    <color name="text_hint">#9CA3AF</color>
+           ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:50: Warning: The resource R.color.notification_primary appears to be unused [UnusedResources]
+    <color name="notification_primary">#6366F1</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\colors.xml:54: Warning: The resource R.color.emergency_light appears to be unused [UnusedResources]
+    <color name="emergency_light">#FEE2E2</color>
+           ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:2: Warning: The resource R.layout.dialog_add_task_enhanced appears to be unused [UnusedResources]
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\drawable\ic_check_circle.xml:2: Warning: The resource R.drawable.ic_check_circle appears to be unused [UnusedResources]
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\drawable\ic_medication_default.xml:2: Warning: The resource R.drawable.ic_medication_default appears to be unused [UnusedResources]
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\drawable\ic_pause.xml:2: Warning: The resource R.drawable.ic_pause appears to be unused [UnusedResources]
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\drawable\ic_pause_circle.xml:2: Warning: The resource R.drawable.ic_pause_circle appears to be unused [UnusedResources]
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\drawable\ic_play_arrow.xml:2: Warning: The resource R.drawable.ic_play_arrow appears to be unused [UnusedResources]
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\drawable\ic_schedule.xml:2: Warning: The resource R.drawable.ic_schedule appears to be unused [UnusedResources]
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\menu\menu_medication_list.xml:2: Warning: The resource R.menu.menu_medication_list appears to be unused [UnusedResources]
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:6: Warning: The resource R.string.login appears to be unused [UnusedResources]
+    <string name="login">Login</string>
+            ~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:7: Warning: The resource R.string.register appears to be unused [UnusedResources]
+    <string name="register">Register</string>
+            ~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:18: Warning: The resource R.string.account_linking appears to be unused [UnusedResources]
+    <string name="account_linking">Account Linking</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:19: Warning: The resource R.string.link_accounts appears to be unused [UnusedResources]
+    <string name="link_accounts">Link Accounts</string>
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:22: Warning: The resource R.string.oauth_config_error appears to be unused [UnusedResources]
+    <string name="oauth_config_error">OAuth sign-in not properly configured. Please contact support.</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:23: Warning: The resource R.string.oauth_cancelled appears to be unused [UnusedResources]
+    <string name="oauth_cancelled">OAuth sign-in was cancelled</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:24: Warning: The resource R.string.oauth_failed appears to be unused [UnusedResources]
+    <string name="oauth_failed">OAuth sign-in failed</string>
+            ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:25: Warning: The resource R.string.account_exists_title appears to be unused [UnusedResources]
+    <string name="account_exists_title">Account Already Exists</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:26: Warning: The resource R.string.account_exists_message appears to be unused [UnusedResources]
+    <string name="account_exists_message">An account with this email already exists using %s. Would you like to sign in and link your accounts?</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:27: Warning: The resource R.string.account_link_success appears to be unused [UnusedResources]
+    <string name="account_link_success">Accounts linked successfully!</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:28: Warning: The resource R.string.account_link_failed appears to be unused [UnusedResources]
+    <string name="account_link_failed">Failed to link accounts</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:29: Warning: The resource R.string.sign_in_to_link appears to be unused [UnusedResources]
+    <string name="sign_in_to_link">Sign in to link accounts</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:30: Warning: The resource R.string.enter_password_to_link appears to be unused [UnusedResources]
+    <string name="enter_password_to_link">Enter your password to link accounts:</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:34: Warning: The resource R.string.enter_patient_id appears to be unused [UnusedResources]
+    <string name="enter_patient_id">Enter Patient ID</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:39: Warning: The resource R.string.notification_channel_critical appears to be unused [UnusedResources]
+    <string name="notification_channel_critical">Critical Patient Alerts</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:40: Warning: The resource R.string.notification_channel_location appears to be unused [UnusedResources]
+    <string name="notification_channel_location">Location Updates</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:41: Warning: The resource R.string.notification_channel_general appears to be unused [UnusedResources]
+    <string name="notification_channel_general">App Notifications</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:42: Warning: The resource R.string.notification_channel_critical_desc appears to be unused [UnusedResources]
+    <string name="notification_channel_critical_desc">Urgent alerts requiring immediate attention for patient safety</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:43: Warning: The resource R.string.notification_channel_location_desc appears to be unused [UnusedResources]
+    <string name="notification_channel_location_desc">Updates about patient location and safe zone activities</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:44: Warning: The resource R.string.notification_channel_general_desc appears to be unused [UnusedResources]
+    <string name="notification_channel_general_desc">General app notifications and reminders</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:47: Warning: The resource R.string.invalid_patient_id appears to be unused [UnusedResources]
+    <string name="invalid_patient_id">Invalid Patient ID</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:50: Warning: The resource R.string.add_medication appears to be unused [UnusedResources]
+    <string name="add_medication">Add Medication</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:53: Warning: The resource R.string.view_patient_data appears to be unused [UnusedResources]
+    <string name="view_patient_data">View Patient Data</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:57: Warning: The resource R.string.medication_name appears to be unused [UnusedResources]
+    <string name="medication_name">Medication Name</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:58: Warning: The resource R.string.medication_name_hint appears to be unused [UnusedResources]
+    <string name="medication_name_hint">e.g., Donepezil</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:59: Warning: The resource R.string.dosage appears to be unused [UnusedResources]
+    <string name="dosage">Dosage</string>
+            ~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:62: Warning: The resource R.string.time appears to be unused [UnusedResources]
+    <string name="time">Time</string>
+            ~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:63: Warning: The resource R.string.time_hint appears to be unused [UnusedResources]
+    <string name="time_hint">08:00 AM</string>
+            ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:69: Warning: The resource R.string.task_name appears to be unused [UnusedResources]
+    <string name="task_name">Task Name</string>
+            ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:70: Warning: The resource R.string.task_name_hint appears to be unused [UnusedResources]
+    <string name="task_name_hint">e.g., Go for a walk</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:71: Warning: The resource R.string.task_description appears to be unused [UnusedResources]
+    <string name="task_description">Description</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:72: Warning: The resource R.string.task_description_hint appears to be unused [UnusedResources]
+    <string name="task_description_hint">e.g., 30 minutes in the garden</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:73: Warning: The resource R.string.due_time appears to be unused [UnusedResources]
+    <string name="due_time">Due Time</string>
+            ~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:75: Warning: The resource R.string.task_added_successfully appears to be unused [UnusedResources]
+    <string name="task_added_successfully">Task added successfully!</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:78: Warning: The resource R.string.contact_name appears to be unused [UnusedResources]
+    <string name="contact_name">Contact Name</string>
+            ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:80: Warning: The resource R.string.relation appears to be unused [UnusedResources]
+    <string name="relation">Relation</string>
+            ~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:82: Warning: The resource R.string.phone_number appears to be unused [UnusedResources]
+    <string name="phone_number">Phone Number</string>
+            ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:89: Warning: The resource R.string.error appears to be unused [UnusedResources]
+    <string name="error">Error</string>
+            ~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:90: Warning: The resource R.string.success appears to be unused [UnusedResources]
+    <string name="success">Success</string>
+            ~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:91: Warning: The resource R.string.loading appears to be unused [UnusedResources]
+    <string name="loading">Loading...</string>
+            ~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:92: Warning: The resource R.string.network_error appears to be unused [UnusedResources]
+    <string name="network_error">Network error. Please check your connection.</string>
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:93: Warning: The resource R.string.unknown_error appears to be unused [UnusedResources]
+    <string name="unknown_error">An unknown error occurred.</string>
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:107: Warning: The resource R.string.enhanced_task_dialog_title appears to be unused [UnusedResources]
+    <string name="enhanced_task_dialog_title">Create Enhanced Task</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:108: Warning: The resource R.string.task_settings appears to be unused [UnusedResources]
+    <string name="task_settings">Task Settings</string>
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:109: Warning: The resource R.string.repeating_task appears to be unused [UnusedResources]
+    <string name="repeating_task">Repeating task</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:110: Warning: The resource R.string.enable_alarm_notification appears to be unused [UnusedResources]
+    <string name="enable_alarm_notification">Enable alarm/notification</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:111: Warning: The resource R.string.notify_caretaker_if_missed appears to be unused [UnusedResources]
+    <string name="notify_caretaker_if_missed">Notify caretaker if missed</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:112: Warning: The resource R.string.repeat_on_days appears to be unused [UnusedResources]
+    <string name="repeat_on_days">Repeat on days:</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:113: Warning: The resource R.string.daily appears to be unused [UnusedResources]
+    <string name="daily">Daily</string>
+            ~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:114: Warning: The resource R.string.weekdays appears to be unused [UnusedResources]
+    <string name="weekdays">Weekdays</string>
+            ~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:115: Warning: The resource R.string.weekends appears to be unused [UnusedResources]
+    <string name="weekends">Weekends</string>
+            ~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:116: Warning: The resource R.string.sunday_short appears to be unused [UnusedResources]
+    <string name="sunday_short">S</string>
+            ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:117: Warning: The resource R.string.monday_short appears to be unused [UnusedResources]
+    <string name="monday_short">M</string>
+            ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:118: Warning: The resource R.string.tuesday_short appears to be unused [UnusedResources]
+    <string name="tuesday_short">T</string>
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:119: Warning: The resource R.string.wednesday_short appears to be unused [UnusedResources]
+    <string name="wednesday_short">W</string>
+            ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:120: Warning: The resource R.string.thursday_short appears to be unused [UnusedResources]
+    <string name="thursday_short">T</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:121: Warning: The resource R.string.friday_short appears to be unused [UnusedResources]
+    <string name="friday_short">F</string>
+            ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:122: Warning: The resource R.string.saturday_short appears to be unused [UnusedResources]
+    <string name="saturday_short">S</string>
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:123: Warning: The resource R.string.task_created_successfully appears to be unused [UnusedResources]
+    <string name="task_created_successfully">Task created successfully</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:124: Warning: The resource R.string.task_name_required appears to be unused [UnusedResources]
+    <string name="task_name_required">Task name required</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:125: Warning: The resource R.string.select_date_time appears to be unused [UnusedResources]
+    <string name="select_date_time">Tap to select date and time</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:126: Warning: The resource R.string.task_category_hint appears to be unused [UnusedResources]
+    <string name="task_category_hint">Category (e.g., Exercise, Medicine)</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\values\strings.xml:91: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+    <string name="loading">Loading...</string>
+                           ~~~~~~~~~~
+
+   Explanation for issues of type "TypographyEllipsis":
+   You can replace the string "..." with a dedicated ellipsis character,
+   ellipsis character (u2026, &#8230;). This can help make the text more
+   readable.
+
+   https://en.wikipedia.org/wiki/Ellipsis
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\mipmap-hdpi\ic_launcher.xml:2: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\mipmap-hdpi\ic_launcher_round.xml:2: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+
+   Explanation for issues of type "MonochromeLauncherIcon":
+   If android:roundIcon and android:icon are both in your manifest, you must
+   either remove the reference to android:roundIcon if it is not needed; or,
+   supply the monochrome icon in the drawable defined by the android:roundIcon
+   and android:icon attribute.
+
+   For example, if android:roundIcon and android:icon are both in the
+   manifest, a launcher might choose to use android:roundIcon over
+   android:icon to display the adaptive app icon. Therefore, your themed
+   application iconwill not show if your monochrome attribute is not also
+   specified in android:roundIcon.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:319: Warning: Buttons in button bars should be borderless; use style="?android:attr/buttonBarButtonStyle" (and ?android:attr/buttonBarStyle on the parent) [ButtonStyle]
+            <Button
+             ~~~~~~
+
+   Explanation for issues of type "ButtonStyle":
+   Button bars typically use a borderless style for the buttons. Set the
+   style="?android:attr/buttonBarButtonStyle" attribute on each of the
+   buttons, and set style="?android:attr/buttonBarStyle" on the parent layout
+
+   https://d.android.com/r/studio-ui/designer/material/dialogs
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:88: Warning: This text field does not specify an inputType [TextFields]
+            <EditText
+             ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:26: Warning: This text field does not specify an inputType [TextFields]
+    <EditText
+     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:39: Warning: This text field does not specify an inputType [TextFields]
+    <EditText
+     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:53: Warning: This text field does not specify an inputType [TextFields]
+        <EditText
+         ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:58: Warning: This text field does not specify an inputType [TextFields]
+        <EditText
+         ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:63: Warning: This text field does not specify an inputType [TextFields]
+        <EditText
+         ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:68: Warning: This text field does not specify an inputType [TextFields]
+        <EditText
+         ~~~~~~~~
+
+   Explanation for issues of type "TextFields":
+   Providing an inputType attribute on a text field improves usability because
+   depending on the data to be input, optimized keyboards can be shown to the
+   user (such as just digits and parentheses for a phone number). 
+
+   The lint detector also looks at the id of the view, and if the id offers a
+   hint of the purpose of the field (for example, the id contains the phrase
+   phone or email), then lint will also ensure that the inputType contains the
+   corresponding type attributes.
+
+   If you really want to keep the text field generic, you can suppress this
+   warning by setting inputType="text".
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_emergency_contact.xml:120: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+            android:textSize="10sp"
+            ~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SmallSp":
+   Avoid using sizes smaller than 11sp.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:32: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:50: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:70: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:88: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:26: Warning: Missing autofillHints attribute [Autofill]
+    <EditText
+     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:39: Warning: Missing autofillHints attribute [Autofill]
+    <EditText
+     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:53: Warning: Missing autofillHints attribute [Autofill]
+        <EditText
+         ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:58: Warning: Missing autofillHints attribute [Autofill]
+        <EditText
+         ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:63: Warning: Missing autofillHints attribute [Autofill]
+        <EditText
+         ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:68: Warning: Missing autofillHints attribute [Autofill]
+        <EditText
+         ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:75: Warning: Missing autofillHints attribute [Autofill]
+    <EditText
+     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:65: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:207: Warning: Missing autofillHints attribute [Autofill]
+                    <EditText
+                     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:221: Warning: Missing autofillHints attribute [Autofill]
+                    <EditText
+                     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:235: Warning: Missing autofillHints attribute [Autofill]
+                    <EditText
+                     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:307: Warning: Missing autofillHints attribute [Autofill]
+                    <EditText
+                     ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:321: Warning: Missing autofillHints attribute [Autofill]
+                    <EditText
+                     ~~~~~~~~
+
+   Explanation for issues of type "Autofill":
+   Specify an autofillHints attribute when targeting SDK version 26 or higher
+   or explicitly specify that the view is not important for autofill. Your app
+   can help an autofill service classify the data correctly by providing the
+   meaning of each view that could be autofillable, such as views representing
+   usernames, passwords, credit card fields, email addresses, etc.
+
+   The hints can have any value, but it is recommended to use predefined
+   values like 'username' for a username or 'creditCardNumber' for a credit
+   card number. For a list of all predefined autofill hint constants, see the
+   AUTOFILL_HINT_ constants in the View reference at
+   https://developer.android.com/reference/android/view/View.html.
+
+   You can mark a view unimportant for autofill by specifying an
+   importantForAutofill attribute on that view or a parent view. See
+   https://developer.android.com/reference/android/view/View.html#setImportant
+   ForAutofill(int).
+
+   https://developer.android.com/guide/topics/text/autofill.html
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:43: Warning: Missing contentDescription attribute on image [ContentDescription]
+            <ImageView
+             ~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:84: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:147: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:174: Warning: Missing contentDescription attribute on image [ContentDescription]
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ContentDescription":
+   Non-textual widgets like ImageViews and ImageButtons should use the
+   contentDescription attribute to specify a textual description of the widget
+   such that screen readers and other accessibility tools can adequately
+   describe the user interface.
+
+   Note that elements in application screens that are purely decorative and do
+   not provide any content or enable a user action should not have
+   accessibility content descriptions. In this case, set their descriptions to
+   @null. If your app's minSdkVersion is 16 or higher, you can instead set
+   these graphical elements' android:importantForAccessibility attributes to
+   no.
+
+   Note that for text fields, you should not set both the hint and the
+   contentDescription attributes since the hint will never be shown. Just set
+   the hint.
+
+   https://developer.android.com/guide/topics/ui/accessibility/apps#special-cases
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\AddEditEmergencyContactActivity.java:117: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            titleText.setText("Edit Emergency Contact");
+                              ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\AddEditEmergencyContactActivity.java:118: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            saveButton.setText("Update Contact");
+                               ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\AddEditEmergencyContactActivity.java:120: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            titleText.setText("Add Emergency Contact");
+                              ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\activities\AddEditEmergencyContactActivity.java:121: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            saveButton.setText("Add Contact");
+                               ~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\AddMedicationActivity.java:374: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        saveButton.setText("Update Medication");
+                           ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CaretakerMapActivity.java:131: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            textPatientName.setText(patientName + "'s Location");
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CaretakerMapActivity.java:131: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            textPatientName.setText(patientName + "'s Location");
+                                                  ~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CaretakerMapActivity.java:133: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            textPatientName.setText("Patient Location");
+                                    ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CaretakerMapActivity.java:137: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        textLocationStatus.setText("Waiting for location data...");
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CaretakerMapActivity.java:138: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        textLastUpdate.setText("No updates yet");
+                               ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CustomMmseQuestionsActivity.java:199: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            holder.scoreText.setText("Score: " + q.score);
+                                     ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\CustomMmseQuestionsActivity.java:199: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            holder.scoreText.setText("Score: " + q.score);
+                                     ~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\GeofenceManagementActivity.java:275: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            textRadius.setText((int) value + "m");
+                               ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\HistoryActivity.java:132: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            textPatientName.setText(patientName + "'s Location History");
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\HistoryActivity.java:132: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            textPatientName.setText(patientName + "'s Location History");
+                                                  ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\HistoryActivity.java:134: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            textPatientName.setText("Patient Location History");
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\HistoryActivity.java:142: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        textMovementStats.setText("No location data for selected date");
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\HistoryActivity.java:358: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            textMovementStats.setText("No location data for selected date");
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\MainActivity.java:80: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+        welcomeText.setText("Welcome! You are linked to Patient ID: " + linkedPatientId);
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\MainActivity.java:80: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        welcomeText.setText("Welcome! You are linked to Patient ID: " + linkedPatientId);
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\MedicationAdapter.java:106: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                textStatus.setText("OVERDUE");
+                                   ~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\MedicationAdapter.java:110: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                textStatus.setText("DUE NOW");
+                                   ~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\MmseResultDetailActivity.java:39: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+                            title.setText("Score: " + totalScore + "  (" + interpretation + ")");
+                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\MmseResultDetailActivity.java:39: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                            title.setText("Score: " + totalScore + "  (" + interpretation + ")");
+                                          ~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\MmseResultsActivity.java:62: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            emptyText.setText("No patient selected");
+                              ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\MmseResultsActivity.java:90: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                        emptyText.setText("No MMSE results yet");
+                                          ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\MmseResultsActivity.java:103: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                    emptyText.setText("Failed to load results");
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:186: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                            savePatientProfileButton.setText("Save Patient Profile");
+                                                             ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:250: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        savePatientProfileButton.setText("Save Patient Profile");
+                                         ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:346: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            toolbarTitle.setText("Edit Patient Profile");
+                                 ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:349: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            modeIndicatorText.setText("EDIT");
+                                      ~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:353: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            profileStatusText.setText("Update patient information");
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:356: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            savePatientProfileButton.setText("Update Profile");
+                                             ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:359: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            statusText.setText("Changes will be saved securely");
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:369: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            toolbarTitle.setText("Patient Profile");
+                                 ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:372: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            modeIndicatorText.setText("CREATE");
+                                      ~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:376: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            profileStatusText.setText("Create a comprehensive patient profile");
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:379: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            savePatientProfileButton.setText("Save Profile");
+                                             ~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\PatientProfileEntryActivity.java:382: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            statusText.setText("All information is securely encrypted");
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\SplashActivity.java:66: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        statusText.setText("Initializing...");
+                           ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:66: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            holder.textScheduledTime.setText("⏰ " + timeString);
+                                             ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:75: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            holder.textRepeatPattern.setText("🔄 " + repeatPattern);
+                                             ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:78: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            holder.textRepeatPattern.setText("📅 One-time");
+                                             ~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:90: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                    holder.textStatus.setText("✅ Completed today");
+                                              ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:94: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                    holder.textStatus.setText("⏳ Pending today");
+                                              ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:99: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                holder.textStatus.setText("📋 Not scheduled today");
+                                          ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:105: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                holder.textStatus.setText("✅ Completed");
+                                          ~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\java\com\mihir\alzheimerscaregiver\caretaker\adapters\TaskAdapter.java:109: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+                holder.textStatus.setText("⏳ Pending");
+                                          ~~~~~~~~~~~
+
+   Explanation for issues of type "SetTextI18n":
+   When calling TextView#setText
+   * Never call Number#toString() to format numbers; it will not handle
+   fraction separators and locale-specific digits properly. Consider using
+   String#format with proper format specifications (%d or %f) instead.
+   * Do not pass a string literal (e.g. "Hello") to display text. Hardcoded
+   text can not be properly translated to other languages. Consider using
+   Android resource strings instead.
+   * Do not build messages by concatenating text chunks. Such messages can not
+   be properly translated.
+
+   https://developer.android.com/guide/topics/resources/localization.html
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:36: Warning: Hardcoded string "Go back", should use @string resource [HardcodedText]
+                    android:contentDescription="Go back"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:46: Warning: Hardcoded string "Add Emergency Contact", should use @string resource [HardcodedText]
+                    android:text="Add Emergency Contact"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:83: Warning: Hardcoded string "Emergency contact icon", should use @string resource [HardcodedText]
+                        android:contentDescription="Emergency contact icon"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:91: Warning: Hardcoded string "Contact Information", should use @string resource [HardcodedText]
+                        android:text="Contact Information"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:115: Warning: Hardcoded string "Contact Name *", should use @string resource [HardcodedText]
+                        android:hint="Contact Name *"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:140: Warning: Hardcoded string "Phone Number * (e.g., 9876543210)", should use @string resource [HardcodedText]
+                        android:hint="Phone Number * (e.g., 9876543210)"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:168: Warning: Hardcoded string "Relationship (e.g., Doctor, Family)", should use @string resource [HardcodedText]
+                        android:hint="Relationship (e.g., Doctor, Family)"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:201: Warning: Hardcoded string "Primary Emergency Contact", should use @string resource [HardcodedText]
+                            android:text="Primary Emergency Contact"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:211: Warning: Hardcoded string "This contact will be prioritized in emergency situations", should use @string resource [HardcodedText]
+                            android:text="This contact will be prioritized in emergency situations"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:224: Warning: Hardcoded string "* Required fields", should use @string resource [HardcodedText]
+                    android:text="* Required fields"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:246: Warning: Hardcoded string "Cancel", should use @string resource [HardcodedText]
+                android:text="Cancel"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_emergency_contact.xml:258: Warning: Hardcoded string "Add Contact", should use @string resource [HardcodedText]
+                android:text="Add Contact"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:18: Warning: Hardcoded string "Task Details", should use @string resource [HardcodedText]
+            android:text="Task Details"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:36: Warning: Hardcoded string "Task name", should use @string resource [HardcodedText]
+                android:hint="Task name"
+                ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:54: Warning: Hardcoded string "Description (optional)", should use @string resource [HardcodedText]
+                android:hint="Description (optional)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:74: Warning: Hardcoded string "Category (e.g., Exercise, Medication)", should use @string resource [HardcodedText]
+                android:hint="Category (e.g., Exercise, Medication)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:92: Warning: Hardcoded string "Scheduled time (tap to pick)", should use @string resource [HardcodedText]
+                android:hint="Scheduled time (tap to pick)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:118: Warning: Hardcoded string "Repeat Options", should use @string resource [HardcodedText]
+                    android:text="Repeat Options"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:128: Warning: Hardcoded string "Enable repeat", should use @string resource [HardcodedText]
+                    android:text="Enable repeat"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:138: Warning: Hardcoded string "Repeat on:", should use @string resource [HardcodedText]
+                    android:text="Repeat on:"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:156: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                        android:textOff="S"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:157: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                        android:textOn="S"
+                        ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:165: Warning: Hardcoded string "M", should use @string resource [HardcodedText]
+                        android:textOff="M"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:166: Warning: Hardcoded string "M", should use @string resource [HardcodedText]
+                        android:textOn="M"
+                        ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:174: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                        android:textOff="T"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:175: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                        android:textOn="T"
+                        ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:183: Warning: Hardcoded string "W", should use @string resource [HardcodedText]
+                        android:textOff="W"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:184: Warning: Hardcoded string "W", should use @string resource [HardcodedText]
+                        android:textOn="W"
+                        ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:192: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                        android:textOff="T"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:193: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                        android:textOn="T"
+                        ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:201: Warning: Hardcoded string "F", should use @string resource [HardcodedText]
+                        android:textOff="F"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:202: Warning: Hardcoded string "F", should use @string resource [HardcodedText]
+                        android:textOn="F"
+                        ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:210: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                        android:textOff="S"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:211: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                        android:textOn="S"
+                        ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:231: Warning: Hardcoded string "Daily", should use @string resource [HardcodedText]
+                        android:text="Daily"
+                        ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:240: Warning: Hardcoded string "Weekdays", should use @string resource [HardcodedText]
+                        android:text="Weekdays"
+                        ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:249: Warning: Hardcoded string "Weekends", should use @string resource [HardcodedText]
+                        android:text="Weekends"
+                        ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:276: Warning: Hardcoded string "Notification Options", should use @string resource [HardcodedText]
+                    android:text="Notification Options"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:286: Warning: Hardcoded string "Enable alarm/notification", should use @string resource [HardcodedText]
+                    android:text="Enable alarm/notification"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:295: Warning: Hardcoded string "Notify caretaker if missed", should use @string resource [HardcodedText]
+                    android:text="Notify caretaker if missed"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:315: Warning: Hardcoded string "Cancel", should use @string resource [HardcodedText]
+                android:text="Cancel"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_edit_task.xml:323: Warning: Hardcoded string "Save Task", should use @string resource [HardcodedText]
+                android:text="Save Task"
+                ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_medication.xml:129: Warning: Hardcoded string "Scheduled Time", should use @string resource [HardcodedText]
+            android:hint="Scheduled Time"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:36: Warning: Hardcoded string "Task Name (e.g., Take a walk)", should use @string resource [HardcodedText]
+                android:hint="Task Name (e.g., Take a walk)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:53: Warning: Hardcoded string "Description (optional)", should use @string resource [HardcodedText]
+                android:hint="Description (optional)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:71: Warning: Hardcoded string "Category (e.g., Exercise, Medicine)", should use @string resource [HardcodedText]
+                android:hint="Category (e.g., Exercise, Medicine)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:88: Warning: Hardcoded string "Tap to select date and time", should use @string resource [HardcodedText]
+                android:hint="Tap to select date and time"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:100: Warning: Hardcoded string "Task Settings", should use @string resource [HardcodedText]
+            android:text="Task Settings"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:112: Warning: Hardcoded string "Repeating task", should use @string resource [HardcodedText]
+            android:text="Repeating task"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:121: Warning: Hardcoded string "Enable alarm/notification", should use @string resource [HardcodedText]
+            android:text="Enable alarm/notification"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:131: Warning: Hardcoded string "Notify caretaker if missed", should use @string resource [HardcodedText]
+            android:text="Notify caretaker if missed"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:141: Warning: Hardcoded string "Repeat on days:", should use @string resource [HardcodedText]
+            android:text="Repeat on days:"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:162: Warning: Hardcoded string "Daily", should use @string resource [HardcodedText]
+                android:text="Daily"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:172: Warning: Hardcoded string "Weekdays", should use @string resource [HardcodedText]
+                android:text="Weekdays"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:183: Warning: Hardcoded string "Weekends", should use @string resource [HardcodedText]
+                android:text="Weekends"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:204: Warning: Hardcoded string "Sun", should use @string resource [HardcodedText]
+                android:textOff="Sun"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:205: Warning: Hardcoded string "Sun", should use @string resource [HardcodedText]
+                android:textOn="Sun"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:214: Warning: Hardcoded string "Mon", should use @string resource [HardcodedText]
+                android:textOff="Mon"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:215: Warning: Hardcoded string "Mon", should use @string resource [HardcodedText]
+                android:textOn="Mon"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:224: Warning: Hardcoded string "Tue", should use @string resource [HardcodedText]
+                android:textOff="Tue"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:225: Warning: Hardcoded string "Tue", should use @string resource [HardcodedText]
+                android:textOn="Tue"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:234: Warning: Hardcoded string "Wed", should use @string resource [HardcodedText]
+                android:textOff="Wed"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:235: Warning: Hardcoded string "Wed", should use @string resource [HardcodedText]
+                android:textOn="Wed"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:244: Warning: Hardcoded string "Thu", should use @string resource [HardcodedText]
+                android:textOff="Thu"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:245: Warning: Hardcoded string "Thu", should use @string resource [HardcodedText]
+                android:textOn="Thu"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:254: Warning: Hardcoded string "Fri", should use @string resource [HardcodedText]
+                android:textOff="Fri"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:255: Warning: Hardcoded string "Fri", should use @string resource [HardcodedText]
+                android:textOn="Fri"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:264: Warning: Hardcoded string "Sat", should use @string resource [HardcodedText]
+                android:textOff="Sat"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_add_task.xml:265: Warning: Hardcoded string "Sat", should use @string resource [HardcodedText]
+                android:textOn="Sat"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:31: Warning: Hardcoded string "Patient Location", should use @string resource [HardcodedText]
+            android:text="Patient Location"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:55: Warning: Hardcoded string "Waiting for location data...", should use @string resource [HardcodedText]
+                android:text="Waiting for location data..."
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:65: Warning: Hardcoded string "No updates yet", should use @string resource [HardcodedText]
+            android:text="No updates yet"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:96: Warning: Hardcoded string "Location data is stale", should use @string resource [HardcodedText]
+            android:text="Location data is stale"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:122: Warning: Hardcoded string "Center on patient location", should use @string resource [HardcodedText]
+            android:contentDescription="Center on patient location"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:146: Warning: Hardcoded string "View History", should use @string resource [HardcodedText]
+            android:text="View History"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_map.xml:157: Warning: Hardcoded string "Geofences", should use @string resource [HardcodedText]
+            android:text="Geofences"
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_mmse_results.xml:18: Warning: Hardcoded string "Export to PDF", should use @string resource [HardcodedText]
+        android:text="Export to PDF"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_mmse_results.xml:39: Warning: Hardcoded string "No MMSE results yet", should use @string resource [HardcodedText]
+        android:text="No MMSE results yet"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_settings.xml:11: Warning: Hardcoded string "Monthly MMSE Reminder", should use @string resource [HardcodedText]
+        android:text="Monthly MMSE Reminder"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_caretaker_settings.xml:20: Warning: Hardcoded string "Enable monthly MMSE reminders", should use @string resource [HardcodedText]
+        android:text="Enable monthly MMSE reminders" />
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:12: Warning: Hardcoded string "Custom MMSE Questions", should use @string resource [HardcodedText]
+        android:text="Custom MMSE Questions"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:30: Warning: Hardcoded string "Question text", should use @string resource [HardcodedText]
+        android:hint="Question text"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:43: Warning: Hardcoded string "Expected answer", should use @string resource [HardcodedText]
+        android:hint="Expected answer"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:57: Warning: Hardcoded string "Option 1", should use @string resource [HardcodedText]
+            android:hint="Option 1" />
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:62: Warning: Hardcoded string "Option 2", should use @string resource [HardcodedText]
+            android:hint="Option 2" />
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:67: Warning: Hardcoded string "Option 3", should use @string resource [HardcodedText]
+            android:hint="Option 3" />
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:72: Warning: Hardcoded string "Option 4", should use @string resource [HardcodedText]
+            android:hint="Option 4" />
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:79: Warning: Hardcoded string "Score (default 1)", should use @string resource [HardcodedText]
+        android:hint="Score (default 1)"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_custom_mmse_questions.xml:87: Warning: Hardcoded string "Add Question", should use @string resource [HardcodedText]
+        android:text="Add Question"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:32: Warning: Hardcoded string "Go back", should use @string resource [HardcodedText]
+                android:contentDescription="Go back"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:42: Warning: Hardcoded string "Emergency Contacts", should use @string resource [HardcodedText]
+                android:text="Emergency Contacts"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:74: Warning: Hardcoded string "Emergency icon", should use @string resource [HardcodedText]
+                android:contentDescription="Emergency icon"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:83: Warning: Hardcoded string "For immediate emergencies, call 911", should use @string resource [HardcodedText]
+                android:text="For immediate emergencies, call 911"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:106: Warning: Hardcoded string "Patient icon", should use @string resource [HardcodedText]
+            android:contentDescription="Patient icon"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:114: Warning: Hardcoded string "Emergency Contacts", should use @string resource [HardcodedText]
+            android:text="Emergency Contacts"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:124: Warning: Hardcoded string "0 contacts", should use @string resource [HardcodedText]
+            android:text="0 contacts"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:146: Warning: Hardcoded string "No contacts", should use @string resource [HardcodedText]
+            android:contentDescription="No contacts"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:154: Warning: Hardcoded string "No Emergency Contacts", should use @string resource [HardcodedText]
+            android:text="No Emergency Contacts"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:164: Warning: Hardcoded string "Add emergency contacts to help in urgent situations", should use @string resource [HardcodedText]
+            android:text="Add emergency contacts to help in urgent situations"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_emergency_contacts.xml:194: Warning: Hardcoded string "Add emergency contact", should use @string resource [HardcodedText]
+        android:contentDescription="Add emergency contact"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_geofence_management.xml:37: Warning: Hardcoded string "Safe Zone Management", should use @string resource [HardcodedText]
+                android:text="Safe Zone Management"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_geofence_management.xml:46: Warning: Hardcoded string "• Long press on the map to create a new safe zonen• Tap existing zones to edit or delete themn• Patient will be notified when leaving safe zones", should use @string resource [HardcodedText]
+                android:text="• Long press on the map to create a new safe zone\n• Tap existing zones to edit or delete them\n• Patient will be notified when leaving safe zones"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_geofence_management.xml:84: Warning: Hardcoded string "Add new safe zone", should use @string resource [HardcodedText]
+            android:contentDescription="Add new safe zone"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_geofence_management.xml:107: Warning: Hardcoded string "View List", should use @string resource [HardcodedText]
+            android:text="View List"
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_geofence_management.xml:118: Warning: Hardcoded string "Patient Location", should use @string resource [HardcodedText]
+            android:text="Patient Location"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:31: Warning: Hardcoded string "Patient Location History", should use @string resource [HardcodedText]
+            android:text="Patient Location History"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:52: Warning: Hardcoded string "Selected Date", should use @string resource [HardcodedText]
+                    android:text="Selected Date"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:61: Warning: Hardcoded string "Today", should use @string resource [HardcodedText]
+                    android:text="Today"
+                    ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:73: Warning: Hardcoded string "Change Date", should use @string resource [HardcodedText]
+                android:text="Change Date"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:84: Warning: Hardcoded string "No location data for selected date", should use @string resource [HardcodedText]
+            android:text="No location data for selected date"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:125: Warning: Hardcoded string "Time Points", should use @string resource [HardcodedText]
+                android:text="Time Points"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:160: Warning: Hardcoded string "Export CSV", should use @string resource [HardcodedText]
+            android:text="Export CSV"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_history.xml:171: Warning: Hardcoded string "Live View", should use @string resource [HardcodedText]
+            android:text="Live View"
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_login.xml:86: Warning: Hardcoded string "OR", should use @string resource [HardcodedText]
+            android:text="OR"
+            ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:18: Warning: Hardcoded string "Welcome!", should use @string resource [HardcodedText]
+        android:text="Welcome!"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:30: Warning: Hardcoded string "Schedule MMSE Test", should use @string resource [HardcodedText]
+        android:text="Schedule MMSE Test"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:40: Warning: Hardcoded string "Add Custom Questions", should use @string resource [HardcodedText]
+        android:text="Add Custom Questions"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:50: Warning: Hardcoded string "Add Patient Profile", should use @string resource [HardcodedText]
+        android:text="Add Patient Profile"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:74: Warning: Hardcoded string "Patient Location Monitoring", should use @string resource [HardcodedText]
+                android:text="Patient Location Monitoring"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:83: Warning: Hardcoded string "Monitor patient's real-time location and view movement history", should use @string resource [HardcodedText]
+                android:text="Monitor patient's real-time location and view movement history"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:99: Warning: Hardcoded string "Live Location", should use @string resource [HardcodedText]
+                    android:text="Live Location"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:110: Warning: Hardcoded string "History", should use @string resource [HardcodedText]
+                    android:text="History"
+                    ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:142: Warning: Hardcoded string "Safe Zone Management", should use @string resource [HardcodedText]
+                android:text="Safe Zone Management"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:151: Warning: Hardcoded string "Create and manage safe zones with automatic alerts", should use @string resource [HardcodedText]
+                android:text="Create and manage safe zones with automatic alerts"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:160: Warning: Hardcoded string "Manage Safe Zones", should use @string resource [HardcodedText]
+                android:text="Manage Safe Zones"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:186: Warning: Hardcoded string "Medication Management", should use @string resource [HardcodedText]
+                android:text="Medication Management"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:195: Warning: Hardcoded string "Manage medication reminders and view all medications for the patient", should use @string resource [HardcodedText]
+                android:text="Manage medication reminders and view all medications for the patient"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:211: Warning: Hardcoded string "Add Medication", should use @string resource [HardcodedText]
+                    android:text="Add Medication"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:222: Warning: Hardcoded string "View All", should use @string resource [HardcodedText]
+                    android:text="View All"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:252: Warning: Hardcoded string "MMSE Results", should use @string resource [HardcodedText]
+                android:text="MMSE Results"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:261: Warning: Hardcoded string "View MMSE results and trends for the patient", should use @string resource [HardcodedText]
+                android:text="View MMSE results and trends for the patient"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:270: Warning: Hardcoded string "View MMSE Results", should use @string resource [HardcodedText]
+                android:text="View MMSE Results"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:302: Warning: Hardcoded string "Add task reminders for the patient", should use @string resource [HardcodedText]
+                android:text="Add task reminders for the patient"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_main.xml:343: Warning: Hardcoded string "Manage emergency contacts with phone integration and primary contact designation", should use @string resource [HardcodedText]
+                android:text="Manage emergency contacts with phone integration and primary contact designation"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_detail.xml:34: Warning: Hardcoded string "Loading medication details...", should use @string resource [HardcodedText]
+            android:text="Loading medication details..." />
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:29: Warning: Hardcoded string "Go back", should use @string resource [HardcodedText]
+                android:contentDescription="Go back"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:39: Warning: Hardcoded string "Medication Reminders", should use @string resource [HardcodedText]
+                android:text="Medication Reminders"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:49: Warning: Hardcoded string "Search medications", should use @string resource [HardcodedText]
+                android:contentDescription="Search medications"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:70: Warning: Hardcoded string "Search medications...", should use @string resource [HardcodedText]
+                android:hint="Search medications..."
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:107: Warning: Hardcoded string "No medication reminders found.nTap + to add a reminder.", should use @string resource [HardcodedText]
+            android:text="No medication reminders found.\nTap + to add a reminder."
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_medication_list.xml:122: Warning: Hardcoded string "Add medication reminder", should use @string resource [HardcodedText]
+        android:contentDescription="Add medication reminder"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:32: Warning: Hardcoded string "Go back", should use @string resource [HardcodedText]
+                android:contentDescription="Go back"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:42: Warning: Hardcoded string "Patient Profile", should use @string resource [HardcodedText]
+                android:text="Patient Profile"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:56: Warning: Hardcoded string "CREATE", should use @string resource [HardcodedText]
+                android:text="CREATE"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:113: Warning: Hardcoded string "Patient profile", should use @string resource [HardcodedText]
+                        android:contentDescription="Patient profile"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:129: Warning: Hardcoded string "Patient Information", should use @string resource [HardcodedText]
+                            android:text="Patient Information"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:140: Warning: Hardcoded string "Create a comprehensive patient profile", should use @string resource [HardcodedText]
+                            android:text="Create a comprehensive patient profile"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:179: Warning: Hardcoded string "Basic info", should use @string resource [HardcodedText]
+                            android:contentDescription="Basic info"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:186: Warning: Hardcoded string "Basic Information", should use @string resource [HardcodedText]
+                            android:text="Basic Information"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:195: Warning: Hardcoded string "Required", should use @string resource [HardcodedText]
+                            android:text="Required"
+                            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:212: Warning: Hardcoded string "Full Name", should use @string resource [HardcodedText]
+                        android:hint="Full Name"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:226: Warning: Hardcoded string "Birth Year (e.g., 1950)", should use @string resource [HardcodedText]
+                        android:hint="Birth Year (e.g., 1950)"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:240: Warning: Hardcoded string "Birthplace", should use @string resource [HardcodedText]
+                        android:hint="Birthplace"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:280: Warning: Hardcoded string "Additional info", should use @string resource [HardcodedText]
+                            android:contentDescription="Additional info"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:287: Warning: Hardcoded string "Additional Information", should use @string resource [HardcodedText]
+                            android:text="Additional Information"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:296: Warning: Hardcoded string "Optional", should use @string resource [HardcodedText]
+                            android:text="Optional"
+                            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:312: Warning: Hardcoded string "Profession / Occupation", should use @string resource [HardcodedText]
+                        android:hint="Profession / Occupation"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:326: Warning: Hardcoded string "Additional Notes", should use @string resource [HardcodedText]
+                        android:hint="Additional Notes"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:358: Warning: Hardcoded string "Save Patient Profile", should use @string resource [HardcodedText]
+            android:text="Save Patient Profile"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_patient_profile_entry.xml:372: Warning: Hardcoded string "All information is securely encrypted", should use @string resource [HardcodedText]
+            android:text="All information is securely encrypted"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_register.xml:103: Warning: Hardcoded string "OR", should use @string resource [HardcodedText]
+            android:text="OR"
+            ~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_schedule_mmse_test.xml:13: Warning: Hardcoded string "Schedule MMSE Test", should use @string resource [HardcodedText]
+        android:text="Schedule MMSE Test"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_schedule_mmse_test.xml:23: Warning: Hardcoded string "Select Date:", should use @string resource [HardcodedText]
+        android:text="Select Date:"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_schedule_mmse_test.xml:45: Warning: Hardcoded string "Pick Date", should use @string resource [HardcodedText]
+            android:text="Pick Date" />
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_schedule_mmse_test.xml:51: Warning: Hardcoded string "Select Time:", should use @string resource [HardcodedText]
+        android:text="Select Time:"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_schedule_mmse_test.xml:73: Warning: Hardcoded string "Pick Time", should use @string resource [HardcodedText]
+            android:text="Pick Time" />
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_schedule_mmse_test.xml:80: Warning: Hardcoded string "Schedule Test", should use @string resource [HardcodedText]
+        android:text="Schedule Test"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_splash.xml:16: Warning: Hardcoded string "Alzheimer's Caregiver App Logo", should use @string resource [HardcodedText]
+        android:contentDescription="Alzheimer's Caregiver App Logo"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_splash.xml:24: Warning: Hardcoded string "Alzheimer's Caregiver", should use @string resource [HardcodedText]
+        android:text="Alzheimer's Caregiver"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_splash.xml:34: Warning: Hardcoded string "Caring Together", should use @string resource [HardcodedText]
+        android:text="Caring Together"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_splash.xml:53: Warning: Hardcoded string "Loading...", should use @string resource [HardcodedText]
+        android:text="Loading..."
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_splash.xml:62: Warning: Hardcoded string "Version 1.0", should use @string resource [HardcodedText]
+        android:text="Version 1.0"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:23: Warning: Hardcoded string "Task Management", should use @string resource [HardcodedText]
+            android:text="Task Management"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:32: Warning: Hardcoded string "Today's Tasks", should use @string resource [HardcodedText]
+            android:text="Today's Tasks"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:55: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                    android:text="0"
+                    ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:63: Warning: Hardcoded string "Total", should use @string resource [HardcodedText]
+                    android:text="Total"
+                    ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:80: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                    android:text="0"
+                    ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:88: Warning: Hardcoded string "Completed", should use @string resource [HardcodedText]
+                    android:text="Completed"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:105: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                    android:text="0"
+                    ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:113: Warning: Hardcoded string "Pending", should use @string resource [HardcodedText]
+                    android:text="Pending"
+                    ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:157: Warning: Hardcoded string "No tasks yet", should use @string resource [HardcodedText]
+            android:text="No tasks yet"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_task_list.xml:166: Warning: Hardcoded string "Tap the + button to add your first task", should use @string resource [HardcodedText]
+            android:text="Tap the + button to add your first task"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:24: Warning: Hardcoded string "Task Name (e.g., Take a walk)", should use @string resource [HardcodedText]
+                android:hint="Task Name (e.g., Take a walk)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:41: Warning: Hardcoded string "Description (optional)", should use @string resource [HardcodedText]
+                android:hint="Description (optional)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:59: Warning: Hardcoded string "Category (e.g., Exercise, Medicine)", should use @string resource [HardcodedText]
+                android:hint="Category (e.g., Exercise, Medicine)"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:76: Warning: Hardcoded string "Tap to select date and time", should use @string resource [HardcodedText]
+                android:hint="Tap to select date and time"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:88: Warning: Hardcoded string "Task Settings", should use @string resource [HardcodedText]
+            android:text="Task Settings"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:99: Warning: Hardcoded string "Repeating task", should use @string resource [HardcodedText]
+            android:text="Repeating task"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:107: Warning: Hardcoded string "Enable alarm/notification", should use @string resource [HardcodedText]
+            android:text="Enable alarm/notification"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:115: Warning: Hardcoded string "Notify caretaker if missed", should use @string resource [HardcodedText]
+            android:text="Notify caretaker if missed"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:123: Warning: Hardcoded string "Repeat on days:", should use @string resource [HardcodedText]
+            android:text="Repeat on days:"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:144: Warning: Hardcoded string "Daily", should use @string resource [HardcodedText]
+                android:text="Daily"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:154: Warning: Hardcoded string "Weekdays", should use @string resource [HardcodedText]
+                android:text="Weekdays"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:165: Warning: Hardcoded string "Weekends", should use @string resource [HardcodedText]
+                android:text="Weekends"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:186: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                android:textOff="S"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:187: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                android:textOn="S"
+                ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:196: Warning: Hardcoded string "M", should use @string resource [HardcodedText]
+                android:textOff="M"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:197: Warning: Hardcoded string "M", should use @string resource [HardcodedText]
+                android:textOn="M"
+                ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:206: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                android:textOff="T"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:207: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                android:textOn="T"
+                ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:216: Warning: Hardcoded string "W", should use @string resource [HardcodedText]
+                android:textOff="W"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:217: Warning: Hardcoded string "W", should use @string resource [HardcodedText]
+                android:textOn="W"
+                ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:226: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                android:textOff="T"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:227: Warning: Hardcoded string "T", should use @string resource [HardcodedText]
+                android:textOn="T"
+                ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:236: Warning: Hardcoded string "F", should use @string resource [HardcodedText]
+                android:textOff="F"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:237: Warning: Hardcoded string "F", should use @string resource [HardcodedText]
+                android:textOn="F"
+                ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:246: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                android:textOff="S"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_add_task_enhanced.xml:247: Warning: Hardcoded string "S", should use @string resource [HardcodedText]
+                android:textOn="S"
+                ~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:12: Warning: Hardcoded string "Create Safe Zone", should use @string resource [HardcodedText]
+        android:text="Create Safe Zone"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:24: Warning: Hardcoded string "Zone Name", should use @string resource [HardcodedText]
+        android:hint="Zone Name"
+        ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:43: Warning: Hardcoded string "Description (Optional)", should use @string resource [HardcodedText]
+        android:hint="Description (Optional)"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:60: Warning: Hardcoded string "Radius", should use @string resource [HardcodedText]
+        android:text="Radius"
+        ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:90: Warning: Hardcoded string "150m", should use @string resource [HardcodedText]
+            android:text="150m"
+            ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:112: Warning: Hardcoded string "Location", should use @string resource [HardcodedText]
+            android:text="Location"
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:122: Warning: Hardcoded string "Lat: 0.000000, Lng: 0.000000", should use @string resource [HardcodedText]
+            android:text="Lat: 0.000000, Lng: 0.000000"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:142: Warning: Hardcoded string "Cancel", should use @string resource [HardcodedText]
+            android:text="Cancel"
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\dialog_create_geofence.xml:150: Warning: Hardcoded string "Create Zone", should use @string resource [HardcodedText]
+            android:text="Create Zone"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_custom_mmse_question.xml:12: Warning: Hardcoded string "Question", should use @string resource [HardcodedText]
+        android:text="Question"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_custom_mmse_question.xml:21: Warning: Hardcoded string "Type", should use @string resource [HardcodedText]
+        android:text="Type"
+        ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_custom_mmse_question.xml:29: Warning: Hardcoded string "Expected Answer", should use @string resource [HardcodedText]
+        android:text="Expected Answer"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_custom_mmse_question.xml:37: Warning: Hardcoded string "Options", should use @string resource [HardcodedText]
+        android:text="Options"
+        ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_custom_mmse_question.xml:46: Warning: Hardcoded string "Score: 1", should use @string resource [HardcodedText]
+        android:text="Score: 1"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_custom_mmse_question.xml:54: Warning: Hardcoded string "Delete", should use @string resource [HardcodedText]
+        android:text="Delete"
+        ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_emergency_contact.xml:39: Warning: Hardcoded string "Emergency contact icon", should use @string resource [HardcodedText]
+            android:contentDescription="Emergency contact icon"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_emergency_contact.xml:104: Warning: Hardcoded string "Call emergency contact", should use @string resource [HardcodedText]
+            android:contentDescription="Call emergency contact"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_emergency_contact.xml:118: Warning: Hardcoded string "PRIMARY", should use @string resource [HardcodedText]
+            android:text="PRIMARY"
+            ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_medication.xml:33: Warning: Hardcoded string "Medication Name", should use @string resource [HardcodedText]
+            android:text="Medication Name"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_medication.xml:50: Warning: Hardcoded string "10mg", should use @string resource [HardcodedText]
+                android:text="10mg"
+                ~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_medication.xml:59: Warning: Hardcoded string "8:00 AM", should use @string resource [HardcodedText]
+                android:text="8:00 AM"
+                ~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_medication.xml:73: Warning: Hardcoded string "ACTIVE", should use @string resource [HardcodedText]
+            android:text="ACTIVE"
+            ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_medication.xml:89: Warning: Hardcoded string "Edit medication", should use @string resource [HardcodedText]
+            android:contentDescription="Edit medication"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_medication.xml:99: Warning: Hardcoded string "Delete medication", should use @string resource [HardcodedText]
+            android:contentDescription="Delete medication"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_mmse_result.xml:28: Warning: Hardcoded string "Score", should use @string resource [HardcodedText]
+            android:text="Score" />
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_mmse_result.xml:35: Warning: Hardcoded string "Interpretation", should use @string resource [HardcodedText]
+            android:text="Interpretation" />
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:47: Warning: Hardcoded string "Task Name", should use @string resource [HardcodedText]
+                    android:text="Task Name"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:59: Warning: Hardcoded string "Task description", should use @string resource [HardcodedText]
+                    android:text="Task description"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:83: Warning: Hardcoded string "Edit task", should use @string resource [HardcodedText]
+                    android:contentDescription="Edit task" />
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:92: Warning: Hardcoded string "Delete task", should use @string resource [HardcodedText]
+                    android:contentDescription="Delete task" />
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:103: Warning: Hardcoded string "Category", should use @string resource [HardcodedText]
+            android:text="Category"
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:126: Warning: Hardcoded string "⏰ 9:00 AM", should use @string resource [HardcodedText]
+                android:text="⏰ 9:00 AM"
+                ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:137: Warning: Hardcoded string "🔄 Daily", should use @string resource [HardcodedText]
+                android:text="🔄 Daily"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:158: Warning: Hardcoded string "Alarm enabled", should use @string resource [HardcodedText]
+                    android:contentDescription="Alarm enabled" />
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:166: Warning: Hardcoded string "Caretaker notification enabled", should use @string resource [HardcodedText]
+                    android:contentDescription="Caretaker notification enabled" />
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_task.xml:177: Warning: Hardcoded string "✅ Completed today", should use @string resource [HardcodedText]
+            android:text="✅ Completed today"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_time_point.xml:16: Warning: Hardcoded string "1", should use @string resource [HardcodedText]
+        android:text="1"
+        ~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_time_point.xml:32: Warning: Hardcoded string "10:30:15", should use @string resource [HardcodedText]
+            android:text="10:30:15"
+            ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\item_time_point.xml:41: Warning: Hardcoded string "40.123456, -74.123456", should use @string resource [HardcodedText]
+            android:text="40.123456, -74.123456"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\menu\menu_medication_list.xml:7: Warning: Hardcoded string "All Medications", should use @string resource [HardcodedText]
+        android:title="All Medications"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\menu\menu_medication_list.xml:13: Warning: Hardcoded string "Active Only", should use @string resource [HardcodedText]
+        android:title="Active Only"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\menu\menu_medication_list.xml:19: Warning: Hardcoded string "Overdue", should use @string resource [HardcodedText]
+        android:title="Overdue"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\menu\menu_medication_list.xml:25: Warning: Hardcoded string "Due Today", should use @string resource [HardcodedText]
+        android:title="Due Today"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\menu\menu_medication_list.xml:31: Warning: Hardcoded string "Refresh", should use @string resource [HardcodedText]
+        android:title="Refresh"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_login.xml:109: Warning: Consider replacing android:drawableLeft with android:drawableStart="@drawable/ic_google" to better support right-to-left layouts [RtlHardcoded]
+        android:drawableLeft="@drawable/ic_google"
+        ~~~~~~~~~~~~~~~~~~~~
+C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\res\layout\activity_register.xml:126: Warning: Consider replacing android:drawableLeft with android:drawableStart="@drawable/ic_google" to better support right-to-left layouts [RtlHardcoded]
+        android:drawableLeft="@drawable/ic_google"
+        ~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RtlHardcoded":
+   Using Gravity#LEFT and Gravity#RIGHT can lead to problems when a layout is
+   rendered in locales where text flows from right to left. Use Gravity#START
+   and Gravity#END instead. Similarly, in XML gravity and layout_gravity
+   attributes, use start rather than left.
+
+   For XML attributes such as paddingLeft and layout_marginLeft, use
+   paddingStart and layout_marginStart. NOTE: If your minSdkVersion is less
+   than 17, you should add both the older left/right attributes as well as the
+   new start/end attributes. On older platforms, where RTL is not supported
+   and the start/end attributes are unknown and therefore ignored, you need
+   the older left/right attributes. There is a separate lint check which
+   catches that type of error.
+
+   (Note: For Gravity#LEFT and Gravity#START, you can use these constants even
+   when targeting older platforms, because the start bitmask is a superset of
+   the left bitmask. Therefore, you can use gravity="start" rather than
+   gravity="left|start".)
+
+4 errors, 490 warnings

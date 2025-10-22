@@ -43,6 +43,11 @@
     <color name="warning">#F59E0B</color>
     <color name="warning_light">#FEF3C7</color>
     <color name="white">#FFFFFFFF</color>
+    <string name="account_exists_message">An account with this email already exists using %s. Would you like to sign in and link your accounts?</string>
+    <string name="account_exists_title">Account Already Exists</string>
+    <string name="account_link_failed">Failed to link accounts</string>
+    <string name="account_link_success">Accounts linked successfully!</string>
+    <string name="account_linking">Account Linking</string>
     <string name="add_emergency_contact">Emergency Contacts</string>
     <string name="add_image">Add Image</string>
     <string name="add_medication">Add Medication</string>
@@ -58,6 +63,7 @@
     <string name="contact_name">Contact Name</string>
     <string name="contact_name_hint">e.g., Dr. Sharma</string>
     <string name="daily">Daily</string>
+    <string name="default_web_client_id" translatable="false">1092854188528-ihigng24tlvqhisrm0961a5qd6alqe11.apps.googleusercontent.com</string>
     <string name="description_hint">Enter reminder description (optional)</string>
     <string name="dont_have_account">Don\'t have an account? </string>
     <string name="dosage">Dosage</string>
@@ -66,6 +72,7 @@
     <string name="email">Email</string>
     <string name="enable_alarm_notification">Enable alarm/notification</string>
     <string name="enhanced_task_dialog_title">Create Enhanced Task</string>
+    <string name="enter_password_to_link">Enter your password to link accounts:</string>
     <string name="enter_patient_id">Enter Patient ID</string>
     <string name="error">Error</string>
     <string name="firebase_database_url" translatable="false">https://recallar-12588-default-rtdb.asia-southeast1.firebasedatabase.app</string>
@@ -79,6 +86,7 @@
     <string name="images">Images</string>
     <string name="invalid_patient_id">Invalid Patient ID</string>
     <string name="link">Link</string>
+    <string name="link_accounts">Link Accounts</string>
     <string name="link_patient">Link Patient</string>
     <string name="link_patient_description">Enter the unique Patient ID to link your account to a patient</string>
     <string name="loading">Loading...</string>
@@ -99,6 +107,9 @@
     <string name="notification_channel_location">Location Updates</string>
     <string name="notification_channel_location_desc">Updates about patient location and safe zone activities</string>
     <string name="notify_caretaker_if_missed">Notify caretaker if missed</string>
+    <string name="oauth_cancelled">OAuth sign-in was cancelled</string>
+    <string name="oauth_config_error">OAuth sign-in not properly configured. Please contact support.</string>
+    <string name="oauth_failed">OAuth sign-in failed</string>
     <string name="password">Password</string>
     <string name="patient_id_hint">Patient ID</string>
     <string name="patient_linked_successfully">Patient linked successfully!</string>
@@ -118,7 +129,10 @@
     <string name="scheduled_date_hint">Scheduled Date</string>
     <string name="select_date_time">Tap to select date and time</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_in_to_link">Sign in to link accounts</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_up">Sign Up</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
     <string name="success">Success</string>
     <string name="sunday_short">S</string>
     <string name="task_added_successfully">Task added successfully!</string>

@@ -83,6 +83,53 @@
         android:layout_marginBottom="16dp"
         app:cornerRadius="8dp" />
 
+    <!-- Divider with "OR" text -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginVertical="16dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OR"
+            android:layout_marginHorizontal="16dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+    <!-- Google Sign-Up Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/googleSignUpButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/sign_up_with_google"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/black"
+        android:drawableLeft="@drawable/ic_google"
+        android:drawablePadding="8dp"
+        app:cornerRadius="8dp"
+        app:strokeColor="@android:color/darker_gray"
+        app:strokeWidth="1dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

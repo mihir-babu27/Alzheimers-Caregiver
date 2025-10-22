@@ -59,6 +59,7 @@ drawable ic_emergency_contacts_empty
 drawable ic_export
 drawable ic_family
 drawable ic_fence
+drawable ic_google
 drawable ic_history
 drawable ic_launcher_background
 drawable ic_location
@@ -160,6 +161,8 @@ id fabAddTask
 id fabCenterOnPatient
 id fab_add_medication
 id forgotPasswordLink
+id googleSignInButton
+id googleSignUpButton
 id headerLayout
 id iconAlarm
 id iconCaretakerNotification
@@ -302,6 +305,7 @@ layout activity_splash
 layout activity_task_list
 layout dialog_add_task_enhanced
 layout dialog_create_geofence
+layout dialog_link_account
 layout item_custom_mmse_question
 layout item_emergency_contact
 layout item_medication
@@ -312,6 +316,11 @@ layout item_time_point
 menu menu_medication_list
 mipmap ic_launcher
 mipmap ic_launcher_round
+string account_exists_message
+string account_exists_title
+string account_link_failed
+string account_link_success
+string account_linking
 string add_emergency_contact
 string add_image
 string add_medication
@@ -327,6 +336,7 @@ string contact_added_successfully
 string contact_name
 string contact_name_hint
 string daily
+string default_web_client_id
 string description_hint
 string dont_have_account
 string dosage
@@ -335,6 +345,7 @@ string due_time
 string email
 string enable_alarm_notification
 string enhanced_task_dialog_title
+string enter_password_to_link
 string enter_patient_id
 string error
 string firebase_database_url
@@ -348,6 +359,7 @@ string google_storage_bucket
 string images
 string invalid_patient_id
 string link
+string link_accounts
 string link_patient
 string link_patient_description
 string loading
@@ -368,6 +380,9 @@ string notification_channel_general_desc
 string notification_channel_location
 string notification_channel_location_desc
 string notify_caretaker_if_missed
+string oauth_cancelled
+string oauth_config_error
+string oauth_failed
 string password
 string patient_id_hint
 string patient_linked_successfully
@@ -387,7 +402,10 @@ string save
 string scheduled_date_hint
 string select_date_time
 string sign_in
+string sign_in_to_link
+string sign_in_with_google
 string sign_up
+string sign_up_with_google
 string success
 string sunday_short
 string task_added_successfully

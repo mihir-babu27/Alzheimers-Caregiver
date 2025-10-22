@@ -561,128 +561,153 @@
 299-->[com.google.android.gms:play-services-maps:18.2.0] C:\Users\mihir\.gradle\caches\transforms-3\4b18f3f7511dfe5adf56e87318bd6682\transformed\play-services-maps-18.2.0\AndroidManifest.xml:41:13-37
 300
 301        <activity
-301-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
-302            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-302-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
-303            android:exported="false"
-303-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
-304            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-304-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
-305
-306        <provider
-306-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:23:9-28:39
-307            android:name="com.google.firebase.provider.FirebaseInitProvider"
-307-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:24:13-77
-308            android:authorities="com.mihir.alzheimerscaregiver.caretaker.firebaseinitprovider"
-308-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:25:13-72
-309            android:directBootAware="true"
-309-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:26:13-43
-310            android:exported="false"
-310-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:27:13-37
-311            android:initOrder="100" />
-311-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:28:13-36
-312
-313        <meta-data
-313-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
-314            android:name="com.google.android.gms.version"
-314-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
-315            android:value="@integer/google_play_services_version" />
-315-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
-316
-317        <provider
-317-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-318            android:name="androidx.startup.InitializationProvider"
-318-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
-319            android:authorities="com.mihir.alzheimerscaregiver.caretaker.androidx-startup"
-319-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
-320            android:exported="false" >
-320-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
-321            <meta-data
-321-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-322                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-322-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
-323                android:value="androidx.startup" />
-323-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
-324            <meta-data
-324-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:29:13-31:52
-325                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-325-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:30:17-78
-326                android:value="androidx.startup" />
-326-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:31:17-49
-327            <meta-data
-327-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-328                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-328-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
-329                android:value="androidx.startup" />
-329-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-330        </provider>
+301-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:23:9-27:75
+302            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+302-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:24:13-93
+303            android:excludeFromRecents="true"
+303-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:25:13-46
+304            android:exported="false"
+304-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:26:13-37
+305            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+305-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:27:13-72
+306        <!--
+307            Service handling Google Sign-In user revocation. For apps that do not integrate with
+308            Google Sign-In, this service will never be started.
+309        -->
+310        <service
+310-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:33:9-37:51
+311            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+311-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:34:13-89
+312            android:exported="true"
+312-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:35:13-36
+313            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+313-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:36:13-107
+314            android:visibleToInstantApps="true" />
+314-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\mihir\.gradle\caches\transforms-3\9a9dfb1b14c0e9da218a4c0eb41303ce\transformed\play-services-auth-20.7.0\AndroidManifest.xml:37:13-48
+315
+316        <activity
+316-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+317            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+317-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+318            android:exported="false"
+318-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+319            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+319-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mihir\.gradle\caches\transforms-3\dc97446591a36eb030f1781a326755ca\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+320
+321        <provider
+321-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:23:9-28:39
+322            android:name="com.google.firebase.provider.FirebaseInitProvider"
+322-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:24:13-77
+323            android:authorities="com.mihir.alzheimerscaregiver.caretaker.firebaseinitprovider"
+323-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:25:13-72
+324            android:directBootAware="true"
+324-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:26:13-43
+325            android:exported="false"
+325-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:27:13-37
+326            android:initOrder="100" />
+326-->[com.google.firebase:firebase-common:20.4.2] C:\Users\mihir\.gradle\caches\transforms-3\10cad8575ae2ea2fbbd8c0221736e883\transformed\firebase-common-20.4.2\AndroidManifest.xml:28:13-36
+327
+328        <meta-data
+328-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
+329            android:name="com.google.android.gms.version"
+329-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
+330            android:value="@integer/google_play_services_version" />
+330-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5e140008dbff1b20405d8eb5d9395a1e\transformed\play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
 331
-332        <service
-332-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:28:9-34:19
-333            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-333-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:29:13-103
-334            android:exported="false" >
-334-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:30:13-37
-335            <meta-data
-335-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:31:13-33:39
-336                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-336-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:32:17-94
-337                android:value="cct" />
-337-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:33:17-36
-338        </service>
-339        <service
-339-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:26:9-30:19
-340            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-340-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:27:13-117
-341            android:exported="false"
-341-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:28:13-37
-342            android:permission="android.permission.BIND_JOB_SERVICE" >
-342-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:29:13-69
-343        </service>
-344
-345        <receiver
-345-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:32:9-34:40
-346            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-346-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:33:13-132
-347            android:exported="false" />
-347-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:34:13-37
-348        <receiver
-348-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-349            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-349-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-350            android:directBootAware="false"
-350-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-351            android:enabled="true"
-351-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-352            android:exported="true"
-352-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-353            android:permission="android.permission.DUMP" >
-353-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-354            <intent-filter>
-354-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-355                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-355-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-355-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-356            </intent-filter>
-357            <intent-filter>
-357-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-358                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-358-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-358-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-359            </intent-filter>
-360            <intent-filter>
-360-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-361                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-361-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-361-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
-362            </intent-filter>
-363            <intent-filter>
-363-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-364                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-364-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-364-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
-365            </intent-filter>
-366        </receiver>
-367    </application>
-368
-369</manifest>
+332        <provider
+332-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+333            android:name="androidx.startup.InitializationProvider"
+333-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+334            android:authorities="com.mihir.alzheimerscaregiver.caretaker.androidx-startup"
+334-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+335            android:exported="false" >
+335-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+336            <meta-data
+336-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+337                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+337-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+338                android:value="androidx.startup" />
+338-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mihir\.gradle\caches\transforms-3\218ceb32324715c08717e1b647b27a4f\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+339            <meta-data
+339-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:29:13-31:52
+340                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+340-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:30:17-78
+341                android:value="androidx.startup" />
+341-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\mihir\.gradle\caches\transforms-3\66bb06a3b126cffd41fd9a76c6810492\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:31:17-49
+342            <meta-data
+342-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+343                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+343-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+344                android:value="androidx.startup" />
+344-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+345        </provider>
+346
+347        <service
+347-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:28:9-34:19
+348            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+348-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:29:13-103
+349            android:exported="false" >
+349-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:30:13-37
+350            <meta-data
+350-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:31:13-33:39
+351                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+351-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:32:17-94
+352                android:value="cct" />
+352-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\9d6ef946b78960ad8276b60bfc6bb2e9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:33:17-36
+353        </service>
+354        <service
+354-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:26:9-30:19
+355            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+355-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:27:13-117
+356            android:exported="false"
+356-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:28:13-37
+357            android:permission="android.permission.BIND_JOB_SERVICE" >
+357-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:29:13-69
+358        </service>
+359
+360        <receiver
+360-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:32:9-34:40
+361            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+361-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:33:13-132
+362            android:exported="false" />
+362-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mihir\.gradle\caches\transforms-3\84766109d69206f149bbf9195dd9e287\transformed\transport-runtime-3.1.8\AndroidManifest.xml:34:13-37
+363        <receiver
+363-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+364            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+364-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+365            android:directBootAware="false"
+365-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+366            android:enabled="true"
+366-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+367            android:exported="true"
+367-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+368            android:permission="android.permission.DUMP" >
+368-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+369            <intent-filter>
+369-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+370                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+370-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+370-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+371            </intent-filter>
+372            <intent-filter>
+372-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+373                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+373-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+373-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+374            </intent-filter>
+375            <intent-filter>
+375-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+376                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+376-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+376-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+377            </intent-filter>
+378            <intent-filter>
+378-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+379                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+379-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+379-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\mihir\.gradle\caches\transforms-3\5dc726081c8eaae4d81b93f10a802c61\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+380            </intent-filter>
+381        </receiver>
+382    </application>
+383
+384</manifest>

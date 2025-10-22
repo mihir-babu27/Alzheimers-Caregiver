@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-38:/values-be/values-be.xml",
+            "outputFile": "com.mihir.alzheimerscaregiver.caretaker.app-mergeReleaseResources-39:/values-be/values-be.xml",
             "map": [
                 {
                     "source": "C:\\Users\\mihir\\.gradle\\caches\\transforms-3\\5e140008dbff1b20405d8eb5d9395a1e\\transformed\\play-services-basement-18.3.0\\res\\values-be\\values.xml",

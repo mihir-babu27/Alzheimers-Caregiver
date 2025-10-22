@@ -1,14 +1,22 @@
 package com.mihir.alzheimerscaregiver.auth;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mihir.alzheimerscaregiver.data.entity.PatientEntity;
 import com.mihir.alzheimerscaregiver.data.FirebaseConfig;
@@ -18,10 +26,48 @@ public class FirebaseAuthManager implements IAuthManager {
     private static final String TAG = "FirebaseAuthManager";
     private final FirebaseAuth auth;
     private final FirebaseFirestore db;
+    private final Context context;
+    private GoogleSignInClient googleSignInClient;
     
     public FirebaseAuthManager() {
         this.auth = FirebaseAuth.getInstance();
-        this.db = FirebaseConfig.getInstance();
+        this.db = FirebaseFirestore.getInstance();
+        this.context = null; // For backward compatibility with existing code
+    }
+    
+    public FirebaseAuthManager(Context context) {
+        this.auth = FirebaseAuth.getInstance();
+        this.db = FirebaseFirestore.getInstance();
+        this.context = context;
+        initializeGoogleSignIn();
+    }
+    
+    /**
+     * Initialize Google Sign-In configuration
+     */
+    private void initializeGoogleSignIn() {
+        if (context == null) return;
+        
+        try {
+            // The web client ID is automatically generated from google-services.json
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(context.getString(context.getResources().getIdentifier("default_web_client_id", "string", context.getPackageName())))
+                    .requestEmail()
+                    .build();
+            
+            googleSignInClient = GoogleSignIn.getClient(context, gso);
+            Log.d(TAG, "Google Sign-In initialized successfully");
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to initialize Google Sign-In: " + e.getMessage());
+            // Continue without Google Sign-In if configuration fails
+        }
+    }
+    
+    /**
+     * Get Google Sign-In client for starting sign-in flow
+     */
+    public GoogleSignInClient getGoogleSignInClient() {
+        return googleSignInClient;
     }
     
     /**
@@ -361,6 +407,186 @@ public class FirebaseAuthManager implements IAuthManager {
                     callback.onResult(false, "Failed to check verification status");
                 }
             });
+    }
+    
+    /**
+     * Sign in with Google OAuth
+     */
+    public void signInWithGoogle(GoogleSignInAccount account, AuthCallback callback) {
+        if (account == null) {
+            if (callback != null) {
+                callback.onError("Google Sign-In failed: No account received");
+            }
+            return;
+        }
+        
+        Log.d(TAG, "Signing in with Google: " + account.getEmail());
+        
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = auth.getCurrentUser();
+                        if (user != null) {
+                            String patientId = user.getUid();
+                            Log.d(TAG, "Google sign-in successful for patient: " + patientId);
+                            
+                            // Create or update patient document in Firestore
+                            createOrUpdatePatientDocument(user, account.getDisplayName(), callback);
+                        } else {
+                            if (callback != null) {
+                                callback.onError("Authentication succeeded but user is null");
+                            }
+                        }
+                    } else {
+                        Exception exception = task.getException();
+                        if (exception instanceof FirebaseAuthUserCollisionException) {
+                            // Email already exists with different provider
+                            handleAccountCollision(credential, exception, callback);
+                        } else {
+                            String errorMessage = exception != null ? exception.getMessage() : "Google sign-in failed";
+                            Log.e(TAG, "Google sign-in failed: " + errorMessage);
+                            if (callback != null) {
+                                callback.onError("Google sign-in failed: " + errorMessage);
+                            }
+                        }
+                    }
+                });
+    }
+    
+    /**
+     * Link Google credential to existing account
+     */
+    public void linkGoogleCredential(GoogleSignInAccount account, AuthCallback callback) {
+        FirebaseUser user = auth.getCurrentUser();
+        if (user == null) {
+            if (callback != null) {
+                callback.onError("No user signed in to link Google account");
+            }
+            return;
+        }
+        
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        
+        user.linkWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Google account linked successfully");
+                        if (callback != null) {
+                            callback.onSuccess(user.getUid());
+                        }
+                    } else {
+                        String errorMessage = task.getException() != null ? 
+                                task.getException().getMessage() : "Failed to link Google account";
+                        Log.e(TAG, "Failed to link Google account: " + errorMessage);
+                        if (callback != null) {
+                            callback.onError("Failed to link Google account: " + errorMessage);
+                        }
+                    }
+                });
+    }
+    
+    /**
+     * Handle account collision when email already exists
+     */
+    private void handleAccountCollision(AuthCredential credential, Exception exception, AuthCallback callback) {
+        Log.d(TAG, "Handling account collision: " + exception.getMessage());
+        
+        if (callback != null) {
+            callback.onError("An account with this email already exists. Please sign in with your email and password, then link your Google account in settings.");
+        }
+    }
+    
+    /**
+     * Create or update patient document for OAuth users
+     */
+    private void createOrUpdatePatientDocument(FirebaseUser user, String displayName, AuthCallback callback) {
+        String patientId = user.getUid();
+        String email = user.getEmail();
+        
+        // Check if patient document already exists
+        db.collection("patients").document(patientId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().exists()) {
+                            // Patient exists, just update email if needed
+                            Log.d(TAG, "Patient document exists, updating email if needed");
+                            updatePatientEmail(patientId, email, callback);
+                        } else {
+                            // Create new patient document
+                            Log.d(TAG, "Creating new patient document for OAuth user");
+                            PatientEntity newPatient = new PatientEntity();
+                            newPatient.patientId = patientId;
+                            newPatient.email = email;
+                            if (displayName != null && !displayName.trim().isEmpty()) {
+                                newPatient.name = displayName;
+                            }
+                            
+                            db.collection("patients").document(patientId)
+                                    .set(newPatient)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d(TAG, "Patient document created successfully for OAuth user");
+                                        if (callback != null) {
+                                            callback.onSuccess(patientId);
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        String errorMessage = "Failed to create patient profile: " + e.getMessage();
+                                        Log.e(TAG, errorMessage, e);
+                                        if (callback != null) {
+                                            callback.onError(errorMessage);
+                                        }
+                                    });
+                        }
+                    } else {
+                        String errorMessage = "Failed to check existing patient: " + 
+                                (task.getException() != null ? task.getException().getMessage() : "Unknown error");
+                        Log.e(TAG, errorMessage);
+                        if (callback != null) {
+                            callback.onError(errorMessage);
+                        }
+                    }
+                });
+    }
+    
+    /**
+     * Update patient email in Firestore
+     */
+    private void updatePatientEmail(String patientId, String email, AuthCallback callback) {
+        db.collection("patients").document(patientId)
+                .update("email", email)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Patient email updated successfully");
+                    if (callback != null) {
+                        callback.onSuccess(patientId);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    String errorMessage = "Failed to update patient email: " + e.getMessage();
+                    Log.e(TAG, errorMessage, e);
+                    if (callback != null) {
+                        callback.onError(errorMessage);
+                    }
+                });
+    }
+    
+    /**
+     * Sign out from Google
+     */
+    public void signOutFromGoogle(Runnable callback) {
+        if (googleSignInClient != null) {
+            googleSignInClient.signOut()
+                    .addOnCompleteListener(task -> {
+                        Log.d(TAG, "Signed out from Google");
+                        if (callback != null) {
+                            callback.run();
+                        }
+                    });
+        } else if (callback != null) {
+            callback.run();
+        }
     }
     
     public interface AuthCallback {

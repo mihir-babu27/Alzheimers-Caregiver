@@ -13,7 +13,12 @@
           "package_name": "com.mihir.alzheimerscaregiver"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1092854188528-ihigng24tlvqhisrm0961a5qd6alqe11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBbCZZ7NPDeZBA6eYtPSMCaw-L7O4RhDvI"
@@ -21,7 +26,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092854188528-ihigng24tlvqhisrm0961a5qd6alqe11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -32,7 +42,20 @@
           "package_name": "com.mihir.alzheimerscaregiver.caretaker"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1092854188528-cas5j4tp5gedib1dprf8p7pla1fvtea0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mihir.alzheimerscaregiver.caretaker",
+            "certificate_hash": "83db9a20eee2f46c0f207be48421553ac4814375"
+          }
+        },
+        {
+          "client_id": "1092854188528-ihigng24tlvqhisrm0961a5qd6alqe11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBbCZZ7NPDeZBA6eYtPSMCaw-L7O4RhDvI"
@@ -40,7 +63,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092854188528-ihigng24tlvqhisrm0961a5qd6alqe11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app"
+    name=":app"
+    type="APP"
+    maven="CaretakerApp:app:"
+    agpVersion="8.2.2"
+    buildFolder="build"
+    bootClassPath="C:\Users\mihir\AppData\Local\Android\Sdk\platforms\android-34\android.jar;C:\Users\mihir\AppData\Local\Android\Sdk\build-tools\34.0.0\core-lambda-stubs.jar"
+    javaSourceLevel="17"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="debug"/>
+</lint-module>
