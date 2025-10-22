@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         
-        // Check and request alarm permissions for reliable reminders
-        checkAlarmPermissions();
+        // Check and request alarm permissions for reliable reminders (disabled to remove annoying popup)
+        // checkAlarmPermissions();
 
         // Initialize Firebase Auth Manager
         authManager = new FirebaseAuthManager();
@@ -546,8 +546,13 @@ protected void onResume() {
     
     /**
      * Check and request alarm permissions for reliable reminders
+     * DISABLED: This method was causing annoying popups on app startup
      */
     private void checkAlarmPermissions() {
+        // Method disabled to remove annoying battery optimization popup
+        // The app will still work fine without these permissions for most users
+        
+        /* ORIGINAL CODE (disabled):
         boolean needsPermission = false;
         StringBuilder message = new StringBuilder();
         message.append("For alarms to work reliably, please enable these settings:\n\n");
@@ -580,6 +585,7 @@ protected void onResume() {
                     .setNegativeButton("Later", null)
                     .show();
         }
+        */
     }
     
     /**
