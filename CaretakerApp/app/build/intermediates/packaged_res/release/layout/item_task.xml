@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViewTask"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Checkbox -->
+            <CheckBox
+                android:id="@+id/checkboxCompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:buttonTint="@color/colorPrimary" />
+
+            <!-- Task Info -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Task Name -->
+                <TextView
+                    android:id="@+id/textTaskName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Task Name"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+
+                <!-- Task Description -->
+                <TextView
+                    android:id="@+id/textTaskDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Task description"
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:layout_marginTop="4dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/buttonEditTask"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_edit"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Edit task" />
+
+                <ImageView
+                    android:id="@+id/buttonDeleteTask"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_delete"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"
+                    android:contentDescription="Delete task" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Category -->
+        <TextView
+            android:id="@+id/textTaskCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/bg_category_tag"
+            android:padding="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="44dp"
+            android:visibility="gone" />
+
+        <!-- Task Details Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="44dp"
+            android:gravity="center_vertical">
+
+            <!-- Scheduled Time -->
+            <TextView
+                android:id="@+id/textScheduledTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⏰ 9:00 AM"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone" />
+
+            <!-- Repeat Pattern -->
+            <TextView
+                android:id="@+id/textRepeatPattern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔄 Daily"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone" />
+
+            <!-- Notification Icons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="0"
+                android:layout_gravity="end">
+
+                <ImageView
+                    android:id="@+id/iconAlarm"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_alarm"
+                    android:layout_marginEnd="4dp"
+                    android:visibility="gone"
+                    android:contentDescription="Alarm enabled" />
+
+                <ImageView
+                    android:id="@+id/iconCaretakerNotification"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_notification"
+                    android:visibility="gone"
+                    android:contentDescription="Caretaker notification enabled" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Status -->
+        <TextView
+            android:id="@+id/textStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✅ Completed today"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#4CAF50"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="44dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

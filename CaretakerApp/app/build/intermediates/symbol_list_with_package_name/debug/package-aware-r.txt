@@ -3597,6 +3597,7 @@ id medicineNamesContainer
 id message
 id middle
 id mini
+id modeIndicatorText
 id month_grid
 id month_navigation_bar
 id month_navigation_fragment_toggle
@@ -3702,6 +3703,7 @@ id primaryBadge
 id primaryCheckBox
 id primaryIndicator
 id professionEditText
+id profileStatusText
 id progressBar
 id progress_bar
 id progress_circular

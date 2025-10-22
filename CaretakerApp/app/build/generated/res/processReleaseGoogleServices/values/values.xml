@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_database_url" translatable="false">https://recallar-12588-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+    <string name="gcm_defaultSenderId" translatable="false">1092854188528</string>
+    <string name="google_api_key" translatable="false">AIzaSyBbCZZ7NPDeZBA6eYtPSMCaw-L7O4RhDvI</string>
+    <string name="google_app_id" translatable="false">1:1092854188528:android:cb219a0d6c0c5f0ee27535</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBbCZZ7NPDeZBA6eYtPSMCaw-L7O4RhDvI</string>
+    <string name="google_storage_bucket" translatable="false">recallar-12588.firebasestorage.app</string>
+    <string name="project_id" translatable="false">recallar-12588</string>
+</resources>

@@ -183,6 +183,7 @@ id logoutButton
 id manageGeofencesButton
 id mapView
 id medicineNamesContainer
+id modeIndicatorText
 id option1Input
 id option2Input
 id option3Input
@@ -203,6 +204,7 @@ id primaryBadge
 id primaryCheckBox
 id primaryIndicator
 id professionEditText
+id profileStatusText
 id progressBar
 id progress_bar
 id questionInput

@@ -3,6 +3,13 @@ package com.mihir.alzheimerscaregiver.caretaker;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -20,17 +28,31 @@ import java.util.Map;
 
 public class PatientProfileEntryActivity extends AppCompatActivity {
 
-    private TextInputEditText patientNameEditText;
-    private TextInputEditText birthYearEditText;
-    private TextInputEditText birthplaceEditText;
-    private TextInputEditText professionEditText;
-    private TextInputEditText otherDetailsEditText;
-    private MaterialButton savePatientProfileButton;
+    // UI Elements - using basic Android components for compatibility
+    private android.widget.EditText patientNameEditText;
+    private android.widget.EditText birthYearEditText;
+    private android.widget.EditText birthplaceEditText;
+    private android.widget.EditText professionEditText;
+    private android.widget.EditText otherDetailsEditText;
+    private android.widget.Button savePatientProfileButton;
     
+    // Additional UI elements for enhanced interface
+    private TextView toolbarTitle;
+    private TextView modeIndicatorText;
+    private TextView profileStatusText;
+    private TextView statusText;
+    private ProgressBar progressBar;
+    private ImageButton backButton;
+    
+    // Firebase and data
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private SharedPreferences prefs;
     private String linkedPatientId;
+    
+    // Mode tracking for edit functionality
+    private boolean isEditMode = false;
+    private Map<String, Object> existingProfile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +77,34 @@ public class PatientProfileEntryActivity extends AppCompatActivity {
         // Initialize views
         initializeViews();
         
+        // Check for existing profile to determine mode
+        checkForExistingProfile();
+        
         // Set click listener
         savePatientProfileButton.setOnClickListener(v -> attemptSaveProfile());
     }
 
     private void initializeViews() {
+        // Form elements
         patientNameEditText = findViewById(R.id.patientNameEditText);
         birthYearEditText = findViewById(R.id.birthYearEditText);
         birthplaceEditText = findViewById(R.id.birthplaceEditText);
         professionEditText = findViewById(R.id.professionEditText);
         otherDetailsEditText = findViewById(R.id.otherDetailsEditText);
         savePatientProfileButton = findViewById(R.id.savePatientProfileButton);
+        
+        // New UI elements
+        toolbarTitle = findViewById(R.id.toolbarTitle);
+        modeIndicatorText = findViewById(R.id.modeIndicatorText);
+        profileStatusText = findViewById(R.id.profileStatusText);
+        statusText = findViewById(R.id.statusText);
+        progressBar = findViewById(R.id.progressBar);
+        backButton = findViewById(R.id.backButton);
+        
+        // Set up back button
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
     }
 
     private void attemptSaveProfile() {
@@ -111,9 +150,8 @@ public class PatientProfileEntryActivity extends AppCompatActivity {
             return;
         }
 
-        // Disable save button and show progress
-        savePatientProfileButton.setEnabled(false);
-        savePatientProfileButton.setText("Saving...");
+        // Show loading state
+        showLoading(true);
 
         // Create patient profile data
         Map<String, Object> patientProfile = new HashMap<>();
@@ -219,6 +257,147 @@ public class PatientProfileEntryActivity extends AppCompatActivity {
         
         // Optionally finish the activity
         finish();
+    }
+
+    /**
+     * Check for existing profile and determine mode
+     */
+    private void checkForExistingProfile() {
+        if (progressBar != null) {
+            progressBar.setVisibility(android.view.View.VISIBLE);
+        }
+        
+        db.collection("patients")
+                .document(linkedPatientId)
+                .collection("profile")
+                .document("details")
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (progressBar != null) {
+                        progressBar.setVisibility(android.view.View.GONE);
+                    }
+                    
+                    if (documentSnapshot.exists()) {
+                        // Profile exists - enter edit mode
+                        isEditMode = true;
+                        existingProfile = documentSnapshot.getData();
+                        populateFieldsForEdit();
+                        updateUIForEditMode();
+                    } else {
+                        // No profile - create mode
+                        isEditMode = false;
+                        updateUIForCreateMode();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    if (progressBar != null) {
+                        progressBar.setVisibility(android.view.View.GONE);
+                    }
+                    Log.e("PatientProfile", "Error checking for existing profile", e);
+                    Toast.makeText(this, "Error loading profile data", Toast.LENGTH_SHORT).show();
+                    // Default to create mode
+                    isEditMode = false;
+                    updateUIForCreateMode();
+                });
+    }
+
+    /**
+     * Populate form fields with existing profile data
+     */
+    private void populateFieldsForEdit() {
+        if (existingProfile == null) return;
+        
+        // Populate name
+        String name = (String) existingProfile.get("name");
+        if (name != null) {
+            patientNameEditText.setText(name);
+        }
+        
+        // Populate birth year
+        Object birthYear = existingProfile.get("birthYear");
+        if (birthYear != null) {
+            birthYearEditText.setText(String.valueOf(birthYear));
+        }
+        
+        // Populate birthplace
+        String birthplace = (String) existingProfile.get("birthplace");
+        if (birthplace != null) {
+            birthplaceEditText.setText(birthplace);
+        }
+        
+        // Populate profession
+        String profession = (String) existingProfile.get("profession");
+        if (profession != null) {
+            professionEditText.setText(profession);
+        }
+        
+        // Populate other details
+        String otherDetails = (String) existingProfile.get("otherDetails");
+        if (otherDetails != null) {
+            otherDetailsEditText.setText(otherDetails);
+        }
+    }
+
+    /**
+     * Update UI for edit mode
+     */
+    private void updateUIForEditMode() {
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("Edit Patient Profile");
+        }
+        if (modeIndicatorText != null) {
+            modeIndicatorText.setText("EDIT");
+            modeIndicatorText.setBackgroundResource(android.R.drawable.btn_default);
+        }
+        if (profileStatusText != null) {
+            profileStatusText.setText("Update patient information");
+        }
+        if (savePatientProfileButton != null) {
+            savePatientProfileButton.setText("Update Profile");
+        }
+        if (statusText != null) {
+            statusText.setText("Changes will be saved securely");
+        }
+        Toast.makeText(this, "Editing existing profile", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Update UI for create mode
+     */
+    private void updateUIForCreateMode() {
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("Patient Profile");
+        }
+        if (modeIndicatorText != null) {
+            modeIndicatorText.setText("CREATE");
+            modeIndicatorText.setBackgroundResource(android.R.drawable.btn_default);
+        }
+        if (profileStatusText != null) {
+            profileStatusText.setText("Create a comprehensive patient profile");
+        }
+        if (savePatientProfileButton != null) {
+            savePatientProfileButton.setText("Save Profile");
+        }
+        if (statusText != null) {
+            statusText.setText("All information is securely encrypted");
+        }
+    }
+
+    /**
+     * Show loading state
+     */
+    private void showLoading(boolean loading) {
+        if (progressBar != null) {
+            progressBar.setVisibility(loading ? android.view.View.VISIBLE : android.view.View.GONE);
+        }
+        if (savePatientProfileButton != null) {
+            savePatientProfileButton.setEnabled(!loading);
+            if (loading) {
+                savePatientProfileButton.setText(isEditMode ? "Updating..." : "Saving...");
+            } else {
+                savePatientProfileButton.setText(isEditMode ? "Update Profile" : "Save Profile");
+            }
+        }
     }
 
     private void clearForm() {

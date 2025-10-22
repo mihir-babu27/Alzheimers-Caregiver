@@ -1,0 +1,361 @@
+package com.mihir.alzheimerscaregiver.caretaker;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class PatientProfileEntryActivity extends AppCompatActivity {
+
+    private static final String TAG = "PatientProfileEntry";
+    
+    private TextInputEditText patientNameEditText;
+    private TextInputEditText birthYearEditText;
+    private TextInputEditText birthplaceEditText;
+    private TextInputEditText professionEditText;
+    private TextInputEditText otherDetailsEditText;
+    private MaterialButton savePatientProfileButton;
+
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private SharedPreferences prefs;
+    private String linkedPatientId;
+    
+    // Mode tracking for edit functionality
+    private boolean isEditMode = false;
+    private Map<String, Object> existingProfile = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_patient_profile_entry);
+
+        // Initialize components
+        initializeComponents();
+        
+        // Check if patient is linked
+        if (linkedPatientId == null) {
+            Toast.makeText(this, "No patient linked. Please link a patient first.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        // Initialize views
+        initializeViews();
+        
+        // Check if this is edit mode (existing profile)
+        checkEditMode();
+        
+        // Set click listeners
+        setupClickListeners();
+    }
+
+    /**
+     * Initialize Firebase, repositories, and get linked patient ID
+     */
+    private void initializeComponents() {
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        
+        // Get shared preferences and linked patient ID
+        prefs = getSharedPreferences("CaretakerApp", MODE_PRIVATE);
+        linkedPatientId = prefs.getString("linkedPatientId", null);
+    }
+
+    /**
+     * Initialize UI views - using simple layout IDs
+     */
+    private void initializeViews() {
+        titleText = findViewById(android.R.id.text1);
+        patientNameEditText = findViewById(android.R.id.edit);
+        birthYearEditText = findViewById(android.R.id.text2);
+        birthplaceEditText = findViewById(android.R.id.input);
+        professionEditText = findViewById(android.R.id.hint);
+        otherDetailsEditText = findViewById(android.R.id.message);
+        savePatientProfileButton = findViewById(android.R.id.button1);
+        progressBar = findViewById(android.R.id.progress);
+    }
+
+    /**
+     * Check if we should load existing profile for editing
+     */
+    private void checkEditMode() {
+        // Check if profile already exists
+        setLoadingState(true);
+        
+        profileRepository.getPatientProfile(linkedPatientId, new PatientProfileRepository.OnProfileLoadListener() {
+            @Override
+            public void onSuccess(PatientProfileEntity profile) {
+                setLoadingState(false);
+                isEditMode = true;
+                existingProfile = profile;
+                populateFieldsForEdit(profile);
+                updateUIForEditMode();
+            }
+
+            @Override
+            public void onError(String error) {
+                setLoadingState(false);
+                // Error loading - could be network issue, show message but continue in create mode
+                Toast.makeText(PatientProfileEntryActivity.this, 
+                    "Note: " + error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNotFound() {
+                setLoadingState(false);
+                // No existing profile - stay in create mode
+                updateUIForCreateMode();
+            }
+        });
+    }
+
+    /**
+     * Populate form fields with existing profile data
+     */
+    private void populateFieldsForEdit(PatientProfileEntity profile) {
+        if (profile.getName() != null) {
+            patientNameEditText.setText(profile.getName());
+        }
+        if (profile.getBirthYear() != null) {
+            birthYearEditText.setText(profile.getBirthYear());
+        }
+        if (profile.getBirthplace() != null) {
+            birthplaceEditText.setText(profile.getBirthplace());
+        }
+        if (profile.getProfession() != null) {
+            professionEditText.setText(profile.getProfession());
+        }
+        if (profile.getOtherDetails() != null) {
+            otherDetailsEditText.setText(profile.getOtherDetails());
+        }
+    }
+
+    /**
+     * Update UI for edit mode
+     */
+    private void updateUIForEditMode() {
+        titleText.setText("Edit Patient Profile");
+        savePatientProfileButton.setText("Update Profile");
+    }
+
+    /**
+     * Update UI for create mode
+     */
+    private void updateUIForCreateMode() {
+        titleText.setText("Create Patient Profile");
+        savePatientProfileButton.setText("Save Profile");
+    }
+
+    /**
+     * Setup click listeners
+     */
+    private void setupClickListeners() {
+        savePatientProfileButton.setOnClickListener(v -> attemptSaveProfile());
+    }
+
+    /**
+     * Attempt to save the patient profile with validation
+     */
+    private void attemptSaveProfile() {
+        // Get input values
+        String patientName = patientNameEditText.getText().toString().trim();
+        String birthYearStr = birthYearEditText.getText().toString().trim();
+        String birthplace = birthplaceEditText.getText().toString().trim();
+        String profession = professionEditText.getText().toString().trim();
+        String otherDetails = otherDetailsEditText.getText().toString().trim();
+
+        // Validate input
+        if (!validateInput(patientName, birthYearStr, birthplace)) {
+            return;
+        }
+
+        // Show loading state
+        setLoadingState(true);
+
+        // Create or update profile entity
+        PatientProfileEntity profile = isEditMode && existingProfile != null ? existingProfile : new PatientProfileEntity();
+        
+        // Update profile data
+        profile.setPatientId(linkedPatientId);
+        profile.setName(patientName);
+        profile.setBirthYear(birthYearStr);
+        profile.setBirthplace(birthplace);
+        profile.setProfession(profession);
+        profile.setOtherDetails(otherDetails);
+        
+        // Update metadata
+        if (mAuth.getCurrentUser() != null) {
+            profile.updateMetadata(mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getEmail());
+        }
+
+        // Save profile
+        profileRepository.savePatientProfile(linkedPatientId, profile, new PatientProfileRepository.OnProfileOperationListener() {
+            @Override
+            public void onSuccess(String message) {
+                setLoadingState(false);
+                String successMessage = isEditMode ? "Profile updated successfully!" : "Profile created successfully!";
+                Toast.makeText(PatientProfileEntryActivity.this, successMessage, Toast.LENGTH_SHORT).show();
+                
+                // Return to previous screen or finish
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+
+            @Override
+            public void onError(String error) {
+                setLoadingState(false);
+                String errorMessage = isEditMode ? "Failed to update profile: " : "Failed to create profile: ";
+                Toast.makeText(PatientProfileEntryActivity.this, errorMessage + error, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * Validate user input
+     */
+    private boolean validateInput(String patientName, String birthYearStr, String birthplace) {
+        // Validate patient name
+        if (TextUtils.isEmpty(patientName)) {
+            patientNameEditText.setError("Patient name is required");
+            patientNameEditText.requestFocus();
+            return false;
+        }
+
+        // Validate birth year
+        if (TextUtils.isEmpty(birthYearStr)) {
+            birthYearEditText.setError("Birth year is required");
+            birthYearEditText.requestFocus();
+            return false;
+        }
+
+        // Validate birth year format and range
+        try {
+            int birthYear = Integer.parseInt(birthYearStr);
+            int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+            if (birthYear < 1900 || birthYear > currentYear) {
+                birthYearEditText.setError("Please enter a valid birth year (1900-" + currentYear + ")");
+                birthYearEditText.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            birthYearEditText.setError("Please enter a valid birth year");
+            birthYearEditText.requestFocus();
+            return false;
+        }
+
+        // Validate birthplace
+        if (TextUtils.isEmpty(birthplace)) {
+            birthplaceEditText.setError("Birthplace is required");
+            birthplaceEditText.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Set loading state for UI
+     */
+    private void setLoadingState(boolean loading) {
+        savePatientProfileButton.setEnabled(!loading);
+        if (loading) {
+            savePatientProfileButton.setText("Processing...");
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            if (isEditMode) {
+                savePatientProfileButton.setText("Update Profile");
+            } else {
+                savePatientProfileButton.setText("Save Profile");
+            }
+        }
+    }
+
+    private void updatePatientCaretakerList() {
+        if (mAuth.getCurrentUser() == null) {
+            finalizeSave();
+            return;
+        }
+        
+        String caretakerId = mAuth.getCurrentUser().getUid();
+        
+        // First, get the current patient document to check existing caretakerIds
+        db.collection("patients")
+                .document(linkedPatientId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    java.util.List<String> caretakerIds = new java.util.ArrayList<>();
+                    
+                    // Get existing caretaker IDs if they exist
+                    if (documentSnapshot.exists()) {
+                        java.util.List<String> existingIds = (java.util.List<String>) documentSnapshot.get("caretakerIds");
+                        if (existingIds != null) {
+                            caretakerIds.addAll(existingIds);
+                        }
+                    }
+                    
+                    // Add current caretaker if not already in the list
+                    if (!caretakerIds.contains(caretakerId)) {
+                        caretakerIds.add(caretakerId);
+                        
+                        // Update the patient document with the new caretaker list
+                        db.collection("patients")
+                                .document(linkedPatientId)
+                                .update("caretakerIds", caretakerIds)
+                                .addOnSuccessListener(aVoid -> finalizeSave())
+                                .addOnFailureListener(e -> {
+                                    android.util.Log.w("PatientProfile", "Failed to update caretaker list", e);
+                                    // Still complete the save even if caretaker list update fails
+                                    finalizeSave();
+                                });
+                    } else {
+                        // Caretaker already in list, just finalize
+                        finalizeSave();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    android.util.Log.w("PatientProfile", "Failed to fetch patient document", e);
+                    // Still complete the save even if caretaker list update fails
+                    finalizeSave();
+                });
+    }
+    
+    private void finalizeSave() {
+        // Re-enable save button
+        savePatientProfileButton.setEnabled(true);
+        savePatientProfileButton.setText("Save Patient Profile");
+        
+        Toast.makeText(PatientProfileEntryActivity.this, 
+            "Patient profile saved successfully!", Toast.LENGTH_SHORT).show();
+        
+        // Clear form after successful save
+        clearForm();
+        
+        // Optionally finish the activity
+        finish();
+    }
+
+    private void clearForm() {
+        patientNameEditText.setText("");
+        birthYearEditText.setText("");
+        birthplaceEditText.setText("");
+        professionEditText.setText("");
+        otherDetailsEditText.setText("");
+    }
+}

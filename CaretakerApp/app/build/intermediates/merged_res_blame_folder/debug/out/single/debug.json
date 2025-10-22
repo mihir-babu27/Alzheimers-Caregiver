@@ -36,10 +36,6 @@
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-42:\\layout\\item_mmse_result.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_add_edit_emergency_contact.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-42:/layout/activity_add_edit_emergency_contact.xml"
-    },
-    {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:\\drawable_ic_history.xml.flat",
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-42:\\drawable\\ic_history.xml"
     },
@@ -70,6 +66,10 @@
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:\\layout_item_emergency_contact.xml.flat",
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-42:\\layout\\item_emergency_contact.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:/layout_activity_patient_profile_entry.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-42:/layout/activity_patient_profile_entry.xml"
     },
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-40:\\layout_dialog_create_geofence.xml.flat",
