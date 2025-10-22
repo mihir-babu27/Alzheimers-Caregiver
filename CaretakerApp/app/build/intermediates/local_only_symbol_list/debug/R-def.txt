@@ -86,13 +86,13 @@ id action_filter_today
 id action_refresh
 id addButton
 id addContactFab
-id addCustomQuestionsButton
-id addEmergencyContactButton
+id addCustomQuestionsCard
+id addEmergencyContactCard
 id addImageButton
 id addMedicationButton
 id addMedicineButton
-id addPatientProfileButton
-id addTaskButton
+id addPatientProfileCard
+id addTaskCard
 id answerText
 id appLogo
 id backButton
@@ -182,8 +182,7 @@ id lineChart
 id linkButton
 id loginButton
 id loginLink
-id logoutButton
-id manageGeofencesButton
+id logoutCard
 id mapView
 id medicineNamesContainer
 id modeIndicatorText
@@ -226,7 +225,7 @@ id removeImageButton
 id saveButton
 id savePatientProfileButton
 id scheduleButton
-id scheduleMmseTestButton
+id scheduleMmseTestCard
 id scheduledDateEditText
 id scoreInput
 id scoreText
@@ -278,7 +277,7 @@ id typeText
 id viewHistoryButton
 id viewLocationButton
 id viewMedicationsButton
-id viewMmseResultsButton
+id viewMmseResultsCard
 id welcomeText
 layout activity_add_edit_emergency_contact
 layout activity_add_edit_task

@@ -20,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
     private Button addMedicationButton, viewMedicationsButton, addTaskButton, addEmergencyContactButton, logoutButton, viewMmseResultsButton;
     private Button scheduleMmseTestButton, addCustomQuestionsButton, addPatientProfileButton;
     private Button viewLocationButton, viewHistoryButton, manageGeofencesButton;
+    
+    // New card views for modern UI
+    private View addPatientProfileCard, scheduleMmseTestCard, addCustomQuestionsCard, viewMmseResultsCard;
+    private View addTaskCard, addEmergencyContactCard, logoutCard;
     private TextView welcomeText;
     private SessionManager sessionManager;
     private SharedPreferences prefs;
@@ -56,20 +60,21 @@ public class MainActivity extends AppCompatActivity {
         // Initialize views
         addMedicationButton = findViewById(R.id.addMedicationButton);
         viewMedicationsButton = findViewById(R.id.viewMedicationsButton);
-        addTaskButton = findViewById(R.id.addTaskButton);
-        addEmergencyContactButton = findViewById(R.id.addEmergencyContactButton);
-        logoutButton = findViewById(R.id.logoutButton);
-        viewMmseResultsButton = findViewById(R.id.viewMmseResultsButton);
         welcomeText = findViewById(R.id.welcomeText);
 
-    scheduleMmseTestButton = findViewById(R.id.scheduleMmseTestButton);
-    addCustomQuestionsButton = findViewById(R.id.addCustomQuestionsButton);
-    addPatientProfileButton = findViewById(R.id.addPatientProfileButton);
-    
-    // Location tracking buttons
-    viewLocationButton = findViewById(R.id.viewLocationButton);
-    viewHistoryButton = findViewById(R.id.viewHistoryButton);
-    manageGeofencesButton = findViewById(R.id.manageGeofencesButton);
+        // Location tracking buttons
+        viewLocationButton = findViewById(R.id.viewLocationButton);
+        viewHistoryButton = findViewById(R.id.viewHistoryButton);
+        //manageGeofencesButton = findViewById(R.id.manageGeofencesButton);
+        
+        // New card views for modern UI
+        addPatientProfileCard = findViewById(R.id.addPatientProfileCard);
+        scheduleMmseTestCard = findViewById(R.id.scheduleMmseTestCard);
+        addCustomQuestionsCard = findViewById(R.id.addCustomQuestionsCard);
+        viewMmseResultsCard = findViewById(R.id.viewMmseResultsCard);
+        addTaskCard = findViewById(R.id.addTaskCard);
+        addEmergencyContactCard = findViewById(R.id.addEmergencyContactCard);
+        logoutCard = findViewById(R.id.logoutCard);
     
     // TODO: Hide geofencing functionality for now
     if (manageGeofencesButton != null) {
@@ -93,21 +98,22 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        addTaskButton.setOnClickListener(v -> {
+        // Set click listeners for modern card UI
+        addTaskCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, com.mihir.alzheimerscaregiver.caretaker.activities.TaskListActivity.class);
             intent.putExtra("patientId", linkedPatientId);
             startActivity(intent);
         });
 
-        addEmergencyContactButton.setOnClickListener(v -> {
+        addEmergencyContactCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, EmergencyContactsActivity.class);
             intent.putExtra("patientId", linkedPatientId);
             startActivity(intent);
         });
 
-        logoutButton.setOnClickListener(v -> logout());
+        logoutCard.setOnClickListener(v -> logout());
 
-        viewMmseResultsButton.setOnClickListener(new View.OnClickListener() {
+        viewMmseResultsCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MmseResultsActivity.class);
@@ -116,19 +122,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        scheduleMmseTestButton.setOnClickListener(v -> {
+        scheduleMmseTestCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ScheduleMmseTestActivity.class);
             intent.putExtra("patientId", linkedPatientId);
             startActivity(intent);
         });
 
-        addCustomQuestionsButton.setOnClickListener(v -> {
+        addCustomQuestionsCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CustomMmseQuestionsActivity.class);
             intent.putExtra("patientId", linkedPatientId);
             startActivity(intent);
         });
 
-        addPatientProfileButton.setOnClickListener(v -> {
+        addPatientProfileCard.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, PatientProfileEntryActivity.class);
             startActivity(intent);
         });

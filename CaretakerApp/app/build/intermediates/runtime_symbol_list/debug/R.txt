@@ -3290,13 +3290,13 @@ int id activity_chooser_view_content 0x7f09004a
 int id add 0x7f09004b
 int id addButton 0x7f09004c
 int id addContactFab 0x7f09004d
-int id addCustomQuestionsButton 0x7f09004e
-int id addEmergencyContactButton 0x7f09004f
+int id addCustomQuestionsCard 0x7f09004e
+int id addEmergencyContactCard 0x7f09004f
 int id addImageButton 0x7f090050
 int id addMedicationButton 0x7f090051
 int id addMedicineButton 0x7f090052
-int id addPatientProfileButton 0x7f090053
-int id addTaskButton 0x7f090054
+int id addPatientProfileCard 0x7f090053
+int id addTaskCard 0x7f090054
 int id adjust_height 0x7f090055
 int id adjust_width 0x7f090056
 int id alertTitle 0x7f090057
@@ -3566,9 +3566,8 @@ int id listMode 0x7f09015e
 int id list_item 0x7f09015f
 int id loginButton 0x7f090160
 int id loginLink 0x7f090161
-int id logoutButton 0x7f090162
+int id logoutCard 0x7f090162
 int id m3_side_sheet 0x7f090163
-int id manageGeofencesButton 0x7f090164
 int id mapView 0x7f090165
 int id marquee 0x7f090166
 int id masked 0x7f090167
@@ -3742,7 +3741,7 @@ int id save_overlay_view 0x7f09020e
 int id sawtooth 0x7f09020f
 int id scale 0x7f090210
 int id scheduleButton 0x7f090211
-int id scheduleMmseTestButton 0x7f090212
+int id scheduleMmseTestCard 0x7f090212
 int id scheduledDateEditText 0x7f090213
 int id scoreInput 0x7f090214
 int id scoreText 0x7f090215
@@ -3904,7 +3903,7 @@ int id vertical_only 0x7f0902b0
 int id viewHistoryButton 0x7f0902b1
 int id viewLocationButton 0x7f0902b2
 int id viewMedicationsButton 0x7f0902b3
-int id viewMmseResultsButton 0x7f0902b4
+int id viewMmseResultsCard 0x7f0902b4
 int id view_offset_helper 0x7f0902b5
 int id view_transition 0x7f0902b6
 int id view_tree_lifecycle_owner 0x7f0902b7
