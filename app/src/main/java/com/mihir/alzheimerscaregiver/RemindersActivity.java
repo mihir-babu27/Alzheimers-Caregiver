@@ -27,6 +27,11 @@ import android.content.Intent;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Base64;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.mihir.alzheimerscaregiver.notifications.MissedMedicationScheduler;
@@ -212,9 +217,24 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
                             android.util.Log.w("RemindersActivity", "Could not take persistent permission for URI: " + imageUri);
                         }
                         
-                        currentImageUrls.add(imageUri.toString());
-                        if (currentImageAdapter != null) {
-                            currentImageAdapter.notifyItemInserted(currentImageUrls.size() - 1);
+                        // 🎯 Convert image to Base64 (matching CaretakerApp functionality)
+                        android.util.Log.d("RemindersActivity", "Converting image to Base64 for URI: " + imageUri);
+                        String base64Image = convertImageToBase64(imageUri);
+                        
+                        if (base64Image != null) {
+                            // Add Base64 string with data URL prefix (like CaretakerApp)
+                            String base64Url = "data:image/jpeg;base64," + base64Image;
+                            currentImageUrls.add(base64Url);
+                            
+                            if (currentImageAdapter != null) {
+                                currentImageAdapter.notifyItemInserted(currentImageUrls.size() - 1);
+                            }
+                            
+                            android.util.Log.d("RemindersActivity", "✅ Image converted to Base64 successfully");
+                            toast("Image added successfully");
+                        } else {
+                            android.util.Log.e("RemindersActivity", "❌ Failed to convert image to Base64");
+                            toast("Failed to add image. Please try again.");
                         }
                     }
                 }
@@ -474,6 +494,69 @@ public class RemindersActivity extends AppCompatActivity implements ReminderEnti
     }
     
     private void toast(String s) { Toast.makeText(this, s, Toast.LENGTH_SHORT).show(); }
+    
+    /**
+     * 🎯 Convert image URI to Base64 string (matching CaretakerApp functionality)
+     * Free alternative to Firebase Storage - stores images directly in Firestore/Database
+     */
+    private String convertImageToBase64(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            if (inputStream == null) {
+                android.util.Log.e("RemindersActivity", "Cannot open input stream for URI: " + imageUri);
+                return null;
+            }
+
+            // Decode and compress the image to reduce size
+            Bitmap originalBitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+            
+            if (originalBitmap == null) {
+                android.util.Log.e("RemindersActivity", "Cannot decode bitmap from URI: " + imageUri);
+                return null;
+            }
+
+            // Compress image to reduce Base64 size (important for Firestore limits)
+            Bitmap compressedBitmap = compressImage(originalBitmap, 800, 600);
+            
+            // Convert to Base64
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            
+            String base64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            
+            android.util.Log.d("RemindersActivity", "✅ Image converted to Base64. Size: " + base64String.length() + " characters");
+            return base64String;
+            
+        } catch (Exception e) {
+            android.util.Log.e("RemindersActivity", "❌ Error converting image to Base64", e);
+            return null;
+        }
+    }
+    
+    /**
+     * 🖼️ Compress image to reduce Base64 size (prevents Firestore document size limits)
+     */
+    private Bitmap compressImage(Bitmap originalBitmap, int maxWidth, int maxHeight) {
+        int width = originalBitmap.getWidth();
+        int height = originalBitmap.getHeight();
+        
+        float scaleWidth = ((float) maxWidth) / width;
+        float scaleHeight = ((float) maxHeight) / height;
+        float scale = Math.min(scaleWidth, scaleHeight);
+        
+        if (scale < 1.0f) {
+            int newWidth = Math.round(width * scale);
+            int newHeight = Math.round(height * scale);
+            
+            android.util.Log.d("RemindersActivity", "📏 Compressing image: " + width + "x" + height + " → " + newWidth + "x" + newHeight);
+            return Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+        } else {
+            android.util.Log.d("RemindersActivity", "📏 Image already optimal size: " + width + "x" + height);
+            return originalBitmap;
+        }
+    }
 }
 
 
