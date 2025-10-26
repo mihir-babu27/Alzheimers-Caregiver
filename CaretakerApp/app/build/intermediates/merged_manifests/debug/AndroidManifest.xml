@@ -60,7 +60,7 @@
         <!-- Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB5cS_sDtZ17l2u1RAs2P7lpuAHoFydIJw" />
+            android:value="AIzaSyBRLuAcralR0dJ9rgFeOHZ9N7DzFpEAX54" />
 
         <!-- SplashActivity as the main launcher -->
         <activity

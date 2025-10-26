@@ -94,25 +94,60 @@ public class FCMNotificationSender {
     public void sendGeofenceAlert(String patientId, String patientName, String geofenceName, 
                                  String transitionType, String severity, String alertId) {
         
-        // Get all caretaker tokens for this patient
+            // Get all caretaker tokens for this patient
+        Log.i(TAG, "🔍 Looking up FCM tokens at: patient_caretaker_tokens/" + patientId);
         databaseReference.child("patient_caretaker_tokens")
                 .child(patientId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (!dataSnapshot.exists()) {
+                            Log.w(TAG, "❌ No caretaker tokens found at patient_caretaker_tokens/" + patientId);
+                            return;
+                        }
+                        
+                        int tokenCount = 0;
                         for (DataSnapshot caretakerSnapshot : dataSnapshot.getChildren()) {
                             try {
-                                String token = caretakerSnapshot.child("token").getValue(String.class);
-                                Boolean active = caretakerSnapshot.child("active").getValue(Boolean.class);
+                                // Check if this is a direct token string or nested object
+                                Object snapshotValue = caretakerSnapshot.getValue();
                                 
-                                if (token != null && (active == null || active)) {
+                                String token = null;
+                                if (snapshotValue instanceof String) {
+                                    // Direct string token
+                                    token = (String) snapshotValue;
+                                    Log.d(TAG, "Found direct string token for caretaker: " + caretakerSnapshot.getKey());
+                                } else {
+                                    // Nested object with token field
+                                    DataSnapshot tokenField = caretakerSnapshot.child("token");
+                                    if (tokenField.exists()) {
+                                        token = tokenField.getValue(String.class);
+                                        Log.d(TAG, "Found nested token for caretaker: " + caretakerSnapshot.getKey());
+                                    }
+                                    
+                                    // Also check for active status
+                                    DataSnapshot activeField = caretakerSnapshot.child("active");
+                                    Boolean active = activeField.exists() ? activeField.getValue(Boolean.class) : true;
+                                    if (active != null && !active) {
+                                        Log.d(TAG, "Skipping inactive token for caretaker: " + caretakerSnapshot.getKey());
+                                        continue;
+                                    }
+                                }
+                                
+                                if (token != null && !token.isEmpty()) {
+                                    Log.i(TAG, "📤 Sending FCM to caretaker: " + caretakerSnapshot.getKey());
                                     sendFCMNotification(token, patientId, patientName, geofenceName,
                                                       transitionType, severity, alertId);
+                                    tokenCount++;
+                                } else {
+                                    Log.w(TAG, "Empty or missing token for caretaker: " + caretakerSnapshot.getKey());
                                 }
                             } catch (Exception e) {
-                                Log.e(TAG, "Error processing caretaker token", e);
+                                Log.e(TAG, "Error processing caretaker token for: " + caretakerSnapshot.getKey(), e);
                             }
                         }
+                        
+                        Log.i(TAG, "✅ FCM notification sent to " + tokenCount + " caretaker(s)");
                     }
                     
                     @Override
@@ -129,13 +164,17 @@ public class FCMNotificationSender {
                                    String geofenceName, String transitionType, 
                                    String severity, String alertId) {
         
-        try {
-            // Get OAuth 2.0 access token
-            String accessToken = getAccessToken();
-            if (accessToken == null) {
-                Log.e(TAG, "Cannot send FCM notification: Access token not available");
-                return;
-            }
+        // Move FCM operations to background thread to prevent NetworkOnMainThreadException
+        new Thread(() -> {
+            try {
+                Log.d(TAG, "📤 Starting FCM send on background thread...");
+                
+                // Get OAuth 2.0 access token
+                String accessToken = getAccessToken();
+                if (accessToken == null) {
+                    Log.e(TAG, "Cannot send FCM notification: Access token not available");
+                    return;
+                }
             
             String fcmUrl = getFCMUrl();
             if (fcmUrl == null) {
@@ -245,9 +284,12 @@ public class FCMNotificationSender {
                 }
             });
             
-        } catch (JSONException e) {
-            Log.e(TAG, "Error creating FCM notification JSON", e);
-        }
+            } catch (JSONException e) {
+                Log.e(TAG, "Error creating FCM notification JSON", e);
+            } catch (Exception e) {
+                Log.e(TAG, "Error sending FCM notification", e);
+            }
+        }).start(); // Start the background thread
     }
     
     /**

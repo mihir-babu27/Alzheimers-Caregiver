@@ -113,7 +113,7 @@ public class PatientGeofenceClient {
      * Start listening for geofence updates from Firebase
      */
     private void startGeofenceUpdatesListener() {
-        DatabaseReference geofencesRef = databaseReference.child("geofences").child(patientId);
+        DatabaseReference geofencesRef = databaseReference.child("patients").child(patientId).child("geofences");
         
         geofenceListener = new ValueEventListener() {
             @Override
@@ -164,7 +164,7 @@ public class PatientGeofenceClient {
      * Load and register geofences from Firebase
      */
     private void loadAndRegisterGeofences() {
-        DatabaseReference geofencesRef = databaseReference.child("geofences").child(patientId);
+        DatabaseReference geofencesRef = databaseReference.child("patients").child(patientId).child("geofences");
         
         geofencesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -314,7 +314,8 @@ public class PatientGeofenceClient {
             return;
         }
         
-        String alertId = java.util.UUID.randomUUID().toString();
+        // Generate unique alert ID with timestamp to prevent duplicates
+        String alertId = geofenceId + "_" + transitionType + "_" + System.currentTimeMillis();
         long timestamp = System.currentTimeMillis();
         
         // Create enhanced alert data using GeofenceDefinition
@@ -341,17 +342,19 @@ public class PatientGeofenceClient {
         
         // Send alert to Firebase with structured ID
         DatabaseReference alertRef = databaseReference
-                .child("alerts")
+                .child("patients")
                 .child(patientId)
+                .child("alerts")
                 .child(alertId);
         
         alertRef.setValue(alertData)
                 .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Enhanced geofence alert sent: " + geofenceDefinition.label + 
+                    Log.i(TAG, "✅ Enhanced geofence alert saved to Firebase: " + geofenceDefinition.label + 
                            " - " + getTransitionName(transitionType) + 
                            " (Severity: " + determineSeverity(transitionType, geofenceDefinition.type) + ")");
                     
                     // Send FCM notification to all caretakers
+                    Log.i(TAG, "📤 Sending FCM notification to caretakers...");
                     sendFCMNotificationToCaretakers(geofenceDefinition, transitionType, alertId);
                 })
                 .addOnFailureListener(e -> {
@@ -449,9 +452,14 @@ public class PatientGeofenceClient {
         }
         
         Intent intent = new Intent(context, GeofenceTransitionReceiver.class);
-        geofencePendingIntent = PendingIntent.getBroadcast(
-                context, 0, intent, 
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        
+        // Android 12+ requires PendingIntent.FLAG_MUTABLE
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_MUTABLE;
+        }
+        
+        geofencePendingIntent = PendingIntent.getBroadcast(context, 0, intent, flags);
         
         return geofencePendingIntent;
     }

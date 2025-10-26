@@ -1,15 +1,15 @@
 [
     {
-        "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\drawable_ic_delete.xml.flat",
-        "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\drawable\\ic_delete.xml"
+        "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\layout_item_task.xml.flat",
+        "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\layout\\item_task.xml"
     },
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\layout_activity_task_list.xml.flat",
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\layout\\activity_task_list.xml"
     },
     {
-        "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\layout_item_task.xml.flat",
-        "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\layout\\item_task.xml"
+        "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\drawable_ic_delete.xml.flat",
+        "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\drawable\\ic_delete.xml"
     },
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\drawable_ic_arrow_back.xml.flat",

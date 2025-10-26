@@ -30,6 +30,23 @@
         ".write": "auth != null && auth.uid == $patientId"
       }
     },
+    "patients": {
+      "$patientId": {
+        ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+        "geofences": {
+          ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+          ".write": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)"
+        },
+        "alerts": {
+          ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+          ".write": "auth != null && auth.uid == $patientId"
+        },
+        "geofenceSettings": {
+          ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",
+          ".write": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)"
+        }
+      }
+    },
     "alerts": {
       "$patientId": {
         ".read": "auth != null && (auth.uid == $patientId || root.child('patientCaretakerLinks').child($patientId).val() === auth.uid)",

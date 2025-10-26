@@ -108,7 +108,7 @@
 61        <meta-data
 62            android:name="com.google.android.geo.API_KEY"
 62-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:33:13-58
-63            android:value="AIzaSyB5cS_sDtZ17l2u1RAs2P7lpuAHoFydIJw" />
+63            android:value="AIzaSyBRLuAcralR0dJ9rgFeOHZ9N7DzFpEAX54" />
 63-->C:\Users\mihir\OneDrive\Desktop\temp\AlzheimersCaregiver\CaretakerApp\app\src\main\AndroidManifest.xml:34:13-42
 64
 65        <!-- SplashActivity as the main launcher -->

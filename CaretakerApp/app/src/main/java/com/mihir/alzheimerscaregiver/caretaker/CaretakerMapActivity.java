@@ -121,11 +121,6 @@ public class CaretakerMapActivity extends AppCompatActivity implements OnMapRead
         buttonViewHistory = findViewById(R.id.buttonViewHistory);
         buttonGeofences = findViewById(R.id.buttonGeofences);
         
-        // TODO: Hide geofencing functionality for now
-        if (buttonGeofences != null) {
-            buttonGeofences.setVisibility(View.GONE);
-        }
-        
         // Set patient name
         if (patientName != null && !patientName.isEmpty()) {
             textPatientName.setText(patientName + "'s Location");
@@ -156,12 +151,10 @@ public class CaretakerMapActivity extends AppCompatActivity implements OnMapRead
             startActivity(intent);
         });
         
-        // TODO: Geofences button functionality (disabled for now)
-        /*
+        // Geofences button - manage safe zones
         buttonGeofences.setOnClickListener(v -> {
             showGeofenceManagementDialog();
         });
-        */
     }
     
     /**

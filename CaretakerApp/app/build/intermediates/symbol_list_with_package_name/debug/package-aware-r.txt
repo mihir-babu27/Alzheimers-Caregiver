@@ -3569,6 +3569,7 @@ id loginButton
 id loginLink
 id logoutCard
 id m3_side_sheet
+id manageGeofencesButton
 id mapView
 id marquee
 id masked

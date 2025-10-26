@@ -410,75 +410,75 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-<!--    -->
-<!--    &lt;!&ndash; Geofence Management Section &ndash;&gt;-->
-<!--    <com.google.android.material.card.MaterialCardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="32dp"-->
-<!--        app:cardCornerRadius="20dp"-->
-<!--        app:cardElevation="8dp"-->
-<!--        app:cardBackgroundColor="@color/warning_light">-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical"-->
-<!--            android:padding="24dp">-->
+    <!-- Geofence Management Section -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="@color/warning_light"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp">
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_marginBottom="16dp">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="32dp"-->
-<!--                    android:layout_height="32dp"-->
-<!--                    android:src="@android:drawable/ic_menu_mapmode"-->
-<!--                    android:layout_marginEnd="12dp"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    app:tint="@color/warning" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:orientation="vertical">-->
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
+                    android:src="@android:drawable/ic_menu_mapmode"
+                    app:tint="@color/warning" />
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Safe Zone Management"-->
-<!--                        android:textSize="18sp"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:textColor="@color/warning"-->
-<!--                        android:fontFamily="sans-serif-medium" />-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Create and manage safe zones with automatic alerts"-->
-<!--                        android:textSize="14sp"-->
-<!--                        android:textColor="@color/text_secondary"-->
-<!--                        android:layout_marginTop="4dp" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Safe Zone Management"
+                        android:textColor="@color/warning"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-<!--                </LinearLayout>-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Create and manage safe zones with automatic alerts"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
 
-<!--            </LinearLayout>-->
+                </LinearLayout>
 
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/manageGeofencesButton"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:text="Manage Safe Zones"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:backgroundTint="@color/warning"-->
-<!--                app:cornerRadius="12dp" />-->
+            </LinearLayout>
 
-<!--        </LinearLayout>-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/manageGeofencesButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/warning"
+                android:text="Manage Safe Zones"
+                android:textColor="@color/white"
+                app:cornerRadius="12dp" />
 
-<!--    </com.google.android.material.card.MaterialCardView>-->
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Care Management Section -->
     <TextView

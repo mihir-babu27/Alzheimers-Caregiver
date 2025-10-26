@@ -164,8 +164,9 @@ public class GeofenceManagementActivity extends AppCompatActivity implements OnM
      */
     private void setupFirebase() {
         geofencesRef = FirebaseDatabase.getInstance()
-                .getReference("geofences")
-                .child(patientId);
+                .getReference("patients")
+                .child(patientId)
+                .child("geofences");
 
         geofenceListener = new ValueEventListener() {
             @Override

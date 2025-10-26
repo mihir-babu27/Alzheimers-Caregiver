@@ -64,7 +64,7 @@ public class PatientGeofenceManager {
             return;
         }
         
-        geofencesRef = databaseReference.child("geofences").child(patientId);
+        geofencesRef = databaseReference.child("patients").child(patientId).child("geofences");
         
         // Generate unique ID if not provided
         if (geofence.id == null || geofence.id.isEmpty()) {
@@ -111,7 +111,7 @@ public class PatientGeofenceManager {
             return;
         }
         
-        geofencesRef = databaseReference.child("geofences").child(patientId);
+        geofencesRef = databaseReference.child("patients").child(patientId).child("geofences");
         
         // Update geofence data
         Map<String, Object> updates = new HashMap<>();
@@ -151,7 +151,7 @@ public class PatientGeofenceManager {
             return;
         }
         
-        geofencesRef = databaseReference.child("geofences").child(patientId);
+        geofencesRef = databaseReference.child("patients").child(patientId).child("geofences");
         
         geofencesRef.child(geofenceId).removeValue()
                 .addOnSuccessListener(aVoid -> {
@@ -176,7 +176,7 @@ public class PatientGeofenceManager {
             return;
         }
         
-        geofencesRef = databaseReference.child("geofences").child(patientId);
+        geofencesRef = databaseReference.child("patients").child(patientId).child("geofences");
         
         geofencesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -217,7 +217,7 @@ public class PatientGeofenceManager {
         // Stop existing listener if any
         stopAlertMonitoring(patientId);
         
-        alertsRef = databaseReference.child("alerts").child(patientId);
+        alertsRef = databaseReference.child("patients").child(patientId).child("alerts");
         
         ValueEventListener alertListener = new ValueEventListener() {
             @Override
@@ -269,7 +269,7 @@ public class PatientGeofenceManager {
             return;
         }
         
-        settingsRef = databaseReference.child("geofenceSettings").child(patientId);
+        settingsRef = databaseReference.child("patients").child(patientId).child("geofenceSettings");
         
         settingsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -309,7 +309,7 @@ public class PatientGeofenceManager {
             return;
         }
         
-        settingsRef = databaseReference.child("geofenceSettings").child(patientId);
+        settingsRef = databaseReference.child("patients").child(patientId).child("geofenceSettings");
         
         Map<String, Object> settingsData = new HashMap<>();
         settingsData.put("enabled", settings.enabled);

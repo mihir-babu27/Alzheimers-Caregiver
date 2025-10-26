@@ -19,7 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Map;
 import java.util.UUID;
+
+import com.google.firebase.database.FirebaseDatabase;
 
 import com.mihir.alzheimerscaregiver.auth.FirebaseAuthManager;
 import com.mihir.alzheimerscaregiver.face_recognition.FaceRecognitionActivity;
@@ -181,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Client-only mode: no FCM; WorkManager periodic sync is sufficient for background updates.
         
-        // TODO: Initialize and start geofence monitoring for patient safety (disabled for now)
-        // initializeGeofenceMonitoring();
+        // Initialize and start geofence monitoring for patient safety
+        initializeGeofenceMonitoring();
         
         // Set up cross-device notification listeners for CaretakerApp created data
         setupCrossDeviceNotificationListeners();
@@ -814,19 +817,28 @@ protected void onResume() {
             // Check location permissions first
             checkLocationPermissions();
             
+            Log.i("MainActivity", "🌍 Initializing geofence monitoring for patient: " + patientId);
+            
             // Initialize geofence client
             geofenceClient = new PatientGeofenceClient(this, patientId);
+            Log.i("MainActivity", "✅ PatientGeofenceClient created successfully");
             
             // Start geofence monitoring
             geofenceClient.startGeofenceMonitoring();
+            Log.i("MainActivity", "✅ Geofence monitoring started");
             
             Log.d("MainActivity", "Geofence monitoring initialized for patient: " + patientId);
             
             // Show a toast to inform the user that geofence monitoring has started
             Toast.makeText(this, "Safety monitoring started", Toast.LENGTH_SHORT).show();
             
-            // TODO: Add a test button for geofence debugging (disabled for now)
-            // addGeofenceTestButton();
+            // Test geofence exit after 10 seconds
+            new android.os.Handler().postDelayed(() -> {
+                Log.i("MainActivity", "🧪 Auto-testing geofence exit in 10 seconds...");
+                if (geofenceClient != null) {
+                    testGeofenceExit();
+                }
+            }, 10000);
             
         } catch (Exception e) {
             Log.e("MainActivity", "Error initializing geofence monitoring", e);
@@ -986,35 +998,72 @@ protected void onResume() {
     /**
      * Test method to manually trigger a geofence exit event for debugging
      */
-    // TODO: Test geofence functionality (disabled for now)
-    /*
     private void testGeofenceExit() {
         try {
+            String patientId = authManager.getCurrentPatientId();
+            if (patientId == null) {
+                Log.w("MainActivity", "No patient ID available for geofence test");
+                Toast.makeText(this, "No patient ID available", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
             if (geofenceClient != null) {
-                // Simulate an exit from a safe zone for testing
-                String testGeofenceId = "test-safe-zone";
-                double currentLat = 40.7128; // Example coordinates (New York)
-                double currentLng = -74.0060;
-                
-                Log.d("MainActivity", "Testing geofence exit notification...");
-                Toast.makeText(this, "Testing geofence exit notification...", Toast.LENGTH_SHORT).show();
-                
-                // Manually trigger the geofence transition handler
-                geofenceClient.handleGeofenceTransition(
-                    testGeofenceId, 
-                    com.google.android.gms.location.Geofence.GEOFENCE_TRANSITION_EXIT,
-                    currentLat, 
-                    currentLng
-                );
-                
-                Log.d("MainActivity", "Geofence exit test triggered successfully");
+                // Get the first available geofence ID from Firebase
+                // For testing, we'll simulate an exit from any existing geofence
+                FirebaseDatabase.getInstance()
+                    .getReference("patients")
+                    .child(patientId)
+                    .child("geofences")
+                    .addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+                        @Override
+                        public void onDataChange(com.google.firebase.database.DataSnapshot snapshot) {
+                            if (snapshot.exists() && snapshot.hasChildren()) {
+                                String testGeofenceId = "";
+                                String geofenceName = "Test Zone";
+                                
+                                for (com.google.firebase.database.DataSnapshot geofenceSnapshot : snapshot.getChildren()) {
+                                    testGeofenceId = geofenceSnapshot.getKey();
+                                    Map<String, Object> data = (Map<String, Object>) geofenceSnapshot.getValue();
+                                    if (data != null) {
+                                        geofenceName = (String) data.getOrDefault("label", "Unknown Zone");
+                                    }
+                                    break; // Just use the first one for testing
+                                }
+                                
+                                // Simulate current location outside the safe zone
+                                double currentLat = 12.9716 + 0.02; // Move slightly outside
+                                double currentLng = 77.5946 + 0.02;
+                                
+                                Log.d("MainActivity", "Testing geofence exit notification for: " + geofenceName);
+                                Toast.makeText(MainActivity.this, "Testing exit from: " + geofenceName, Toast.LENGTH_SHORT).show();
+                                
+                                // Manually trigger the geofence transition handler
+                                geofenceClient.handleGeofenceTransition(
+                                    testGeofenceId, 
+                                    com.google.android.gms.location.Geofence.GEOFENCE_TRANSITION_EXIT,
+                                    currentLat, 
+                                    currentLng
+                                );
+                                
+                                Log.d("MainActivity", "✅ Geofence exit test triggered successfully");
+                            } else {
+                                Toast.makeText(MainActivity.this, "No geofences found to test", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        
+                        @Override
+                        public void onCancelled(com.google.firebase.database.DatabaseError error) {
+                            Log.e("MainActivity", "Error loading geofences for test", error.toException());
+                        }
+                    });
+            } else {
+                Log.w("MainActivity", "GeofenceClient is null");
             }
         } catch (Exception e) {
             Log.e("MainActivity", "Error testing geofence exit", e);
             Toast.makeText(this, "Error testing geofence: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-    */
     
     /**
      * Check and request location permissions for geofencing

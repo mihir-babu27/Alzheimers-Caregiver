@@ -183,6 +183,7 @@ id linkButton
 id loginButton
 id loginLink
 id logoutCard
+id manageGeofencesButton
 id mapView
 id medicineNamesContainer
 id modeIndicatorText
