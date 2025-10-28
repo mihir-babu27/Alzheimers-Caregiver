@@ -124,7 +124,9 @@
             android:exported="false"
             android:label="Chat Assistant"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AlzheimersCaregiver">
+            android:theme="@style/Theme.AlzheimersCaregiver"
+            android:fitsSystemWindows="true"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

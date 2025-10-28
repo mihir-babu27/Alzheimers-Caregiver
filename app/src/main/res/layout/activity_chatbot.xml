@@ -84,6 +84,8 @@
         android:elevation="8dp"
         android:orientation="vertical"
         android:padding="16dp"
+        android:fitsSystemWindows="true"
+        android:windowSoftInputMode="adjustResize"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Text input layout -->
