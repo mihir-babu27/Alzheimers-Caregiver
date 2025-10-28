@@ -45,7 +45,7 @@ public class MemoryQuestionRepository {
             .document(patientId)
             .collection("memory_questions")
             .orderBy("createdDate", Query.Direction.DESCENDING)
-            .limit(50)  // Get more than needed for randomization
+            .limit(100)  // Fetch a larger pool for better randomization
             .get()
             .addOnSuccessListener(queryDocumentSnapshots -> {
                 List<MemoryQuestionEntity> allQuestions = new ArrayList<>();
@@ -54,8 +54,8 @@ public class MemoryQuestionRepository {
                     try {
                         MemoryQuestionEntity question = document.toObject(MemoryQuestionEntity.class);
                         
-                        // Skip questions that should be refreshed and only include active questions
-                        if (question != null && !question.shouldRefresh() && question.isActive()) {
+                        // Include all active questions; ignore usage/refresh limits per new requirement
+                        if (question != null && question.isActive()) {
                             allQuestions.add(question);
                         }
                         
@@ -87,39 +87,8 @@ public class MemoryQuestionRepository {
      * Mark questions as used after they are presented in MMSE
      */
     public void markQuestionsAsUsed(List<MemoryQuestionEntity> questions) {
-        Log.d(TAG, "📝 Marking " + questions.size() + " questions as used");
-        
-        for (MemoryQuestionEntity question : questions) {
-            if (question.getQuestionId() != null) {
-                
-                question.markAsUsed();
-                
-                // Update in Firebase
-                db.collection(COLLECTION_NAME)
-                    .document(question.getPatientId())
-                    .collection("memory_questions")
-                    .whereEqualTo("questionId", question.getQuestionId())
-                    .get()
-                    .addOnSuccessListener(querySnapshot -> {
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            document.getReference()
-                                .update(
-                                    "timesUsed", question.getTimesUsed(),
-                                    "lastUsedDate", question.getLastUsedDate()
-                                )
-                                .addOnSuccessListener(aVoid -> 
-                                    Log.d(TAG, "✅ Updated usage for question: " + question.getQuestionId())
-                                )
-                                .addOnFailureListener(e -> 
-                                    Log.e(TAG, "❌ Failed to update question usage", e)
-                                );
-                        }
-                    })
-                    .addOnFailureListener(e -> 
-                        Log.e(TAG, "❌ Failed to find question for usage update", e)
-                    );
-            }
-        }
+        // No-op: usage limits removed per requirement; keep method for compatibility
+        Log.d(TAG, "ℹ️ markQuestionsAsUsed skipped - usage limits disabled");
     }
     
     /**

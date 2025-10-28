@@ -1,9 +1,12 @@
 package com.mihir.alzheimerscaregiver;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -96,10 +99,9 @@ public class EnhancedMmseQuizActivity extends AppCompatActivity
         
         String patientId = getPatientId();
         if (patientId != null && !patientId.isEmpty()) {
-            // 🚀 NEW: Load pre-generated memory questions from conversations
+            // 🚀 NEW: Load combined custom + memory questions (random up to 15)
             showLoadingState("Loading personalized assessment questions...");
-            
-            loadStoredMemoryQuestions(patientId);
+            loadCombinedMmseQuestions(patientId, 15);
         } else {
             // Fallback to standard questions
             loadStandardQuestions();
@@ -364,6 +366,23 @@ public class EnhancedMmseQuizActivity extends AppCompatActivity
     private void setupMultipleChoice(GeminiMMSEGenerator.PersonalizedMMSEQuestion question) {
         radioGroup.removeAllViews();
         
+        // If an image is attached (e.g., custom MCQ with Base64), show it above options
+        imageContainer.setVisibility(View.GONE);
+        questionImage.setImageDrawable(null);
+        if (question.imageUrl != null && !question.imageUrl.isEmpty()) {
+            try {
+                if (question.imageUrl.startsWith("base64:")) {
+                    String b64 = question.imageUrl.substring("base64:".length());
+                    byte[] bytes = Base64.decode(b64, Base64.DEFAULT);
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if (bmp != null) {
+                        questionImage.setImageBitmap(bmp);
+                        imageContainer.setVisibility(View.VISIBLE);
+                    }
+                }
+            } catch (Exception ignore) {}
+        }
+
         if (question.options != null && question.options.length > 0) {
             for (int i = 0; i < question.options.length; i++) {
                 RadioButton radioButton = new RadioButton(this);
@@ -409,8 +428,26 @@ public class EnhancedMmseQuizActivity extends AppCompatActivity
     private void setupImageQuestion(GeminiMMSEGenerator.PersonalizedMMSEQuestion question) {
         // Set image if available
         if (question.imageUrl != null && !question.imageUrl.isEmpty()) {
-            // Load image (implement image loading logic)
-            questionImage.setVisibility(View.VISIBLE);
+            try {
+                if (question.imageUrl.startsWith("base64:")) {
+                    String b64 = question.imageUrl.substring("base64:".length());
+                    byte[] bytes = Base64.decode(b64, Base64.DEFAULT);
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if (bmp != null) {
+                        questionImage.setImageBitmap(bmp);
+                        questionImage.setVisibility(View.VISIBLE);
+                    } else {
+                        questionImage.setVisibility(View.GONE);
+                    }
+                } else {
+                    // URL loading could be implemented with an image loader if needed
+                    questionImage.setVisibility(View.GONE);
+                }
+            } catch (Exception e) {
+                questionImage.setVisibility(View.GONE);
+            }
+        } else {
+            questionImage.setVisibility(View.GONE);
         }
         
         // Restore previous answer
@@ -418,6 +455,113 @@ public class EnhancedMmseQuizActivity extends AppCompatActivity
         if (previousAnswer != null) {
             imageAnswerInput.setText(previousAnswer);
         }
+    }
+
+    // --- Combined source flow (custom + memory) ---
+    private void loadCombinedMmseQuestions(String patientId, int maxCount) {
+        Log.d(TAG, "🔗 Loading combined MMSE questions (custom + memory) for patient: " + patientId);
+        memoryQuestionRepository.getRandomMemoryQuestions(patientId, 100, new MemoryQuestionRepository.QuestionRetrievalCallback() {
+            @Override
+            public void onQuestionsRetrieved(List<MemoryQuestionEntity> memoryQuestions) {
+                loadCustomMmseQuestions(patientId, new CustomQuestionsCallback() {
+                    @Override public void onLoaded(List<CustomQuestionDoc> docs) {
+                        createCombinedQuestionSet(patientId, memoryQuestions, docs, maxCount);
+                    }
+                }, new ErrorCallback() {
+                    @Override public void onError(String error) {
+                        Log.e(TAG, "❌ Failed to load custom questions: " + error);
+                        createCombinedQuestionSet(patientId, memoryQuestions, new ArrayList<>(), maxCount);
+                    }
+                });
+            }
+            @Override
+            public void onError(String error) {
+                Log.e(TAG, "❌ Failed to load memory questions: " + error);
+                loadCustomMmseQuestions(patientId, new CustomQuestionsCallback() {
+                    @Override public void onLoaded(List<CustomQuestionDoc> docs) {
+                        createCombinedQuestionSet(patientId, new ArrayList<>(), docs, maxCount);
+                    }
+                }, new ErrorCallback() {
+                    @Override public void onError(String error) {
+                        runOnUiThread(() -> { loadStandardQuestions(); startQuiz(); });
+                    }
+                });
+            }
+        });
+    }
+
+    private interface CustomQuestionsCallback { void onLoaded(List<CustomQuestionDoc> docs); }
+    private interface ErrorCallback { void onError(String error); }
+
+    private static class CustomQuestionDoc {
+        public String id;
+        public String question;
+        public String type;
+        public List<String> options;
+        public String expectedAnswer;
+        public Integer score;
+        public String imageBase64;
+    }
+
+    private void loadCustomMmseQuestions(String patientId, CustomQuestionsCallback cb, ErrorCallback eb) {
+        com.google.firebase.firestore.FirebaseFirestore.getInstance()
+            .collection("patients").document(patientId)
+            .collection("custom_mmse_questions")
+            .get()
+            .addOnSuccessListener(snap -> {
+                List<CustomQuestionDoc> list = new ArrayList<>();
+                for (com.google.firebase.firestore.DocumentSnapshot doc : snap) {
+                    try {
+                        CustomQuestionDoc q = doc.toObject(CustomQuestionDoc.class);
+                        if (q != null) q.id = doc.getId();
+                        if (q != null) list.add(q);
+                    } catch (Exception ignored) {}
+                }
+                cb.onLoaded(list);
+            })
+            .addOnFailureListener(e -> eb.onError(e.getMessage()));
+    }
+
+    private void createCombinedQuestionSet(String patientId, List<MemoryQuestionEntity> memoryQuestions, List<CustomQuestionDoc> customQuestions, int maxCount) {
+        List<GeminiMMSEGenerator.PersonalizedMMSEQuestion> combined = new ArrayList<>();
+        if (memoryQuestions != null) {
+            for (MemoryQuestionEntity mq : memoryQuestions) combined.add(convertMemoryQuestionToPersonalized(mq));
+        }
+        if (customQuestions != null) {
+            for (CustomQuestionDoc cq : customQuestions) combined.add(convertCustomQuestionToPersonalized(cq));
+        }
+        java.util.Collections.shuffle(combined);
+        if (combined.size() > maxCount) combined = new ArrayList<>(combined.subList(0, maxCount));
+        personalizedQuestions.clear();
+        personalizedQuestions.addAll(combined);
+        runOnUiThread(() -> { usingPersonalizedQuestions = true; hideLoadingState(); startQuiz(); });
+    }
+
+    private GeminiMMSEGenerator.PersonalizedMMSEQuestion convertCustomQuestionToPersonalized(CustomQuestionDoc cq) {
+        List<String> accepted = new ArrayList<>();
+        if (cq.expectedAnswer != null) accepted.add(cq.expectedAnswer);
+        String[] opts = (cq.options != null && !cq.options.isEmpty()) ? cq.options.toArray(new String[0]) : null;
+        String type = (cq.type != null) ? cq.type : "text";
+        if ("mcq".equalsIgnoreCase(type)) type = "multiple_choice";
+        String imageUrl = null;
+        if (cq.imageBase64 != null && !cq.imageBase64.isEmpty()) {
+            imageUrl = "base64:" + cq.imageBase64;
+            if ("text".equalsIgnoreCase(type)) type = "image";
+        }
+        return new GeminiMMSEGenerator.PersonalizedMMSEQuestion(
+                "custom_" + (cq.id != null ? cq.id : java.util.UUID.randomUUID()),
+                "Custom MMSE",
+                cq.question != null ? cq.question : "",
+                type,
+                opts,
+                cq.expectedAnswer,
+                accepted,
+                cq.score != null ? cq.score : 1,
+                "Medium",
+                "custom",
+                null,
+                imageUrl
+        );
     }
     
     private void updateProgress() {
@@ -552,7 +696,24 @@ public class EnhancedMmseQuizActivity extends AppCompatActivity
     
     private void finishPersonalizedQuiz() {
         showLoadingState("Evaluating your answers with AI...");
-        mmseEvaluator.evaluateAnswers(personalizedQuestions, answers, this);
+        int n = personalizedQuestions.size();
+        int totalMax = 30;
+        if (n > 0) {
+            int base = totalMax / n;
+            int rem = totalMax % n;
+            List<GeminiMMSEGenerator.PersonalizedMMSEQuestion> weighted = new ArrayList<>(n);
+            for (int i = 0; i < n; i++) {
+                GeminiMMSEGenerator.PersonalizedMMSEQuestion q = personalizedQuestions.get(i);
+                int weight = base + (i < rem ? 1 : 0);
+                weighted.add(new GeminiMMSEGenerator.PersonalizedMMSEQuestion(
+                        q.id, q.section, q.question, q.type, q.options, q.correctAnswer,
+                        q.acceptedAnswers, weight, q.difficulty, q.source, q.memoryContext, q.imageUrl
+                ));
+            }
+            mmseEvaluator.evaluateAnswers(weighted, answers, this);
+        } else {
+            mmseEvaluator.evaluateAnswers(personalizedQuestions, answers, this);
+        }
     }
     
     private void finishStandardQuiz() {

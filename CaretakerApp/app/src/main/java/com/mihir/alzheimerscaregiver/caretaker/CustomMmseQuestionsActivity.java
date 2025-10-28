@@ -1,6 +1,17 @@
 package com.mihir.alzheimerscaregiver.caretaker;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -16,6 +28,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +56,14 @@ public class CustomMmseQuestionsActivity extends AppCompatActivity {
     private Spinner typeSpinner;
     private LinearLayout optionsContainer;
     private Button addButton;
+    private Button addPhotoButton, takePhotoButton;
+    private ImageView imagePreview;
+    private Uri cameraPhotoUri;
+    private String pendingImageBase64;
+
+    private static final int REQ_PICK_IMAGE = 1001;
+    private static final int REQ_TAKE_PHOTO = 1002;
+    private static final int REQ_PERMS = 1100;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +88,9 @@ public class CustomMmseQuestionsActivity extends AppCompatActivity {
         typeSpinner = findViewById(R.id.typeSpinner);
         optionsContainer = findViewById(R.id.optionsContainer);
         addButton = findViewById(R.id.addButton);
+        addPhotoButton = findViewById(R.id.addPhotoButton);
+        takePhotoButton = findViewById(R.id.takePhotoButton);
+        imagePreview = findViewById(R.id.imagePreview);
 
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.mmse_question_types, android.R.layout.simple_spinner_item);
@@ -82,6 +107,8 @@ public class CustomMmseQuestionsActivity extends AppCompatActivity {
         });
 
         addButton.setOnClickListener(v -> addQuestion());
+        addPhotoButton.setOnClickListener(v -> onPickImage());
+        takePhotoButton.setOnClickListener(v -> onTakePhoto());
 
         loadQuestions();
     }
@@ -127,6 +154,7 @@ public class CustomMmseQuestionsActivity extends AppCompatActivity {
         data.put("expectedAnswer", expectedAnswer);
         data.put("score", score);
         if (!options.isEmpty()) data.put("options", options);
+        if (!TextUtils.isEmpty(pendingImageBase64)) data.put("imageBase64", pendingImageBase64);
         String id = UUID.randomUUID().toString();
         db.collection("patients").document(patientId)
                 .collection("custom_mmse_questions").document(id)
@@ -147,6 +175,9 @@ public class CustomMmseQuestionsActivity extends AppCompatActivity {
         option3Input.setText("");
         option4Input.setText("");
         scoreInput.setText("");
+        pendingImageBase64 = null;
+        imagePreview.setImageDrawable(null);
+        imagePreview.setVisibility(View.GONE);
     }
 
     private void deleteQuestion(CustomMmseQuestion q) {
@@ -214,5 +245,100 @@ public class CustomMmseQuestionsActivity extends AppCompatActivity {
                 deleteButton = itemView.findViewById(R.id.deleteButton);
             }
         }
+    }
+
+    // --- Image helpers ---
+    private void onPickImage() {
+        if (!ensureMediaPermission()) return;
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQ_PICK_IMAGE);
+    }
+
+    private void onTakePhoto() {
+        if (!ensureCameraPermission()) return;
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "mmse_question_" + System.currentTimeMillis());
+        ContentResolver resolver = getContentResolver();
+        cameraPhotoUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPhotoUri);
+        startActivityForResult(intent, REQ_TAKE_PHOTO);
+    }
+
+    private boolean ensureMediaPermission() {
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQ_PERMS);
+                return false;
+            }
+            return true;
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_PERMS);
+                return false;
+            }
+            return true;
+        }
+    }
+
+    private boolean ensureCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQ_PERMS);
+            return false;
+        }
+        return ensureMediaPermission();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+        try {
+            Uri uri = null;
+            if (requestCode == REQ_PICK_IMAGE && data != null) {
+                uri = data.getData();
+            } else if (requestCode == REQ_TAKE_PHOTO) {
+                uri = cameraPhotoUri;
+            }
+            if (uri != null) {
+                Bitmap bitmap = decodeDownsampledBitmap(uri, 1024, 1024);
+                if (bitmap != null) {
+                    pendingImageBase64 = encodeToBase64(bitmap, 80);
+                    imagePreview.setImageBitmap(bitmap);
+                    imagePreview.setVisibility(View.VISIBLE);
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Image error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private Bitmap decodeDownsampledBitmap(Uri uri, int reqWidth, int reqHeight) throws Exception {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        try (var is1 = getContentResolver().openInputStream(uri)) {
+            BitmapFactory.decodeStream(is1, null, options);
+        }
+        int inSampleSize = 1;
+        while ((options.outWidth / inSampleSize) > reqWidth || (options.outHeight / inSampleSize) > reqHeight) {
+            inSampleSize *= 2;
+        }
+        BitmapFactory.Options options2 = new BitmapFactory.Options();
+        options2.inSampleSize = inSampleSize;
+        try (var is2 = getContentResolver().openInputStream(uri)) {
+            return BitmapFactory.decodeStream(is2, null, options2);
+        }
+    }
+
+    private String encodeToBase64(Bitmap bitmap, int quality) throws Exception {
+        java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+        byte[] bytes = baos.toByteArray();
+        // Warn if large (~>500KB)
+        if (bytes.length > 500 * 1024) {
+            Toast.makeText(this, "Image is large (" + (bytes.length/1024) + "KB)", Toast.LENGTH_SHORT).show();
+        }
+        return Base64.encodeToString(bytes, Base64.NO_WRAP);
     }
 }

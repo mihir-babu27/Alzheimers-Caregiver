@@ -108,11 +108,13 @@ public class MmseResultsActivity extends AppCompatActivity implements MmseResult
     private void renderChart(List<MmseResult> list) {
         List<Entry> entries = new ArrayList<>();
         int index = 0;
-        for (MmseResult r : list) {
+        // Iterate from the last index (list.size() - 1) down to 0
+        for (int i = list.size() - 1; i >= 0; i--) {
+            MmseResult r = list.get(i); // Get the element at the current index
             float score = r.totalScore != null ? r.totalScore : 0;
             entries.add(new Entry(index++, score));
         }
-        LineDataSet dataSet = new LineDataSet(entries, "MMSE Total Score");
+        LineDataSet dataSet = new LineDataSet(entries, "Quiz Total Score");
         dataSet.setColor(getColor(R.color.purple_700));
         dataSet.setCircleColor(getColor(R.color.purple_700));
         LineData lineData = new LineData(dataSet);

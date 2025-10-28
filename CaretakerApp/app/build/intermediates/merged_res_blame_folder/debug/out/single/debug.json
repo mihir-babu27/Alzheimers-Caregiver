@@ -56,10 +56,6 @@
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\drawable\\ic_play_arrow.xml"
     },
     {
-        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:/layout_activity_main.xml.flat",
-        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-43:/layout/activity_main.xml"
-    },
-    {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\drawable_ic_location.xml.flat",
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\drawable\\ic_location.xml"
     },
@@ -174,6 +170,10 @@
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\drawable_ic_family.xml.flat",
         "source": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-main-43:\\drawable\\ic_family.xml"
+    },
+    {
+        "merged": "com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:/layout_activity_custom_mmse_questions.xml.flat",
+        "source": "com.mihir.alzheimerscaregiver.caretaker.app-main-43:/layout/activity_custom_mmse_questions.xml"
     },
     {
         "merged": "C:\\Users\\mihir\\.gradle\\daemon\\8.5\\com.mihir.alzheimerscaregiver.caretaker.app-merged_res-41:\\drawable_ic_person.xml.flat",

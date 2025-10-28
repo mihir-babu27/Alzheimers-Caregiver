@@ -259,7 +259,7 @@ public class GeminiMMSEEvaluator {
             prompt.append("Max Score: ").append(question.score).append("\n");
             prompt.append("Difficulty: ").append(question.difficulty).append("\n");
             prompt.append("Source: ").append(question.source).append("\n");
-            if (!question.memoryContext.isEmpty()) {
+            if (question.memoryContext != null && !question.memoryContext.isEmpty()) {
                 prompt.append("Memory Context: ").append(question.memoryContext).append("\n");
             }
             prompt.append("---\n");

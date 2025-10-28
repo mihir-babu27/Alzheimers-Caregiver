@@ -92,6 +92,7 @@ id addImageButton
 id addMedicationButton
 id addMedicineButton
 id addPatientProfileCard
+id addPhotoButton
 id addTaskCard
 id answerText
 id appLogo
@@ -166,6 +167,7 @@ id googleSignUpButton
 id headerLayout
 id iconAlarm
 id iconCaretakerNotification
+id imagePreview
 id imageStatusIcon
 id imageView
 id imagesRecyclerView
@@ -183,7 +185,6 @@ id linkButton
 id loginButton
 id loginLink
 id logoutCard
-id manageGeofencesButton
 id mapView
 id medicineNamesContainer
 id modeIndicatorText
@@ -236,6 +237,7 @@ id sectionsText
 id sliderRadius
 id statusText
 id switchMmseMonthly
+id takePhotoButton
 id taskCategoryEditText
 id taskDescriptionEditText
 id taskNameEditText
