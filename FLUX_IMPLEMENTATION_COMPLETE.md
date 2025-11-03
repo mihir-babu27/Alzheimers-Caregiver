@@ -49,7 +49,7 @@
 ```java
 // FLUX.1-dev API endpoint
 private static final String IMAGE_API_URL =
-    "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev";
+    "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-dev"; // Updated endpoint
 
 // Optimized parameters
 params.inferenceSteps = 20;        // Quality vs speed balance

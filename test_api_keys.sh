@@ -192,10 +192,10 @@ test_api_endpoints() {
     fi
     
     # Test Hugging Face endpoint
-    if curl -s --head "https://api-inference.huggingface.co" | grep -q "200 OK"; then
-        print_test_result "Hugging Face Endpoint" "PASS" "api-inference.huggingface.co reachable"
+    if curl -s --head "https://router.huggingface.co" | grep -q "200 OK"; then
+        print_test_result "Hugging Face Endpoint" "PASS" "router.huggingface.co reachable"
     else
-        print_test_result "Hugging Face Endpoint" "FAIL" "Cannot reach api-inference.huggingface.co"
+        print_test_result "Hugging Face Endpoint" "FAIL" "Cannot reach router.huggingface.co"
     fi
     
     # Test Gemini AI endpoint
@@ -411,7 +411,7 @@ grep "HUGGING_FACE_API_KEY" secure-keys/api-keys.properties
 ```bash
 # Test if APIs are reachable
 curl -I https://www.googleapis.com
-curl -I https://api-inference.huggingface.co
+curl -I https://router.huggingface.co
 ```
 
 ### Validate Firebase Configuration:

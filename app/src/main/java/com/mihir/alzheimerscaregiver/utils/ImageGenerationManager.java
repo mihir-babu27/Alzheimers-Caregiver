@@ -47,8 +47,8 @@ import okhttp3.Response;
 public class ImageGenerationManager {
     private static final String TAG = "ImageGenerationManager";
     
-    // FLUX.1-dev API Configuration
-    private static final String IMAGE_API_URL = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev";
+    // FLUX.1-dev API Configuration - Updated to new endpoint
+    private static final String IMAGE_API_URL = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-dev";
     private static final String API_KEY = BuildConfig.HUGGING_FACE_API_KEY;
     
     private final Context context;

@@ -61,7 +61,7 @@ if (story.getIllustrationUrl() != null && !story.getIllustrationUrl().isEmpty())
 
 ## Technical Details
 
-- **API URL**: https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev
+- **API URL**: https://router.huggingface.co/black-forest-labs/FLUX.1-dev (Updated endpoint)
 - **Parameters**: prompt, negative_prompt, num_inference_steps (20), guidance_scale (3.5), width (1024), height (1024)
 - **Quality**: High-resolution therapeutic images with cultural context
 - **Generation Time**: 15-45 seconds per image
