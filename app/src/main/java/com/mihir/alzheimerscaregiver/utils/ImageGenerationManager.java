@@ -24,6 +24,19 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+
+// Android imports
+import android.util.Log;
+
+// Firebase imports for memory retrieval
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+// Model imports
+import com.mihir.alzheimerscaregiver.data.model.PatientProfile;
 
 /**
  * Enhanced therapeutic image generation using FLUX.1-dev model
@@ -359,23 +372,108 @@ public class ImageGenerationManager {
     }
     
     /**
-     * Access the same extracted memories cache used by GeminiStoryGenerator
+     * Access extracted memories from Firebase (enhanced approach)
      */
     private String getExtractedMemoriesForImage() {
         try {
-            // Access the static memory cache from GeminiStoryGenerator
+            // First try to access the cached memories from GeminiStoryGenerator
             java.lang.reflect.Field field = com.mihir.alzheimerscaregiver.reminiscence.GeminiStoryGenerator.class
                 .getDeclaredField("cachedMemoriesContext");
             field.setAccessible(true);
             String cachedMemories = (String) field.get(null);
             
             if (cachedMemories != null && !cachedMemories.trim().isEmpty()) {
-                Log.d(TAG, "Retrieved cached memories for image generation: " + 
+                Log.d(TAG, "Retrieved cached memories from GeminiStoryGenerator for image generation: " + 
                     (cachedMemories.length() > 100 ? cachedMemories.substring(0, 100) + "..." : cachedMemories));
                 return cachedMemories;
             }
+            
+            // If cached memories are not available, try to get them from Firebase directly
+            Log.d(TAG, "No cached memories found, attempting to retrieve from Firebase directly");
+            return getMemoriesFromFirebaseSync();
+            
         } catch (Exception e) {
-            Log.w(TAG, "Could not access cached memories, using fallback", e);
+            Log.w(TAG, "Could not access memories, using fallback", e);
+        }
+        return "";
+    }
+    
+    /**
+     * Retrieve memories directly from Firebase with timeout
+     */
+    private String getMemoriesFromFirebaseSync() {
+        try {
+            // Get current patient ID from Firebase Auth
+            com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
+            if (auth.getCurrentUser() == null) {
+                Log.d(TAG, "No authenticated user, cannot retrieve memories from Firebase");
+                return "";
+            }
+            
+            String patientId = auth.getCurrentUser().getUid();
+            Log.d(TAG, "Attempting to fetch memories from Firebase for patient: " + patientId);
+            
+            // Use a synchronous approach with CompletableFuture and timeout
+            java.util.concurrent.CompletableFuture<String> memoryFuture = new java.util.concurrent.CompletableFuture<>();
+            
+            // Get Firebase Firestore instance
+            com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+            
+            // Query recent conversations with memories
+            db.collection("patients")
+                .document(patientId)
+                .collection("conversations")
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(8) // Get last 8 conversations for image context
+                .get()
+                .addOnCompleteListener(task -> {
+                    try {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            StringBuilder memoriesContext = new StringBuilder();
+                            int memoryCount = 0;
+                            
+                            // Collect memories from conversations
+                            for (com.google.firebase.firestore.QueryDocumentSnapshot document : task.getResult()) {
+                                @SuppressWarnings("unchecked")
+                                java.util.List<String> detectedMemories = (java.util.List<String>) document.get("detectedMemories");
+                                
+                                if (detectedMemories != null && !detectedMemories.isEmpty()) {
+                                    for (String memory : detectedMemories) {
+                                        memoriesContext.append("• ").append(memory).append("\n");
+                                        memoryCount++;
+                                        
+                                        // Limit memories for image generation context
+                                        if (memoryCount >= 12) break;
+                                    }
+                                    if (memoryCount >= 12) break;
+                                }
+                            }
+                            
+                            String memories = memoriesContext.toString().trim();
+                            if (!memories.isEmpty()) {
+                                Log.d(TAG, "Successfully retrieved " + memoryCount + " memories from Firebase for image generation");
+                            } else {
+                                Log.d(TAG, "No memories found in Firebase conversations");
+                            }
+                            
+                            memoryFuture.complete(memories);
+                        } else {
+                            Log.w(TAG, "Failed to retrieve memories from Firebase", task.getException());
+                            memoryFuture.complete("");
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error processing Firebase memories", e);
+                        memoryFuture.complete("");
+                    }
+                });
+            
+            // Wait for Firebase query to complete (with 3 second timeout)
+            return memoryFuture.get(3, java.util.concurrent.TimeUnit.SECONDS);
+            
+        } catch (java.util.concurrent.TimeoutException e) {
+            Log.w(TAG, "Timeout retrieving memories from Firebase (3s), using fallback");
+        } catch (Exception e) {
+            Log.w(TAG, "Error retrieving memories from Firebase, using fallback", e);
         }
         return "";
     }
