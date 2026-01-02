@@ -36,11 +36,10 @@ public class ProactiveQuestionGeneratorService {
     
     // Same Gemini models as the enhanced MMSE system
     private static final String[] MODEL_NAMES = {
-        "gemini-2.0-flash-exp",
-        "gemini-2.0-flash",      // Stable 2.0 Flash model (NEW - more quota)
-        "gemini-1.5-flash-8b", 
-        "gemini-1.5-flash",
-        "gemini-1.5-pro"
+    
+        "gemini-2.5-flash",          // Recommended: Fast, efficient, multimodal (Active)
+        "gemini-2.5-flash-lite",     // Extremely low cost/latency fallback
+        "gemini-2.5-pro"             // High intelligence for complex reasoning
     };
     
     private final Context context;

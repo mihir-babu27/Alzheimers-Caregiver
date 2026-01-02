@@ -47,11 +47,10 @@ public class GeminiMMSEGenerator {
     // Gemini API Configuration - Updated with newer available models
     private static final String BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/";
     private static final String[] MODEL_NAMES = {
-        "gemini-2.0-flash-exp",  // Latest experimental 2.0 Flash model
-        "gemini-2.0-flash",      // Stable 2.0 Flash model (NEW - more quota)
-        "gemini-1.5-flash-8b",   // Lightweight flash model
-        "gemini-1.5-flash",      // Standard flash model
-        "gemini-1.5-pro"         // Pro version fallback
+       
+        "gemini-2.5-flash",          // Recommended: Fast, efficient, multimodal (Active)
+        "gemini-2.5-flash-lite",     // Extremely low cost/latency fallback
+        "gemini-2.5-pro"             // High intelligence for complex reasoning
     };
     private static final String GENERATE_ENDPOINT = ":generateContent?key=";
     private static final String API_KEY = BuildConfig.GEMINI_API_KEY;

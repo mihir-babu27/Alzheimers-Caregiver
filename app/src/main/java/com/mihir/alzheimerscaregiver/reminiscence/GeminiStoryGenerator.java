@@ -36,10 +36,9 @@ public class GeminiStoryGenerator {
     // API Configuration - Updated with newer available models
     private static final String BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/";
     private static final String[] MODEL_NAMES = {
-        "gemini-2.0-flash",      // Latest 2.0 Flash model
-        "gemini-2.5-flash",      // 2.5 Flash for better performance
-        "gemini-1.5-flash",      // Fallback to 1.5 Flash
-        "gemini-pro"             // Original model as final fallback
+        "gemini-2.5-flash",          // Recommended: Fast, efficient, multimodal (Active)
+        "gemini-2.5-flash-lite",     // Extremely low cost/latency fallback
+        "gemini-2.5-pro"             // High intelligence for complex reasoning
     };
     private static final String GENERATE_ENDPOINT = ":generateContent?key=";
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");

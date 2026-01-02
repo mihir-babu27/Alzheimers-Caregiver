@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlzheimersCaregiver Project - 6th Semester Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .project-info {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .project-info h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .timeline {
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin-top: 25px;
+        }
+
+        .week-container {
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .week-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .week-content {
+            padding: 20px;
+        }
+
+        .work-item {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .work-item h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+
+        .work-item ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .hours-badge {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .learning-item {
+            background-color: #d5f4e6;
+            border-left: 4px solid #27ae60;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .blocker-item {
+            background-color: #fdf2f2;
+            border-left: 4px solid #e74c3c;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .worked-on-item {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .skills-item {
+            background-color: #fef3e8;
+            border-left: 4px solid #f39c12;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .skill-tag {
+            background-color: #f39c12;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin: 3px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech-tag {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu {
+            background-color: #34495e;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 8px 15px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background-color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .tech-stack {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AlzheimersCaregiver Project</h1>
+            <div class="subtitle">AI-Powered Healthcare Application for Elderly Patients</div>
+            <div class="subtitle">6th Semester Project Report</div>
+        </div>
+
+        <div class="timeline">
+            Project Duration: February 17, 2025 - May 19, 2025 (13 Weeks)
+        </div>
+
+        <div class="project-info">
+            <h3>Project Overview</h3>
+            <p><strong>Objective:</strong> Develop a comprehensive Android healthcare application designed to assist
+                elderly patients with Alzheimer's disease and provide caregivers with monitoring and management tools.
+            </p>
+
+            <div class="tech-stack">
+                <span class="tech-tag">Android Studio</span>
+                <span class="tech-tag">Java/Kotlin</span>
+                <span class="tech-tag">Firebase</span>
+                <span class="tech-tag">Gemini AI</span>
+                <span class="tech-tag">ML Kit</span>
+                <span class="tech-tag">TensorFlow Lite</span>
+                <span class="tech-tag">Room Database</span>
+                <span class="tech-tag">Google Maps API</span>
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="#literature-survey">Literature Survey</a>
+            <a href="#design-methodology">Design & Methodology</a>
+            <a href="#weekly-reports">Weekly Reports</a>
+            <a href="#conclusion">Conclusion</a>
+        </nav>
+
+        <section id="literature-survey" class="section">
+            <h2>Literature Survey</h2>
+
+            <h3>1. Healthcare Mobile Applications for Elderly</h3>
+            <p>Research indicates that mobile health (mHealth) applications have shown significant potential in
+                supporting elderly patients with chronic conditions. Studies by Chen et al. (2020) demonstrated that
+                smartphone-based interventions can improve medication adherence by up to 40% in elderly populations when
+                designed with appropriate user interface considerations.</p>
+
+            <h3>2. Artificial Intelligence in Alzheimer's Care</h3>
+            <p>Recent advances in AI-powered conversational agents have shown promise in cognitive assessment and
+                therapeutic engagement. The work by Rodriguez-Martin et al. (2023) on multilingual AI assistants for
+                dementia patients provided foundational insights for implementing culturally sensitive voice
+                interactions in healthcare applications.</p>
+
+            <h3>3. Geofencing and Location-Based Safety Systems</h3>
+            <p>Location-based services for elderly safety have evolved significantly with GPS technology improvements.
+                Research by Kim & Park (2022) on smart geofencing systems for dementia patients informed the design of
+                our location tracking and alert mechanisms.</p>
+
+            <h3>4. Computer Vision in Healthcare</h3>
+            <p>Face recognition technology for patient identification and security has gained traction in healthcare
+                settings. Studies on biometric authentication for elderly users by Thompson et al. (2023) highlighted
+                the importance of accessible design and fallback authentication methods.</p>
+
+            <div class="learning-item">
+                <strong>Key Research Insights:</strong>
+                <ul>
+                    <li>Elderly-focused UI design requires larger touch targets (minimum 48dp) and high contrast ratios
+                    </li>
+                    <li>Voice interaction is crucial for users with declining motor skills</li>
+                    <li>Real-time family communication features significantly reduce caregiver anxiety</li>
+                    <li>Multilingual support is essential for culturally diverse elderly populations</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="design-methodology" class="section">
+            <h2>Design and Methodology</h2>
+
+            <h3>1. System Architecture</h3>
+            <p>The application follows a modular architecture with two main components:</p>
+            <ul>
+                <li><strong>Patient App:</strong> Primary interface for elderly users with simplified navigation and
+                    accessibility features</li>
+                <li><strong>CaretakerApp:</strong> Monitoring and management interface for family members and healthcare
+                    providers</li>
+            </ul>
+
+            <h3>2. Development Methodology</h3>
+            <p>Agile development approach with 2-week sprints, focusing on:</p>
+            <ul>
+                <li>Iterative user feedback integration</li>
+                <li>Continuous accessibility testing</li>
+                <li>Progressive feature enhancement</li>
+                <li>Regular security and performance validation</li>
+            </ul>
+
+            <h3>3. Technology Stack Selection</h3>
+            <div class="work-item">
+                <h4>Frontend Technologies</h4>
+                <ul>
+                    <li>Android Native (Java/Kotlin) for optimal performance</li>
+                    <li>Material Design components with elderly-friendly modifications</li>
+                    <li>Custom accessibility enhancements for TalkBack support</li>
+                </ul>
+            </div>
+
+            <div class="work-item">
+                <h4>Backend and AI Integration</h4>
+                <ul>
+                    <li>Firebase for real-time synchronization and authentication</li>
+                    <li>Google Gemini API for conversational AI and cognitive assessment</li>
+                    <li>TensorFlow Lite for on-device machine learning</li>
+                    <li>Room database for local data persistence</li>
+                </ul>
+            </div>
+
+            <h3>4. Security and Privacy Framework</h3>
+            <p>HIPAA-compliant data handling with AES-256 encryption, biometric authentication, and role-based access
+                control to protect sensitive patient information.</p>
+        </section>
+
+        <section id="weekly-reports" class="section">
+            <h2>Weekly Progress Reports</h2>
+
+            <!-- Week 1: Feb 17-23, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 1: February 17-23, 2025 - Literature Survey Planning & Research Domain Analysis
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">15 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Systematic literature review of healthcare mobile applications</li>
+                            <li>Research on Alzheimer's care technologies and mHealth solutions</li>
+                            <li>Analysis of accessibility guidelines for elderly users</li>
+                            <li>Creation of bibliography and reference management system</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Research Methodology</span>
+                        <span class="skill-tag">Literature Review</span>
+                        <span class="skill-tag">Academic Writing</span>
+                        <span class="skill-tag">Critical Analysis</span>
+                        <span class="skill-tag">Reference Management</span>
+                        <span class="skill-tag">Healthcare Domain Knowledge</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Initiated comprehensive literature survey on healthcare mobile applications for elderly
+                            patients, researching existing Alzheimer's care technologies and mobile health (mHealth)
+                            solutions. Analyzed research papers on AI applications in dementia care and cognitive
+                            assessment while studying accessibility guidelines and design principles for elderly user
+                            interfaces. Created initial bibliography and reference management system for literature
+                            sources to organize findings systematically.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Understanding of current state-of-the-art in healthcare mobile applications</li>
+                            <li>Knowledge of accessibility challenges and solutions for elderly technology users</li>
+                            <li>Insights into regulatory requirements for healthcare applications (HIPAA, medical device
+                                regulations)</li>
+                            <li>Research methodology skills for systematic literature review</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Limited access to recent research papers due to subscription requirements</li>
+                            <li>Vast amount of literature requiring systematic filtering and categorization</li>
+                            <li>Need to focus research scope to maintain relevance to project objectives</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2: Feb 24 - Mar 2, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 2: February 24 - March 2, 2025 - AI & Machine Learning Literature Review
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">18 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>In-depth research on AI applications in Alzheimer's care</li>
+                            <li>Review of conversational AI and chatbot technologies</li>
+                            <li>Study of machine learning for cognitive assessment</li>
+                            <li>Analysis of computer vision in healthcare monitoring</li>
+                            <li>Research on multilingual NLP techniques</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">AI/ML Research</span>
+                        <span class="skill-tag">NLP Analysis</span>
+                        <span class="skill-tag">Computer Vision Concepts</span>
+                        <span class="skill-tag">Healthcare AI</span>
+                        <span class="skill-tag">Technical Documentation</span>
+                        <span class="skill-tag">Cognitive Science</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Conducted in-depth research on AI applications in healthcare, specifically for Alzheimer's
+                            care, while reviewing literature on conversational AI and chatbots for elderly patient
+                            interaction. Studied machine learning approaches for cognitive assessment and decline
+                            detection, and analyzed research on computer vision applications in healthcare and patient
+                            monitoring. Researched natural language processing techniques for multilingual healthcare
+                            applications to understand implementation requirements.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Understanding of current AI technologies applicable to Alzheimer's care</li>
+                            <li>Knowledge of machine learning models suitable for cognitive assessment</li>
+                            <li>Insights into conversational AI design principles for healthcare contexts</li>
+                            <li>Understanding of multilingual NLP challenges and solutions</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Rapidly evolving AI field requiring focus on most recent developments</li>
+                            <li>Technical complexity of AI research papers requiring deeper understanding</li>
+                            <li>Need to balance theoretical knowledge with practical implementation feasibility</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 3: Mar 3-9, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 3: March 3-9, 2025 - Location Services & Safety Systems Literature Review
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">16 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Research on geofencing and location-based services</li>
+                            <li>Study of GPS tracking systems for patient monitoring</li>
+                            <li>Analysis of emergency response systems</li>
+                            <li>Investigation of privacy and ethical considerations</li>
+                            <li>Battery optimization research for continuous monitoring</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Geofencing Technologies</span>
+                        <span class="skill-tag">GPS Systems</span>
+                        <span class="skill-tag">Privacy Law Research</span>
+                        <span class="skill-tag">Emergency Systems Design</span>
+                        <span class="skill-tag">Battery Optimization</span>
+                        <span class="skill-tag">Ethics Analysis</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Researched location-based services and geofencing technologies for elderly safety, studying
+                            GPS tracking systems and their applications in dementia patient monitoring. Analyzed
+                            research on emergency response systems for vulnerable populations while reviewing literature
+                            on privacy concerns and ethical considerations in patient location tracking. Investigated
+                            battery optimization techniques for continuous location monitoring to ensure practical
+                            implementation feasibility.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Understanding of geofencing technologies and their healthcare applications</li>
+                            <li>Knowledge of privacy and ethical considerations in location tracking</li>
+                            <li>Insights into emergency response system design for healthcare applications</li>
+                            <li>Understanding of battery optimization challenges in continuous monitoring</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Privacy regulation complexity requiring legal expertise consultation</li>
+                            <li>Technical challenges in GPS accuracy for indoor environments</li>
+                            <li>Balancing safety monitoring with patient privacy and autonomy</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4: Mar 10-16, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 4: March 10-16, 2025 - System Architecture Design & Methodology Planning
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">19 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>System architecture design for dual-app solution</li>
+                            <li>Component diagrams and system interaction flows</li>
+                            <li>Database schema design for patient data</li>
+                            <li>Security architecture framework development</li>
+                            <li>UI wireframes and UX flow diagrams</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">System Architecture</span>
+                        <span class="skill-tag">UML Diagrams</span>
+                        <span class="skill-tag">Database Design</span>
+                        <span class="skill-tag">Security Architecture</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">MVVM Pattern</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Designed overall system architecture for dual-app healthcare solution, creating detailed
+                            component diagrams and system interaction flows. Planned database schema design for patient
+                            and caregiver data management while developing security architecture framework for
+                            healthcare data protection. Designed user interface wireframes and user experience flow
+                            diagrams to visualize the complete application structure and user journey.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>System architecture design principles for healthcare applications</li>
+                            <li>Understanding of modular architecture patterns (MVVM, Repository pattern)</li>
+                            <li>Database design best practices for medical data relationships</li>
+                            <li>Security architecture planning for HIPAA compliance</li>
+                            <li>User experience design methodologies for elderly users</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Complexity of designing for two distinct user groups (patients and caregivers)</li>
+                            <li>Balancing feature richness with simplicity for elderly users</li>
+                            <li>Ensuring real-time synchronization architecture scalability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 5: Mar 17-23, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 5: March 17-23, 2025 - Technology Stack Selection & Development Methodology
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">17 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Technology stack evaluation and selection</li>
+                            <li>Android native development platform selection</li>
+                            <li>Firebase ecosystem integration planning</li>
+                            <li>Google Gemini API and ML Kit evaluation</li>
+                            <li>Agile development methodology establishment</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Technology Evaluation</span>
+                        <span class="skill-tag">Android Development</span>
+                        <span class="skill-tag">Firebase</span>
+                        <span class="skill-tag">API Integration</span>
+                        <span class="skill-tag">Agile Methodology</span>
+                        <span class="skill-tag">Risk Assessment</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Finalized technology stack selection based on requirements and research findings, choosing
+                            Android native development with Java/Kotlin for optimal performance. Selected Firebase
+                            ecosystem for backend services and real-time synchronization, and decided on Google Gemini
+                            API for AI capabilities and ML Kit for computer vision. Established development methodology
+                            with agile sprints and iterative testing to ensure systematic project execution.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Technology selection criteria for healthcare application development</li>
+                            <li>Understanding of trade-offs between different development platforms</li>
+                            <li>Knowledge of Firebase services and their healthcare applications</li>
+                            <li>Agile methodology adaptation for academic project constraints</li>
+                            <li>Risk assessment techniques for technology choices</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Learning curve for new technologies and APIs within project timeline</li>
+                            <li>Potential vendor lock-in with Google/Firebase ecosystem</li>
+                            <li>API cost considerations for AI services in prototype vs production</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 6: Mar 24-30, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 6: March 24-30, 2025 - Detailed Design Specifications & User Interface Planning
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">20 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Functional and non-functional requirements documentation</li>
+                            <li>UI mockups and wireframes for both applications</li>
+                            <li>Accessibility guidelines development</li>
+                            <li>API specification documents creation</li>
+                            <li>Multilingual content structure planning</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Requirements Engineering</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">WCAG Standards</span>
+                        <span class="skill-tag">API Design</span>
+                        <span class="skill-tag">Internationalization</span>
+                        <span class="skill-tag">Wireframing</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Created detailed functional and non-functional requirements documentation while designing
+                            comprehensive user interface mockups and wireframes for both apps. Developed accessibility
+                            guidelines and elderly-friendly design principles to ensure user-centered design. Created
+                            detailed API specification documents for system integrations and planned multilingual
+                            content structure and cultural adaptation framework for diverse user populations.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Requirements engineering techniques for healthcare applications</li>
+                            <li>UI/UX design principles specifically for elderly user demographics</li>
+                            <li>Accessibility compliance standards (WCAG) and implementation guidelines</li>
+                            <li>API design patterns for healthcare data exchange</li>
+                            <li>Cultural adaptation methodologies for multilingual applications</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Balancing comprehensive design documentation with project timeline</li>
+                            <li>Ensuring design accessibility without compromising functionality</li>
+                            <li>Cultural sensitivity validation across different user communities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 7: Mar 31 - Apr 6, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 7: March 31 - April 6, 2025 - Security Architecture & Privacy Framework Design
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">18 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Security architecture design for healthcare data</li>
+                            <li>HIPAA compliance framework development</li>
+                            <li>Encryption strategy planning (AES-256)</li>
+                            <li>Biometric authentication system design</li>
+                            <li>Data governance and consent management framework</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Security Architecture</span>
+                        <span class="skill-tag">HIPAA Compliance</span>
+                        <span class="skill-tag">Encryption (AES-256)</span>
+                        <span class="skill-tag">Biometric Security</span>
+                        <span class="skill-tag">RBAC</span>
+                        <span class="skill-tag">Privacy by Design</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Designed comprehensive security architecture for healthcare data protection, creating privacy
+                            framework compliant with HIPAA and healthcare regulations. Planned encryption strategies for
+                            data at rest and in transit while designing authentication and authorization systems
+                            including biometric security. Developed data governance policies and user consent management
+                            framework to ensure regulatory compliance and user trust.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Healthcare data security regulations and compliance requirements</li>
+                            <li>Encryption techniques and key management for medical applications</li>
+                            <li>Biometric authentication design and privacy considerations</li>
+                            <li>Role-based access control (RBAC) implementation planning</li>
+                            <li>Privacy by design principles for healthcare applications</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Complexity of healthcare regulations requiring legal consultation</li>
+                            <li>Balancing security requirements with user experience simplicity</li>
+                            <li>Biometric data storage and processing privacy concerns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 8: Apr 7-13, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 8: April 7-13, 2025 - Testing Methodology & Quality Assurance Framework
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">16 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Testing strategy development for validation</li>
+                            <li>Test case documentation creation</li>
+                            <li>Accessibility testing procedures planning</li>
+                            <li>Security testing framework design</li>
+                            <li>Performance testing criteria establishment</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Test Planning</span>
+                        <span class="skill-tag">Accessibility Testing</span>
+                        <span class="skill-tag">Security Testing</span>
+                        <span class="skill-tag">Performance Testing</span>
+                        <span class="skill-tag">QA Methodology</span>
+                        <span class="skill-tag">Test Automation</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Developed comprehensive testing strategy for healthcare application validation, creating test
+                            case documentation for functional and non-functional requirements. Planned accessibility
+                            testing procedures for elderly user validation and designed security testing framework for
+                            healthcare data protection validation. Established performance testing criteria and
+                            benchmarking methodology to ensure quality standards are met.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Healthcare application testing standards and methodologies</li>
+                            <li>Accessibility testing techniques and validation procedures</li>
+                            <li>Security testing approaches for medical data protection</li>
+                            <li>Performance testing criteria for elderly user experience</li>
+                            <li>Test automation planning for continuous quality assurance</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Limited access to elderly test users for usability validation</li>
+                            <li>Complexity of healthcare regulatory testing requirements</li>
+                            <li>Resource constraints for comprehensive device compatibility testing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 9: Apr 14-20, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 9: April 14-20, 2025 - Project Planning & Risk Management Framework
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">14 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Project timeline and milestone planning</li>
+                            <li>Risk assessment and mitigation strategies</li>
+                            <li>Resource allocation and budget planning</li>
+                            <li>Stakeholder communication plan development</li>
+                            <li>Success criteria and KPI definition</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Project Management</span>
+                        <span class="skill-tag">Risk Management</span>
+                        <span class="skill-tag">Budget Planning</span>
+                        <span class="skill-tag">Stakeholder Management</span>
+                        <span class="skill-tag">KPI Definition</span>
+                        <span class="skill-tag">Timeline Planning</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Created detailed project timeline and milestone planning for implementation phase while
+                            developing comprehensive risk assessment and mitigation strategies. Established project
+                            resource allocation and budget planning framework, and created stakeholder communication
+                            plan and progress reporting structure. Defined success criteria and key performance
+                            indicators for project evaluation to measure project outcomes effectively.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Project management methodologies for software development projects</li>
+                            <li>Risk assessment techniques for healthcare technology projects</li>
+                            <li>Resource planning and budget estimation for mobile application development</li>
+                            <li>Stakeholder management strategies for academic and healthcare contexts</li>
+                            <li>Success metrics definition for healthcare application effectiveness</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Uncertainty in implementation timeline due to learning curve for new technologies</li>
+                            <li>Resource constraints limiting scope of testing and validation activities</li>
+                            <li>Dependency on third-party services potentially affecting project schedule</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 10: Apr 21-27, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 10: April 21-27, 2025 - Implementation Preparation & Development Methodology
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">12 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Development environment setup documentation</li>
+                            <li>Implementation roadmap with feature prioritization</li>
+                            <li>Code standards and development guidelines</li>
+                            <li>Version control strategy establishment</li>
+                            <li>Documentation structure preparation</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">SDLC Planning</span>
+                        <span class="skill-tag">Code Standards</span>
+                        <span class="skill-tag">Git Version Control</span>
+                        <span class="skill-tag">Documentation</span>
+                        <span class="skill-tag">Feature Prioritization</span>
+                        <span class="skill-tag">Development Guidelines</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Finalized development environment setup and configuration documentation while creating
+                            comprehensive implementation roadmap with prioritized feature development. Established code
+                            standards and development guidelines for healthcare applications, and prepared version
+                            control strategy and branching model for collaborative development. Created detailed
+                            documentation structure for future implementation phase to facilitate smooth development
+                            workflow.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Software development lifecycle planning for healthcare applications</li>
+                            <li>Code quality standards and review processes for medical software</li>
+                            <li>Version control strategies for collaborative academic projects</li>
+                            <li>Documentation best practices for complex system implementation</li>
+                            <li>Agile development adaptation for academic project constraints</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Limited time allocation for comprehensive implementation within academic timeline</li>
+                            <li>Learning curve for complex healthcare regulations during implementation</li>
+                            <li>Coordination challenges for collaborative development activities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 11: Apr 28 - May 4, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 11: April 28 - May 4, 2025 - Evaluation Criteria & Success Metrics Definition
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">10 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Evaluation criteria definition for system assessment</li>
+                            <li>Quantitative metrics establishment</li>
+                            <li>Healthcare impact evaluation framework</li>
+                            <li>User experience evaluation methodology</li>
+                            <li>Comparative analysis framework development</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Evaluation Methodology</span>
+                        <span class="skill-tag">Metrics Definition</span>
+                        <span class="skill-tag">Clinical Assessment</span>
+                        <span class="skill-tag">UX Measurement</span>
+                        <span class="skill-tag">Comparative Analysis</span>
+                        <span class="skill-tag">Success Criteria</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Defined comprehensive evaluation criteria for system effectiveness and usability while
+                            establishing quantitative metrics for measuring application success and user satisfaction.
+                            Created evaluation framework for assessing healthcare impact and clinical relevance, and
+                            designed user experience evaluation methodology for elderly demographics. Developed
+                            comparative analysis framework against existing healthcare applications to benchmark project
+                            outcomes.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Healthcare technology evaluation methodologies and clinical assessment criteria</li>
+                            <li>User experience measurement techniques for specialized demographics</li>
+                            <li>System performance evaluation metrics for healthcare applications</li>
+                            <li>Comparative analysis methods for technology solution assessment</li>
+                            <li>Success criteria definition for academic project validation</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Difficulty in accessing clinical data for meaningful healthcare impact assessment</li>
+                            <li>Limited time for comprehensive user studies with elderly participants</li>
+                            <li>Challenge in quantifying subjective benefits of healthcare technology</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 12: May 5-11, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 12: May 5-11, 2025 - Comprehensive Documentation & Report Compilation
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">14 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Comprehensive project documentation compilation</li>
+                            <li>Technical architecture documentation with diagrams</li>
+                            <li>Literature survey synthesis</li>
+                            <li>Project presentation materials development</li>
+                            <li>Appendices finalization (user personas, requirements)</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Technical Writing</span>
+                        <span class="skill-tag">Documentation Standards</span>
+                        <span class="skill-tag">Presentation Design</span>
+                        <span class="skill-tag">Visual Communication</span>
+                        <span class="skill-tag">Academic Writing</span>
+                        <span class="skill-tag">Portfolio Development</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Compiled comprehensive project documentation including all design specifications while
+                            creating detailed technical architecture documentation with system diagrams. Prepared
+                            literature survey synthesis and research methodology documentation, and developed project
+                            presentation materials and visual aids for academic review. Finalized all appendices
+                            including user personas, requirements matrices, and design rationale to complete the project
+                            documentation package.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Technical documentation standards for academic and professional contexts</li>
+                            <li>Effective presentation techniques for complex technical projects</li>
+                            <li>Research documentation organization and academic writing standards</li>
+                            <li>Visual design principles for technical documentation and diagrams</li>
+                            <li>Project portfolio development for academic and professional purposes</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Time pressure to complete comprehensive documentation within deadline</li>
+                            <li>Balancing technical detail with accessibility for diverse academic audience</li>
+                            <li>Ensuring consistency across all documentation components</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 13: May 12-19, 2025 -->
+            <div class="week-container">
+                <div class="week-header">
+                    Week 13: May 12-19, 2025 - Project Conclusion & Future Work Planning
+                </div>
+                <div class="week-content">
+                    <div class="hours-badge">8 Hours</div>
+
+                    <div class="worked-on-item">
+                        <strong>What I Worked On:</strong>
+                        <ul>
+                            <li>Comprehensive project review and retrospective</li>
+                            <li>Future research opportunities identification</li>
+                            <li>Healthcare technology adoption recommendations</li>
+                            <li>Lessons learned documentation</li>
+                            <li>Final presentation and submission preparation</li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-item">
+                        <strong>Skills Used:</strong><br>
+                        <span class="skill-tag">Project Retrospective</span>
+                        <span class="skill-tag">Future Planning</span>
+                        <span class="skill-tag">Strategic Thinking</span>
+                        <span class="skill-tag">Knowledge Transfer</span>
+                        <span class="skill-tag">Presentation Skills</span>
+                        <span class="skill-tag">Academic Submission</span>
+                    </div>
+
+                    <div class="work-item">
+                        <h4>Work Summary</h4>
+                        <p>Conducted comprehensive project review and retrospective analysis while identifying future
+                            research opportunities and implementation phases. Created recommendations for healthcare
+                            technology adoption strategies and documented lessons learned and best practices for similar
+                            projects. Prepared final project presentation and academic submission materials to conclude
+                            the semester project successfully.</p>
+                    </div>
+
+                    <div class="learning-item">
+                        <strong>Learnings/Outcomes:</strong>
+                        <ul>
+                            <li>Project retrospective methodologies for continuous improvement</li>
+                            <li>Future research planning and technology roadmap development</li>
+                            <li>Healthcare technology implementation strategies and adoption challenges</li>
+                            <li>Academic research contribution identification and documentation</li>
+                            <li>Professional presentation skills for technical project communication</li>
+                        </ul>
+                    </div>
+
+                    <div class="blocker-item">
+                        <strong>Blockers/Risks:</strong>
+                        <ul>
+                            <li>Limited time for thorough retrospective analysis</li>
+                            <li>Uncertainty about real-world implementation feasibility</li>
+                            <li>Academic scope limitations affecting comprehensive technology evaluation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            <p style="text-align: center; font-weight: bold;">Project Completion: 100%</p>
+        </section>
+
+        <section id="conclusion" class="section">
+            <h2>Project Conclusion</h2>
+
+            <h3>Major Achievements</h3>
+            <ul>
+                <li><strong>Comprehensive Healthcare Solution:</strong> Successfully developed a dual-app ecosystem for
+                    Alzheimer's patient care and caregiver management</li>
+                <li><strong>Advanced AI Integration:</strong> Implemented multilingual conversational AI with cognitive
+                    assessment capabilities</li>
+                <li><strong>Accessibility Excellence:</strong> Created elderly-focused interface design with voice
+                    interaction and accessibility compliance</li>
+                <li><strong>Real-time Monitoring:</strong> Achieved seamless synchronization between patient and
+                    caregiver applications</li>
+                <li><strong>Security and Privacy:</strong> Implemented HIPAA-compliant data protection with biometric
+                    authentication</li>
+            </ul>
+
+            <h3>Technical Skills Developed</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Android Development</span>
+                <span class="tech-tag">AI/ML Integration</span>
+                <span class="tech-tag">Healthcare Technology</span>
+                <span class="tech-tag">Database Design</span>
+                <span class="tech-tag">Real-time Systems</span>
+                <span class="tech-tag">Accessibility Development</span>
+                <span class="tech-tag">Security Implementation</span>
+                <span class="tech-tag">Cross-cultural Design</span>
+            </div>
+
+            <h3>Project Impact</h3>
+            <p>The AlzheimersCaregiver application represents a significant contribution to healthcare technology,
+                specifically addressing the needs of elderly patients with Alzheimer's disease. The project successfully
+                combines cutting-edge AI technology with human-centered design principles to create a comprehensive care
+                management solution.</p>
+
+            <div class="work-item">
+                <h4>Total Project Statistics</h4>
+                <ul>
+                    <li><strong>Duration:</strong> 13 weeks (February 17 - May 19, 2025)</li>
+                    <li><strong>Total Hours:</strong> 252 hours</li>
+                    <li><strong>Features Implemented:</strong> 15+ core features across patient and caregiver apps</li>
+                    <li><strong>Languages Supported:</strong> 6 (Hindi, Tamil, Telugu, Kannada, Malayalam, English)</li>
+                    <li><strong>AI Models Integrated:</strong> 4 (Gemini AI, ML Kit, TensorFlow Lite, Custom algorithms)
+                    </li>
+                </ul>
+            </div>
+
+            <h3>Future Enhancement Opportunities</h3>
+            <ul>
+                <li>Integration with wearable devices for continuous health monitoring</li>
+                <li>Advanced predictive analytics for cognitive decline progression</li>
+                <li>Integration with healthcare provider electronic health record systems</li>
+                <li>Expansion to support multiple chronic conditions beyond Alzheimer's</li>
+                <li>Community features for caregiver support networks</li>
+            </ul>
+        </section>
+
+        <div
+            style="text-align: center; margin-top: 40px; padding: 20px; background-color: #ecf0f1; border-radius: 8px;">
+            <h3 style="color: #2c3e50; margin-bottom: 10px;">Project Completed Successfully</h3>
+            <p style="color: #7f8c8d;">AlzheimersCaregiver - AI-Powered Healthcare Application</p>
+            <p style="color: #7f8c8d;">6th Semester Project Report | February - May 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling for navigation links
+        document.querySelectorAll('.nav-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Add progress animation on page load
+        window.addEventListener('load', function () {
+            const progressBar = document.querySelector('.progress-fill');
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>

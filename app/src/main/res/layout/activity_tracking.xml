@@ -200,7 +200,7 @@
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🔧 Test Firebase Connection"
+            android:text="Debug"
             android:layout_marginBottom="8dp" />
 
     </LinearLayout>

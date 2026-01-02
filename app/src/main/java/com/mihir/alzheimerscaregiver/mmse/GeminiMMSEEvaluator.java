@@ -41,10 +41,10 @@ public class GeminiMMSEEvaluator {
     // Gemini API Configuration - Updated with newer available models
     private static final String BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/";
     private static final String[] MODEL_NAMES = {
-        "gemini-2.0-flash-exp",  // Latest experimental 2.0 Flash model
-        "gemini-2.0-flash",      // Latest 2.0 Flash model
-        "gemini-1.5-flash",      // Fallback to 1.5 Flash
-        "gemini-1.5-pro"         // Pro version fallback
+        
+        "gemini-2.5-flash",          // Recommended: Fast, efficient, multimodal (Active)
+        "gemini-2.5-flash-lite",     // Extremely low cost/latency fallback
+        "gemini-2.5-pro"             // High intelligence for complex reasoning
     };
     private static final String GENERATE_ENDPOINT = ":generateContent?key=";
     private static final String API_KEY = BuildConfig.GEMINI_API_KEY;
@@ -103,7 +103,7 @@ public class GeminiMMSEEvaluator {
     }
     
     /**
-     * Evaluate patient answers using AI-powered analysis
+     * Evaluate patient answers using fallback method (bypassing AI evaluation)
      */
     public void evaluateAnswers(List<GeminiMMSEGenerator.PersonalizedMMSEQuestion> questions, 
                                Map<String, String> patientAnswers, 
@@ -116,7 +116,12 @@ public class GeminiMMSEEvaluator {
         
         executorService.execute(() -> {
             try {
-                evaluateAnswersWithAPI(questions, patientAnswers, callback);
+                // Use fallback evaluation method directly (skip AI evaluation)
+                Log.d(TAG, "Using fallback evaluation method");
+                List<AnswerEvaluation> evaluations = performBasicEvaluation(questions, patientAnswers);
+                int totalScore = calculateTotalScore(evaluations);
+                String overallFeedback = generateOverallFeedback(evaluations, totalScore);
+                callback.onEvaluationComplete(evaluations, totalScore, overallFeedback);
             } catch (Exception e) {
                 Log.e(TAG, "Error evaluating MMSE answers", e);
                 callback.onEvaluationFailed("Error evaluating answers: " + e.getMessage());
@@ -387,7 +392,7 @@ public class GeminiMMSEEvaluator {
                     feedback = "Perfect match with expected answer.";
                 }
                 // Check accepted answers
-                else if (question.acceptedAnswers != null) {
+                /* else if (question.acceptedAnswers != null) {
                     for (String accepted : question.acceptedAnswers) {
                         if (normalizedPatient.equals(accepted.trim().toLowerCase())) {
                             score = 1.0;
@@ -396,7 +401,7 @@ public class GeminiMMSEEvaluator {
                             break;
                         }
                     }
-                }
+                } */
                 // Basic partial credit for contains
                 else if (normalizedCorrect.contains(normalizedPatient) || normalizedPatient.contains(normalizedCorrect)) {
                     score = 0.5;
