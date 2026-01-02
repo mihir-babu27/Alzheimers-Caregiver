@@ -832,13 +832,8 @@ protected void onResume() {
             // Show a toast to inform the user that geofence monitoring has started
             Toast.makeText(this, "Safety monitoring started", Toast.LENGTH_SHORT).show();
             
-            // Test geofence exit after 10 seconds
-            new android.os.Handler().postDelayed(() -> {
-                Log.i("MainActivity", "🧪 Auto-testing geofence exit in 10 seconds...");
-                if (geofenceClient != null) {
-                    testGeofenceExit();
-                }
-            }, 10000);
+            // NOTE: Removed auto-test code. Geofences will now only trigger on actual location changes.
+            // To manually test, call testGeofenceExit() from a button or debug menu.
             
         } catch (Exception e) {
             Log.e("MainActivity", "Error initializing geofence monitoring", e);
@@ -1188,9 +1183,10 @@ protected void onResume() {
     protected void onDestroy() {
         super.onDestroy();
         
-        // Clean up geofence monitoring when activity is destroyed
-        if (geofenceClient != null) {
-            geofenceClient.stopGeofenceMonitoring();
-        }
+        // DON'T stop geofence monitoring - it should continue in background
+        // Geofences will persist even when app is closed for patient safety monitoring
+        // Only stop geofencing if user explicitly signs out or disables the feature
+        
+        Log.d("MainActivity", "Activity destroyed - geofence monitoring continues in background");
     }
 }

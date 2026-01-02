@@ -211,7 +211,7 @@ public class PatientGeofenceClient {
         patientGeofence.latitude = definition.lat;
         patientGeofence.longitude = definition.lng;
         patientGeofence.radius = definition.radius;
-        patientGeofence.type = GeofenceType.EXIT_ONLY; // Safe zones trigger on exit
+        patientGeofence.type = GeofenceType.ENTER_EXIT; // Trigger on both ENTER and EXIT for complete monitoring
         patientGeofence.enabled = definition.active;
         return patientGeofence;
     }
@@ -258,7 +258,7 @@ public class PatientGeofenceClient {
         }
         
         GeofencingRequest geofencingRequest = new GeofencingRequest.Builder()
-                .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER | GeofencingRequest.INITIAL_TRIGGER_EXIT)
+                .setInitialTrigger(0) // Disable initial triggers to prevent false alarms on registration
                 .addGeofences(androidGeofences)
                 .build();
         
@@ -304,6 +304,9 @@ public class PatientGeofenceClient {
      */
     public void handleGeofenceTransition(String geofenceId, int transitionType, 
                                        double latitude, double longitude) {
+        
+        Log.i(TAG, "🔔 handleGeofenceTransition called: " + geofenceId + " - " + getTransitionName(transitionType));
+        Log.i(TAG, "   Location: (" + latitude + ", " + longitude + ")");
         
         // Find the geofence definition from our new structure
         GeofenceDefinition geofenceDefinition = geofenceDefinitions.get(geofenceId);

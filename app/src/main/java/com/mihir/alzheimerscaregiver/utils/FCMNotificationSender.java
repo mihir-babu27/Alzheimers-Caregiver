@@ -94,7 +94,13 @@ public class FCMNotificationSender {
     public void sendGeofenceAlert(String patientId, String patientName, String geofenceName, 
                                  String transitionType, String severity, String alertId) {
         
-            // Get all caretaker tokens for this patient
+        Log.i(TAG, "🚨 sendGeofenceAlert() called:");
+        Log.i(TAG, "   Patient: " + patientName + " (" + patientId + ")");
+        Log.i(TAG, "   Geofence: " + geofenceName);
+        Log.i(TAG, "   Transition: " + transitionType);
+        Log.i(TAG, "   Severity: " + severity);
+        
+        // Get all caretaker tokens for this patient
         Log.i(TAG, "🔍 Looking up FCM tokens at: patient_caretaker_tokens/" + patientId);
         databaseReference.child("patient_caretaker_tokens")
                 .child(patientId)
