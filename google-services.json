@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "407685088007",
+    "project_id": "alz-care-7e599",
+    "storage_bucket": "alz-care-7e599.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407685088007:android:cb3269ca3347d3ecd97ba2",
+        "android_client_info": {
+          "package_name": "com.mihir.alzheimerscaregiver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxv0wfmUbDi5Gr0YhMp2mN9izOIobsKAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
